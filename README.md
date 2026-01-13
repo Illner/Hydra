@@ -37,11 +37,15 @@ The following tools are required:
 ./bella.sh
 ```
 
+The compilation takes place in the **`build_bella`** directory. The release binary can be found at: **`build_bella/Release/Bella/`**
+
 ### Building Cara
 
 ```console
 ./cara.sh
 ```
+
+The compilation takes place in the **`build_cara`** directory. The release binary can be found at: **`build_cara/Release/Cara/`**
 
 ## Used software
 
