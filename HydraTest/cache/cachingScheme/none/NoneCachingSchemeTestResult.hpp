@@ -1,0 +1,173 @@
+#pragma once
+
+#include <string>
+
+namespace HydraTest::Cache::CachingScheme::None {
+    inline std::string noneCachingSchemeComponentCachingResult = "Caching scheme\n"
+                                                                 "Type: none\n"
+                                                                 "Cache type: component caching\n"
+                                                                 "Used mapping: 0\n"
+                                                                 "Current formula: -1 3 0 1 2 0 2 -4 0 -3 -4 0 5 6 0 -6 -7 0 1 -2 3 0 -5 -6 -7 0 5 6 7 0 -1 2 -3 4 0 \n"
+                                                                 "\n"
+                                                                 "Current component variables: 1 2 3 4 5 6 7\n"
+                                                                 "Cache record structure\n"
+                                                                 "Empty\n"
+                                                                 "\n"
+                                                                 "Max bytes for key: 0\n"
+                                                                 "Max bytes for mapping: 28\n"
+                                                                 "\n";
+
+    inline std::string noneCachingSchemeComponentCachingCurrentComponentVariablesResult = "Caching scheme\n"
+                                                                                          "Type: none\n"
+                                                                                          "Cache type: component caching\n"
+                                                                                          "Used mapping: 0\n"
+                                                                                          "Current formula: -1 3 0 1 2 0 2 -4 0 -3 -4 0 5 6 0 -6 -7 0 1 -2 3 0 -5 -6 -7 0 5 6 7 0 -1 2 -3 4 0 \n"
+                                                                                          "\n"
+                                                                                          "Current component variables: 1 2 3 4\n"
+                                                                                          "Cache record structure\n"
+                                                                                          "Empty\n"
+                                                                                          "\n"
+                                                                                          "Current component variables: 5 6 7\n"
+                                                                                          "Cache record structure\n"
+                                                                                          "Empty\n"
+                                                                                          "\n";
+
+    inline std::string noneCachingSchemeComponentCachingAssignmentResult = "Caching scheme\n"
+                                                                           "Type: none\n"
+                                                                           "Cache type: component caching\n"
+                                                                           "Used mapping: 0\n"
+                                                                           "Current formula: 1 0 -4 0 -7 0 -1 3 0 -3 -4 0 -5 -7 0 -1 -3 4 0 \n"
+                                                                           "\n"
+                                                                           "Current component variables: 1 3 4 5 7\n"
+                                                                           "Cache record structure\n"
+                                                                           "Empty\n"
+                                                                           "\n";
+
+    inline std::string noneCachingSchemeComponentCachingChar8Result = "Caching scheme\n"
+                                                                      "Type: none\n"
+                                                                      "Cache type: component caching\n"
+                                                                      "Used mapping: 0\n"
+                                                                      "Current formula: -1 126 0 1 -126 0 -2 -127 0 2 127 0 \n"
+                                                                      "\n"
+                                                                      "Current component variables: 1 2 126 127\n"
+                                                                      "Cache record structure\n"
+                                                                      "Empty\n"
+                                                                      "\n";
+
+    inline std::string noneCachingSchemeComponentCachingChar16LowResult = "Caching scheme\n"
+                                                                          "Type: none\n"
+                                                                          "Cache type: component caching\n"
+                                                                          "Used mapping: 0\n"
+                                                                          "Current formula: -1 127 0 1 -127 0 -2 -128 0 2 128 0 \n"
+                                                                          "\n"
+                                                                          "Current component variables: 1 2 127 128\n"
+                                                                          "Cache record structure\n"
+                                                                          "Empty\n"
+                                                                          "\n";
+
+    inline std::string noneCachingSchemeComponentCachingChar16HighResult = "Caching scheme\n"
+                                                                           "Type: none\n"
+                                                                           "Cache type: component caching\n"
+                                                                           "Used mapping: 0\n"
+                                                                           "Current formula: -1 32766 0 1 -32766 0 -2 -32767 0 2 32767 0 \n"
+                                                                           "\n"
+                                                                           "Current component variables: 1 2 32766 32767\n"
+                                                                           "Cache record structure\n"
+                                                                           "Empty\n"
+                                                                           "\n";
+
+    inline std::string noneCachingSchemeComponentCachingChar32Result = "Caching scheme\n"
+                                                                       "Type: none\n"
+                                                                       "Cache type: component caching\n"
+                                                                       "Used mapping: 0\n"
+                                                                       "Current formula: -1 32767 0 1 -32767 0 -2 -32768 0 2 32768 0 \n"
+                                                                       "\n"
+                                                                       "Current component variables: 1 2 32767 32768\n"
+                                                                       "Cache record structure\n"
+                                                                       "Empty\n"
+                                                                       "\n";
+
+    inline std::string noneCachingSchemeHypergraphCutCachingResult = "Caching scheme\n"
+                                                                     "Type: none\n"
+                                                                     "Cache type: hypergraph cut caching\n"
+                                                                     "Used mapping: 0\n"
+                                                                     "Current formula: -1 3 0 1 2 0 2 -4 0 -3 -4 0 5 6 0 -6 -7 0 1 -2 3 0 -5 -6 -7 0 5 6 7 0 -1 2 -3 4 0 \n"
+                                                                     "\n"
+                                                                     "Current component variables: 1 2 3 4 5 6 7\n"
+                                                                     "Cache record structure\n"
+                                                                     "Empty\n"
+                                                                     "\n"
+                                                                     "Max bytes for key: 0\n"
+                                                                     "Max bytes for mapping: 28\n"
+                                                                     "\n";
+
+    inline std::string noneCachingSchemeHypergraphCutCachingCurrentComponentVariablesResult = "Caching scheme\n"
+                                                                                              "Type: none\n"
+                                                                                              "Cache type: hypergraph cut caching\n"
+                                                                                              "Used mapping: 0\n"
+                                                                                              "Current formula: -1 3 0 1 2 0 2 -4 0 -3 -4 0 5 6 0 -6 -7 0 1 -2 3 0 -5 -6 -7 0 5 6 7 0 -1 2 -3 4 0 \n"
+                                                                                              "\n"
+                                                                                              "Current component variables: 1 2 3 4\n"
+                                                                                              "Cache record structure\n"
+                                                                                              "Empty\n"
+                                                                                              "\n"
+                                                                                              "Current component variables: 5 6 7\n"
+                                                                                              "Cache record structure\n"
+                                                                                              "Empty\n"
+                                                                                              "\n";
+
+    inline std::string noneCachingSchemeHypergraphCutCachingAssignmentResult = "Caching scheme\n"
+                                                                               "Type: none\n"
+                                                                               "Cache type: hypergraph cut caching\n"
+                                                                               "Used mapping: 0\n"
+                                                                               "Current formula: 1 0 -4 0 -7 0 -1 3 0 -3 -4 0 -5 -7 0 -1 -3 4 0 \n"
+                                                                               "\n"
+                                                                               "Current component variables: 1 3 4 5 7\n"
+                                                                               "Cache record structure\n"
+                                                                               "Empty\n"
+                                                                               "\n";
+
+    inline std::string noneCachingSchemeHypergraphCutCachingChar8Result = "Caching scheme\n"
+                                                                          "Type: none\n"
+                                                                          "Cache type: hypergraph cut caching\n"
+                                                                          "Used mapping: 0\n"
+                                                                          "Current formula: -1 254 0 1 -254 0 -2 -255 0 2 255 0 \n"
+                                                                          "\n"
+                                                                          "Current component variables: 1 2 254 255\n"
+                                                                          "Cache record structure\n"
+                                                                          "Empty\n"
+                                                                          "\n";
+
+    inline std::string noneCachingSchemeHypergraphCutCachingChar16LowResult = "Caching scheme\n"
+                                                                              "Type: none\n"
+                                                                              "Cache type: hypergraph cut caching\n"
+                                                                              "Used mapping: 0\n"
+                                                                              "Current formula: -1 255 0 1 -255 0 -2 -256 0 2 256 0 \n"
+                                                                              "\n"
+                                                                              "Current component variables: 1 2 255 256\n"
+                                                                              "Cache record structure\n"
+                                                                              "Empty\n"
+                                                                              "\n";
+
+    inline std::string noneCachingSchemeHypergraphCutCachingChar16HighResult = "Caching scheme\n"
+                                                                               "Type: none\n"
+                                                                               "Cache type: hypergraph cut caching\n"
+                                                                               "Used mapping: 0\n"
+                                                                               "Current formula: -1 65534 0 1 -65534 0 -2 -65535 0 2 65535 0 \n"
+                                                                               "\n"
+                                                                               "Current component variables: 1 2 65534 65535\n"
+                                                                               "Cache record structure\n"
+                                                                               "Empty\n"
+                                                                               "\n";
+
+    inline std::string noneCachingSchemeHypergraphCutCachingChar32Result = "Caching scheme\n"
+                                                                           "Type: none\n"
+                                                                           "Cache type: hypergraph cut caching\n"
+                                                                           "Used mapping: 0\n"
+                                                                           "Current formula: -1 65535 0 1 -65535 0 -2 -65536 0 2 65536 0 \n"
+                                                                           "\n"
+                                                                           "Current component variables: 1 2 65535 65536\n"
+                                                                           "Cache record structure\n"
+                                                                           "Empty\n"
+                                                                           "\n";
+}   // namespace HydraTest::Cache::CachingScheme::None
