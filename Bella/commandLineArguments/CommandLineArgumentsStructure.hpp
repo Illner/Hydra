@@ -21,7 +21,7 @@ namespace Bella::CommandLineArguments {
         using ContagiousFormulaRepresentationConfigurationType = typename Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentationConfiguration;
 
     public:
-        bool help = false;
+        bool exit = false;   // help, version
 
         bool numberOfModels;
         LargeNumberType timeout;

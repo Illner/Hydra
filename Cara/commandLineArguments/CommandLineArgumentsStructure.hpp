@@ -26,7 +26,7 @@ namespace Cara::CommandLineArguments {
         using ModelCountingTypeEnum = typename Cara::ModelCountingTypeEnum;
 
     public:
-        bool help = false;
+        bool exit = false;   // help, version
 
         // Input
         std::string inputFilePath;

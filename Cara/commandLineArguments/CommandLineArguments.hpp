@@ -3,7 +3,9 @@
 #include <string_view>
 
 #include "Cara/commandLineArguments/CommandLineArgumentsStructure.hpp"
+#include "Hydra/other/Other.hpp"
 #include "Hydra/other/parser/CommandLineArgumentsParser.hpp"
+#include "Hydra/other/version/Version.hpp"
 
 #include "Hydra/compiler/Compiler.tpp"
 
@@ -31,6 +33,7 @@ namespace Cara::CommandLineArguments {
 
     // Others
     inline constexpr ArgumentNameType HELP_ARGUMENT = "-h";
+    inline constexpr ArgumentNameType VERSION_ARGUMENT = "-v";
     inline constexpr ArgumentNameType MUST_MULTIPLY_BY_FACTOR_ARGUMENT = "-mmbf";
     inline constexpr ArgumentNameType NUMBER_OF_SAMPLE_MOMENTS_ARGUMENT = "-nsm";
 

@@ -36,14 +36,27 @@ namespace Bella::CommandLineArguments {
         // Help
         if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, HELP_ARGUMENT)) {
             // program -h
-            if (argc > 2) {
-                std::cerr << "WARNING: only the argument \"-h\" is considered; the remaining arguments are ignored!" << std::endl;
-                std::cerr << std::endl;
-            }
+            if (argc > 2)
+                Hydra::Other::printWarningAboutIgnoringRemainingArgumentsExceptOne(HELP_ARGUMENT);
 
-            commandLineArgumentsStruct.help = true;
+            commandLineArgumentsStruct.exit = true;
 
             printHelp();
+
+            return commandLineArgumentsStruct;
+        }
+
+        // Version
+        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, VERSION_ARGUMENT)) {
+            // program -v
+            if (argc > 2)
+                Hydra::Other::printWarningAboutIgnoringRemainingArgumentsExceptOne(VERSION_ARGUMENT);
+
+            commandLineArgumentsStruct.exit = true;
+
+            std::cout << "Bella (";
+            Hydra::Other::Version::printHydraVersion(std::cout);
+            std::cout << ")" << std::endl;
 
             return commandLineArgumentsStruct;
         }
@@ -748,6 +761,7 @@ namespace Bella::CommandLineArguments {
                   << std::endl;
 
         // Command
+        std::cout << "./Bella " << VERSION_ARGUMENT << std::endl;
         std::cout << "./Bella";
         // Circuit types
         std::cout << " < "
@@ -888,6 +902,7 @@ namespace Bella::CommandLineArguments {
         std::cout << std::endl;
 
         std::cout << COUNT_ARGUMENT << " — counts the models" << std::endl;
+        std::cout << VERSION_ARGUMENT << " — print version information" << std::endl;
         std::cout << EQUIVALENCE_SIMPLIFICATION_METHOD_ARGUMENT << " — uses the equivalence simplification method (highly recommended)" << std::endl;
         std::cout << TIMEOUT_ARGUMENT << " — sets the compilation timeout (default: 86400 s)" << std::endl;
         std::cout << READABLE_STATISTICS_ARGUMENT << " — the statistics file is in a form readable by a human" << std::endl;

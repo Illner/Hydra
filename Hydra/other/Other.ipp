@@ -270,6 +270,11 @@ namespace Hydra::Other {
         std::cerr << name << " = " << adjustedValue << std::endl;
     }
 
+    void printWarningAboutIgnoringRemainingArgumentsExceptOne(const Parser::CommandLineArguments::ArgumentNameType& notIgnoredArgumentName) {
+        std::cerr << "WARNING: only the argument \"" << notIgnoredArgumentName << "\" is considered; the remaining arguments are ignored!" << std::endl;
+        std::cerr << std::endl;
+    }
+
     void printTitle(std::ostream& out, const std::string& title, int numberOfDelimiters, char delimiter, char prefix, bool printTop, bool printBottom) {
         printTitle(out, title, numberOfDelimiters, delimiter, std::string_view(&prefix, 1), printTop, printBottom);
     }

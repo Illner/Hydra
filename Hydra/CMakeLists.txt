@@ -5,7 +5,7 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
 
 add_library(HydraLibrary STATIC
         "other/parser/CommandLineArgumentsParser.cpp"
-        "statistics/StatisticsAbstract.cpp" "statistics/Statistics.cpp"
+        "statistics/StatisticsAbstract.cpp" "statistics/Statistics.cpp" "other/version/Version.cpp"
         "other/operatingSystem/OperatingSystem.cpp" "other/memory/Memory.cpp" "other/container/vectorSet/VectorSet.cpp"
         "other/type/arbitraryPrecisionInteger/custom/CustomArbitraryPrecisionInteger.cpp" "external/satSolvers/MiniSat_d4/Solver.cpp"
 
@@ -18,6 +18,14 @@ add_library(HydraLibrary STATIC
         "decisionHeuristic/DecisionHeuristicAbstract.cxx"
         "formula/representation/FormulaRepresentationAbstract.cxx"
         "partitioningHypergraph/PartitioningHypergraphAbstract.cxx")
+
+# Hydra version
+target_compile_definitions(HydraLibrary PRIVATE
+        HYDRA_VERSION="${PROJECT_VERSION}"
+        HYDRA_VERSION_MAJOR="${PROJECT_VERSION_MAJOR}"
+        HYDRA_VERSION_MINOR="${PROJECT_VERSION_MINOR}"
+        HYDRA_VERSION_PATCH="${PROJECT_VERSION_PATCH}"
+)
 
 # Boost (header-only)
 IF (CMAKE_SYSTEM_NAME STREQUAL "CYGWIN")

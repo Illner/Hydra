@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Bella/commandLineArguments/CommandLineArgumentsStructure.hpp"
+#include "Hydra/other/Other.hpp"
 #include "Hydra/other/parser/CommandLineArgumentsParser.hpp"
+#include "Hydra/other/version/Version.hpp"
 
 #include "Hydra/compiler/Compiler.tpp"
 
@@ -89,6 +91,7 @@ namespace Bella::CommandLineArguments {
     inline constexpr ArgumentNameType HELP_ARGUMENT = "-h";
     inline constexpr ArgumentNameType COUNT_ARGUMENT = "-c";
     inline constexpr ArgumentNameType TIMEOUT_ARGUMENT = "-t";
+    inline constexpr ArgumentNameType VERSION_ARGUMENT = "-v";
     inline constexpr ArgumentNameType METACENTRUM_ARGUMENT = "-m";
     inline constexpr ArgumentNameType READABLE_STATISTICS_ARGUMENT = "-r";
     inline constexpr ArgumentNameType EQUIVALENCE_SIMPLIFICATION_METHOD_ARGUMENT = "-e";

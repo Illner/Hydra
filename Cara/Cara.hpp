@@ -33,8 +33,8 @@ int main(int argc, char* argv[]) {
     try {
         CommandLineArgumentsStruct commandLineArgumentsStruct = Cara::CommandLineArguments::parseCommandLineArguments(argc, argv);
 
-        // Help
-        if (commandLineArgumentsStruct.help)
+        // Exit - help, version
+        if (commandLineArgumentsStruct.exit)
             return 0;
 
         // Title

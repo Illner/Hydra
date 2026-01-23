@@ -30,14 +30,27 @@ namespace Cara::CommandLineArguments {
         // Help
         if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, HELP_ARGUMENT)) {
             // program -h
-            if (argc > 2) {
-                std::cerr << "WARNING: only the argument \"-h\" is considered; the remaining arguments are ignored!" << std::endl;
-                std::cerr << std::endl;
-            }
+            if (argc > 2)
+                Hydra::Other::printWarningAboutIgnoringRemainingArgumentsExceptOne(HELP_ARGUMENT);
 
-            commandLineArgumentsStruct.help = true;
+            commandLineArgumentsStruct.exit = true;
 
             printHelp();
+
+            return commandLineArgumentsStruct;
+        }
+
+        // Version
+        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, VERSION_ARGUMENT)) {
+            // program -v
+            if (argc > 2)
+                Hydra::Other::printWarningAboutIgnoringRemainingArgumentsExceptOne(VERSION_ARGUMENT);
+
+            commandLineArgumentsStruct.exit = true;
+
+            std::cout << "Cara (";
+            Hydra::Other::Version::printHydraVersion(std::cout);
+            std::cout << ")" << std::endl;
 
             return commandLineArgumentsStruct;
         }
@@ -243,6 +256,7 @@ namespace Cara::CommandLineArguments {
                   << std::endl;
 
         // Command
+        std::cout << "./Cara " << VERSION_ARGUMENT << std::endl;
         std::cout << "./Cara";
 
         // Partitioning hypergraph types
@@ -277,6 +291,7 @@ namespace Cara::CommandLineArguments {
         std::cout << "\t" << NOT_SUBSUMED_CLAUSES_PREPROCESSING_TYPE_ARGUMENT << " — " << Hydra::Cache::CachingScheme::preprocessingTypeEnumToString(Hydra::Cache::CachingScheme::PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES) << std::endl;
         std::cout << std::endl;
 
+        std::cout << VERSION_ARGUMENT << " — print version information" << std::endl;
         std::cout << NUMBER_OF_SAMPLE_MOMENTS_ARGUMENT << " — sets the number of sample moments (min: " << std::to_string(Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::S_NUMBER_OF_SAMPLE_MOMENTS_MINIMUM) << ", max: " << std::to_string(Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::S_NUMBER_OF_SAMPLE_MOMENTS_MAXIMUM) << ")" << std::endl;
         std::cout << MUST_MULTIPLY_BY_FACTOR_ARGUMENT << " — multiplies the model count by this factor (for example, Arjun's \"MUST MULTIPLY BY\" factor) (default: 1)" << std::endl;
         std::cout << std::endl;
