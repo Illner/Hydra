@@ -11,8 +11,8 @@
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
 
 int main(int argc, char* argv[]) {
-    Hydra::Other::printBuildType(std::cout);
-    Hydra::Other::printMacros(std::cout);
+    // Hydra::Other::printBuildType(std::cout);
+    // Hydra::Other::printMacros(std::cout);
 
     // Create the log file
     {
