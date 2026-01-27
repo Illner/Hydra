@@ -51,7 +51,7 @@ The compilation takes place in the **`build_cara`** directory. The release binar
 
 ### SAT solver
 
-* <a href="https://github.com/crillab/d4v2" target="_blank"> MiniSat 2.2.0 (d4 version) </a> <br> Hydra/external/satSolvers/MiniSat_d4
+* <a href="https://github.com/crillab/d4v2" target="_blank"> MiniSat 2.2.0 (d4v2 version) </a> <br> Hydra/external/satSolvers/MiniSat_d4
 * <a href="https://github.com/niklasso/minisat" target="_blank"> MiniSat 2.2.0 </a> <br> <i> implemented, not used </i> <br> Hydra/external/satSolvers/MiniSat
 * <a href="https://github.com/arminbiere/cadical" target="_blank"> CaDiCaL 3.0.0 </a> (TBD) <br> Hydra/external/satSolvers/CaDiCaL
 
@@ -64,7 +64,7 @@ The compilation takes place in the **`build_cara`** directory. The release binar
 ### Hypergraph partitioning
 
 * <a href="https://faculty.cc.gatech.edu/~umit/software.html" target="_blank"> PaToH v3.3 </a> <br> <i> used for Linux, and macOS </i> <br> Hydra/external/partitioningHypergraphs/PaToH
-* <a href="http://glaros.dtc.umn.edu/gkhome/metis/hmetis/overview" target="_blank"> hMETIS 1.5 </a> <br> <i> used only for Windows </i> <br> Hydra/external/partitioningHypergraphs/hMETIS
+* <a href="http://glaros.dtc.umn.edu/gkhome/metis/hmetis/overview" target="_blank"> hMETIS 1.5.3 </a> <br> <i> used only for Windows </i> <br> Hydra/external/partitioningHypergraphs/hMETIS
 * <a href="https://kahypar.org/" target="_blank"> KaHyPar v.1.3.3 </a> <br> Hydra/external/partitioningHypergraphs/KaHyPar
 
 ### Other
