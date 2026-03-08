@@ -1,5 +1,7 @@
 # Hydra
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/5bbb68f3dd1f47f180b7523ece4e4148)](https://app.codacy.com/gh/Illner/Hydra/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+
 Hydra is the development repository for the **Bella knowledge compiler** and the **Cara #SAT solver**.
 
 **Supported OS**: Linux, macOS (Intel & Apple Silicon), Windows
