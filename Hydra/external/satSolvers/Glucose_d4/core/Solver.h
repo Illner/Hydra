@@ -471,7 +471,44 @@ namespace glucose {
    * @return true if assign l and propagate does not give a conflict, false otherwise.
    */
         template <typename VectorT>
-        bool decideAndComputeUnit(Lit l, VectorT& units);
+        inline bool decideAndComputeUnit(Lit l, VectorT& units) {
+            assert(units.empty());
+
+            Var v = var(l);
+
+            if (isAssigned(v)) {
+                if (litAssigned(v) != l)
+                    return false;
+
+                return true;
+            }
+
+            int posTrail = trail.size();
+            newDecisionLevel();
+            uncheckedEnqueue(l);
+            CRef confl = propagate();
+
+            if (confl != CRef_Undef)   // unit literal
+            {
+                int bt;
+                vec<Lit> learnt_clause;
+                analyzeLastUIP(confl, learnt_clause, bt);
+                assert(learnt_clause[0] == ~l);
+
+                cancelUntil(decisionLevel() - 1);
+
+                insertClauseAndPropagate(learnt_clause);
+
+                return false;
+            }
+
+            for (int j = posTrail; j < trail.size(); ++j)
+                units.push_back(trail[j]);
+
+            cancelUntil(decisionLevel() - 1);
+
+            return true;
+        }   // decideAndComputeUnit
 
         /**
    * @brief Propagate the assumption.
