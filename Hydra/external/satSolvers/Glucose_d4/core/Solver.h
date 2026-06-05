@@ -463,6 +463,17 @@ public:
   } // solveWithAssumptions
 
   /**
+   * @brief Collect the unit literal from the affectation of the literal l to the formula.
+   *
+   * @param[in] l, the literal we want to branch on.
+   * @param[out] units, the unit literals
+   *
+   * @return true if assign l and propagate does not give a conflict, false otherwise.
+   */
+  template <typename VectorT>
+  bool decideAndComputeUnit(Lit l, VectorT& units);
+
+  /**
    * @brief Propagate the assumption.
    *
    * @return true if no conflict, false otherwise.
