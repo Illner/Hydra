@@ -24,14 +24,14 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
     // Not sure if there are newer versions that support C99 headers. The
     // needed features are implemented in the headers below though:
 
-#   include <sys/int_types.h>
-#   include <sys/int_fmtio.h>
-#   include <sys/int_limits.h>
+    #include <sys/int_fmtio.h>
+    #include <sys/int_limits.h>
+    #include <sys/int_types.h>
 
 #else
-#   define __STDC_FORMAT_MACROS 1
-#   include <stdint.h>
-#   include <inttypes.h>
+    #define __STDC_FORMAT_MACROS 1
+    #include <inttypes.h>
+    #include <stdint.h>
 
 #endif
 
