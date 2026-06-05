@@ -362,8 +362,7 @@ namespace minisat {
             }
 
             // Select next clause to look at:
-            while (!seen[var(trail[index--])])
-                ;
+            while (!seen[var(trail[index--])]);
             p = trail[index + 1];
             confl = reason(var(p));
             seen[var(p)] = 0;
@@ -975,8 +974,7 @@ namespace minisat {
         // Find the finite subsequence that contains index 'x', and the size of that
         // subsequence:
         int size, seq;
-        for (size = 1, seq = 0; size < x + 1; seq++, size = 2 * size + 1)
-            ;
+        for (size = 1, seq = 0; size < x + 1; seq++, size = 2 * size + 1);
 
         while (size - 1 != x) {
             size = (size - 1) >> 1;

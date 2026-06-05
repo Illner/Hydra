@@ -22,23 +22,23 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 
 #if defined(__linux__)
 
-#include <stdio.h>
-#include <stdlib.h>
+    #include <stdio.h>
+    #include <stdlib.h>
 
 using namespace glucose;
 
 // TODO: split the memory reading functions into two: one for reading high-watermark of RSS, and
 // one for reading the current virtual memory size.
 
-static inline int memReadStat(int field)
-{
-    char  name[256];
+static inline int memReadStat(int field) {
+    char name[256];
     pid_t pid = getpid();
-    int   value;
+    int value;
 
     sprintf(name, "/proc/%d/statm", pid);
     FILE* in = fopen(name, "rb");
-    if (in == NULL) return 0;
+    if (in == NULL)
+        return 0;
 
     for (; field >= 0; field--)
         if (fscanf(in, "%d", &value) != 1)
@@ -47,49 +47,50 @@ static inline int memReadStat(int field)
     return value;
 }
 
-
-static inline int memReadPeak(void)
-{
-    char  name[256];
+static inline int memReadPeak(void) {
+    char name[256];
     pid_t pid = getpid();
 
     sprintf(name, "/proc/%d/status", pid);
     FILE* in = fopen(name, "rb");
-    if (in == NULL) return 0;
+    if (in == NULL)
+        return 0;
 
     // Find the correct line, beginning with "VmPeak:":
     int peak_kb = 0;
     while (!feof(in) && fscanf(in, "VmPeak: %d kB", &peak_kb) != 1)
-        while (!feof(in) && fgetc(in) != '\n')
-            ;
+        while (!feof(in) && fgetc(in) != '\n');
     fclose(in);
 
     return peak_kb;
 }
 
-double glucose::memUsed() { return (double)memReadStat(0) * (double)getpagesize() / (1024*1024); }
+double glucose::memUsed() { return (double)memReadStat(0) * (double)getpagesize() / (1024 * 1024); }
 double glucose::memUsedPeak() {
     double peak = memReadPeak() / 1024;
-    return peak == 0 ? memUsed() : peak; }
+    return peak == 0 ? memUsed() : peak;
+}
 
 #elif defined(__FreeBSD__)
 
 double glucose::memUsed(void) {
     struct rusage ru;
     getrusage(RUSAGE_SELF, &ru);
-    return (double)ru.ru_maxrss / 1024; }
+    return (double)ru.ru_maxrss / 1024;
+}
 double MiniSat::memUsedPeak(void) { return memUsed(); }
 
-
 #elif defined(__APPLE__)
-#include <malloc/malloc.h>
+    #include <malloc/malloc.h>
 
 double glucose::memUsed(void) {
     malloc_statistics_t t;
     malloc_zone_statistics(NULL, &t);
-    return (double)t.max_size_in_use / (1024*1024); }
+    return (double)t.max_size_in_use / (1024 * 1024);
+}
 
 #else
 double glucose::memUsed() {
-    return 0; }
+    return 0;
+}
 #endif
