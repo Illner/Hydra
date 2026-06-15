@@ -9,6 +9,7 @@
 #include "Hydra/Hydra.hpp"
 #include "Hydra/other/Other.hpp"
 
+#include "Hydra/compiler/exceptions/ParserException.hpp"
 #include "Hydra/formula/exceptions/FormulaRepresentationException.hpp"
 
 using MpzIntType = Cara::CommandLineArguments::MpzIntType;
@@ -53,6 +54,14 @@ int main(int argc, char* argv[]) {
             MpzIntType numberOfModels = MpzIntType(1) << commandLineArgumentsStruct.numberOfVariables;   // 2^|V|
             numberOfModels *= commandLineArgumentsStruct.mustMultiplyByFactor;
 
+            printModelCountingOutputForModelCountingCompetition(numberOfModels);
+        }
+        // There is an empty clause
+        catch (const Hydra::Exception::Parser::ClauseIsEmptyException& e) {
+            modifyConfigurationAfterParsingFormula(commandLineArgumentsStruct);
+            printConfigurationBeforeCompilation(commandLineArgumentsStruct);
+
+            MpzIntType numberOfModels = MpzIntType(0);
             printModelCountingOutputForModelCountingCompetition(numberOfModels);
         }
     }
