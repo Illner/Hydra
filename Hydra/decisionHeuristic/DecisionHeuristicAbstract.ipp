@@ -15,6 +15,8 @@ namespace Hydra::DecisionHeuristic {
             decisionHeuristicStatisticsPtr_->numberOfPreselectedVariablesCounter.addCount(static_cast<Statistics::LargeNumberType>(selectedVariableSet.size()));
         }
 
+        satSolverAbstractPtr_->getDecisionVariableIsCalled();
+
         // No restriction is needed
         if (!removeIgnoredPureVariables || (ignorePureLiteralType_ == IgnorePureLiteralTypeEnum::NONE)) {
             #ifndef NDEBUG

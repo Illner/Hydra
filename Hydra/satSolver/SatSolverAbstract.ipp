@@ -44,6 +44,10 @@ namespace Hydra::SatSolver {
 
         processComputeAndSetInitiallyImpliedLiterals();
 
+        #ifndef NDEBUG
+        std::sort(initiallyImpliedLiterals_.begin(), initiallyImpliedLiterals_.end());
+        #endif
+
         // Statistics
         if (satSolverStatisticsPtr_) {
             satSolverStatisticsPtr_->numberOfInitiallyImpliedLiteralsNumber.setNumber(static_cast<Statistics::LargeNumberType>(initiallyImpliedLiterals_.size()));

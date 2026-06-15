@@ -58,6 +58,8 @@ namespace Hydra::SatSolver::Cadical {
 
         bool isVariableAssigned(VarT variable) const override;
 
+        void getDecisionVariableIsCalled() override;
+
     public:
         VsidsScoreType getVsidsScore(VarT variable) const override;
 

@@ -81,23 +81,12 @@ namespace Hydra::SatSolver::MiniSat {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     void MiniSatSolver<VarT, LiteralT, ClauseIdT>::processComputeAndSetInitiallyImpliedLiterals() {
-        int numberOfAssignedLiterals = solver_.nAssigns();
-        this->initiallyImpliedLiterals_.reserve(static_cast<typename LiteralVectorType::size_type>(numberOfAssignedLiterals));
+        this->initiallyImpliedLiterals_.reserve(static_cast<typename LiteralVectorType::size_type>(solver_.nAssigns()));
 
-        for (int i = 0; i < solver_.nVars(); ++i) {
-            if (static_cast<int>(this->initiallyImpliedLiterals_.size()) == numberOfAssignedLiterals)
-                break;
+        for (int i = 0; i < solver_.trail.size(); ++i) {
+            const minisat::Lit& litMiniSat = solver_.trail[i];
 
-            minisat::Var var = static_cast<minisat::Var>(i);
-            minisat::lbool value = solver_.value(var);
-
-            // The variable is assigned
-            if (!lboolIsUndef(value)) {
-                if (lboolIsTrue(value))
-                    this->initiallyImpliedLiterals_.emplace_back(convertVariableMiniSatToVariable(var), true);
-                else
-                    this->initiallyImpliedLiterals_.emplace_back(convertVariableMiniSatToVariable(var), false);
-            }
+            this->initiallyImpliedLiterals_.emplace_back(convertLiteralMiniSatToLiteral(litMiniSat));
         }
     }
 
@@ -135,13 +124,12 @@ namespace Hydra::SatSolver::MiniSat {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     bool MiniSatSolver<VarT, LiteralT, ClauseIdT>::processIsSatisfiable(const VariableSetType& restrictedVariableSet) {
-        minisat::vec<minisat::Var> restrictedVariableMiniSatVector;
-        restrictedVariableMiniSatVector.capacity(restrictedVariableSet.size());
+        l_restrictedVariableMiniSatVector_processIsSatisfiable_.clear();
 
         for (VarT var : restrictedVariableSet)
-            restrictedVariableMiniSatVector.push(convertVariableToVariableMiniSat(var));
+            l_restrictedVariableMiniSatVector_processIsSatisfiable_.push(convertVariableToVariableMiniSat(var));
 
-        solver_.rebuildWithConnectedComponent(std::move(restrictedVariableMiniSatVector));
+        solver_.rebuildWithConnectedComponent(l_restrictedVariableMiniSatVector_processIsSatisfiable_);
 
         activeModel_ = solver_.solveWithAssumptions();
         return activeModel_;
@@ -248,6 +236,22 @@ namespace Hydra::SatSolver::MiniSat {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
+    void MiniSatSolver<VarT, LiteralT, ClauseIdT>::getDecisionVariableIsCalled() {
+        ++numberOfGetDecisionVariableCalls_;
+
+        // D4v2
+        if (configuration_.vsidsScoreType == VsidsScoreTypeEnum::D4_V2) {
+            // Decay the variable scores
+            if (configuration_.frequencyDecayD4v2VsidsScore && !(numberOfGetDecisionVariableCalls_ % configuration_.frequencyDecayD4v2VsidsScore)) {
+                numberOfGetDecisionVariableCalls_ = 0;   // reset
+
+                for (int i = 0; i < solver_.scoreActivityD4v2.size(); ++i)
+                    solver_.scoreActivityD4v2[i] /= 2;
+            }
+        }
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
     VsidsScoreType MiniSatSolver<VarT, LiteralT, ClauseIdT>::getVsidsScore(VarT variable) const {
         switch (configuration_.vsidsScoreType) {
             // D4
@@ -270,6 +274,8 @@ namespace Hydra::SatSolver::MiniSat {
     void MiniSatSolver<VarT, LiteralT, ClauseIdT>::processPrintSatSolverDebug(std::ostream& out, bool printCoreSatSolver, bool printLearntClauses) const {
         // Configuration
         out << "VSIDS score type: " << vsidsScoreTypeEnumToString(configuration_.vsidsScoreType) << std::endl;
+        if (configuration_.vsidsScoreType == VsidsScoreTypeEnum::D4_V2)
+            out << "Frequency decay for VSIDS score: " << std::to_string(configuration_.frequencyDecayD4v2VsidsScore) << std::endl;
 
         out << "Assumption:";
         for (int i = 0; i < solver_.assumptions.size(); ++i)

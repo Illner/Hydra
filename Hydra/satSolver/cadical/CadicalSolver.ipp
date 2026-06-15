@@ -61,6 +61,11 @@ namespace Hydra::SatSolver::Cadical {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
+    void CadicalSolver<VarT, LiteralT, ClauseIdT>::getDecisionVariableIsCalled() {
+        throw Exception::NotImplementedException("", "getDecisionVariableIsCalled");
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
     VsidsScoreType CadicalSolver<VarT, LiteralT, ClauseIdT>::getVsidsScore([[maybe_unused]] VarT variable) const {
         throw Exception::NotImplementedException("", "getVsidsScore");
     }

@@ -211,6 +211,7 @@ namespace Bella::CommandLineArguments {
         commandLineArgumentsStruct.compilerConfiguration.useEquivalenceSimplificationMethod = Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, EQUIVALENCE_SIMPLIFICATION_METHOD_ARGUMENT);
 
         // SAT solver
+        commandLineArgumentsStruct.compilerConfiguration.satSolverType = Hydra::SatSolver::SatSolverTypeEnum::MINISAT;
         commandLineArgumentsStruct.compilerConfiguration.miniSatSolverConfiguration.vsidsScoreType = Hydra::SatSolver::MiniSat::VsidsScoreTypeEnum::D4_V2;
 
         // Component caching

@@ -37,7 +37,6 @@ namespace Hydra::SatSolver::MiniSat {
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     class MiniSatSolver final : public SatSolverAbstract<VarT, LiteralT, ClauseIdT> {
     private:
-        using LiteralMiniSatVectorType = typename minisat::vec<minisat::Lit>;
         using LiteralType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
         using VariableSetType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::VariableSetType;
         using LiteralVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralVectorType;
@@ -49,6 +48,8 @@ namespace Hydra::SatSolver::MiniSat {
     private:
         using BoolVectorType = std::vector<bool>;
         using MiniSatSolverType = minisat::Solver;
+        using LiteralMiniSatVectorType = minisat::vec<minisat::Lit>;
+        using VariableMiniSatVectorType = minisat::vec<minisat::Var>;
         using LiteralMiniSatReusableVectorType = Container::ReusableVector::ReusableVector<minisat::Lit>;
 
     public:
@@ -58,7 +59,9 @@ namespace Hydra::SatSolver::MiniSat {
             : SatSolverAbstract<VarT, LiteralT, ClauseIdT>(formulaRepresentationAbstractPtr, SatSolverTypeEnum::MINISAT, satSolverStatisticsPtr),
               activeModel_(false), solver_(),
               variableAssumptionVector_(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormulaUsedForIndexing(), false),
-              configuration_(configuration), l_firstCall_unitPropagation_(true), l_impliedLiteralMiniSatReusableVector_unitPropagation_() {
+              numberOfGetDecisionVariableCalls_(0), configuration_(configuration),
+              l_restrictedVariableMiniSatVector_processIsSatisfiable_(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula()),
+              l_firstCall_unitPropagation_(true), l_impliedLiteralMiniSatReusableVector_unitPropagation_() {
             // The variables cannot be saved as std::size_t
             if (!Other::unsignedValueCanBeSavedAsStdSizeT<VarT>(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula(), 1))
                 throw Exception::SomethingCannotBeSavedAsStdSizeTException("variables", this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
@@ -88,8 +91,12 @@ namespace Hydra::SatSolver::MiniSat {
         bool activeModel_;
         MiniSatSolverType solver_;
         BoolVectorType variableAssumptionVector_;
+        LargeNumberType numberOfGetDecisionVariableCalls_;
 
         MiniSatSolverConfiguration configuration_;
+
+        // Local auxiliary data structures for processIsSatisfiable
+        VariableMiniSatVectorType l_restrictedVariableMiniSatVector_processIsSatisfiable_;
 
         // Local auxiliary data structures for unitPropagation
         bool l_firstCall_unitPropagation_;
@@ -130,6 +137,8 @@ namespace Hydra::SatSolver::MiniSat {
                              LiteralReusableVectorType& impliedLiteralReusableVector) override;
 
         bool isVariableAssigned(VarT variable) const override;
+
+        void getDecisionVariableIsCalled() override;
 
     public:
         VsidsScoreType getVsidsScore(VarT variable) const override;

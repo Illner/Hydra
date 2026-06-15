@@ -597,7 +597,7 @@ namespace minisat {
 
         for (int i = trail.size() - 1; i >= trail_lim[0]; i--) {
             Var x = var(trail[i]);
-            scoreActivityD4v2[x]++;   // CHANGED
+            ++scoreActivityD4v2[x];   // CHANGED
             if (seen[x]) {
                 if (reason(x) == CRef_Undef) {
                     assert(level(x) > 0);

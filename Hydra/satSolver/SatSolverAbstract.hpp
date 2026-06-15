@@ -217,6 +217,12 @@ namespace Hydra::SatSolver {
         const LiteralReusableVectorType& getImpliedLiteralReusableVectorFromPreviousCallOfUnitPropagation() const;
 
         /**
+         * The function is invoked when "getDecisionVariable" is called
+         * Note: used for decays
+         */
+        virtual void getDecisionVariableIsCalled() = 0;
+
+        /**
          * @param variable a variable
          * @return the VSIDS score of the variable
          * @throw SatSolverDoesNotSupportVsidsException if the SAT solver does not support VSIDS

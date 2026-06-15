@@ -763,14 +763,12 @@ namespace minisat {
             rebuildOrderHeap();
         }   // rebuildWithAllVar
 
-        inline void rebuildWithConnectedComponent(vec<Var>&& v) {
+        inline void rebuildWithConnectedComponent(vec<Var>& v) {
+            v.copyTo(problemVariable);
             ++stampInTheHeap;
             for (int j = 0; j < v.size(); ++j)
                 if (value(v[j]) == l_Undef)
                     inTheHeap[v[j]] = stampInTheHeap;
-
-            v.moveTo(problemVariable);
-
             rebuildOrderHeap();
         }   // rebuidWithConnectedComponent
 
