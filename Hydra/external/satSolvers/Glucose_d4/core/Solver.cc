@@ -1347,7 +1347,7 @@ lbool Solver::search(int nof_conflicts) {
                 next = pickBranchLit();
 
                 if (next == lit_Undef) {
-                    if (verbosity >= 1)
+                    if (verbosity > 0)
                         printf("c last restart ## conflicts  :  %d %d \n", conflictC,
                                decisionLevel());
                     // Model found:
