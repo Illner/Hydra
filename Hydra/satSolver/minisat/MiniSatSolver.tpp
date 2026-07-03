@@ -16,7 +16,7 @@ namespace Hydra::SatSolver::MiniSat {
         /**
          * VSIDS score type
          */
-        VsidsScoreTypeEnum vsidsScoreType = VsidsScoreTypeEnum::D4;
+        VsidsScoreTypeEnum vsidsScoreType = VsidsScoreTypeEnum::MINISAT;
 
         /**
          * Frequency decay for D4v2 VSIDS score
