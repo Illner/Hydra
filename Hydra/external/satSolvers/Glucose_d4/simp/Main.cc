@@ -94,7 +94,7 @@ int main(int argc, char** argv) {
 
         setUsageHelp("c USAGE: %s [options] <input-file> <result-output-file>\n\n  where input may be either in plain or gzipped DIMACS.\n");
 
-#if defined(__linux__)
+#if defined(__linux__) && defined(__GLIBC__) && (defined(__i386__) || defined(__x86_64__))
         fpu_control_t oldcw, newcw;
         _FPU_GETCW(oldcw);
         newcw = (oldcw & ~_FPU_EXTENDED) | _FPU_DOUBLE;
