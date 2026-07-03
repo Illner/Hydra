@@ -437,8 +437,8 @@ namespace glucose {
 
         inline void rebuildWithConnectedComponent(vec<Var>& v) {
             v.copyTo(problemVariable);
-            stampInTheHeap++;
-            for (int j = 0; j < v.size(); j++)
+            ++stampInTheHeap;
+            for (int j = 0; j < v.size(); ++j)
                 if (value(v[j]) == l_Undef)
                     inTheHeap[v[j]] = stampInTheHeap;
             rebuildOrderHeap();
