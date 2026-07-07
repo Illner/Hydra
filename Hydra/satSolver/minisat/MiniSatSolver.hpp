@@ -139,7 +139,6 @@ namespace Hydra::SatSolver::MiniSat {
 
         void getDecisionVariableIsCalled() override;
 
-    public:
         VsidsScoreType getVsidsScore(VarT variable) const override;
 
     #ifndef NDEBUG
@@ -150,13 +149,13 @@ namespace Hydra::SatSolver::MiniSat {
          * Print the assumptions
          * Note: prefix
          */
-        void printAssumptions(std::ostream& out) const;
+        void printAssumptionsDebug(std::ostream& out) const;
 
         /**
          * Print the current formula
          * Note: prefix
          */
-        void printCurrentFormula(std::ostream& out, bool printLearntClauses = false) const;
+        void printCurrentFormulaDebug(std::ostream& out, bool printLearntClauses = false) const;
     #endif
     };
 }   // namespace Hydra::SatSolver::MiniSat

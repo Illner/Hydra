@@ -301,12 +301,12 @@ namespace Hydra::SatSolver::MiniSat {
             out << "Number of learnt clauses: " << std::to_string(solver_.nLearnts()) << std::endl;
         out << "Number of assigned literals: " << std::to_string(solver_.nAssigns()) << std::endl;
 
-        printAssumptions(out);
-        printCurrentFormula(out, printLearntClauses);
+        printAssumptionsDebug(out);
+        printCurrentFormulaDebug(out, printLearntClauses);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    void MiniSatSolver<VarT, LiteralT, ClauseIdT>::printAssumptions(std::ostream& out) const {
+    void MiniSatSolver<VarT, LiteralT, ClauseIdT>::printAssumptionsDebug(std::ostream& out) const {
         out << "Assumptions: ";
 
         for (int i = 0; i < solver_.assumptions.size(); ++i) {
@@ -320,7 +320,7 @@ namespace Hydra::SatSolver::MiniSat {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    void MiniSatSolver<VarT, LiteralT, ClauseIdT>::printCurrentFormula(std::ostream& out, bool printLearntClauses) const {
+    void MiniSatSolver<VarT, LiteralT, ClauseIdT>::printCurrentFormulaDebug(std::ostream& out, bool printLearntClauses) const {
         out << "Current formula: ";
 
         for (int i = 0; i < solver_.clauses.size(); ++i) {
