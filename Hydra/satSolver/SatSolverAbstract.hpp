@@ -4,6 +4,7 @@
 #include <cassert>
 #include <iostream>
 #include <utility>
+#include <vector>
 
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
@@ -54,6 +55,9 @@ namespace Hydra::SatSolver {
 
     public:
         using EquivalencePreprocessingStruct = SatSolver::EquivalencePreprocessingStruct<VarT, LiteralT>;
+
+    protected:
+        using BoolVectorType = std::vector<bool>;
 
     private:
         using VariableReusableVectorType = typename Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableReusableVectorType;

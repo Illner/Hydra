@@ -3,7 +3,6 @@
 #include <cassert>
 #include <iostream>
 #include <string>
-#include <vector>
 
 #include "Hydra/external/satSolvers/MiniSat_d4/Solver.hpp"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
@@ -38,6 +37,7 @@ namespace Hydra::SatSolver::MiniSat {
     class MiniSatSolver final : public SatSolverAbstract<VarT, LiteralT, ClauseIdT> {
     private:
         using LiteralType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
+        using BoolVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::BoolVectorType;
         using VariableSetType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::VariableSetType;
         using LiteralVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralVectorType;
         using VariableVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::VariableVectorType;
@@ -46,7 +46,6 @@ namespace Hydra::SatSolver::MiniSat {
         using FormulaRepresentationAbstractPtrType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::FormulaRepresentationAbstractPtrType;
 
     private:
-        using BoolVectorType = std::vector<bool>;
         using MiniSatSolverType = minisat::Solver;
         using LiteralMiniSatVectorType = minisat::vec<minisat::Lit>;
         using VariableMiniSatVectorType = minisat::vec<minisat::Var>;
