@@ -102,14 +102,14 @@ namespace Hydra::SatSolver::MiniSat {
         LiteralMiniSatReusableVectorType l_impliedLiteralMiniSatReusableVector_unitPropagation_;
 
     private:
-        bool lboolIsTrue(const minisat::lbool& b) const;
-        bool lboolIsFalse(const minisat::lbool& b) const;
-        bool lboolIsUndef(const minisat::lbool& b) const;
+        static bool lboolIsTrue(const minisat::lbool& b);
+        static bool lboolIsFalse(const minisat::lbool& b);
+        static bool lboolIsUndef(const minisat::lbool& b);
 
-        minisat::Var convertVariableToVariableMiniSat(VarT variable) const;
-        VarT convertVariableMiniSatToVariable(minisat::Var variableMiniSat) const;
-        minisat::Lit convertLiteralToLiteralMiniSat(const LiteralType& literal) const;
-        LiteralType convertLiteralMiniSatToLiteral(const minisat::Lit& literalMiniSat) const;
+        static minisat::Var convertVariableToVariableMiniSat(VarT variable);
+        static VarT convertVariableMiniSatToVariable(minisat::Var variableMiniSat);
+        static minisat::Lit convertLiteralToLiteralMiniSat(const LiteralType& literal);
+        static LiteralType convertLiteralMiniSatToLiteral(const minisat::Lit& literalMiniSat);
 
         /**
          * Initialize the SAT solver

@@ -5,42 +5,42 @@
 namespace Hydra::SatSolver::MiniSat {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool MiniSatSolver<VarT, LiteralT, ClauseIdT>::lboolIsTrue(const minisat::lbool& b) const {
+    bool MiniSatSolver<VarT, LiteralT, ClauseIdT>::lboolIsTrue(const minisat::lbool& b) {
         return b == minisat::l_True;
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool MiniSatSolver<VarT, LiteralT, ClauseIdT>::lboolIsFalse(const minisat::lbool& b) const {
+    bool MiniSatSolver<VarT, LiteralT, ClauseIdT>::lboolIsFalse(const minisat::lbool& b) {
         return b == minisat::l_False;
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool MiniSatSolver<VarT, LiteralT, ClauseIdT>::lboolIsUndef(const minisat::lbool& b) const {
+    bool MiniSatSolver<VarT, LiteralT, ClauseIdT>::lboolIsUndef(const minisat::lbool& b) {
         return b == minisat::l_Undef;
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    minisat::Var MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertVariableToVariableMiniSat(VarT variable) const {
+    minisat::Var MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertVariableToVariableMiniSat(VarT variable) {
         assert(variable > 0);   // valid variable
 
         return static_cast<minisat::Var>(variable - 1);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    VarT MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertVariableMiniSatToVariable(minisat::Var variableMiniSat) const {
+    VarT MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertVariableMiniSatToVariable(minisat::Var variableMiniSat) {
         assert(variableMiniSat >= 0);   // valid variable
 
         return static_cast<VarT>(variableMiniSat + 1);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    minisat::Lit MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertLiteralToLiteralMiniSat(const LiteralType& literal) const {
+    minisat::Lit MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertLiteralToLiteralMiniSat(const LiteralType& literal) {
         return minisat::mkLit(convertVariableToVariableMiniSat(literal.getVariable()), literal.isNegative());
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     typename MiniSatSolver<VarT, LiteralT, ClauseIdT>::LiteralType
-    MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertLiteralMiniSatToLiteral(const minisat::Lit& literalMiniSat) const {
+    MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertLiteralMiniSatToLiteral(const minisat::Lit& literalMiniSat) {
         return LiteralType(convertVariableMiniSatToVariable(minisat::var(literalMiniSat)), !minisat::sign(literalMiniSat));
     }
 
@@ -143,7 +143,7 @@ namespace Hydra::SatSolver::MiniSat {
         // The current formula is satisfiable
         if (solver_.propagateAssumption()) {
             // Iterating trail
-            if (solver_.trail.size() < (int)restrictedVariableSet.size()) {
+            if (solver_.trail.size() < static_cast<int>(restrictedVariableSet.size())) {
                 for (int i = 0; i < solver_.trail.size(); ++i) {
                     const minisat::Lit& litMiniSat = solver_.trail[i];
 
