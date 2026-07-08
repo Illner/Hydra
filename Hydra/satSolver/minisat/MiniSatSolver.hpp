@@ -40,7 +40,6 @@ namespace Hydra::SatSolver::MiniSat {
         using BoolVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::BoolVectorType;
         using VariableSetType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::VariableSetType;
         using LiteralVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralVectorType;
-        using VariableVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::VariableVectorType;
         using LiteralReusableVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralReusableVectorType;
         using SatSolverStatisticsPtrType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::SatSolverStatisticsPtrType;
         using FormulaRepresentationAbstractPtrType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::FormulaRepresentationAbstractPtrType;
