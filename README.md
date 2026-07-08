@@ -52,6 +52,7 @@ The compilation takes place in the **`build_cara`** directory. The release binar
 ### SAT solver
 
 * <a href="https://github.com/crillab/d4v2" target="_blank"> MiniSat 2.2.0 (d4v2 version) </a> <br> Hydra/external/satSolvers/MiniSat_d4
+* <a href="https://github.com/crillab/d4v2" target="_blank"> Glucose 3.0 (d4v2 version) </a> <br> Hydra/external/satSolvers/Glucose_d4  
 * <a href="https://github.com/niklasso/minisat" target="_blank"> MiniSat 2.2.0 </a> <br> <i> implemented, not used </i> <br> Hydra/external/satSolvers/MiniSat
 * <a href="https://github.com/arminbiere/cadical" target="_blank"> CaDiCaL 3.0.0 </a> (TBD) <br> Hydra/external/satSolvers/CaDiCaL
 
