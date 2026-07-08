@@ -69,13 +69,9 @@ namespace Hydra::SatSolver::MiniSat {
             if (!Other::unsignedValueCanBeSavedAsInt<LiteralT>(this->formulaRepresentationAbstractPtr_->getNumberOfLiteralsInOriginalFormula()))
                 throw Exception::SomethingCannotBeSavedAsIntException("literals", this->formulaRepresentationAbstractPtr_->getNumberOfLiteralsInOriginalFormula());
 
-            // The clauses cannot be saved as int
-            if (!Other::unsignedValueCanBeSavedAsInt<ClauseIdT>(this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses()))
-                throw Exception::SomethingCannotBeSavedAsIntException("clauses", this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses());
-
-            // The formula size cannot be saved as int
-            if (!Other::unsignedValueCanBeSavedAsInt<FormulaSizeType>(this->formulaRepresentationAbstractPtr_->getOriginalFormulaSize()))
-                throw Exception::SomethingCannotBeSavedAsIntException("formula size", this->formulaRepresentationAbstractPtr_->getOriginalFormulaSize());
+            // The clauses cannot be saved as std::size_t
+            if (!Other::unsignedValueCanBeSavedAsStdSizeT<ClauseIdT>(this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses()))
+                throw Exception::SomethingCannotBeSavedAsStdSizeTException("clauses", this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses());
 
             this->initializeSatSolver();
 
