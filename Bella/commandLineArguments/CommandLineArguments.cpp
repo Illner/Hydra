@@ -345,7 +345,7 @@ namespace Bella::CommandLineArguments {
         // Cara
         if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CARA_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT)) {
             if (exists)
-                throw Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
+                throw Hydra::Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
 
             exists = true;
             partitioningHypergraphType = Hydra::PartitioningHypergraphTypeEnum::CARA;
@@ -354,7 +354,7 @@ namespace Bella::CommandLineArguments {
         // PaToH or hMETIS
         if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, PATOH_HMETIS_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT)) {
             if (exists)
-                throw Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
+                throw Hydra::Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
 
             exists = true;
             partitioningHypergraphType = Hydra::PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
@@ -362,7 +362,7 @@ namespace Bella::CommandLineArguments {
 
         // No partitioning hypergraph type is mentioned
         if (!exists)
-            throw Exception::CommandLineArguments::NoPartitioningHypergraphTypeIsMentionedException();
+            throw Hydra::Exception::CommandLineArguments::NoPartitioningHypergraphTypeIsMentionedException();
 
         return partitioningHypergraphType;
     }

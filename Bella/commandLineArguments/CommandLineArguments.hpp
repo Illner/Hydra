@@ -5,6 +5,9 @@
 #include "Hydra/other/parser/CommandLineArgumentsParser.hpp"
 #include "Hydra/other/version/Version.hpp"
 
+#include "Bella/commandLineArguments/exceptions/CommandLineArgumentsException.hpp"
+#include "Hydra/other/parser/exceptions/CommandLineArgumentsParserException.hpp"
+
 #include "Hydra/compiler/Compiler.tpp"
 
 namespace Bella::CommandLineArguments {

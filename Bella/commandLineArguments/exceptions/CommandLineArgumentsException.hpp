@@ -2,117 +2,99 @@
 
 #include <string>
 
-#include "Hydra/other/parser/exceptions/CommandLineArgumentsParserException.hpp"
+#include "Hydra/compiler/exceptions/CommandLineArgumentsException.hpp"
 
 namespace Bella::Exception::CommandLineArguments {
 
-    using CommandLineArgumentsParserException = Hydra::Exception::Other::Parser::CommandLineArguments::CommandLineArgumentsParserException;
+    using CommandLineArgumentsException = Hydra::Exception::CommandLineArguments::CommandLineArgumentsException;
 
     /**
      * Timeout is not a number
      */
-    class TimeoutIsNotNumberException : public CommandLineArgumentsParserException {
+    class TimeoutIsNotNumberException : public CommandLineArgumentsException {
     public:
         explicit TimeoutIsNotNumberException(const std::string& timeoutString)
-            : CommandLineArgumentsParserException("The timeout is not a number (" + timeoutString + ")!") { }
+            : CommandLineArgumentsException("The timeout is not a number (" + timeoutString + ")!") { }
     };
 
     /**
      * More circuit types are mentioned
      */
-    class MoreCircuitTypesAreMentionedException : public CommandLineArgumentsParserException {
+    class MoreCircuitTypesAreMentionedException : public CommandLineArgumentsException {
     public:
         MoreCircuitTypesAreMentionedException()
-            : CommandLineArgumentsParserException("More circuit types are mentioned!") { }
-    };
-
-    /**
-     * More partitioning hypergraph types are mentioned
-     */
-    class MorePartitioningHypergraphTypesAreMentionedException : public CommandLineArgumentsParserException {
-    public:
-        MorePartitioningHypergraphTypesAreMentionedException()
-            : CommandLineArgumentsParserException("More partitioning hypergraph types are mentioned!") { }
-    };
-
-    /**
-     * More decision heuristics are mentioned
-     */
-    class MoreDecisionHeuristicsAreMentionedException : public CommandLineArgumentsParserException {
-    public:
-        MoreDecisionHeuristicsAreMentionedException()
-            : CommandLineArgumentsParserException("More decision heuristics are mentioned!") { }
-    };
-
-    /**
-     * More component caching schemes are mentioned
-     */
-    class MoreComponentCachingSchemesAreMentionedException : public CommandLineArgumentsParserException {
-    public:
-        MoreComponentCachingSchemesAreMentionedException()
-            : CommandLineArgumentsParserException("More component caching schemes are mentioned!") { }
-    };
-
-    /**
-     * More component cache cleaning strategies are mentioned
-     */
-    class MoreComponentCacheCleaningStrategiesAreMentionedException : public CommandLineArgumentsParserException {
-    public:
-        MoreComponentCacheCleaningStrategiesAreMentionedException()
-            : CommandLineArgumentsParserException("More component cache cleaning strategies are mentioned!") { }
-    };
-
-    /**
-     * More hypergraph cut caching schemes are mentioned
-     */
-    class MoreHypergraphCutCachingSchemesAreMentionedException : public CommandLineArgumentsParserException {
-    public:
-        MoreHypergraphCutCachingSchemesAreMentionedException()
-            : CommandLineArgumentsParserException("More hypergraph cut caching schemes are mentioned!") { }
-    };
-
-    /**
-     * More hypergraph cut cache cleaning strategies are mentioned
-     */
-    class MoreHypergraphCutCacheCleaningStrategiesAreMentionedException : public CommandLineArgumentsParserException {
-    public:
-        MoreHypergraphCutCacheCleaningStrategiesAreMentionedException()
-            : CommandLineArgumentsParserException("More hypergraph cut cache cleaning strategies are mentioned!") { }
-    };
-
-    /**
-     * More hypergraph node weight types are mentioned
-     */
-    class MoreHypergraphNodeWeightTypesAreMentionedException : public CommandLineArgumentsParserException {
-    public:
-        MoreHypergraphNodeWeightTypesAreMentionedException()
-            : CommandLineArgumentsParserException("More hypergraph node weight types are mentioned!") { }
-    };
-
-    /**
-     * More recomputing hypergraph cut types are mentioned
-     */
-    class MoreRecomputingHypergraphCutTypesAreMentionedException : public CommandLineArgumentsParserException {
-    public:
-        MoreRecomputingHypergraphCutTypesAreMentionedException()
-            : CommandLineArgumentsParserException("More recomputing hypergraph cut types are mentioned!") { }
+            : CommandLineArgumentsException("More circuit types are mentioned!") { }
     };
 
     /**
      * No circuit type is mentioned
      */
-    class NoCircuitTypeIsMentionedException : public CommandLineArgumentsParserException {
+    class NoCircuitTypeIsMentionedException : public CommandLineArgumentsException {
     public:
         NoCircuitTypeIsMentionedException()
-            : CommandLineArgumentsParserException("No circuit type is mentioned!") { }
+            : CommandLineArgumentsException("No circuit type is mentioned!") { }
     };
 
     /**
-     * No partitioning hypergraph type is mentioned
+     * More decision heuristics are mentioned
      */
-    class NoPartitioningHypergraphTypeIsMentionedException : public CommandLineArgumentsParserException {
+    class MoreDecisionHeuristicsAreMentionedException : public CommandLineArgumentsException {
     public:
-        NoPartitioningHypergraphTypeIsMentionedException()
-            : CommandLineArgumentsParserException("No partitioning hypergraph type is mentioned!") { }
+        MoreDecisionHeuristicsAreMentionedException()
+            : CommandLineArgumentsException("More decision heuristics are mentioned!") { }
+    };
+
+    /**
+     * More component caching schemes are mentioned
+     */
+    class MoreComponentCachingSchemesAreMentionedException : public CommandLineArgumentsException {
+    public:
+        MoreComponentCachingSchemesAreMentionedException()
+            : CommandLineArgumentsException("More component caching schemes are mentioned!") { }
+    };
+
+    /**
+     * More component cache cleaning strategies are mentioned
+     */
+    class MoreComponentCacheCleaningStrategiesAreMentionedException : public CommandLineArgumentsException {
+    public:
+        MoreComponentCacheCleaningStrategiesAreMentionedException()
+            : CommandLineArgumentsException("More component cache cleaning strategies are mentioned!") { }
+    };
+
+    /**
+     * More hypergraph cut caching schemes are mentioned
+     */
+    class MoreHypergraphCutCachingSchemesAreMentionedException : public CommandLineArgumentsException {
+    public:
+        MoreHypergraphCutCachingSchemesAreMentionedException()
+            : CommandLineArgumentsException("More hypergraph cut caching schemes are mentioned!") { }
+    };
+
+    /**
+     * More hypergraph cut cache cleaning strategies are mentioned
+     */
+    class MoreHypergraphCutCacheCleaningStrategiesAreMentionedException : public CommandLineArgumentsException {
+    public:
+        MoreHypergraphCutCacheCleaningStrategiesAreMentionedException()
+            : CommandLineArgumentsException("More hypergraph cut cache cleaning strategies are mentioned!") { }
+    };
+
+    /**
+     * More hypergraph node weight types are mentioned
+     */
+    class MoreHypergraphNodeWeightTypesAreMentionedException : public CommandLineArgumentsException {
+    public:
+        MoreHypergraphNodeWeightTypesAreMentionedException()
+            : CommandLineArgumentsException("More hypergraph node weight types are mentioned!") { }
+    };
+
+    /**
+     * More recomputing hypergraph cut types are mentioned
+     */
+    class MoreRecomputingHypergraphCutTypesAreMentionedException : public CommandLineArgumentsException {
+    public:
+        MoreRecomputingHypergraphCutTypesAreMentionedException()
+            : CommandLineArgumentsException("More recomputing hypergraph cut types are mentioned!") { }
     };
 }   // namespace Bella::Exception::CommandLineArguments

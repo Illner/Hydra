@@ -7,6 +7,9 @@
 #include "Hydra/other/parser/CommandLineArgumentsParser.hpp"
 #include "Hydra/other/version/Version.hpp"
 
+#include "Cara/commandLineArguments/exceptions/CommandLineArgumentsException.hpp"
+#include "Hydra/other/parser/exceptions/CommandLineArgumentsParserException.hpp"
+
 #include "Hydra/compiler/Compiler.tpp"
 
 namespace Cara::CommandLineArguments {
