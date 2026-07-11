@@ -44,6 +44,7 @@
 #include "Hydra/satSolver/EquivalencePreprocessingStructure.hpp"
 #include "Hydra/satSolver/SatSolverAbstract.hpp"
 #include "Hydra/satSolver/cadical/CadicalSolver.hpp"
+#include "Hydra/satSolver/glucose/GlucoseSolver.hpp"
 #include "Hydra/satSolver/minisat/MiniSatSolver.hpp"
 #include "Hydra/statistics/Statistics.hpp"
 
@@ -174,8 +175,9 @@ namespace Hydra {
 
         // SAT solver
     private:
-        using MiniSatSolverType = SatSolver::MiniSat::MiniSatSolver<VarT, LiteralT, ClauseIdT>;
         using CadicalSolverType = SatSolver::Cadical::CadicalSolver<VarT, LiteralT, ClauseIdT>;
+        using GlucoseSolverType = SatSolver::Glucose::GlucoseSolver<VarT, LiteralT, ClauseIdT>;
+        using MiniSatSolverType = SatSolver::MiniSat::MiniSatSolver<VarT, LiteralT, ClauseIdT>;
         using SatSolverAbstractUniquePtrType = std::unique_ptr<SatSolver::SatSolverAbstract<VarT, LiteralT, ClauseIdT>>;
 
         // Decision heuristic
