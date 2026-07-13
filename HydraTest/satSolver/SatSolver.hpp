@@ -81,7 +81,6 @@ namespace HydraTest::SatSolver {
         // Implicit implied literals
         actualResult << "Implicit implied literals:";
 
-        // Because of unassignment
         LiteralVectorType tmp(equivalencePreprocessingStruct.implicitImpliedLiteralVector.cbegin(), equivalencePreprocessingStruct.implicitImpliedLiteralVector.cend());
         std::sort(tmp.begin(), tmp.end());
 
