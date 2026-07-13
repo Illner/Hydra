@@ -28,6 +28,8 @@ namespace HydraTest::SatSolver {
     using SatSolverAbstractUniquePtrType = std::unique_ptr<Hydra::SatSolver::SatSolverAbstract<VarT, LiteralT, ClauseIdT>>;
     using FormulaRepresentationAbstractConstPtrType = const Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>*;
     using FormulaRepresentationAbstractUniquePtrType = std::unique_ptr<Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>>;
+
+    using ImplicitBcpVariableOrderTypeEnum = Hydra::SatSolver::ImplicitBcpVariableOrderTypeEnum;
     //endregion
 
     inline void printSatSolver(SatSolverAbstractConstPtrType satSolverAbstractPtr, std::stringstream& actualResult, bool printCoreSatSolver = true) {

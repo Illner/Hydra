@@ -22,13 +22,6 @@ namespace HydraTest::SatSolver::MiniSat {
     using LiteralT = HydraTest::SatSolver::LiteralT;
     using ClauseIdT = HydraTest::SatSolver::ClauseIdT;
 
-    using LiteralType = typename Hydra::SatSolver::SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
-    using VariableSetType = typename Hydra::SatSolver::SatSolverAbstract<VarT, LiteralT, ClauseIdT>::VariableSetType;
-    using LiteralVectorType = typename Hydra::SatSolver::SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralVectorType;
-    using VariableVectorType = typename Hydra::SatSolver::SatSolverAbstract<VarT, LiteralT, ClauseIdT>::VariableVectorType;
-
-    using ImplicitBcpVariableOrderTypeEnum = Hydra::SatSolver::ImplicitBcpVariableOrderTypeEnum;
-
     using MiniSatSolverType = Hydra::SatSolver::MiniSat::MiniSatSolver<VarT, LiteralT, ClauseIdT>;
     //endregion
 
