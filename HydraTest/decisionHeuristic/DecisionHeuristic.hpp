@@ -25,7 +25,7 @@ namespace HydraTest::DecisionHeuristic {
 
     using MiniSatSolverType = Hydra::SatSolver::MiniSat::MiniSatSolver<VarT, LiteralT, ClauseIdT>;
     using SatSolverAbstractUniquePtrType = std::unique_ptr<Hydra::SatSolver::SatSolverAbstract<VarT, LiteralT, ClauseIdT>>;
-    using DecisionHeuristicAbstractPtrType = const Hydra::DecisionHeuristic::DecisionHeuristicAbstract<VarT, LiteralT, ClauseIdT>*;
+    using DecisionHeuristicAbstractConstPtrType = const Hydra::DecisionHeuristic::DecisionHeuristicAbstract<VarT, LiteralT, ClauseIdT>*;
     using DecisionHeuristicAbstractUniquePtrType = std::unique_ptr<Hydra::DecisionHeuristic::DecisionHeuristicAbstract<VarT, LiteralT, ClauseIdT>>;
     using FormulaRepresentationAbstractUniquePtrType = std::unique_ptr<Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>>;
 
@@ -36,7 +36,7 @@ namespace HydraTest::DecisionHeuristic {
         return std::make_unique<MiniSatSolverType>(formulaRepresentationAbstractPtr, true);
     }
 
-    inline void printDecisionHeuristic(DecisionHeuristicAbstractPtrType decisionHeuristicAbstractPtr, std::stringstream& actualResult,
+    inline void printDecisionHeuristic(DecisionHeuristicAbstractConstPtrType decisionHeuristicAbstractPtr, std::stringstream& actualResult,
                                        bool printCurrentFormula = true) {
         decisionHeuristicAbstractPtr->printDecisionHeuristicDebug(actualResult, printCurrentFormula);
         actualResult << std::endl;
@@ -49,7 +49,7 @@ namespace HydraTest::DecisionHeuristic {
         actualResult << std::endl;
     }
 
-    inline void computeDecisionHeuristic(DecisionHeuristicAbstractPtrType decisionHeuristicAbstractPtr, const VariableSetType& selectedVariableSet,
+    inline void computeDecisionHeuristic(DecisionHeuristicAbstractConstPtrType decisionHeuristicAbstractPtr, const VariableSetType& selectedVariableSet,
                                          std::stringstream& actualResult, bool printDecisionVariableAndSelectedVariableSet = true,
                                          bool removeIgnoredPureVariables = false) {
         if (printDecisionVariableAndSelectedVariableSet)
@@ -72,8 +72,8 @@ namespace HydraTest::DecisionHeuristic {
     inline VariableSetType generateSelectedVariableSet(VarT maxVariable) {
         VariableSetType selectedVariableSet(maxVariable);
 
-        for (VarT i = 1; i <= maxVariable; ++i)
-            selectedVariableSet.emplace(i);
+        for (VarT var = 1; var <= maxVariable; ++var)
+            selectedVariableSet.emplace(var);
 
         return selectedVariableSet;
     }
