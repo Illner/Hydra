@@ -26,7 +26,7 @@ namespace HydraTest::SatSolver {
     using EquivalencePreprocessingStruct = Hydra::SatSolver::EquivalencePreprocessingStruct<VarT, LiteralT>;
     using SatSolverAbstractConstPtrType = const Hydra::SatSolver::SatSolverAbstract<VarT, LiteralT, ClauseIdT>*;
     using SatSolverAbstractUniquePtrType = std::unique_ptr<Hydra::SatSolver::SatSolverAbstract<VarT, LiteralT, ClauseIdT>>;
-    using FormulaRepresentationAbstractPtrType = const Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>*;
+    using FormulaRepresentationAbstractConstPtrType = const Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>*;
     using FormulaRepresentationAbstractUniquePtrType = std::unique_ptr<Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>>;
     //endregion
 
@@ -35,7 +35,7 @@ namespace HydraTest::SatSolver {
         actualResult << std::endl;
     }
 
-    inline void printCurrentFormula(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr, std::stringstream& actualResult) {
+    inline void printCurrentFormula(FormulaRepresentationAbstractConstPtrType formulaRepresentationAbstractPtr, std::stringstream& actualResult) {
         actualResult << "Current formula: ";
         formulaRepresentationAbstractPtr->printCurrentFormulaDebug(actualResult);
         actualResult << std::endl
