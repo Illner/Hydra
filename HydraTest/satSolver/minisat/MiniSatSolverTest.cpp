@@ -1,5 +1,4 @@
 #include <string>
-#include <vector>
 
 #include "HydraTest/TemplateTest.hpp"
 #include "HydraTest/catch.hpp"
@@ -7,13 +6,7 @@
 #include "HydraTest/satSolver/SatSolver.hpp"
 #include "HydraTest/satSolver/minisat/MiniSatSolverTestResult.hpp"
 
-#include "Hydra/other/Other.hpp"
 #include "Hydra/satSolver/minisat/MiniSatSolver.hpp"
-
-#include "Hydra/compiler/exceptions/CompilerException.hpp"
-#include "Hydra/satSolver/exceptions/SatSolverException.hpp"
-
-#include "Hydra/satSolver/enums/ImplicitBcpVariableOrderTypeEnum.hpp"
 
 namespace HydraTest::SatSolver::MiniSat {
 
@@ -108,18 +101,6 @@ namespace HydraTest::SatSolver::MiniSat {
                           miniSatSolverSatisfiabilityAssumptionsResult);
         std::stringstream& actualResult = test.getStringStream();
 
-        //region Literals
-        LiteralType litPos1(1, true);
-        LiteralType litPos2(2, true);
-        LiteralType litNeg2(2, false);
-        LiteralType litPos3(3, true);
-        LiteralType litNeg3(3, false);
-        LiteralType litNeg4(4, false);
-        LiteralType litPos5(5, true);
-        LiteralType litNeg6(6, false);
-        LiteralType litPos8(8, true);
-        //endregion
-
         try {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createSatisfiableFormula<VarT, LiteralT, ClauseIdT>();
             printCurrentFormula(formulaRepresentation.get(), actualResult);
@@ -127,41 +108,7 @@ namespace HydraTest::SatSolver::MiniSat {
             SatSolverAbstractUniquePtrType satSolver = std::make_unique<MiniSatSolverType>(formulaRepresentation.get(), true);
             printSatSolver(satSolver.get(), actualResult);
 
-            VariableVectorType tmp;
-            VariableSetType variableSet { 1, 2, 3, 4, 5, 6, 7, 8 };
-            std::vector<LiteralVectorType> assumptionsVector { {}, { litPos1 }, { litPos3 }, { litPos1, litNeg3 }, { litPos2 }, { litNeg2 }, { litNeg4, litPos5 }, { litNeg6, litPos8 }, {} };
-
-            for (const LiteralVectorType& assumptions : assumptionsVector) {
-                actualResult << "--------------------------------------------------" << std::endl;
-                printAssumption(assumptions, actualResult);
-                actualResult << "--------------------------------------------------" << std::endl;
-
-                for (const LiteralType& lit : assumptions)
-                    variableSet.erase(lit.getVariable());
-
-                try {
-                    formulaRepresentation->addLiteralVectorToPartialAssignment(assumptions, tmp);
-                    satSolver->assignLiteralVector(assumptions);
-
-                    printSatSolver(satSolver.get(), actualResult, false);
-
-                    bool isSatisfiable = satSolver->isSatisfiable(variableSet);
-                    actualResult << "------------------------------" << std::endl;
-                    actualResult << "Is satisfiable: " << std::to_string(isSatisfiable) << std::endl;
-                    actualResult << "------------------------------" << std::endl;
-
-                    satSolver->unassignLiteralVector(assumptions, true);
-                    formulaRepresentation->removeLiteralVectorFromPartialAssignment(assumptions, tmp, true);
-
-                    printSatSolver(satSolver.get(), actualResult, false);
-                }
-                catch (const Hydra::Exception::SatSolver::SatSolverException& e) {
-                    actualResult << e.what() << std::endl;
-                }
-
-                for (const LiteralType& lit : assumptions)
-                    variableSet.emplace(lit.getVariable());
-            }
+            isSatisfiableAssumptions(formulaRepresentation.get(), satSolver.get(), actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -179,16 +126,6 @@ namespace HydraTest::SatSolver::MiniSat {
                           miniSatSolverUnitPropagationResult);
         std::stringstream& actualResult = test.getStringStream();
 
-        //region Literals
-        LiteralType litPos1(1, true);
-        LiteralType litPos2(2, true);
-        LiteralType litNeg2(2, false);
-        LiteralType litNeg3(3, false);
-        LiteralType litNeg4(4, false);
-        LiteralType litNeg5(5, false);
-        LiteralType litPos6(6, true);
-        //endregion
-
         try {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaForUnitPropagation<VarT, LiteralT, ClauseIdT>();
             printCurrentFormula(formulaRepresentation.get(), actualResult);
@@ -196,33 +133,7 @@ namespace HydraTest::SatSolver::MiniSat {
             SatSolverAbstractUniquePtrType satSolver = std::make_unique<MiniSatSolverType>(formulaRepresentation.get(), true);
             printSatSolver(satSolver.get(), actualResult);
 
-            VariableVectorType tmp;
-            VariableSetType restrictedVariableSet { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            std::vector<LiteralVectorType> assumptionsVector { {}, { litNeg2 }, { litNeg5 }, { litPos6 }, { litNeg5, litPos6 }, { litPos1, litPos2, litNeg3, litNeg4, litNeg5 }, { litPos1, litPos2, litNeg3, litNeg4, litPos6 }, { litPos1, litPos2, litNeg3, litNeg4, litNeg5, litPos6 } };
-
-            for (const LiteralVectorType& assumptions : assumptionsVector) {
-                for (bool includeAssumptions : { true, false }) {
-                    actualResult << "------------------------------" << std::endl;
-                    printAssumption(assumptions, actualResult);
-                    actualResult << "Include assumptions: " << std::to_string(includeAssumptions) << std::endl;
-                    actualResult << "------------------------------" << std::endl;
-
-                    try {
-                        formulaRepresentation->addLiteralVectorToPartialAssignment(assumptions, tmp);
-                        satSolver->assignLiteralVector(assumptions);
-
-                        doUnitPropagation(satSolver.get(), restrictedVariableSet, includeAssumptions, actualResult);
-
-                        satSolver->unassignLiteralVector(assumptions, true);
-                        formulaRepresentation->removeLiteralVectorFromPartialAssignment(assumptions, tmp, true);
-                    }
-                    catch (const Hydra::Exception::SatSolver::SatSolverException& e) {
-                        actualResult << e.what() << std::endl;
-                    }
-
-                    actualResult << std::endl;
-                }
-            }
+            processUnitPropagation(formulaRepresentation.get(), satSolver.get(), actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -240,11 +151,6 @@ namespace HydraTest::SatSolver::MiniSat {
                           miniSatSolverUnitPropagationRestrictionsResult);
         std::stringstream& actualResult = test.getStringStream();
 
-        //region Literals
-        LiteralType litNeg5(5, false);
-        LiteralType litPos6(6, true);
-        //endregion
-
         try {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaForUnitPropagation<VarT, LiteralT, ClauseIdT>();
             printCurrentFormula(formulaRepresentation.get(), actualResult);
@@ -252,38 +158,7 @@ namespace HydraTest::SatSolver::MiniSat {
             SatSolverAbstractUniquePtrType satSolver = std::make_unique<MiniSatSolverType>(formulaRepresentation.get(), true);
             printSatSolver(satSolver.get(), actualResult);
 
-            VariableVectorType tmp;
-            std::vector<VariableSetType> restrictedVariableSetVector { {}, { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, { 1, 2, 3, 4 }, { 5, 6, 7, 8, 9 }, { 6, 7, 8 }, { 9 } };
-            std::vector<LiteralVectorType> assumptionsVector { {}, { litNeg5 }, { litPos6 }, { litNeg5, litPos6 } };
-
-            for (const VariableSetType& restrictedVariableSet : restrictedVariableSetVector)
-                for (const LiteralVectorType& assumptions : assumptionsVector) {
-                    for (bool includeAssumptions : { true, false }) {
-                        actualResult << "------------------------------" << std::endl;
-                        printAssumption(assumptions, actualResult);
-                        actualResult << "Include assumptions: " << std::to_string(includeAssumptions) << std::endl;
-                        actualResult << "Restricted variables:";
-                        for (VarT var : Hydra::Other::sortUnorderedSet(restrictedVariableSet))
-                            actualResult << " " << std::to_string(var);
-                        actualResult << std::endl;
-                        actualResult << "------------------------------" << std::endl;
-
-                        try {
-                            formulaRepresentation->addLiteralVectorToPartialAssignment(assumptions, tmp);
-                            satSolver->assignLiteralVector(assumptions);
-
-                            doUnitPropagation(satSolver.get(), restrictedVariableSet, includeAssumptions, actualResult);
-
-                            satSolver->unassignLiteralVector(assumptions, true);
-                            formulaRepresentation->removeLiteralVectorFromPartialAssignment(assumptions, tmp, true);
-                        }
-                        catch (const Hydra::Exception::SatSolver::SatSolverException& e) {
-                            actualResult << e.what() << std::endl;
-                        }
-
-                        actualResult << std::endl;
-                    }
-                }
+            processUnitPropagationRestrictions(formulaRepresentation.get(), satSolver.get(), actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -308,8 +183,7 @@ namespace HydraTest::SatSolver::MiniSat {
             SatSolverAbstractUniquePtrType satSolver = std::make_unique<MiniSatSolverType>(formulaRepresentation.get(), true);
             printSatSolver(satSolver.get(), actualResult);
 
-            VariableSetType selectedVariableSet { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
-            EquivalencePreprocessingStruct equivalencePreprocessingStruct = satSolver->createEquivalencePreprocessingStruct(selectedVariableSet,
+            EquivalencePreprocessingStruct equivalencePreprocessingStruct = satSolver->createEquivalencePreprocessingStruct(generateSelectedVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula()),
                                                                                                                             false,
                                                                                                                             ImplicitBcpVariableOrderTypeEnum::VARIABLE_INDEX);
             printEquivalencePreprocessingStructure(equivalencePreprocessingStruct, actualResult);
@@ -337,21 +211,7 @@ namespace HydraTest::SatSolver::MiniSat {
             SatSolverAbstractUniquePtrType satSolver = std::make_unique<MiniSatSolverType>(formulaRepresentation.get(), true);
             printSatSolver(satSolver.get(), actualResult);
 
-            std::vector<VariableSetType> selectedVariablesVector { {}, { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }, { 10, 11, 12 }, { 7, 8, 9, 10, 11, 12, 13, 14, 15 }, { 16, 17, 18 }, { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 } };
-
-            for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                actualResult << "------------------------------" << std::endl;
-                printSelectedVariableSet(selectedVariables, actualResult);
-                actualResult << "------------------------------" << std::endl;
-
-                EquivalencePreprocessingStruct equivalencePreprocessingStruct = satSolver->createEquivalencePreprocessingStruct(selectedVariables,
-                                                                                                                                false,
-                                                                                                                                ImplicitBcpVariableOrderTypeEnum::VARIABLE_INDEX);
-
-                satSolver->unassignLiteralVector(equivalencePreprocessingStruct.implicitImpliedLiteralVector, true);
-
-                printEquivalencePreprocessingStructure(equivalencePreprocessingStruct, actualResult);
-            }
+            processEquivalencePreprocessingStructureSelectedVariables(satSolver.get(), actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -376,8 +236,7 @@ namespace HydraTest::SatSolver::MiniSat {
             SatSolverAbstractUniquePtrType satSolver = std::make_unique<MiniSatSolverType>(formulaRepresentation.get(), true);
             printSatSolver(satSolver.get(), actualResult);
 
-            VariableSetType selectedVariableSet { 1, 2, 3, 4, 5 };
-            EquivalencePreprocessingStruct equivalencePreprocessingStruct = satSolver->createEquivalencePreprocessingStruct(selectedVariableSet,
+            EquivalencePreprocessingStruct equivalencePreprocessingStruct = satSolver->createEquivalencePreprocessingStruct(generateSelectedVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula()),
                                                                                                                             false,
                                                                                                                             ImplicitBcpVariableOrderTypeEnum::VARIABLE_INDEX);
             printEquivalencePreprocessingStructure(equivalencePreprocessingStruct, actualResult);
@@ -405,8 +264,7 @@ namespace HydraTest::SatSolver::MiniSat {
             SatSolverAbstractUniquePtrType satSolver = std::make_unique<MiniSatSolverType>(formulaRepresentation.get(), true);
             printSatSolver(satSolver.get(), actualResult);
 
-            VariableSetType selectedVariableSet { 1, 2, 3, 4, 5 };
-            EquivalencePreprocessingStruct equivalencePreprocessingStruct = satSolver->createEquivalencePreprocessingStruct(selectedVariableSet,
+            EquivalencePreprocessingStruct equivalencePreprocessingStruct = satSolver->createEquivalencePreprocessingStruct(generateSelectedVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula()),
                                                                                                                             true,
                                                                                                                             ImplicitBcpVariableOrderTypeEnum::VARIABLE_INDEX);
             printEquivalencePreprocessingStructure(equivalencePreprocessingStruct, actualResult);
@@ -434,8 +292,7 @@ namespace HydraTest::SatSolver::MiniSat {
             SatSolverAbstractUniquePtrType satSolver = std::make_unique<MiniSatSolverType>(formulaRepresentation.get(), true);
             printSatSolver(satSolver.get(), actualResult);
 
-            VariableSetType selectedVariableSet { 1, 2, 3, 4, 5 };
-            EquivalencePreprocessingStruct equivalencePreprocessingStruct = satSolver->createEquivalencePreprocessingStruct(selectedVariableSet,
+            EquivalencePreprocessingStruct equivalencePreprocessingStruct = satSolver->createEquivalencePreprocessingStruct(generateSelectedVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula()),
                                                                                                                             false,
                                                                                                                             ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_ASCENDING);
             printEquivalencePreprocessingStructure(equivalencePreprocessingStruct, actualResult);
@@ -463,8 +320,7 @@ namespace HydraTest::SatSolver::MiniSat {
             SatSolverAbstractUniquePtrType satSolver = std::make_unique<MiniSatSolverType>(formulaRepresentation.get(), true);
             printSatSolver(satSolver.get(), actualResult);
 
-            VariableSetType selectedVariableSet { 1, 2, 3, 4, 5 };
-            EquivalencePreprocessingStruct equivalencePreprocessingStruct = satSolver->createEquivalencePreprocessingStruct(selectedVariableSet,
+            EquivalencePreprocessingStruct equivalencePreprocessingStruct = satSolver->createEquivalencePreprocessingStruct(generateSelectedVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula()),
                                                                                                                             false,
                                                                                                                             ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_DESCENDING);
             printEquivalencePreprocessingStructure(equivalencePreprocessingStruct, actualResult);
