@@ -95,6 +95,8 @@ namespace CaraTest::SharpSolver {
 
         // SAT solver
         configuration.satSolverType = SatSolverTypeEnum::MINISAT;
+        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
+        configuration.miniSatSolverConfiguration.vsidsScoreType = Hydra::SatSolver::MiniSat::VsidsScoreTypeEnum::D4_V2;
 
         // Decision heuristic
         configuration.decisionHeuristicType = DecisionHeuristicTypeEnum::VSADS;
