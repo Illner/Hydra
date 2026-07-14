@@ -160,7 +160,9 @@ namespace Cara::CommandLineArguments {
         commandLineArgumentsStruct.compilerConfiguration.implicitBcpVariableOrderType = Hydra::SatSolver::ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_DESCENDING;
 
         // SAT solver
+        commandLineArgumentsStruct.compilerConfiguration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
         commandLineArgumentsStruct.compilerConfiguration.glucoseSolverConfiguration.vsidsScoreType = Hydra::SatSolver::Glucose::VsidsScoreTypeEnum::D4_V2;
+        commandLineArgumentsStruct.compilerConfiguration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
         commandLineArgumentsStruct.compilerConfiguration.miniSatSolverConfiguration.vsidsScoreType = Hydra::SatSolver::MiniSat::VsidsScoreTypeEnum::D4_V2;
 
         // Others

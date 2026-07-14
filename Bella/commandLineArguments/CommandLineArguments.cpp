@@ -214,7 +214,9 @@ namespace Bella::CommandLineArguments {
         commandLineArgumentsStruct.compilerConfiguration.useEquivalenceSimplificationMethod = Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, EQUIVALENCE_SIMPLIFICATION_METHOD_ARGUMENT);
 
         // SAT solver
+        commandLineArgumentsStruct.compilerConfiguration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
         commandLineArgumentsStruct.compilerConfiguration.glucoseSolverConfiguration.vsidsScoreType = Hydra::SatSolver::Glucose::VsidsScoreTypeEnum::D4_V2;
+        commandLineArgumentsStruct.compilerConfiguration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
         commandLineArgumentsStruct.compilerConfiguration.miniSatSolverConfiguration.vsidsScoreType = Hydra::SatSolver::MiniSat::VsidsScoreTypeEnum::D4_V2;
 
         // Component caching
