@@ -21,7 +21,6 @@
 namespace Hydra::SatSolver::MiniSat {
 
     using VsidsScoreType = Hydra::SatSolver::VsidsScoreType;
-    using FormulaSizeType = Hydra::Formula::Representation::FormulaSizeType;
 
     /**
      * MiniSat solver (final class)
