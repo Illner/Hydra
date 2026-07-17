@@ -1,0 +1,376 @@
+#pragma once
+
+#include "./GlucoseSolver.hpp"
+
+namespace Hydra::SatSolver::Glucose {
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::lboolIsTrue(const glucose::lbool& b) {
+        return b == glucose::l_True;
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::lboolIsFalse(const glucose::lbool& b) {
+        return b == glucose::l_False;
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::lboolIsUndef(const glucose::lbool& b) {
+        return b == glucose::l_Undef;
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    glucose::Var GlucoseSolver<VarT, LiteralT, ClauseIdT>::convertVariableToVariableGlucose(VarT variable) {
+        assert(variable > 0);   // valid variable
+
+        return static_cast<glucose::Var>(variable - 1);
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    VarT GlucoseSolver<VarT, LiteralT, ClauseIdT>::convertVariableGlucoseToVariable(glucose::Var variableGlucose) {
+        assert(variableGlucose >= 0);   // valid variable
+
+        return static_cast<VarT>(variableGlucose + 1);
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    glucose::Lit GlucoseSolver<VarT, LiteralT, ClauseIdT>::convertLiteralToLiteralGlucose(const LiteralType& literal) {
+        return glucose::mkLit(convertVariableToVariableGlucose(literal.getVariable()), literal.isNegative());
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    typename GlucoseSolver<VarT, LiteralT, ClauseIdT>::LiteralType
+    GlucoseSolver<VarT, LiteralT, ClauseIdT>::convertLiteralGlucoseToLiteral(const glucose::Lit& literalGlucose) {
+        return LiteralType(convertVariableGlucoseToVariable(glucose::var(literalGlucose)), !glucose::sign(literalGlucose));
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    void GlucoseSolver<VarT, LiteralT, ClauseIdT>::processInitializeSatSolver() {
+        LiteralGlucoseVectorType clause;
+        clause.capacity(this->S_ESTIMATED_SIZE_OF_CLAUSE_);
+
+        // Add the variables
+        for (VarT var = 1; var <= this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula(); ++var)
+            solver_.newVar();
+
+        for (ClauseIdT clauseId = 0; clauseId < this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses(); ++clauseId) {
+            for (auto clauseIt = this->formulaRepresentationAbstractPtr_->beginClause(clauseId);
+                 clauseIt != this->formulaRepresentationAbstractPtr_->endClause(); ++clauseIt) {
+                assert(convertVariableToVariableGlucose(clauseIt->getVariable()) < solver_.nVars());
+
+                clause.push(convertLiteralToLiteralGlucose(*clauseIt));
+            }
+
+            // Add the clause
+            if (!solver_.addClause(clause))
+                throw Exception::SatSolver::SomethingWentWrongWhileInitializingSatSolverException("adding clause " + std::to_string(clauseId));
+
+            clause.clear();
+        }
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    void GlucoseSolver<VarT, LiteralT, ClauseIdT>::processInitialSimplification() {
+        assert(solver_.solveWithAssumptions());   // input formula is satisfiable
+
+        solver_.simplify();
+        solver_.remove_satisfied = false;
+
+        this->computeAndSetInitiallyImpliedLiterals();
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    void GlucoseSolver<VarT, LiteralT, ClauseIdT>::processComputeAndSetInitiallyImpliedLiterals() {
+        this->initiallyImpliedLiterals_.reserve(static_cast<typename LiteralVectorType::size_type>(solver_.nAssigns()));
+
+        for (int i = 0; i < solver_.trail.size(); ++i) {
+            const glucose::Lit& litGlucose = solver_.trail[i];
+
+            this->initiallyImpliedLiterals_.emplace_back(convertLiteralGlucoseToLiteral(litGlucose));
+        }
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    void GlucoseSolver<VarT, LiteralT, ClauseIdT>::processAssignLiteral(const LiteralType& lit) {
+        assert(lit.getVariable() < variableAssumptionVector_.size());
+        assert(!variableAssumptionVector_[lit.getVariable()]);   // variable is not assigned
+
+        variableAssumptionVector_[lit.getVariable()] = true;
+
+        glucose::Lit litGlucose = convertLiteralToLiteralGlucose(lit);
+        activeModel_ = activeModel_ && !solver_.isAssigned(glucose::var(litGlucose));
+
+        solver_.assumptions.push(litGlucose);
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    void GlucoseSolver<VarT, LiteralT, ClauseIdT>::processUnassignLiteral(const LiteralType& lit) {
+        assert(lit.getVariable() < variableAssumptionVector_.size());
+        assert(variableAssumptionVector_[lit.getVariable()]);   // variable is assigned
+        assert(solver_.assumptions.last() == convertLiteralToLiteralGlucose(lit));
+
+        variableAssumptionVector_[lit.getVariable()] = false;
+
+        solver_.assumptions.pop();
+        solver_.cancelUntil(solver_.assumptions.size());
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::processIsSatisfiable() {
+        // solver_.rebuildWithAllVar();
+
+        return solver_.solveWithAssumptions();
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::processIsSatisfiable(const VariableSetType& restrictedVariableSet) {
+        l_restrictedVariableGlucoseVector_processIsSatisfiable_.clear();
+
+        for (VarT var : restrictedVariableSet)
+            l_restrictedVariableGlucoseVector_processIsSatisfiable_.push(convertVariableToVariableGlucose(var));
+
+        solver_.rebuildWithConnectedComponent(l_restrictedVariableGlucoseVector_processIsSatisfiable_);
+
+        activeModel_ = solver_.solveWithAssumptions();
+        return activeModel_;
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::processUnitPropagation(const VariableSetType& restrictedVariableSet,
+                                                                          LiteralReusableVectorType& impliedLiteralReusableVector, bool includeAssumptions) {
+        assert(impliedLiteralReusableVector.empty());
+
+        // The current formula is satisfiable
+        if (solver_.propagateAssumption()) {
+            // Iterating trail
+            if (solver_.trail.size() < static_cast<int>(restrictedVariableSet.size())) {
+                for (int i = 0; i < solver_.trail.size(); ++i) {
+                    const glucose::Lit& litGlucose = solver_.trail[i];
+
+                    VarT var = convertVariableGlucoseToVariable(glucose::var(litGlucose));
+
+                    assert(var < variableAssumptionVector_.size());
+
+                    // It is an assumption
+                    if (!includeAssumptions && variableAssumptionVector_[var])
+                        continue;
+
+                    if (!Other::containInSet(restrictedVariableSet, var))
+                        continue;
+
+                    impliedLiteralReusableVector.emplace_back(var, !glucose::sign(litGlucose));
+                }
+            }
+            // Iterating restricted variables
+            else {
+                for (VarT var : restrictedVariableSet) {
+                    assert(var < variableAssumptionVector_.size());
+
+                    // It is an assumption
+                    if (!includeAssumptions && variableAssumptionVector_[var])
+                        continue;
+
+                    glucose::Var varGlucose = convertVariableToVariableGlucose(var);
+
+                    if (!solver_.isAssigned(varGlucose))
+                        continue;
+
+                    impliedLiteralReusableVector.push_back(convertLiteralGlucoseToLiteral(solver_.litAssigned(varGlucose)));
+                }
+            }
+
+            return true;
+        }
+
+        // The current formula is NOT satisfiable
+        return false;
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::unitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
+                                                                   LiteralReusableVectorType& impliedLiteralReusableVector) {
+        assert(!variableAssumptionVector_[lit.getVariable()]);   // variable is not assigned
+
+        // Initialize local auxiliary data structures
+        if (l_firstCall_unitPropagation_) {
+            l_impliedLiteralGlucoseReusableVector_unitPropagation_ = LiteralGlucoseReusableVectorType(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
+
+            l_firstCall_unitPropagation_ = false;
+        }
+
+        impliedLiteralReusableVector.clear();
+        l_impliedLiteralGlucoseReusableVector_unitPropagation_.clear();
+
+        // No contradiction was derived
+        if (solver_.decideAndComputeUnit(convertLiteralToLiteralGlucose(lit), l_impliedLiteralGlucoseReusableVector_unitPropagation_)) {
+            // Iterate the implied literals
+            for (const glucose::Lit& impliedLitGlucose : l_impliedLiteralGlucoseReusableVector_unitPropagation_) {
+                LiteralType impliedLit = convertLiteralGlucoseToLiteral(impliedLitGlucose);
+
+                if (!Other::containInSet(restrictedVariableSet, impliedLit.getVariable()))
+                    continue;
+
+                assert(impliedLit != ~lit);   // not a complementary literal
+
+                // Variable is already assigned
+                if (variableAssumptionVector_[impliedLit.getVariable()])
+                    continue;
+
+                if (impliedLit == lit)
+                    continue;
+
+                impliedLiteralReusableVector.push_back(std::move(impliedLit));
+            }
+
+            return true;
+        }
+
+        // A contradiction was derived
+        return false;
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::isVariableAssigned(VarT variable) const {
+        assert(variable < variableAssumptionVector_.size());
+
+        return variableAssumptionVector_[variable];
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    void GlucoseSolver<VarT, LiteralT, ClauseIdT>::getDecisionVariableIsCalled() {
+        ++numberOfGetDecisionVariableCalls_;
+
+        // D4v2
+        if (configuration_.vsidsScoreType == VsidsScoreTypeEnum::D4_V2) {
+            // Decay the variable scores
+            if (configuration_.frequencyDecayD4v2VsidsScore && !(numberOfGetDecisionVariableCalls_ % configuration_.frequencyDecayD4v2VsidsScore)) {
+                numberOfGetDecisionVariableCalls_ = 0;   // reset
+
+                for (int i = 0; i < solver_.scoreActivity.size(); ++i)
+                    solver_.scoreActivity[i] /= 2;
+            }
+        }
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    VsidsScoreType GlucoseSolver<VarT, LiteralT, ClauseIdT>::getVsidsScore(VarT variable) const {
+        switch (configuration_.vsidsScoreType) {
+            // D4v2
+            case VsidsScoreTypeEnum::D4_V2:
+                return static_cast<VsidsScoreType>(solver_.scoreActivity[convertVariableToVariableGlucose(variable)]);
+            // Glucose
+            case VsidsScoreTypeEnum::GLUCOSE:
+                return static_cast<VsidsScoreType>(solver_.activity[convertVariableToVariableGlucose(variable)]);
+            default:
+                throw Exception::NotImplementedException(vsidsScoreTypeEnumToString(configuration_.vsidsScoreType),
+                                                         "Hydra::SatSolver::Glucose::GlucoseSolver::getVsidsScore");
+        }
+    }
+
+    #ifndef NDEBUG
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    void GlucoseSolver<VarT, LiteralT, ClauseIdT>::processPrintSatSolverDebug(std::ostream& out, bool printCoreSatSolver, bool printLearntClauses) const {
+        // Configuration
+        out << "VSIDS score type: " << vsidsScoreTypeEnumToString(configuration_.vsidsScoreType) << std::endl;
+        if (configuration_.vsidsScoreType == VsidsScoreTypeEnum::D4_V2)
+            out << "Frequency decay for VSIDS score: " << std::to_string(configuration_.frequencyDecayD4v2VsidsScore) << std::endl;
+
+        out << "Assumption:";
+        for (int i = 0; i < solver_.assumptions.size(); ++i)
+            out << " " << convertLiteralGlucoseToLiteral(solver_.assumptions[i]);
+        out << std::endl;
+
+        out << "Variable assumption:";
+        for (VarT var = 1; var < variableAssumptionVector_.size(); ++var) {
+            if (variableAssumptionVector_[var])
+                out << " " << std::to_string(var);
+        }
+        out << std::endl
+            << std::endl;
+
+        if (!printCoreSatSolver)
+            return;
+
+        Other::printTitle(out, " Glucose ", 19, '-');
+
+        out << "Number of variables: " << std::to_string(solver_.nVars()) << std::endl;
+        out << "Number of clauses: " << std::to_string(solver_.nClauses()) << std::endl;
+        if (printLearntClauses)
+            out << "Number of learnt clauses: " << std::to_string(solver_.nLearnts()) << std::endl;
+        out << "Number of assigned literals: " << std::to_string(solver_.nAssigns()) << std::endl;
+
+        printAssumptionsDebug(out);
+        printCurrentFormulaDebug(out, printLearntClauses);
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    void GlucoseSolver<VarT, LiteralT, ClauseIdT>::printAssumptionsDebug(std::ostream& out) const {
+        out << "Assumptions: ";
+
+        for (int i = 0; i < solver_.assumptions.size(); ++i) {
+            if (glucose::sign(solver_.assumptions[i]))
+                out << "-";
+
+            out << std::to_string(convertVariableGlucoseToVariable(glucose::var(solver_.assumptions[i]))) << " ";
+        }
+
+        out << std::endl;
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    void GlucoseSolver<VarT, LiteralT, ClauseIdT>::printCurrentFormulaDebug(std::ostream& out, bool printLearntClauses) const {
+        out << "Current formula: ";
+
+        for (int i = 0; i < solver_.clauses.size(); ++i) {
+            const auto& clause = solver_.ca[solver_.clauses[i]];
+
+            if (solver_.satisfied(clause))
+                continue;
+
+            for (int j = 0; j < clause.size(); ++j) {
+                const glucose::Lit& lit = clause[j];
+
+                // The literal is not assigned
+                if (lboolIsUndef(solver_.value(lit))) {
+                    if (glucose::sign(lit))
+                        out << "-";
+
+                    out << std::to_string(convertVariableGlucoseToVariable(glucose::var(lit))) << " ";
+                }
+            }
+
+            out << "0 ";
+        }
+
+        out << "00" << std::endl;
+
+        // Learnt clauses
+        if (printLearntClauses) {
+            out << "Learnt clauses: ";
+
+            for (int i = 0; i < solver_.learnts.size(); ++i) {
+                const auto& clause = solver_.ca[solver_.learnts[i]];
+
+                if (solver_.satisfied(clause))
+                    continue;
+
+                for (int j = 0; j < clause.size(); ++j) {
+                    const glucose::Lit& lit = clause[j];
+
+                    // The literal is not assigned
+                    if (lboolIsUndef(solver_.value(lit))) {
+                        if (glucose::sign(lit))
+                            out << "-";
+
+                        out << std::to_string(convertVariableGlucoseToVariable(glucose::var(lit))) << " ";
+                    }
+                }
+
+                out << "0 ";
+            }
+
+            out << "00" << std::endl;
+        }
+    }
+    #endif
+}   // namespace Hydra::SatSolver::Glucose
