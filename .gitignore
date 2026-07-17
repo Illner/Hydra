@@ -20,6 +20,7 @@ build_cara
 ## Others
 .DS_Store
 /temp.txt
+/cnfFormulae/tmp.cnf
 
 # Binary files of compiled MiniSat
 Hydra/external/satSolvers/MiniSat/core/Solver.or
