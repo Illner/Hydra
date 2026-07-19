@@ -35,19 +35,11 @@ namespace HydraTest::DecisionHeuristic::Vsids {
         return std::make_unique<VsidsDecisionHeuristicType>(formulaRepresentationAbstractPtr, satSolverAbstractPtr,
                                                             ignorePureLiteralType, configuration);
     }
-    //endregion
 
-    /**
-     * VSIDS
-     */
-    TEST_CASE("[DecisionHeuristic::Vsids] VSIDS", "[DecisionHeuristic::Vsids]") {
-        TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
-                          vsidsDecisionHeuristicResult);
-        std::stringstream& actualResult = test.getStringStream();
-
+    void processVsids(SatSolverTypeEnum satSolverType, std::stringstream& actualResult) {
         try {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createPigeonHoleFormula<VarT, LiteralT, ClauseIdT>();
-            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get(), satSolverType);
 
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createVsidsDecisionHeuristic(formulaRepresentation.get(), satSolver.get());
             printDecisionHeuristic(decisionHeuristic.get(), actualResult, false);
@@ -73,22 +65,12 @@ namespace HydraTest::DecisionHeuristic::Vsids {
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
         }
-
-        // test.saveActualResultToFile();
-        REQUIRE(test.checkTest());
     }
 
-    /**
-     * VSIDS (selected variables)
-     */
-    TEST_CASE("[DecisionHeuristic::Vsids] VSIDS (selected variables)", "[DecisionHeuristic::Vsids]") {
-        TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
-                          vsidsDecisionHeuristicSelectedVariablesResult);
-        std::stringstream& actualResult = test.getStringStream();
-
+    void processVsidsSelectedVariables(SatSolverTypeEnum satSolverType, std::stringstream& actualResult) {
         try {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createPigeonHoleFormula<VarT, LiteralT, ClauseIdT>();
-            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get(), satSolverType);
 
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createVsidsDecisionHeuristic(formulaRepresentation.get(), satSolver.get());
             printDecisionHeuristic(decisionHeuristic.get(), actualResult, false);
@@ -119,8 +101,72 @@ namespace HydraTest::DecisionHeuristic::Vsids {
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
         }
+    }
+    //endregion
 
-        // test.saveActualResultToFile();
-        REQUIRE(test.checkTest());
+    /**
+     * VSIDS
+     */
+    TEST_CASE("[DecisionHeuristic::Vsids] VSIDS", "[DecisionHeuristic::Vsids]") {
+        // MiniSat
+        SECTION(Hydra::SatSolver::satSolverTypeEnumToString(SatSolverTypeEnum::MINISAT)) {
+            SatSolverTypeEnum satSolverType = SatSolverTypeEnum::MINISAT;
+
+            TemplateTest test(Catch::getResultCapture().getCurrentTestName() + " (" + Hydra::SatSolver::satSolverTypeEnumToString(satSolverType) + ")",
+                              vsidsDecisionHeuristicResult);
+            std::stringstream& actualResult = test.getStringStream();
+
+            processVsids(satSolverType, actualResult);
+
+            // test.saveActualResultToFile();
+            REQUIRE(test.checkTest());
+        }
+
+        // Glucose
+        SECTION(Hydra::SatSolver::satSolverTypeEnumToString(SatSolverTypeEnum::GLUCOSE)) {
+            SatSolverTypeEnum satSolverType = SatSolverTypeEnum::GLUCOSE;
+
+            TemplateTest test(Catch::getResultCapture().getCurrentTestName() + " (" + Hydra::SatSolver::satSolverTypeEnumToString(satSolverType) + ")",
+                              vsidsDecisionHeuristicResult);
+            std::stringstream& actualResult = test.getStringStream();
+
+            processVsids(satSolverType, actualResult);
+
+            // test.saveActualResultToFile();
+            REQUIRE(test.checkTest());
+        }
+    }
+
+    /**
+     * VSIDS (selected variables)
+     */
+    TEST_CASE("[DecisionHeuristic::Vsids] VSIDS (selected variables)", "[DecisionHeuristic::Vsids]") {
+        // MiniSat
+        SECTION(Hydra::SatSolver::satSolverTypeEnumToString(SatSolverTypeEnum::MINISAT)) {
+            SatSolverTypeEnum satSolverType = SatSolverTypeEnum::MINISAT;
+
+            TemplateTest test(Catch::getResultCapture().getCurrentTestName() + " (" + Hydra::SatSolver::satSolverTypeEnumToString(satSolverType) + ")",
+                              vsidsDecisionHeuristicSelectedVariablesResult);
+            std::stringstream& actualResult = test.getStringStream();
+
+            processVsidsSelectedVariables(satSolverType, actualResult);
+
+            // test.saveActualResultToFile();
+            REQUIRE(test.checkTest());
+        }
+
+        // Glucose
+        SECTION(Hydra::SatSolver::satSolverTypeEnumToString(SatSolverTypeEnum::GLUCOSE)) {
+            SatSolverTypeEnum satSolverType = SatSolverTypeEnum::GLUCOSE;
+
+            TemplateTest test(Catch::getResultCapture().getCurrentTestName() + " (" + Hydra::SatSolver::satSolverTypeEnumToString(satSolverType) + ")",
+                              vsidsDecisionHeuristicSelectedVariablesResult);
+            std::stringstream& actualResult = test.getStringStream();
+
+            processVsidsSelectedVariables(satSolverType, actualResult);
+
+            // test.saveActualResultToFile();
+            REQUIRE(test.checkTest());
+        }
     }
 }   // namespace HydraTest::DecisionHeuristic::Vsids

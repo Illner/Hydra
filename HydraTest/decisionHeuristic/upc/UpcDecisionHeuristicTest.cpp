@@ -38,44 +38,28 @@ namespace HydraTest::DecisionHeuristic::Upc {
         return std::make_unique<UpcDecisionHeuristicType>(formulaRepresentationAbstractPtr, satSolverAbstractPtr,
                                                           ignorePureLiteralType, configuration);
     }
-    //endregion
 
-    /**
-     * EUPC
-     */
-    TEST_CASE("[DecisionHeuristic::Upc] EUPC", "[DecisionHeuristic::Upc]") {
-        TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
-                          upcDecisionHeuristicEupcResult);
-        std::stringstream& actualResult = test.getStringStream();
-
+    void processEupc(SatSolverTypeEnum satSolverType, std::stringstream& actualResult) {
         try {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaForUpc<VarT, LiteralT, ClauseIdT>();
-            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get(), satSolverType);
 
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createUpcDecisionHeuristic(formulaRepresentation.get(), satSolver.get(),
                                                                                                   true);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
-            computeDecisionHeuristic(decisionHeuristic.get(), { 1, 2, 3, 4, 5, 6 }, actualResult);
+            computeDecisionHeuristic(decisionHeuristic.get(),
+                                     generateSelectedVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula()),
+                                     actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
         }
-
-        // test.saveActualResultToFile();
-        REQUIRE(test.checkTest());
     }
 
-    /**
-     * EUPC (selected variables)
-     */
-    TEST_CASE("[DecisionHeuristic::Upc] EUPC (selected variables)", "[DecisionHeuristic::Upc]") {
-        TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
-                          upcDecisionHeuristicEupcSelectedVariablesResult);
-        std::stringstream& actualResult = test.getStringStream();
-
+    void processEupcSelectedVariables(SatSolverTypeEnum satSolverType, std::stringstream& actualResult) {
         try {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaForUpc<VarT, LiteralT, ClauseIdT>();
-            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get(), satSolverType);
 
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createUpcDecisionHeuristic(formulaRepresentation.get(), satSolver.get(),
                                                                                                   true);
@@ -90,47 +74,29 @@ namespace HydraTest::DecisionHeuristic::Upc {
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
         }
-
-        // test.saveActualResultToFile();
-        REQUIRE(test.checkTest());
     }
 
-    /**
-     * AUPC
-     */
-    TEST_CASE("[DecisionHeuristic::Upc] AUPC", "[DecisionHeuristic::Upc]") {
-        TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
-                          upcDecisionHeuristicAupcResult);
-        std::stringstream& actualResult = test.getStringStream();
-
+    void processAupc(SatSolverTypeEnum satSolverType, std::stringstream& actualResult) {
         try {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaForUpc<VarT, LiteralT, ClauseIdT>();
-            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get(), satSolverType);
 
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createUpcDecisionHeuristic(formulaRepresentation.get(), satSolver.get(),
                                                                                                   false, 1);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
-            computeDecisionHeuristic(decisionHeuristic.get(), { 1, 2, 3, 4, 5, 6 }, actualResult);
+            computeDecisionHeuristic(decisionHeuristic.get(),
+                                     generateSelectedVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula()),
+                                     actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
         }
-
-        // test.saveActualResultToFile();
-        REQUIRE(test.checkTest());
     }
 
-    /**
-     * AUPC (selected variables)
-     */
-    TEST_CASE("[DecisionHeuristic::Upc] AUPC (selected variables)", "[DecisionHeuristic::Upc]") {
-        TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
-                          upcDecisionHeuristicAupcSelectedVariablesResult);
-        std::stringstream& actualResult = test.getStringStream();
-
+    void processAupcSelectedVariables(SatSolverTypeEnum satSolverType, std::stringstream& actualResult) {
         try {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaForUpc<VarT, LiteralT, ClauseIdT>();
-            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get(), satSolverType);
 
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createUpcDecisionHeuristic(formulaRepresentation.get(), satSolver.get(),
                                                                                                   false, 2);
@@ -145,8 +111,138 @@ namespace HydraTest::DecisionHeuristic::Upc {
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
         }
+    }
+    //endregion
 
-        // test.saveActualResultToFile();
-        REQUIRE(test.checkTest());
+    /**
+     * EUPC
+     */
+    TEST_CASE("[DecisionHeuristic::Upc] EUPC", "[DecisionHeuristic::Upc]") {
+        // MiniSat
+        SECTION(Hydra::SatSolver::satSolverTypeEnumToString(SatSolverTypeEnum::MINISAT)) {
+            SatSolverTypeEnum satSolverType = SatSolverTypeEnum::MINISAT;
+
+            TemplateTest test(Catch::getResultCapture().getCurrentTestName() + " (" + Hydra::SatSolver::satSolverTypeEnumToString(satSolverType) + ")",
+                              upcDecisionHeuristicEupcResult);
+            std::stringstream& actualResult = test.getStringStream();
+
+            processEupc(satSolverType, actualResult);
+
+            // test.saveActualResultToFile();
+            REQUIRE(test.checkTest());
+        }
+
+        // Glucose
+        SECTION(Hydra::SatSolver::satSolverTypeEnumToString(SatSolverTypeEnum::GLUCOSE)) {
+            SatSolverTypeEnum satSolverType = SatSolverTypeEnum::GLUCOSE;
+
+            TemplateTest test(Catch::getResultCapture().getCurrentTestName() + " (" + Hydra::SatSolver::satSolverTypeEnumToString(satSolverType) + ")",
+                              upcDecisionHeuristicEupcResult);
+            std::stringstream& actualResult = test.getStringStream();
+
+            processEupc(satSolverType, actualResult);
+
+            // test.saveActualResultToFile();
+            REQUIRE(test.checkTest());
+        }
+    }
+
+    /**
+     * EUPC (selected variables)
+     */
+    TEST_CASE("[DecisionHeuristic::Upc] EUPC (selected variables)", "[DecisionHeuristic::Upc]") {
+        // MiniSat
+        SECTION(Hydra::SatSolver::satSolverTypeEnumToString(SatSolverTypeEnum::MINISAT)) {
+            SatSolverTypeEnum satSolverType = SatSolverTypeEnum::MINISAT;
+
+            TemplateTest test(Catch::getResultCapture().getCurrentTestName() + " (" + Hydra::SatSolver::satSolverTypeEnumToString(satSolverType) + ")",
+                              upcDecisionHeuristicEupcSelectedVariablesResult);
+            std::stringstream& actualResult = test.getStringStream();
+
+            processEupcSelectedVariables(satSolverType, actualResult);
+
+            // test.saveActualResultToFile();
+            REQUIRE(test.checkTest());
+        }
+
+        // Glucose
+        SECTION(Hydra::SatSolver::satSolverTypeEnumToString(SatSolverTypeEnum::GLUCOSE)) {
+            SatSolverTypeEnum satSolverType = SatSolverTypeEnum::GLUCOSE;
+
+            TemplateTest test(Catch::getResultCapture().getCurrentTestName() + " (" + Hydra::SatSolver::satSolverTypeEnumToString(satSolverType) + ")",
+                              upcDecisionHeuristicEupcSelectedVariablesResult);
+            std::stringstream& actualResult = test.getStringStream();
+
+            processEupcSelectedVariables(satSolverType, actualResult);
+
+            // test.saveActualResultToFile();
+            REQUIRE(test.checkTest());
+        }
+    }
+
+    /**
+     * AUPC
+     */
+    TEST_CASE("[DecisionHeuristic::Upc] AUPC", "[DecisionHeuristic::Upc]") {
+        // MiniSat
+        SECTION(Hydra::SatSolver::satSolverTypeEnumToString(SatSolverTypeEnum::MINISAT)) {
+            SatSolverTypeEnum satSolverType = SatSolverTypeEnum::MINISAT;
+
+            TemplateTest test(Catch::getResultCapture().getCurrentTestName() + " (" + Hydra::SatSolver::satSolverTypeEnumToString(satSolverType) + ")",
+                              upcDecisionHeuristicAupcResult);
+            std::stringstream& actualResult = test.getStringStream();
+
+            processAupc(satSolverType, actualResult);
+
+            // test.saveActualResultToFile();
+            REQUIRE(test.checkTest());
+        }
+
+        // Glucose
+        SECTION(Hydra::SatSolver::satSolverTypeEnumToString(SatSolverTypeEnum::GLUCOSE)) {
+            SatSolverTypeEnum satSolverType = SatSolverTypeEnum::GLUCOSE;
+
+            TemplateTest test(Catch::getResultCapture().getCurrentTestName() + " (" + Hydra::SatSolver::satSolverTypeEnumToString(satSolverType) + ")",
+                              upcDecisionHeuristicAupcResult);
+            std::stringstream& actualResult = test.getStringStream();
+
+            processAupc(satSolverType, actualResult);
+
+            // test.saveActualResultToFile();
+            REQUIRE(test.checkTest());
+        }
+    }
+
+    /**
+     * AUPC (selected variables)
+     */
+    TEST_CASE("[DecisionHeuristic::Upc] AUPC (selected variables)", "[DecisionHeuristic::Upc]") {
+        // MiniSat
+        SECTION(Hydra::SatSolver::satSolverTypeEnumToString(SatSolverTypeEnum::MINISAT)) {
+            SatSolverTypeEnum satSolverType = SatSolverTypeEnum::MINISAT;
+
+            TemplateTest test(Catch::getResultCapture().getCurrentTestName() + " (" + Hydra::SatSolver::satSolverTypeEnumToString(satSolverType) + ")",
+                              upcDecisionHeuristicAupcSelectedVariablesResult);
+            std::stringstream& actualResult = test.getStringStream();
+
+            processAupcSelectedVariables(satSolverType, actualResult);
+
+            // test.saveActualResultToFile();
+            REQUIRE(test.checkTest());
+        }
+
+        // Glucose
+        SECTION(Hydra::SatSolver::satSolverTypeEnumToString(SatSolverTypeEnum::GLUCOSE)) {
+            SatSolverTypeEnum satSolverType = SatSolverTypeEnum::GLUCOSE;
+
+            TemplateTest test(Catch::getResultCapture().getCurrentTestName() + " (" + Hydra::SatSolver::satSolverTypeEnumToString(satSolverType) + ")",
+                              upcDecisionHeuristicAupcSelectedVariablesResult);
+            std::stringstream& actualResult = test.getStringStream();
+
+            processAupcSelectedVariables(satSolverType, actualResult);
+
+            // test.saveActualResultToFile();
+            REQUIRE(test.checkTest());
+        }
     }
 }   // namespace HydraTest::DecisionHeuristic::Upc
