@@ -51,13 +51,15 @@ namespace CaraTest::SharpSolver {
     using ContagiousFormulaRepresentationConfigurationType = Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentationConfiguration;
     using FormulaRepresentationAbstractUniquePtrType = std::unique_ptr<Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>>;
 
-    using NumberOfModelsType = typename Hydra::Compiler<VarT, LiteralT, ClauseIdT>::NumberOfModelsType;
+    using NumberOfModelsType = Hydra::Compiler<VarT, LiteralT, ClauseIdT>::NumberOfModelsType;
 
     using CircuitTypeEnum = Hydra::CompilerConfiguration::CircuitTypeEnum;
     using SatSolverTypeEnum = Hydra::CompilerConfiguration::SatSolverTypeEnum;
     using OmitClauseTypeEnum = Hydra::Cache::CachingScheme::OmitClauseTypeEnum;
     using FormulaInstanceEnum = HydraTest::FormulaInstance::FormulaInstanceEnum;
     using PartitioningHypergraphTypeEnum = Hydra::PartitioningHypergraphTypeEnum;
+    using GlucoseVsidsScoreTypeEnum = Hydra::SatSolver::Glucose::VsidsScoreTypeEnum;
+    using MiniSatVsidsScoreTypeEnum = Hydra::SatSolver::MiniSat::VsidsScoreTypeEnum;
     using VertexWeightTypeEnum = Hydra::CompilerConfiguration::VertexWeightTypeEnum;
     using PreprocessingTypeEnum = Hydra::Cache::CachingScheme::PreprocessingTypeEnum;
     using RecomputingHypergraphCutTypeEnum = Hydra::RecomputingHypergraphCutTypeEnum;
@@ -96,7 +98,7 @@ namespace CaraTest::SharpSolver {
         // SAT solver
         configuration.satSolverType = SatSolverTypeEnum::MINISAT;
         configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
-        configuration.miniSatSolverConfiguration.vsidsScoreType = Hydra::SatSolver::MiniSat::VsidsScoreTypeEnum::D4_V2;
+        configuration.miniSatSolverConfiguration.vsidsScoreType = MiniSatVsidsScoreTypeEnum::D4_V2;
 
         // Decision heuristic
         configuration.decisionHeuristicType = DecisionHeuristicTypeEnum::VSADS;
