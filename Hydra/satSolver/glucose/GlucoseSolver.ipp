@@ -47,7 +47,7 @@ namespace Hydra::SatSolver::Glucose {
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     void GlucoseSolver<VarT, LiteralT, ClauseIdT>::processInitializeSatSolver() {
         LiteralGlucoseVectorType clause;
-        clause.capacity(this->S_ESTIMATED_SIZE_OF_CLAUSE_);
+        clause.capacity(static_cast<int>(this->formulaRepresentationAbstractPtr_->getMaxOriginalClauseSize()));
 
         // Add the variables
         for (VarT var = 1; var <= this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula(); ++var)

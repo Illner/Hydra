@@ -104,8 +104,6 @@ namespace Hydra::SatSolver {
 
         SatSolverStatisticsPtrType satSolverStatisticsPtr_;
 
-        inline static constexpr int S_ESTIMATED_SIZE_OF_CLAUSE_ = 4;
-
     protected:
         virtual void processInitializeSatSolver() = 0;
 

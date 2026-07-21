@@ -47,7 +47,7 @@ namespace Hydra::SatSolver::MiniSat {
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     void MiniSatSolver<VarT, LiteralT, ClauseIdT>::processInitializeSatSolver() {
         LiteralMiniSatVectorType clause;
-        clause.capacity(this->S_ESTIMATED_SIZE_OF_CLAUSE_);
+        clause.capacity(static_cast<int>(this->formulaRepresentationAbstractPtr_->getMaxOriginalClauseSize()));
 
         // Add the variables
         for (VarT var = 1; var <= this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula(); ++var)
