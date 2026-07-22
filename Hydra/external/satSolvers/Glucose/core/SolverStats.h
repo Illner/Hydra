@@ -48,7 +48,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
  **************************************************************************************************/
 
 #ifndef SOLVERSTATS_H
-#define	SOLVERSTATS_H
+#define SOLVERSTATS_H
 
 #include "../mtl/Map.h"
 #include <string>
@@ -59,41 +59,38 @@ namespace Glucose {
         Map<std::string, uint64_t> map;
 
     public:
-
-        SolverStats(std::string all[],int sz) : map() {
-            addStats(all,sz);
+        SolverStats(std::string all[], int sz) : map() {
+            addStats(all, sz);
         }
 
-        void addStats(std::string names[],int sz) {
-            for(int i = 0;i<sz;i++)
+        void addStats(std::string names[], int sz) {
+            for (int i = 0; i < sz; i++)
                 addStat(names[i]);
         }
-        
+
         void addStat(std::string name) {
             map.insert(name, 0);
         }
 
-        const uint64_t& operator [] (const std::string name) const {
+        const uint64_t& operator[](const std::string name) const {
             return map[name];
         }
 
-         uint64_t& operator [] (const std::string name)  {
+        uint64_t& operator[](const std::string name) {
             return map[name];
         }
 
-        void maximize(const std::string name,uint64_t val) {
-            if(val > map[name])
+        void maximize(const std::string name, uint64_t val) {
+            if (val > map[name])
                 map[name] = val;
-        } 
-         
-        void minimize(const std::string name,uint64_t val) {
-            if(val < map[name])
+        }
+
+        void minimize(const std::string name, uint64_t val) {
+            if (val < map[name])
                 map[name] = val;
-        } 
+        }
+    };
 
-};
+}   // namespace Glucose
 
-}
-
-#endif	/* SOLVERSTATS_H */
-
+#endif /* SOLVERSTATS_H */
