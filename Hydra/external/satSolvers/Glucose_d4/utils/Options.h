@@ -19,8 +19,8 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **************************************************************************************************/
 
-#ifndef Glucose_Options_h
-#define Glucose_Options_h
+#ifndef Glucose_d4_Options_h
+#define Glucose_d4_Options_h
 
 #include <math.h>
 #include <stdio.h>
@@ -31,7 +31,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "../mtl/Vec.h"
 #include "ParseUtils.h"
 
-namespace glucose {
+namespace glucose_d4 {
 
     //==================================================================================================
     // Top-level option parse/help functions:
@@ -402,6 +402,6 @@ namespace glucose {
     };
 
     //=================================================================================================
-}   // namespace glucose
+}   // namespace glucose_d4
 
 #endif

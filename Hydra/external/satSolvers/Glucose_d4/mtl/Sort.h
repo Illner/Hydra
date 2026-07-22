@@ -18,15 +18,15 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **************************************************************************************************/
 
-#ifndef Glucose_Sort_h
-#define Glucose_Sort_h
+#ifndef Glucose_d4_Sort_h
+#define Glucose_d4_Sort_h
 
 #include "Vec.h"
 
 //=================================================================================================
 // Some sorting algorithms for vec's
 
-namespace glucose {
+namespace glucose_d4 {
 
     template <class T>
     struct LessThan_default {
@@ -101,6 +101,6 @@ namespace glucose {
     }
 
     //=================================================================================================
-}   // namespace glucose
+}   // namespace glucose_d4
 
 #endif

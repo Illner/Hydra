@@ -18,12 +18,12 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **************************************************************************************************/
 
-#ifndef Glucose_Heap_h
-#define Glucose_Heap_h
+#ifndef Glucose_d4_Heap_h
+#define Glucose_d4_Heap_h
 
 #include "Vec.h"
 
-namespace glucose {
+namespace glucose_d4 {
 
     //=================================================================================================
     // A heap implementation with support for decrease/increase key.
@@ -140,6 +140,6 @@ namespace glucose {
     };
 
     //=================================================================================================
-}   // namespace glucose
+}   // namespace glucose_d4
 
 #endif

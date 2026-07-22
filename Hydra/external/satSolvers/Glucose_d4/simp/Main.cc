@@ -39,7 +39,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include "../utils/System.h"
 #include "SimpSolver.h"
 
-using namespace glucose;
+using namespace glucose_d4;
 
 //=================================================================================================
 

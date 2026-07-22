@@ -21,9 +21,9 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include "../mtl/Sort.h"
 #include "ParseUtils.h"
 
-using namespace glucose;
+using namespace glucose_d4;
 
-void glucose::parseOptions(int& argc, char** argv, bool strict) {
+void glucose_d4::parseOptions(int& argc, char** argv, bool strict) {
     int i, j;
     for (i = j = 1; i < argc; i++) {
         const char* str = argv[i];
@@ -53,9 +53,9 @@ void glucose::parseOptions(int& argc, char** argv, bool strict) {
     argc -= (i - j);
 }
 
-void glucose::setUsageHelp(const char* str) { Option::getUsageString() = str; }
-void glucose::setHelpPrefixStr(const char* str) { Option::getHelpPrefixString() = str; }
-void glucose::printUsageAndExit(int argc, char** argv, bool verbose) {
+void glucose_d4::setUsageHelp(const char* str) { Option::getUsageString() = str; }
+void glucose_d4::setHelpPrefixStr(const char* str) { Option::getHelpPrefixString() = str; }
+void glucose_d4::printUsageAndExit(int argc, char** argv, bool verbose) {
     const char* usage = Option::getUsageString();
     if (usage != NULL)
         fprintf(stderr, usage, argv[0]);

@@ -29,8 +29,8 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **************************************************************************************************/
 
-#ifndef Glucose_SolverTypes_h
-#define Glucose_SolverTypes_h
+#ifndef Glucose_d4_SolverTypes_h
+#define Glucose_d4_SolverTypes_h
 
 #include <assert.h>
 
@@ -40,7 +40,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "../mtl/Map.h"
 #include "../mtl/Vec.h"
 
-namespace glucose {
+namespace glucose_d4 {
 
     //=================================================================================================
     // Variables, literals, lifted booleans, clauses:
@@ -114,9 +114,9 @@ namespace glucose {
     //       code, and this appears to be somewhat fragile unfortunately.
 
     // gcc does not do constant propagation if these are real constants.
-    // #define l_True (glucose::lbool((uint8_t)0))
-    // #define l_False (glucose::lbool((uint8_t)1))
-    // #define l_Undef (glucose::lbool((uint8_t)2))
+    // #define l_True (glucose_d4::lbool((uint8_t)0))
+    // #define l_False (glucose_d4::lbool((uint8_t)1))
+    // #define l_Undef (glucose_d4::lbool((uint8_t)2))
 
     class lbool {
         uint8_t value;
@@ -150,9 +150,9 @@ namespace glucose {
         friend lbool toLbool(int v);
     };
 
-    const lbool l_True(glucose ::lbool((uint8_t)0));
-    const lbool l_False(glucose ::lbool((uint8_t)1));
-    const lbool l_Undef(glucose ::lbool((uint8_t)2));
+    const lbool l_True(glucose_d4::lbool((uint8_t)0));
+    const lbool l_False(glucose_d4::lbool((uint8_t)1));
+    const lbool l_Undef(glucose_d4::lbool((uint8_t)2));
 
     inline int toInt(lbool l) { return l.value; }
     inline lbool toLbool(int v) { return lbool((uint8_t)v); }
@@ -511,6 +511,6 @@ used to simplify 'other' |       by subsumption resolution.
     }
 
     //=================================================================================================
-}   // namespace glucose
+}   // namespace glucose_d4
 
 #endif

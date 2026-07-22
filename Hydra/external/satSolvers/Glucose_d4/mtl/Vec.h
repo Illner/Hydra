@@ -20,8 +20,8 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **************************************************************************************************/
 
-#ifndef Glucose_Vec_h
-#define Glucose_Vec_h
+#ifndef Glucose_d4_Vec_h
+#define Glucose_d4_Vec_h
 
 #include <assert.h>
 #include <new>
@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "IntTypes.h"
 #include "XAlloc.h"
 
-namespace glucose {
+namespace glucose_d4 {
 
     //=================================================================================================
     // Automatically resizable arrays
@@ -181,6 +181,6 @@ namespace glucose {
     }
 
     //=================================================================================================
-}   // namespace glucose
+}   // namespace glucose_d4
 
 #endif

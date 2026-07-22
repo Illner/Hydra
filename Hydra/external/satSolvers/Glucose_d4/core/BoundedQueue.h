@@ -26,7 +26,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 
 //=================================================================================================
 
-namespace glucose {
+namespace glucose_d4 {
 
     template <class T>
     class bqueue {
@@ -131,7 +131,7 @@ namespace glucose {
             sumofqueue = 0;
         }
     };
-}   // namespace glucose
+}   // namespace glucose_d4
 //=================================================================================================
 
 #endif

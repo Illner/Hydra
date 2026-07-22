@@ -39,7 +39,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "Solver.h"
 #include "SolverTypes.h"
 
-using namespace glucose;
+using namespace glucose_d4;
 
 //=================================================================================================
 // Options:
