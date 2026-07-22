@@ -55,8 +55,6 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include "../mtl/Heap.h"
 #include "../utils/Options.h"
 #include "BoundedQueue.h"
-#include "Constants.h"
-#include "SolverStats.h"
 #include "SolverTypes.h"
 
 namespace Glucose {
