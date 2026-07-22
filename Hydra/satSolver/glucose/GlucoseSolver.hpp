@@ -44,10 +44,10 @@ namespace Hydra::SatSolver::Glucose {
         using FormulaRepresentationAbstractPtrType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::FormulaRepresentationAbstractPtrType;
 
     private:
-        using GlucoseSolverType = glucose::Solver;
-        using LiteralGlucoseVectorType = glucose::vec<glucose::Lit>;
-        using VariableGlucoseVectorType = glucose::vec<glucose::Var>;
-        using LiteralGlucoseReusableVectorType = Container::ReusableVector::ReusableVector<glucose::Lit>;
+        using GlucoseSolverType = glucose_d4::Solver;
+        using LiteralGlucoseVectorType = glucose_d4::vec<glucose_d4::Lit>;
+        using VariableGlucoseVectorType = glucose_d4::vec<glucose_d4::Var>;
+        using LiteralGlucoseReusableVectorType = Container::ReusableVector::ReusableVector<glucose_d4::Lit>;
 
     public:
         GlucoseSolver(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr, bool computeInitiallyImpliedLiterals,
@@ -96,14 +96,14 @@ namespace Hydra::SatSolver::Glucose {
         LiteralGlucoseReusableVectorType l_impliedLiteralGlucoseReusableVector_unitPropagation_;
 
     private:
-        static bool lboolIsTrue(const glucose::lbool& b);
-        static bool lboolIsFalse(const glucose::lbool& b);
-        static bool lboolIsUndef(const glucose::lbool& b);
+        static bool lboolIsTrue(const glucose_d4::lbool& b);
+        static bool lboolIsFalse(const glucose_d4::lbool& b);
+        static bool lboolIsUndef(const glucose_d4::lbool& b);
 
-        static glucose::Var convertVariableToVariableGlucose(VarT variable);
-        static VarT convertVariableGlucoseToVariable(glucose::Var variableGlucose);
-        static glucose::Lit convertLiteralToLiteralGlucose(const LiteralType& literal);
-        static LiteralType convertLiteralGlucoseToLiteral(const glucose::Lit& literalGlucose);
+        static glucose_d4::Var convertVariableToVariableGlucose(VarT variable);
+        static VarT convertVariableGlucoseToVariable(glucose_d4::Var variableGlucose);
+        static glucose_d4::Lit convertLiteralToLiteralGlucose(const LiteralType& literal);
+        static LiteralType convertLiteralGlucoseToLiteral(const glucose_d4::Lit& literalGlucose);
 
         /**
          * Initialize the SAT solver

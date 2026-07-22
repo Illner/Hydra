@@ -5,43 +5,43 @@
 namespace Hydra::SatSolver::Glucose {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::lboolIsTrue(const glucose::lbool& b) {
-        return b == glucose::l_True;
+    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::lboolIsTrue(const glucose_d4::lbool& b) {
+        return b == glucose_d4::l_True;
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::lboolIsFalse(const glucose::lbool& b) {
-        return b == glucose::l_False;
+    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::lboolIsFalse(const glucose_d4::lbool& b) {
+        return b == glucose_d4::l_False;
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::lboolIsUndef(const glucose::lbool& b) {
-        return b == glucose::l_Undef;
+    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::lboolIsUndef(const glucose_d4::lbool& b) {
+        return b == glucose_d4::l_Undef;
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    glucose::Var GlucoseSolver<VarT, LiteralT, ClauseIdT>::convertVariableToVariableGlucose(VarT variable) {
+    glucose_d4::Var GlucoseSolver<VarT, LiteralT, ClauseIdT>::convertVariableToVariableGlucose(VarT variable) {
         assert(variable > 0);   // valid variable
 
-        return static_cast<glucose::Var>(variable - 1);
+        return static_cast<glucose_d4::Var>(variable - 1);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    VarT GlucoseSolver<VarT, LiteralT, ClauseIdT>::convertVariableGlucoseToVariable(glucose::Var variableGlucose) {
+    VarT GlucoseSolver<VarT, LiteralT, ClauseIdT>::convertVariableGlucoseToVariable(glucose_d4::Var variableGlucose) {
         assert(variableGlucose >= 0);   // valid variable
 
         return static_cast<VarT>(variableGlucose + 1);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    glucose::Lit GlucoseSolver<VarT, LiteralT, ClauseIdT>::convertLiteralToLiteralGlucose(const LiteralType& literal) {
-        return glucose::mkLit(convertVariableToVariableGlucose(literal.getVariable()), literal.isNegative());
+    glucose_d4::Lit GlucoseSolver<VarT, LiteralT, ClauseIdT>::convertLiteralToLiteralGlucose(const LiteralType& literal) {
+        return glucose_d4::mkLit(convertVariableToVariableGlucose(literal.getVariable()), literal.isNegative());
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     typename GlucoseSolver<VarT, LiteralT, ClauseIdT>::LiteralType
-    GlucoseSolver<VarT, LiteralT, ClauseIdT>::convertLiteralGlucoseToLiteral(const glucose::Lit& literalGlucose) {
-        return LiteralType(convertVariableGlucoseToVariable(glucose::var(literalGlucose)), !glucose::sign(literalGlucose));
+    GlucoseSolver<VarT, LiteralT, ClauseIdT>::convertLiteralGlucoseToLiteral(const glucose_d4::Lit& literalGlucose) {
+        return LiteralType(convertVariableGlucoseToVariable(glucose_d4::var(literalGlucose)), !glucose_d4::sign(literalGlucose));
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
@@ -84,7 +84,7 @@ namespace Hydra::SatSolver::Glucose {
         this->initiallyImpliedLiterals_.reserve(static_cast<typename LiteralVectorType::size_type>(solver_.nAssigns()));
 
         for (int i = 0; i < solver_.trail.size(); ++i) {
-            const glucose::Lit& litGlucose = solver_.trail[i];
+            const glucose_d4::Lit& litGlucose = solver_.trail[i];
 
             this->initiallyImpliedLiterals_.emplace_back(convertLiteralGlucoseToLiteral(litGlucose));
         }
@@ -97,8 +97,8 @@ namespace Hydra::SatSolver::Glucose {
 
         variableAssumptionVector_[lit.getVariable()] = true;
 
-        glucose::Lit litGlucose = convertLiteralToLiteralGlucose(lit);
-        activeModel_ = activeModel_ && !solver_.isAssigned(glucose::var(litGlucose));
+        glucose_d4::Lit litGlucose = convertLiteralToLiteralGlucose(lit);
+        activeModel_ = activeModel_ && !solver_.isAssigned(glucose_d4::var(litGlucose));
 
         solver_.assumptions.push(litGlucose);
     }
@@ -145,9 +145,9 @@ namespace Hydra::SatSolver::Glucose {
             // Iterating trail
             if (solver_.trail.size() < static_cast<int>(restrictedVariableSet.size())) {
                 for (int i = 0; i < solver_.trail.size(); ++i) {
-                    const glucose::Lit& litGlucose = solver_.trail[i];
+                    const glucose_d4::Lit& litGlucose = solver_.trail[i];
 
-                    VarT var = convertVariableGlucoseToVariable(glucose::var(litGlucose));
+                    VarT var = convertVariableGlucoseToVariable(glucose_d4::var(litGlucose));
 
                     assert(var < variableAssumptionVector_.size());
 
@@ -158,7 +158,7 @@ namespace Hydra::SatSolver::Glucose {
                     if (!Other::containInSet(restrictedVariableSet, var))
                         continue;
 
-                    impliedLiteralReusableVector.emplace_back(var, !glucose::sign(litGlucose));
+                    impliedLiteralReusableVector.emplace_back(var, !glucose_d4::sign(litGlucose));
                 }
             }
             // Iterating restricted variables
@@ -170,7 +170,7 @@ namespace Hydra::SatSolver::Glucose {
                     if (!includeAssumptions && variableAssumptionVector_[var])
                         continue;
 
-                    glucose::Var varGlucose = convertVariableToVariableGlucose(var);
+                    glucose_d4::Var varGlucose = convertVariableToVariableGlucose(var);
 
                     if (!solver_.isAssigned(varGlucose))
                         continue;
@@ -204,7 +204,7 @@ namespace Hydra::SatSolver::Glucose {
         // No contradiction was derived
         if (solver_.decideAndComputeUnit(convertLiteralToLiteralGlucose(lit), l_impliedLiteralGlucoseReusableVector_unitPropagation_)) {
             // Iterate the implied literals
-            for (const glucose::Lit& impliedLitGlucose : l_impliedLiteralGlucoseReusableVector_unitPropagation_) {
+            for (const glucose_d4::Lit& impliedLitGlucose : l_impliedLiteralGlucoseReusableVector_unitPropagation_) {
                 LiteralType impliedLit = convertLiteralGlucoseToLiteral(impliedLitGlucose);
 
                 if (!Other::containInSet(restrictedVariableSet, impliedLit.getVariable()))
@@ -308,10 +308,10 @@ namespace Hydra::SatSolver::Glucose {
         out << "Assumptions: ";
 
         for (int i = 0; i < solver_.assumptions.size(); ++i) {
-            if (glucose::sign(solver_.assumptions[i]))
+            if (glucose_d4::sign(solver_.assumptions[i]))
                 out << "-";
 
-            out << std::to_string(convertVariableGlucoseToVariable(glucose::var(solver_.assumptions[i]))) << " ";
+            out << std::to_string(convertVariableGlucoseToVariable(glucose_d4::var(solver_.assumptions[i]))) << " ";
         }
 
         out << std::endl;
@@ -328,14 +328,14 @@ namespace Hydra::SatSolver::Glucose {
                 continue;
 
             for (int j = 0; j < clause.size(); ++j) {
-                const glucose::Lit& lit = clause[j];
+                const glucose_d4::Lit& lit = clause[j];
 
                 // The literal is not assigned
                 if (lboolIsUndef(solver_.value(lit))) {
-                    if (glucose::sign(lit))
+                    if (glucose_d4::sign(lit))
                         out << "-";
 
-                    out << std::to_string(convertVariableGlucoseToVariable(glucose::var(lit))) << " ";
+                    out << std::to_string(convertVariableGlucoseToVariable(glucose_d4::var(lit))) << " ";
                 }
             }
 
@@ -355,14 +355,14 @@ namespace Hydra::SatSolver::Glucose {
                     continue;
 
                 for (int j = 0; j < clause.size(); ++j) {
-                    const glucose::Lit& lit = clause[j];
+                    const glucose_d4::Lit& lit = clause[j];
 
                     // The literal is not assigned
                     if (lboolIsUndef(solver_.value(lit))) {
-                        if (glucose::sign(lit))
+                        if (glucose_d4::sign(lit))
                             out << "-";
 
-                        out << std::to_string(convertVariableGlucoseToVariable(glucose::var(lit))) << " ";
+                        out << std::to_string(convertVariableGlucoseToVariable(glucose_d4::var(lit))) << " ";
                     }
                 }
 
