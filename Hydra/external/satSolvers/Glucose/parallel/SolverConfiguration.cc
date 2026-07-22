@@ -47,10 +47,10 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  **************************************************************************************************/
 
-#include "parallel/MultiSolvers.h"
-#include "core/Solver.h"
-//#include "parallel/ParallelSolver.h"
-#include "parallel/SolverConfiguration.h"
+#include "MultiSolvers.h"
+#include "../core/Solver.h"
+//#include "ParallelSolver.h"
+#include "SolverConfiguration.h"
 
 using namespace Glucose;
 

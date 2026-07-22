@@ -50,14 +50,14 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #ifndef Glucose_Solver_h
 #define Glucose_Solver_h
 
-#include "mtl/Heap.h"
-#include "mtl/Alg.h"
-#include "utils/Options.h"
-#include "core/SolverTypes.h"
-#include "core/BoundedQueue.h"
-#include "core/Constants.h"
-#include "mtl/Clone.h"
-#include "core/SolverStats.h"
+#include "../mtl/Heap.h"
+#include "../mtl/Alg.h"
+#include "../utils/Options.h"
+#include "SolverTypes.h"
+#include "BoundedQueue.h"
+#include "Constants.h"
+#include "../mtl/Clone.h"
+#include "SolverStats.h"
 
 
 namespace Glucose {

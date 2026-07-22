@@ -50,9 +50,9 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #ifndef ClausesBuffer_h 
 #define ClausesBuffer_h
 
-#include "mtl/Vec.h"
-#include "core/SolverTypes.h"
-#include "core/Solver.h"
+#include "../mtl/Vec.h"
+#include "../core/SolverTypes.h"
+#include "../core/Solver.h"
 
 //=================================================================================================
 

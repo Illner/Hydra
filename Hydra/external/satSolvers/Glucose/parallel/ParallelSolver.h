@@ -50,10 +50,10 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #ifndef PARALLELSOLVER_H
 #define	PARALLELSOLVER_H
 
-#include "core/SolverTypes.h"
-#include "core/Solver.h"
-#include "simp/SimpSolver.h"
-#include "parallel/SharedCompanion.h"
+#include "../core/SolverTypes.h"
+#include "../core/Solver.h"
+#include "../simp/SimpSolver.h"
+#include "SharedCompanion.h"
 namespace Glucose {
     
    enum ParallelStats{

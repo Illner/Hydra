@@ -49,11 +49,10 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 
 #include <math.h>
 
-#include "utils/System.h"
-#include "mtl/Sort.h"
-#include "core/Solver.h"
-#include "core/Constants.h"
-#include"simp/SimpSolver.h"
+#include "../utils/System.h"
+#include "../mtl/Sort.h"
+#include "Solver.h"
+#include "Constants.h"
 
 using namespace Glucose;
 
