@@ -236,6 +236,272 @@ namespace BellaTest::Compiler::wDNNF {
         process(configuration, false, ContagiousFormulaRepresentationConfigurationType(), false);
     }
 
+    //region SAT solver
+    //region MiniSat
+    /**
+     * SAT solver - MiniSat
+     *      VSIDS score: MiniSat
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - MiniSat (VSIDS score: MiniSat)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::MINISAT;
+        configuration.miniSatSolverConfiguration.vsidsScoreType = MiniSatVsidsScoreTypeEnum::MINISAT;
+
+        process(configuration, false);
+    }
+
+    /**
+     * SAT solver - MiniSat
+     *      VSIDS score: D4
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - MiniSat (VSIDS score: D4)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::MINISAT;
+        configuration.miniSatSolverConfiguration.vsidsScoreType = MiniSatVsidsScoreTypeEnum::D4;
+
+        process(configuration, false);
+    }
+
+    /**
+     * SAT solver - MiniSat
+     *      VSIDS score: D4v2
+     *      frequency decay: 0
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - MiniSat (VSIDS score: D4v2, frequency decay: 0)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::MINISAT;
+        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 0;
+        configuration.miniSatSolverConfiguration.vsidsScoreType = MiniSatVsidsScoreTypeEnum::D4_V2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * SAT solver - MiniSat
+     *      VSIDS score: D4v2
+     *      frequency decay: 2
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - MiniSat (VSIDS score: D4v2, frequency decay: 2)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::MINISAT;
+        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 2;
+        configuration.miniSatSolverConfiguration.vsidsScoreType = MiniSatVsidsScoreTypeEnum::D4_V2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * SAT solver - MiniSat
+     *      VSIDS score: D4v2
+     *      frequency decay: 8
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - MiniSat (VSIDS score: D4v2, frequency decay: 8)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::MINISAT;
+        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 8;
+        configuration.miniSatSolverConfiguration.vsidsScoreType = MiniSatVsidsScoreTypeEnum::D4_V2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * SAT solver - MiniSat
+     *      VSIDS score: D4v2
+     *      frequency decay: 32
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - MiniSat (VSIDS score: D4v2, frequency decay: 32)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::MINISAT;
+        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 32;
+        configuration.miniSatSolverConfiguration.vsidsScoreType = MiniSatVsidsScoreTypeEnum::D4_V2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * SAT solver - MiniSat
+     *      VSIDS score: D4v2
+     *      frequency decay: 128
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - MiniSat (VSIDS score: D4v2, frequency decay: 128)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::MINISAT;
+        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 128;
+        configuration.miniSatSolverConfiguration.vsidsScoreType = MiniSatVsidsScoreTypeEnum::D4_V2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * SAT solver - MiniSat
+     *      VSIDS score: D4v2
+     *      frequency decay: 512
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - MiniSat (VSIDS score: D4v2, frequency decay: 512)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::MINISAT;
+        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 512;
+        configuration.miniSatSolverConfiguration.vsidsScoreType = MiniSatVsidsScoreTypeEnum::D4_V2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * SAT solver - MiniSat
+     *      VSIDS score: D4v2
+     *      frequency decay: 2048
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - MiniSat (VSIDS score: D4v2, frequency decay: 2048)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::MINISAT;
+        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
+        configuration.miniSatSolverConfiguration.vsidsScoreType = MiniSatVsidsScoreTypeEnum::D4_V2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * SAT solver - MiniSat
+     *      VSIDS score: D4v2
+     *      frequency decay: 8192
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - MiniSat (VSIDS score: D4v2, frequency decay: 8192)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::MINISAT;
+        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 8192;
+        configuration.miniSatSolverConfiguration.vsidsScoreType = MiniSatVsidsScoreTypeEnum::D4_V2;
+
+        process(configuration, false);
+    }
+    //endregion
+
+    //region Glucose
+    /**
+     * SAT solver - Glucose
+     *      VSIDS score: Glucose
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - Glucose (VSIDS score: Glucose)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::GLUCOSE;
+        configuration.glucoseSolverConfiguration.vsidsScoreType = GlucoseVsidsScoreTypeEnum::GLUCOSE;
+
+        process(configuration, false);
+    }
+
+    /**
+     * SAT solver - Glucose
+     *      VSIDS score: D4v2
+     *      frequency decay: 0
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - Glucose (VSIDS score: D4v2, frequency decay: 0)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::GLUCOSE;
+        configuration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 0;
+        configuration.glucoseSolverConfiguration.vsidsScoreType = GlucoseVsidsScoreTypeEnum::D4_V2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * SAT solver - Glucose
+     *      VSIDS score: D4v2
+     *      frequency decay: 2
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - Glucose (VSIDS score: D4v2, frequency decay: 2)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::GLUCOSE;
+        configuration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 2;
+        configuration.glucoseSolverConfiguration.vsidsScoreType = GlucoseVsidsScoreTypeEnum::D4_V2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * SAT solver - Glucose
+     *      VSIDS score: D4v2
+     *      frequency decay: 8
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - Glucose (VSIDS score: D4v2, frequency decay: 8)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::GLUCOSE;
+        configuration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 8;
+        configuration.glucoseSolverConfiguration.vsidsScoreType = GlucoseVsidsScoreTypeEnum::D4_V2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * SAT solver - Glucose
+     *      VSIDS score: D4v2
+     *      frequency decay: 32
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - Glucose (VSIDS score: D4v2, frequency decay: 32)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::GLUCOSE;
+        configuration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 32;
+        configuration.glucoseSolverConfiguration.vsidsScoreType = GlucoseVsidsScoreTypeEnum::D4_V2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * SAT solver - Glucose
+     *      VSIDS score: D4v2
+     *      frequency decay: 128
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - Glucose (VSIDS score: D4v2, frequency decay: 128)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::GLUCOSE;
+        configuration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 128;
+        configuration.glucoseSolverConfiguration.vsidsScoreType = GlucoseVsidsScoreTypeEnum::D4_V2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * SAT solver - Glucose
+     *      VSIDS score: D4v2
+     *      frequency decay: 512
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - Glucose (VSIDS score: D4v2, frequency decay: 512)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::GLUCOSE;
+        configuration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 512;
+        configuration.glucoseSolverConfiguration.vsidsScoreType = GlucoseVsidsScoreTypeEnum::D4_V2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * SAT solver - Glucose
+     *      VSIDS score: D4v2
+     *      frequency decay: 2048
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - Glucose (VSIDS score: D4v2, frequency decay: 2048)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::GLUCOSE;
+        configuration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
+        configuration.glucoseSolverConfiguration.vsidsScoreType = GlucoseVsidsScoreTypeEnum::D4_V2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * SAT solver - Glucose
+     *      VSIDS score: D4v2
+     *      frequency decay: 8192
+     */
+    TEST_CASE("[Compiler::wDNNF] SAT solver - Glucose (VSIDS score: D4v2, frequency decay: 8192)", "[Compiler::wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::GLUCOSE;
+        configuration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 8192;
+        configuration.glucoseSolverConfiguration.vsidsScoreType = GlucoseVsidsScoreTypeEnum::D4_V2;
+
+        process(configuration, false);
+    }
+    //endregion
+    //endregion
+
     //region Decision heuristic
     /**
      * Decision heuristic - random
