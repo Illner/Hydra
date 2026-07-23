@@ -24,7 +24,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include "../core/Solver.h"
 #include "../mtl/Queue.h"
 
-namespace Minisat {
+namespace minisat {
 
     //=================================================================================================
 
@@ -240,6 +240,6 @@ namespace Minisat {
     }
 
     //=================================================================================================
-}   // namespace Minisat
+}   // namespace minisat
 
 #endif

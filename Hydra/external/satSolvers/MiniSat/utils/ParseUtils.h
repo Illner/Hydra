@@ -26,7 +26,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 
 #include <zlib.h>
 
-namespace Minisat {
+namespace minisat {
 
     //-------------------------------------------------------------------------------------------------
     // A simple buffered character stream class:
@@ -126,6 +126,6 @@ namespace Minisat {
     }
 
     //=================================================================================================
-}   // namespace Minisat
+}   // namespace minisat
 
 #endif

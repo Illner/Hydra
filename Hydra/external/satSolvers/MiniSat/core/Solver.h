@@ -27,7 +27,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include "../utils/Options.h"
 #include "SolverTypes.h"
 
-namespace Minisat {
+namespace minisat {
 
     //=================================================================================================
     // Solver -- the main class:
@@ -446,6 +446,6 @@ namespace Minisat {
     // Debug etc:
 
     //=================================================================================================
-}   // namespace Minisat
+}   // namespace minisat
 
 #endif

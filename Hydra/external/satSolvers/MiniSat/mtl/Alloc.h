@@ -23,7 +23,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include "Vec.h"
 #include "XAlloc.h"
 
-namespace Minisat {
+namespace minisat {
 
     //=================================================================================================
     // Simple Region-based memory allocator:
@@ -132,6 +132,6 @@ namespace Minisat {
     }
 
     //=================================================================================================
-}   // namespace Minisat
+}   // namespace minisat
 
 #endif

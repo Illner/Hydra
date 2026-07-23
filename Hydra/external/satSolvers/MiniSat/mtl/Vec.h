@@ -27,7 +27,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include "IntTypes.h"
 #include "XAlloc.h"
 
-namespace Minisat {
+namespace minisat {
 
     //=================================================================================================
     // Automatically resizable arrays
@@ -168,6 +168,6 @@ namespace Minisat {
     }
 
     //=================================================================================================
-}   // namespace Minisat
+}   // namespace minisat
 
 #endif

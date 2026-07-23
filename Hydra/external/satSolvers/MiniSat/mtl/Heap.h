@@ -23,7 +23,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 
 #include "Vec.h"
 
-namespace Minisat {
+namespace minisat {
 
     //=================================================================================================
     // A heap implementation with support for decrease/increase key.
@@ -140,6 +140,6 @@ namespace Minisat {
     };
 
     //=================================================================================================
-}   // namespace Minisat
+}   // namespace minisat
 
 #endif

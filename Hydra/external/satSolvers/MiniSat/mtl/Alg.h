@@ -23,7 +23,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 
 #include "Vec.h"
 
-namespace Minisat {
+namespace minisat {
 
     //=================================================================================================
     // Useful functions on vector-like types:
@@ -73,6 +73,6 @@ namespace Minisat {
     static inline void append(const vec<T>& from, vec<T>& to) { copy(from, to, true); }
 
     //=================================================================================================
-}   // namespace Minisat
+}   // namespace minisat
 
 #endif

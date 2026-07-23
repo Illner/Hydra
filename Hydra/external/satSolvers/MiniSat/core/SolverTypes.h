@@ -29,7 +29,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include "../mtl/Map.h"
 #include "../mtl/Vec.h"
 
-namespace Minisat {
+namespace minisat {
 
     //=================================================================================================
     // Variables, literals, lifted booleans, clauses:
@@ -436,6 +436,6 @@ namespace Minisat {
     }
 
     //=================================================================================================
-}   // namespace Minisat
+}   // namespace minisat
 
 #endif
