@@ -20,8 +20,8 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **************************************************************************************************/
 
-#ifndef Solver_h
-#define Solver_h
+#ifndef Minisat_d4_Solver_h
+#define Minisat_d4_Solver_h
 
 #include <cassert>
 #include <fstream>
@@ -31,7 +31,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "SolverTypes.hpp"
 #include "mtl/Heap.hpp"
 
-namespace minisat {
+namespace minisat_d4 {
     struct Watcher {
         CRef cref;
         Lit blocker;
@@ -1322,6 +1322,6 @@ namespace minisat {
     }
     //=================================================================================================
     // Debug etc:
-}   // namespace minisat
+}   // namespace minisat_d4
 
 #endif

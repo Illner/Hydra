@@ -20,8 +20,8 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **************************************************************************************************/
 
-#ifndef CUBE_GENERATOR_SolverTypes_h
-#define CUBE_GENERATOR_SolverTypes_h
+#ifndef Minisat_d4_SolverTypes_h
+#define Minisat_d4_SolverTypes_h
 
 #include <assert.h>
 #include <iostream>
@@ -33,7 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "mtl/Map.hpp"
 #include "mtl/Vec.hpp"
 
-namespace minisat {
+namespace minisat_d4 {
     //=================================================================================================
     // Variables, literals, lifted booleans, clauses:
 
@@ -224,9 +224,9 @@ namespace minisat {
         friend lbool toLbool(int v);
     };
 
-    const lbool l_True(minisat::lbool((uint8_t)0));
-    const lbool l_False(minisat::lbool((uint8_t)1));
-    const lbool l_Undef(minisat::lbool((uint8_t)2));
+    const lbool l_True(minisat_d4::lbool((uint8_t)0));
+    const lbool l_False(minisat_d4::lbool((uint8_t)1));
+    const lbool l_Undef(minisat_d4::lbool((uint8_t)2));
 
     inline int toInt(lbool l) { return l.value; }
     inline lbool toLbool(int v) { return lbool((uint8_t)v); }
@@ -618,5 +618,5 @@ namespace minisat {
     }
 
     //=================================================================================================
-}   // namespace minisat
+}   // namespace minisat_d4
 #endif

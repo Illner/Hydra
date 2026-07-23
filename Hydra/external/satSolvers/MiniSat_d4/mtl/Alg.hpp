@@ -18,12 +18,12 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **************************************************************************************************/
 
-#ifndef Alg_h
-#define Alg_h
+#ifndef Minisat_d4_Alg_h
+#define Minisat_d4_Alg_h
 
 #include "Vec.hpp"
 
-namespace minisat {
+namespace minisat_d4 {
     //=================================================================================================
     // Useful functions on vector-like types:
 
@@ -70,6 +70,6 @@ namespace minisat {
 
     template <class T>
     static inline void append(const vec<T>& from, vec<T>& to) { copy(from, to, true); }
-}   // namespace minisat
+}   // namespace minisat_d4
 
 #endif

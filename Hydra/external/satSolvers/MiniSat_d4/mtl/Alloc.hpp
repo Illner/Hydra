@@ -17,13 +17,13 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **************************************************************************************************/
 
-#ifndef Alloc_h
-#define Alloc_h
+#ifndef Minisat_d4_Alloc_h
+#define Minisat_d4_Alloc_h
 
 #include "Vec.hpp"
 #include "XAlloc.hpp"
 
-namespace minisat {
+namespace minisat_d4 {
     //=================================================================================================
     // Simple Region-based memory allocator:
 
@@ -129,6 +129,6 @@ namespace minisat {
 
         return prev_sz;
     }
-}   // namespace minisat
+}   // namespace minisat_d4
 
 #endif

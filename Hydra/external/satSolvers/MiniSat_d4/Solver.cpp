@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "mtl/Sort.hpp"
 #include "mtl/Vec.hpp"
 
-namespace minisat {
+namespace minisat_d4 {
     //=================================================================================================
     // Constructor/Destructor:
     Solver::Solver(std::ostream* certif)
@@ -303,7 +303,7 @@ namespace minisat {
                 next = order_heap.removeMin();
         }
 
-        if (next == minisat::var_Undef)
+        if (next == minisat_d4::var_Undef)
             return lit_Undef;
 
         // if (insistTruePolarity[next])
@@ -1179,4 +1179,4 @@ namespace minisat {
         return true;
     }   // propagateAssumption
 
-}   // namespace minisat
+}   // namespace minisat_d4
