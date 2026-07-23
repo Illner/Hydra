@@ -27,7 +27,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 
 #include <zlib.h>
 
-namespace Glucose {
+namespace glucose {
 
     //-------------------------------------------------------------------------------------------------
     // A simple buffered character stream class:
@@ -161,6 +161,6 @@ namespace Glucose {
     }
 
     //=================================================================================================
-}   // namespace Glucose
+}   // namespace glucose
 
 #endif

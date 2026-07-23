@@ -57,7 +57,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include "BoundedQueue.h"
 #include "SolverTypes.h"
 
-namespace Glucose {
+namespace glucose {
     // Core stats
 
     enum CoreStats {
@@ -809,6 +809,6 @@ namespace Glucose {
         }
     };
 
-}   // namespace Glucose
+}   // namespace glucose
 
 #endif

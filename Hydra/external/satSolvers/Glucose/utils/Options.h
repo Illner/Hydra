@@ -29,7 +29,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include "../mtl/Vec.h"
 #include "ParseUtils.h"
 
-namespace Glucose {
+namespace glucose {
 
     //==================================================================================================
     // Top-level option parse/help functions:
@@ -388,6 +388,6 @@ namespace Glucose {
     };
 
     //=================================================================================================
-}   // namespace Glucose
+}   // namespace glucose
 
 #endif

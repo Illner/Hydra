@@ -29,7 +29,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include "XAlloc.h"
 #include <string.h>
 
-namespace Glucose {
+namespace glucose {
 
     //=================================================================================================
     // Automatically resizable arrays
@@ -255,6 +255,6 @@ namespace Glucose {
     }
 
     //=================================================================================================
-}   // namespace Glucose
+}   // namespace glucose
 
 #endif

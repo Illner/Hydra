@@ -47,12 +47,12 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  **************************************************************************************************/
 
-#ifndef SOLVERSTATS_H
-#define SOLVERSTATS_H
+#ifndef Glucose_SolverStats_h
+#define Glucose_SolverStats_h
 
 #include "../mtl/Map.h"
 #include <string>
-namespace Glucose {
+namespace glucose {
 
     class SolverStats {
     protected:
@@ -91,6 +91,6 @@ namespace Glucose {
         }
     };
 
-}   // namespace Glucose
+}   // namespace glucose
 
 #endif /* SOLVERSTATS_H */

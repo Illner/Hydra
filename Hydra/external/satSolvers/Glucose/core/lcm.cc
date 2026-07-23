@@ -1,6 +1,6 @@
 #include "../mtl/Sort.h"
 #include "Solver.h"
-using namespace Glucose;
+using namespace glucose;
 
 // simplify All
 //

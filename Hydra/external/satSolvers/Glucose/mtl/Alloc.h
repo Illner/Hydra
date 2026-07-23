@@ -23,7 +23,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include "Vec.h"
 #include "XAlloc.h"
 
-namespace Glucose {
+namespace glucose {
 
     //=================================================================================================
     // Simple Region-based memory allocator:
@@ -141,6 +141,6 @@ namespace Glucose {
     }
 
     //=================================================================================================
-}   // namespace Glucose
+}   // namespace glucose
 
 #endif

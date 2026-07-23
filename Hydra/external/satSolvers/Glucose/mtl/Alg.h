@@ -23,7 +23,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 
 #include "Vec.h"
 
-namespace Glucose {
+namespace glucose {
 
     //=================================================================================================
     // Useful functions on vector-like types:
@@ -73,6 +73,6 @@ namespace Glucose {
     static inline void append(const vec<T>& from, vec<T>& to) { copy(from, to, true); }
 
     //=================================================================================================
-}   // namespace Glucose
+}   // namespace glucose
 
 #endif

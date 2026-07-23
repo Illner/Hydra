@@ -25,7 +25,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include <string>
 #include <unordered_map>
 
-namespace Glucose {
+namespace glucose {
 
     //=================================================================================================
     // Default hash/equals functions
@@ -221,6 +221,6 @@ namespace Glucose {
     };
 
     //=================================================================================================
-}   // namespace Glucose
+}   // namespace glucose
 
 #endif

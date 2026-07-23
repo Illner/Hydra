@@ -60,7 +60,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include "../mtl/Map.h"
 #include "../mtl/Vec.h"
 
-namespace Glucose {
+namespace glucose {
 
     //=================================================================================================
     // Variables, literals, lifted booleans, clauses:
@@ -123,9 +123,9 @@ namespace Glucose {
     //       does enough constant propagation to produce sensible code, and this appears to be somewhat
     //       fragile unfortunately.
 
-#define l_True (Glucose::lbool((uint8_t)0))   // gcc does not do constant propagation if these are real constants.
-#define l_False (Glucose::lbool((uint8_t)1))
-#define l_Undef (Glucose::lbool((uint8_t)2))
+#define l_True (glucose::lbool((uint8_t)0))   // gcc does not do constant propagation if these are real constants.
+#define l_False (glucose::lbool((uint8_t)1))
+#define l_Undef (glucose::lbool((uint8_t)2))
 
     class lbool {
         uint8_t value;
@@ -559,6 +559,6 @@ namespace Glucose {
     }
 
     //=================================================================================================
-}   // namespace Glucose
+}   // namespace glucose
 
 #endif

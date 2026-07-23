@@ -26,7 +26,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include "../utils/ParseUtils.h"
 #include "SolverTypes.h"
 
-namespace Glucose {
+namespace glucose {
 
     //=================================================================================================
     // DIMACS Parser:
@@ -90,6 +90,6 @@ namespace Glucose {
     }
 
     //=================================================================================================
-}   // namespace Glucose
+}   // namespace glucose
 
 #endif

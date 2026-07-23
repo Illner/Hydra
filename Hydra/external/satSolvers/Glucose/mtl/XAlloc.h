@@ -24,7 +24,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include <stdio.h>
 #include <stdlib.h>
 
-namespace Glucose {
+namespace glucose {
 
     //=================================================================================================
     // Simple layer on top of malloc/realloc to catch out-of-memory situtaions and provide some typing:
@@ -41,6 +41,6 @@ namespace Glucose {
     }
 
     //=================================================================================================
-}   // namespace Glucose
+}   // namespace glucose
 
 #endif

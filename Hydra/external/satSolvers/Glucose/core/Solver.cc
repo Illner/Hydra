@@ -54,7 +54,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include "Constants.h"
 #include "Solver.h"
 
-using namespace Glucose;
+using namespace glucose;
 
 //=================================================================================================
 // Statistics
