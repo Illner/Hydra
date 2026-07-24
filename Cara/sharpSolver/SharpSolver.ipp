@@ -112,9 +112,11 @@ namespace Hydra {
 
         // No hypergraph cut exists (can happen)
         if (hypergraphCut.empty())
-            decisionVariable = decisionHeuristicAbstractUniquePtr_->getDecisionVariable(currentComponentVariableSet, false);
+            decisionVariable = decisionHeuristicAbstractUniquePtr_->getDecisionVariable(currentComponentVariableSet,
+                                                                                        currentComponentVariableSet, false);
         else
-            decisionVariable = decisionHeuristicAbstractUniquePtr_->getDecisionVariable(hypergraphCut, false);
+            decisionVariable = decisionHeuristicAbstractUniquePtr_->getDecisionVariable(hypergraphCut,
+                                                                                        currentComponentVariableSet, false);
 
         assert(decisionVariable != 0);   // decision variable has been set
 

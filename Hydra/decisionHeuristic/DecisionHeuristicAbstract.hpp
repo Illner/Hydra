@@ -6,6 +6,7 @@
 
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
+#include "Hydra/other/Other.hpp"
 #include "Hydra/satSolver/SatSolverAbstract.hpp"
 
 #include "Hydra/decisionHeuristic/exceptions/DecisionHeuristicException.hpp"
@@ -78,14 +79,17 @@ namespace Hydra::DecisionHeuristic {
         /**
          * Compute a decision variable
          * Assert: selectedVariableSet MUST NOT be empty
+         * Assert: selectedVariableSet MUST be a subset of currentComponentVariableSet
          * Local auxiliary data structures:
          *      l_firstCall_getDecisionVariable_
          *      l_restrictedSelectedVariableSet_getDecisionVariable_
          * @param selectedVariableSet a set of (pre)selected variables
+         * @param currentComponentVariableSet a set of variables appearing in the current component
          * @param removeIgnoredPureVariables should ignored pure variables be removed
          * @return a decision variable
          */
-        VarT getDecisionVariable(const VariableSetType& selectedVariableSet, bool removeIgnoredPureVariables = false) const;
+        VarT getDecisionVariable(const VariableSetType& selectedVariableSet, const VariableSetType& currentComponentVariableSet,
+                                 bool removeIgnoredPureVariables = false) const;
 
     #ifndef NDEBUG
     public:

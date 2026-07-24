@@ -136,6 +136,18 @@ namespace Hydra::SatSolver::Glucose {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
+    void GlucoseSolver<VarT, LiteralT, ClauseIdT>::processGetDecisionVariableIsCalled([[maybe_unused]] const VariableSetType& currentComponentVariableSet) {
+        // D4v2
+        if (configuration_.vsidsScoreType == VsidsScoreTypeEnum::D4_V2) {
+            // Decay the variable scores
+            if (configuration_.frequencyDecayD4v2VsidsScore && !(this->numberOfGetDecisionVariableCalls_ % configuration_.frequencyDecayD4v2VsidsScore)) {
+                for (int i = 0; i < solver_.scoreActivity.size(); ++i)
+                    solver_.scoreActivity[i] /= 2;
+            }
+        }
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
     bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::processUnitPropagation(const VariableSetType& restrictedVariableSet,
                                                                           LiteralReusableVectorType& impliedLiteralReusableVector, bool includeAssumptions) {
         assert(impliedLiteralReusableVector.empty());
@@ -234,22 +246,6 @@ namespace Hydra::SatSolver::Glucose {
         assert(variable < variableAssumptionVector_.size());
 
         return variableAssumptionVector_[variable];
-    }
-
-    template <typename VarT, typename LiteralT, typename ClauseIdT>
-    void GlucoseSolver<VarT, LiteralT, ClauseIdT>::getDecisionVariableIsCalled() {
-        ++numberOfGetDecisionVariableCalls_;
-
-        // D4v2
-        if (configuration_.vsidsScoreType == VsidsScoreTypeEnum::D4_V2) {
-            // Decay the variable scores
-            if (configuration_.frequencyDecayD4v2VsidsScore && !(numberOfGetDecisionVariableCalls_ % configuration_.frequencyDecayD4v2VsidsScore)) {
-                numberOfGetDecisionVariableCalls_ = 0;   // reset
-
-                for (int i = 0; i < solver_.scoreActivity.size(); ++i)
-                    solver_.scoreActivity[i] /= 2;
-            }
-        }
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>

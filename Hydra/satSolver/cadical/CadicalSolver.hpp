@@ -50,6 +50,8 @@ namespace Hydra::SatSolver::Cadical {
 
         bool processIsSatisfiable(const VariableSetType& restrictedVariableSet) override;
 
+        void processGetDecisionVariableIsCalled(const VariableSetType& currentComponentVariableSet) override;
+
         bool processUnitPropagation(const VariableSetType& restrictedVariableSet, LiteralReusableVectorType& impliedLiteralReusableVector,
                                     bool includeAssumptions) override;
 
@@ -57,8 +59,6 @@ namespace Hydra::SatSolver::Cadical {
                              LiteralReusableVectorType& impliedLiteralReusableVector) override;
 
         bool isVariableAssigned(VarT variable) const override;
-
-        void getDecisionVariableIsCalled() override;
 
     public:
         VsidsScoreType getVsidsScore(VarT variable) const override;
