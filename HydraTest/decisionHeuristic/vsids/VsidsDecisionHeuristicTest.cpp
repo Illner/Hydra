@@ -44,14 +44,15 @@ namespace HydraTest::DecisionHeuristic::Vsids {
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createVsidsDecisionHeuristic(formulaRepresentation.get(), satSolver.get());
             printDecisionHeuristic(decisionHeuristic.get(), actualResult, false);
 
-            VariableSetType selectedVariableSet = generateSelectedVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
 
             // Before calling SAT
             actualResult << "--------------------" << std::endl;
             actualResult << "------ before ------" << std::endl;
             actualResult << "--------------------" << std::endl;
 
-            computeDecisionHeuristic(decisionHeuristic.get(), selectedVariableSet, actualResult, true);
+            computeDecisionHeuristic(decisionHeuristic.get(), currentComponentVariableSet, currentComponentVariableSet,
+                                     actualResult, true);
 
             // After calling SAT
             actualResult << "-------------------" << std::endl;
@@ -60,7 +61,8 @@ namespace HydraTest::DecisionHeuristic::Vsids {
 
             satSolver->isSatisfiable();
 
-            computeDecisionHeuristic(decisionHeuristic.get(), selectedVariableSet, actualResult, false);
+            computeDecisionHeuristic(decisionHeuristic.get(), currentComponentVariableSet, currentComponentVariableSet,
+                                     actualResult, false);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -75,6 +77,7 @@ namespace HydraTest::DecisionHeuristic::Vsids {
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createVsidsDecisionHeuristic(formulaRepresentation.get(), satSolver.get());
             printDecisionHeuristic(decisionHeuristic.get(), actualResult, false);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4, 5, 6 }, { 1, 7, 13, 19, 25, 31, 37 }, { 7, 8, 9 }, { 13 } };
 
             // Before calling SAT
@@ -83,7 +86,8 @@ namespace HydraTest::DecisionHeuristic::Vsids {
             actualResult << "--------------------" << std::endl;
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector)
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, true);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, true);
 
             // After calling SAT
             actualResult << "-------------------" << std::endl;
@@ -94,7 +98,8 @@ namespace HydraTest::DecisionHeuristic::Vsids {
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
                 printSelectedVariables(selectedVariables, actualResult);
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, false);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, false);
                 actualResult << std::endl;
             }
         }

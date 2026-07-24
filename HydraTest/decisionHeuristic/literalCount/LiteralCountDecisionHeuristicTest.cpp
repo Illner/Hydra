@@ -58,7 +58,10 @@ namespace HydraTest::DecisionHeuristic::LiteralCount {
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createLiteralCountDecisionHeuristic(formulaRepresentation.get(), satSolver.get(),
                                                                                                            DecisionHeuristicTypeEnum::DLCS);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
-            computeDecisionHeuristic(decisionHeuristic.get(), { 1, 2, 3, 4, 5, 6 }, actualResult);
+
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
+
+            computeDecisionHeuristic(decisionHeuristic.get(), currentComponentVariableSet, currentComponentVariableSet, actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -84,10 +87,11 @@ namespace HydraTest::DecisionHeuristic::LiteralCount {
                                                                                                            DecisionHeuristicTypeEnum::DLCS);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 3, 4, 5, 6 }, { 1, 3, 5, 6 }, { 1, 5, 6 }, { 4, 5 }, { 1 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet, actualResult);
             }
         }
         catch (const std::exception& e) {
@@ -116,10 +120,12 @@ namespace HydraTest::DecisionHeuristic::LiteralCount {
                                                                                                            IgnorePureLiteralTypeEnum::ONLY_POSITIVE);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4 }, { 1, 3, 4 }, { 2, 3, 4 }, { 3, 4 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, true, true);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, true, true);
             }
         }
         catch (const std::exception& e) {
@@ -147,10 +153,12 @@ namespace HydraTest::DecisionHeuristic::LiteralCount {
                                                                                                            IgnorePureLiteralTypeEnum::ONLY_NEGATIVE);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4 }, { 1, 3, 4 }, { 2, 3, 4 }, { 3, 4 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, true, true);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, true, true);
             }
         }
         catch (const std::exception& e) {
@@ -178,10 +186,12 @@ namespace HydraTest::DecisionHeuristic::LiteralCount {
                                                                                                            IgnorePureLiteralTypeEnum::BOTH_POSITIVE_AND_NEGATIVE);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4 }, { 1, 3, 4 }, { 2, 3, 4 }, { 3, 4 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, true, true);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, true, true);
             }
         }
         catch (const std::exception& e) {
@@ -208,7 +218,10 @@ namespace HydraTest::DecisionHeuristic::LiteralCount {
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createLiteralCountDecisionHeuristic(formulaRepresentation.get(), satSolver.get(),
                                                                                                            DecisionHeuristicTypeEnum::DLIS);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
-            computeDecisionHeuristic(decisionHeuristic.get(), { 1, 2, 3, 4, 5, 6 }, actualResult);
+
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
+
+            computeDecisionHeuristic(decisionHeuristic.get(), currentComponentVariableSet, currentComponentVariableSet, actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -234,10 +247,11 @@ namespace HydraTest::DecisionHeuristic::LiteralCount {
                                                                                                            DecisionHeuristicTypeEnum::DLIS);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4, 5 }, { 2, 3, 5 }, { 1, 3 }, { 2 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet, actualResult);
             }
         }
         catch (const std::exception& e) {
@@ -266,10 +280,12 @@ namespace HydraTest::DecisionHeuristic::LiteralCount {
                                                                                                            IgnorePureLiteralTypeEnum::ONLY_POSITIVE);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4 }, { 1, 3, 4 }, { 2, 3, 4 }, { 3, 4 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, true, true);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, true, true);
             }
         }
         catch (const std::exception& e) {
@@ -297,10 +313,12 @@ namespace HydraTest::DecisionHeuristic::LiteralCount {
                                                                                                            IgnorePureLiteralTypeEnum::ONLY_NEGATIVE);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4 }, { 1, 3, 4 }, { 2, 3, 4 }, { 3, 4 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, true, true);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, true, true);
             }
         }
         catch (const std::exception& e) {
@@ -328,10 +346,12 @@ namespace HydraTest::DecisionHeuristic::LiteralCount {
                                                                                                            IgnorePureLiteralTypeEnum::BOTH_POSITIVE_AND_NEGATIVE);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4 }, { 1, 3, 4 }, { 2, 3, 4 }, { 3, 4 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, true, true);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, true, true);
             }
         }
         catch (const std::exception& e) {
@@ -358,7 +378,10 @@ namespace HydraTest::DecisionHeuristic::LiteralCount {
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createLiteralCountDecisionHeuristic(formulaRepresentation.get(), satSolver.get(),
                                                                                                            DecisionHeuristicTypeEnum::DLCS_DLIS);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
-            computeDecisionHeuristic(decisionHeuristic.get(), { 1, 2, 3, 4, 5, 6 }, actualResult);
+
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
+
+            computeDecisionHeuristic(decisionHeuristic.get(), currentComponentVariableSet, currentComponentVariableSet, actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -384,10 +407,11 @@ namespace HydraTest::DecisionHeuristic::LiteralCount {
                                                                                                            DecisionHeuristicTypeEnum::DLCS_DLIS);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 4, 5, 6 }, { 1, 5, 6 }, { 4, 5 }, { 1 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet, actualResult);
             }
         }
         catch (const std::exception& e) {
@@ -416,10 +440,12 @@ namespace HydraTest::DecisionHeuristic::LiteralCount {
                                                                                                            IgnorePureLiteralTypeEnum::ONLY_POSITIVE);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4 }, { 1, 3, 4 }, { 2, 3, 4 }, { 3, 4 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, true, true);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, true, true);
             }
         }
         catch (const std::exception& e) {
@@ -447,10 +473,12 @@ namespace HydraTest::DecisionHeuristic::LiteralCount {
                                                                                                            IgnorePureLiteralTypeEnum::ONLY_NEGATIVE);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4 }, { 1, 3, 4 }, { 2, 3, 4 }, { 3, 4 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, true, true);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, true, true);
             }
         }
         catch (const std::exception& e) {
@@ -478,10 +506,12 @@ namespace HydraTest::DecisionHeuristic::LiteralCount {
                                                                                                            IgnorePureLiteralTypeEnum::BOTH_POSITIVE_AND_NEGATIVE);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4 }, { 1, 3, 4 }, { 2, 3, 4 }, { 3, 4 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, true, true);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, true, true);
             }
         }
         catch (const std::exception& e) {

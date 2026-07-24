@@ -47,9 +47,10 @@ namespace HydraTest::DecisionHeuristic::Upc {
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createUpcDecisionHeuristic(formulaRepresentation.get(), satSolver.get(),
                                                                                                   true);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
-            computeDecisionHeuristic(decisionHeuristic.get(),
-                                     generateSelectedVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula()),
-                                     actualResult);
+
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
+
+            computeDecisionHeuristic(decisionHeuristic.get(), currentComponentVariableSet, currentComponentVariableSet, actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -65,10 +66,11 @@ namespace HydraTest::DecisionHeuristic::Upc {
                                                                                                   true);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 2, 3, 4, 5, 6 }, { 2, 3 }, { 4 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet, actualResult);
             }
         }
         catch (const std::exception& e) {
@@ -84,9 +86,10 @@ namespace HydraTest::DecisionHeuristic::Upc {
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createUpcDecisionHeuristic(formulaRepresentation.get(), satSolver.get(),
                                                                                                   false, 1);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
-            computeDecisionHeuristic(decisionHeuristic.get(),
-                                     generateSelectedVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula()),
-                                     actualResult);
+
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
+
+            computeDecisionHeuristic(decisionHeuristic.get(), currentComponentVariableSet, currentComponentVariableSet, actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -102,10 +105,11 @@ namespace HydraTest::DecisionHeuristic::Upc {
                                                                                                   false, 2);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 3 }, { 2, 3, 5 }, { 2, 4, 6 }, { 3, 4, 6 }, { 1, 2, 3, 4, 5, 6 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet, actualResult);
             }
         }
         catch (const std::exception& e) {

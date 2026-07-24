@@ -71,12 +71,12 @@ namespace HydraTest::DecisionHeuristic {
     }
 
     inline void computeDecisionHeuristic(DecisionHeuristicAbstractConstPtrType decisionHeuristicAbstractPtr, const VariableSetType& selectedVariableSet,
-                                         std::stringstream& actualResult, bool printDecisionVariableAndSelectedVariableSet = true,
-                                         bool removeIgnoredPureVariables = false) {
+                                         const VariableSetType& currentComponentVariableSet, std::stringstream& actualResult,
+                                         bool printDecisionVariableAndSelectedVariableSet = true, bool removeIgnoredPureVariables = false) {
         if (printDecisionVariableAndSelectedVariableSet)
             printSelectedVariables(selectedVariableSet, actualResult);
 
-        VarT decisionVariable = decisionHeuristicAbstractPtr->getDecisionVariable(selectedVariableSet, removeIgnoredPureVariables);
+        VarT decisionVariable = decisionHeuristicAbstractPtr->getDecisionVariable(selectedVariableSet, currentComponentVariableSet, removeIgnoredPureVariables);
 
         actualResult << "Decision variable: ";
         if (printDecisionVariableAndSelectedVariableSet)
@@ -90,12 +90,12 @@ namespace HydraTest::DecisionHeuristic {
         actualResult << std::endl;
     }
 
-    inline VariableSetType generateSelectedVariableSet(VarT maxVariable) {
-        VariableSetType selectedVariableSet(maxVariable);
+    inline VariableSetType generateCurrentComponentVariableSet(VarT maxVariable) {
+        VariableSetType currentComponentVariableSet(maxVariable);
 
         for (VarT var = 1; var <= maxVariable; ++var)
-            selectedVariableSet.emplace(var);
+            currentComponentVariableSet.emplace(var);
 
-        return selectedVariableSet;
+        return currentComponentVariableSet;
     }
 }   // namespace HydraTest::DecisionHeuristic
