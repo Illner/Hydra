@@ -61,11 +61,9 @@ namespace Hydra::SatSolver::MiniSat {
                 clause.push(convertLiteralToLiteralMiniSat(*clauseIt));
             }
 
-            // Add the clause
-            if (!solver_.addClause(clause))
-                throw Exception::SatSolver::SomethingWentWrongWhileInitializingSatSolverException("adding clause " + std::to_string(clauseId));
+            solver_.addClause(clause);   // add the clause
 
-            clause.clear();
+            clause.clear();   // clear the clause
         }
     }
 

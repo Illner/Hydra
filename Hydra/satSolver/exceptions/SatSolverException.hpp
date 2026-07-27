@@ -44,15 +44,6 @@ namespace Hydra::Exception::SatSolver {
     };
 
     /**
-     * Something went wrong while initializing the SAT solver
-     */
-    class SomethingWentWrongWhileInitializingSatSolverException : public SatSolverException {
-    public:
-        explicit SomethingWentWrongWhileInitializingSatSolverException(const std::string& message)
-            : SatSolverException("Something went wrong while initializing the SAT solver (" + message + ")!") { }
-    };
-
-    /**
      * The i-th element of the assignment does not correspond to the i-th element of the partial assignment
      */
     template <typename VarT, typename LiteralT>

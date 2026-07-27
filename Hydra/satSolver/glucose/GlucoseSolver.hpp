@@ -11,7 +11,6 @@
 #include "Hydra/satSolver/SatSolverAbstract.hpp"
 
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
-#include "Hydra/satSolver/exceptions/SatSolverException.hpp"
 
 #include "Hydra/satSolver/enums/SatSolverTypeEnum.hpp"
 #include "Hydra/satSolver/glucose/enums/VsidsScoreTypeEnum.hpp"
@@ -29,7 +28,6 @@ namespace Hydra::SatSolver::Glucose {
      * Exceptions:
      *      SomethingCannotBeSavedAsIntException
      *      SomethingCannotBeSavedAsStdSizeTException
-     *      SomethingWentWrongWhileInitializingSatSolverException
      * @tparam VarT type used for a variable
      * @tparam LiteralT type used for a literal
      * @tparam ClauseIdT type used for a clause identifier
@@ -108,7 +106,6 @@ namespace Hydra::SatSolver::Glucose {
 
         /**
          * Initialize the SAT solver
-         * @throw SomethingWentWrongWhileInitializingSatSolverException if something went wrong while initializing the SAT solver
          */
         void processInitializeSatSolver() override;
 
