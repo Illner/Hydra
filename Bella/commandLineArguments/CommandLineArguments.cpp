@@ -54,9 +54,13 @@ namespace Bella::CommandLineArguments {
 
             commandLineArgumentsStruct.exit = true;
 
+            // Version
             std::cout << "Bella (";
             Hydra::Other::Version::printHydraVersion(std::cout);
             std::cout << ")" << std::endl;
+
+            // Build type
+            Hydra::Other::printBuildType(std::cout);
 
             return commandLineArgumentsStruct;
         }
