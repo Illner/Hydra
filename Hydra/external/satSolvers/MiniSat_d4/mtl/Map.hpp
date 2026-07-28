@@ -17,8 +17,8 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **************************************************************************************************/
 
-#ifndef mtl_Map_h
-#define mtl_Map_h
+#ifndef Minisat_d4_Map_h
+#define Minisat_d4_Map_h
 
 #include "../mtl/IntTypes.hpp"
 #include "../mtl/Vec.hpp"
@@ -27,7 +27,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 // Default hash/equals functions
 //
 
-namespace minisat {
+namespace minisat_d4 {
 
     template <class K>
     struct Hash {
@@ -209,6 +209,6 @@ namespace minisat {
         // NOTE: given a bit more time, I could make a more C++-style iterator out of this:
         const vec<Pair>& bucket(int i) const { return table[i]; }
     };
-}   // namespace minisat
+}   // namespace minisat_d4
 
 #endif

@@ -31,6 +31,7 @@ void printConfigurationBeforeCompilation(const CommandLineArgumentsStructT& comm
     std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << std::endl;
 
     // Configuration
+    std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << " SAT solver: " << Hydra::SatSolver::satSolverTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.satSolverType) << std::endl;
     std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << " Number of sample moments: " << std::to_string(commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeComponentCachingConfiguration.numberOfSampleMoments) << std::endl;
     std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << " Partitioning hypergraph type: " << Hydra::partitioningHypergraphTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType) << std::endl;
     std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << " Preprocessing type of Cara caching scheme: " << Hydra::Cache::CachingScheme::preprocessingTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeComponentCachingConfiguration.preprocessingType) << std::endl;

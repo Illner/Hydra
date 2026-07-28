@@ -7,6 +7,9 @@
 #include "Hydra/other/parser/CommandLineArgumentsParser.hpp"
 #include "Hydra/other/version/Version.hpp"
 
+#include "Cara/commandLineArguments/exceptions/CommandLineArgumentsException.hpp"
+#include "Hydra/other/parser/exceptions/CommandLineArgumentsParserException.hpp"
+
 #include "Hydra/compiler/Compiler.tpp"
 
 namespace Cara::CommandLineArguments {
@@ -25,6 +28,10 @@ namespace Cara::CommandLineArguments {
     inline constexpr ArgumentNameType KAHYPAR_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT = "-ka";
     inline constexpr ArgumentNameType CARA_SPEED_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT = "-cs";
     inline constexpr ArgumentNameType PATOH_HMETIS_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT = "-ph";
+
+    // SAT solvers
+    inline constexpr ArgumentNameType MINISAT_SAT_SOLVER_ARGUMENT = "-m";
+    inline constexpr ArgumentNameType GLUCOSE_SAT_SOLVER_ARGUMENT = "-g";
 
     // Preprocessing types
     inline constexpr ArgumentNameType NONE_PREPROCESSING_TYPE_ARGUMENT = "-n";
@@ -55,6 +62,13 @@ namespace Cara::CommandLineArguments {
      * @throw NoPartitioningHypergraphTypeIsMentionedException if no partitioning hypergraph type is mentioned
      */
     Hydra::PartitioningHypergraphTypeEnum getPartitioningHypergraphType(const ArgumentsType& arguments);
+
+    /**
+     * @param arguments the arguments
+     * @return the SAT solver
+     * @throw MoreSatSolversAreMentionedException if more SAT solvers are mentioned
+     */
+    Hydra::SatSolver::SatSolverTypeEnum getSatSolverType(const ArgumentsType& arguments);
 
     /**
      * @param arguments the arguments

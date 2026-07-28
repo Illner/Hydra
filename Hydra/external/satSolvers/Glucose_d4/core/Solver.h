@@ -29,8 +29,8 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **************************************************************************************************/
 
-#ifndef Glucose_Solver_h
-#define Glucose_Solver_h
+#ifndef Glucose_d4_Solver_h
+#define Glucose_d4_Solver_h
 
 #include <fstream>
 #include <iostream>
@@ -43,7 +43,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "Constants.h"
 #include "SolverTypes.h"
 
-namespace glucose {
+namespace glucose_d4 {
 
     //=================================================================================================
     // Solver -- the main class:
@@ -437,8 +437,8 @@ namespace glucose {
 
         inline void rebuildWithConnectedComponent(vec<Var>& v) {
             v.copyTo(problemVariable);
-            stampInTheHeap++;
-            for (int j = 0; j < v.size(); j++)
+            ++stampInTheHeap;
+            for (int j = 0; j < v.size(); ++j)
                 if (value(v[j]) == l_Undef)
                     inTheHeap[v[j]] = stampInTheHeap;
             rebuildOrderHeap();
@@ -809,6 +809,6 @@ namespace glucose {
     }
 
     //=================================================================================================
-}   // namespace glucose
+}   // namespace glucose_d4
 
 #endif

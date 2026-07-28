@@ -22,7 +22,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include "../mtl/Sort.h"
 #include "../utils/System.h"
 
-using namespace glucose;
+using namespace glucose_d4;
 
 //=================================================================================================
 // Options:

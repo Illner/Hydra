@@ -200,6 +200,13 @@ namespace Hydra::SatSolver {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
+    void SatSolverAbstract<VarT, LiteralT, ClauseIdT>::getDecisionVariableIsCalled(const VariableSetType& currentComponentVariableSet) {
+        ++numberOfGetDecisionVariableCalls_;
+
+        processGetDecisionVariableIsCalled(currentComponentVariableSet);
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
     typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::EquivalencePreprocessingStruct
     SatSolverAbstract<VarT, LiteralT, ClauseIdT>::createEquivalencePreprocessingStruct(const VariableSetType& selectedVariableSet,
                                                                                        bool ignoreMultiOccurrentIgnoredVariables,

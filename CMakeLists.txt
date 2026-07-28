@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.14)
 
 project(Hydra
-        VERSION 2.0.1)
+        VERSION 2.1.0)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -16,6 +16,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-class-memaccess -Wno-unknown-warnin
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 # set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -march=native")
+
+# Static linking
+option(BUILD_STATIC "Build static" OFF)
+IF (BUILD_STATIC AND (${CMAKE_SYSTEM_NAME} STREQUAL "Linux"))
+    set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
+ENDIF ()
 
 # "file too big" (CYGWIN)
 IF ((CMAKE_SYSTEM_NAME STREQUAL "CYGWIN") AND (CMAKE_BUILD_TYPE STREQUAL "Debug"))

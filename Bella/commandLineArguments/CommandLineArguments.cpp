@@ -54,9 +54,13 @@ namespace Bella::CommandLineArguments {
 
             commandLineArgumentsStruct.exit = true;
 
+            // Version
             std::cout << "Bella (";
             Hydra::Other::Version::printHydraVersion(std::cout);
             std::cout << ")" << std::endl;
+
+            // Build type
+            Hydra::Other::printBuildType(std::cout);
 
             return commandLineArgumentsStruct;
         }
@@ -71,11 +75,14 @@ namespace Bella::CommandLineArguments {
         // Circuit type
         commandLineArgumentsStruct.compilerConfiguration.circuitType = getCircuitType(arguments);
 
-        // Decision heuristic
-        commandLineArgumentsStruct.compilerConfiguration.decisionHeuristicType = getDecisionHeuristicType(arguments);
-
         // Partitioning hypergraph type
         commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType = getPartitioningHypergraphType(arguments);
+
+        // SAT solver
+        commandLineArgumentsStruct.compilerConfiguration.satSolverType = getSatSolverType(arguments);
+
+        // Decision heuristic
+        commandLineArgumentsStruct.compilerConfiguration.decisionHeuristicType = getDecisionHeuristicType(arguments);
 
         // Component caching
         commandLineArgumentsStruct.compilerConfiguration.cachingSchemeVariantComponentCachingType = getComponentCachingSchemeType(arguments);
@@ -211,7 +218,9 @@ namespace Bella::CommandLineArguments {
         commandLineArgumentsStruct.compilerConfiguration.useEquivalenceSimplificationMethod = Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, EQUIVALENCE_SIMPLIFICATION_METHOD_ARGUMENT);
 
         // SAT solver
-        commandLineArgumentsStruct.compilerConfiguration.satSolverType = Hydra::SatSolver::SatSolverTypeEnum::MINISAT;
+        commandLineArgumentsStruct.compilerConfiguration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
+        commandLineArgumentsStruct.compilerConfiguration.glucoseSolverConfiguration.vsidsScoreType = Hydra::SatSolver::Glucose::VsidsScoreTypeEnum::D4_V2;
+        commandLineArgumentsStruct.compilerConfiguration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
         commandLineArgumentsStruct.compilerConfiguration.miniSatSolverConfiguration.vsidsScoreType = Hydra::SatSolver::MiniSat::VsidsScoreTypeEnum::D4_V2;
 
         // Component caching
@@ -345,7 +354,7 @@ namespace Bella::CommandLineArguments {
         // Cara
         if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CARA_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT)) {
             if (exists)
-                throw Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
+                throw Hydra::Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
 
             exists = true;
             partitioningHypergraphType = Hydra::PartitioningHypergraphTypeEnum::CARA;
@@ -354,7 +363,7 @@ namespace Bella::CommandLineArguments {
         // PaToH or hMETIS
         if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, PATOH_HMETIS_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT)) {
             if (exists)
-                throw Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
+                throw Hydra::Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
 
             exists = true;
             partitioningHypergraphType = Hydra::PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
@@ -362,9 +371,37 @@ namespace Bella::CommandLineArguments {
 
         // No partitioning hypergraph type is mentioned
         if (!exists)
-            throw Exception::CommandLineArguments::NoPartitioningHypergraphTypeIsMentionedException();
+            throw Hydra::Exception::CommandLineArguments::NoPartitioningHypergraphTypeIsMentionedException();
 
         return partitioningHypergraphType;
+    }
+
+    Hydra::SatSolver::SatSolverTypeEnum getSatSolverType(const ArgumentsType& arguments) {
+        using SatSolverTypeEnum = Hydra::SatSolver::SatSolverTypeEnum;
+
+        bool exists = false;
+        SatSolverTypeEnum satSolverType;
+
+        // MiniSat
+        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, MINISAT_SAT_SOLVER_ARGUMENT)) {
+            exists = true;
+            satSolverType = SatSolverTypeEnum::MINISAT;
+        }
+
+        // Glucose
+        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, GLUCOSE_SAT_SOLVER_ARGUMENT)) {
+            if (exists)
+                throw Hydra::Exception::CommandLineArguments::MoreSatSolversAreMentionedException();
+
+            exists = true;
+            satSolverType = SatSolverTypeEnum::GLUCOSE;
+        }
+
+        // No SAT solver is mentioned
+        if (!exists)
+            satSolverType = SatSolverTypeEnum::MINISAT;
+
+        return satSolverType;
     }
 
     Hydra::DecisionHeuristic::DecisionHeuristicTypeEnum getDecisionHeuristicType(const ArgumentsType& arguments) {
@@ -789,6 +826,11 @@ namespace Bella::CommandLineArguments {
         std::cout << " [ " << TIMEOUT_ARGUMENT << " positive_integer (default: " << std::to_string(TIMEOUT_DEFAULT) << ") ]";
         std::cout << std::endl;
 
+        // SAT solvers
+        std::cout << "       ";
+        std::cout << " [ " << MINISAT_SAT_SOLVER_ARGUMENT << " | " << GLUCOSE_SAT_SOLVER_ARGUMENT << " ]";
+        std::cout << std::endl;
+
         // Decision heuristics
         std::cout << "       ";
         std::cout << " [ " << RANDOM_DECISION_HEURISTIC_ARGUMENT << " | " << DLCS_DECISION_HEURISTIC_ARGUMENT << " | " << DLIS_DECISION_HEURISTIC_ARGUMENT << " | " << DLCS_DLIS_DECISION_HEURISTIC_ARGUMENT << " | " << VSIDS_DECISION_HEURISTIC_ARGUMENT << " | " << VSADS_DECISION_HEURISTIC_ARGUMENT << " | " << JEROSLOW_WANG_ONE_SIDED_DECISION_HEURISTIC_ARGUMENT << " | " << JEROSLOW_WANG_TWO_SIDED_DECISION_HEURISTIC_ARGUMENT << " | " << EUPC_DECISION_HEURISTIC_ARGUMENT << " | " << AUPC_DECISION_HEURISTIC_ARGUMENT << " ]";
@@ -844,6 +886,11 @@ namespace Bella::CommandLineArguments {
         std::cout << "\t" << INPUT_ARGUMENT << " — specifies the CNF file name" << std::endl;
         std::cout << "\t" << STATISTICS_ARGUMENT << " — specifies the file name where the statistics will be saved" << std::endl;
         std::cout << "\t" << OUTPUT_ARGUMENT << " — specifies the file name where the compiled circuit will be saved" << std::endl;
+        std::cout << std::endl;
+
+        std::cout << "SAT solvers:" << std::endl;
+        std::cout << "\t" << MINISAT_SAT_SOLVER_ARGUMENT << " — " << Hydra::SatSolver::satSolverTypeEnumToString(Hydra::SatSolver::SatSolverTypeEnum::MINISAT) << " (default)" << std::endl;
+        std::cout << "\t" << GLUCOSE_SAT_SOLVER_ARGUMENT << " — " << Hydra::SatSolver::satSolverTypeEnumToString(Hydra::SatSolver::SatSolverTypeEnum::GLUCOSE) << std::endl;
         std::cout << std::endl;
 
         std::cout << "Decision heuristics:" << std::endl;

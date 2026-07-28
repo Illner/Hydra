@@ -52,12 +52,13 @@ namespace HydraTest::DecisionHeuristic::Random {
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createRandomDecisionHeuristic(formulaRepresentation.get(), satSolver.get());
             printDecisionHeuristic(decisionHeuristic.get(), actualResult, false);
 
-            VariableSetType selectedVariableSet = generateSelectedVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
-            printSelectedVariables(selectedVariableSet, actualResult);
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
+            printSelectedVariables(currentComponentVariableSet, actualResult);
 
             int numberOfIteration = 10;
             for (int i = 0; i < numberOfIteration; ++i)
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariableSet, actualResult, false);
+                computeDecisionHeuristic(decisionHeuristic.get(), currentComponentVariableSet, currentComponentVariableSet,
+                                         actualResult, false);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -82,11 +83,13 @@ namespace HydraTest::DecisionHeuristic::Random {
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createRandomDecisionHeuristic(formulaRepresentation.get(), satSolver.get());
             printDecisionHeuristic(decisionHeuristic.get(), actualResult, false);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4, 5, 6 }, { 1, 7, 13, 19, 25, 31, 37 }, { 7, 8, 9 }, { 13 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
                 printSelectedVariables(selectedVariables, actualResult);
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, false);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, false);
                 actualResult << std::endl;
             }
         }

@@ -5,6 +5,9 @@
 #include "Hydra/other/parser/CommandLineArgumentsParser.hpp"
 #include "Hydra/other/version/Version.hpp"
 
+#include "Bella/commandLineArguments/exceptions/CommandLineArgumentsException.hpp"
+#include "Hydra/other/parser/exceptions/CommandLineArgumentsParserException.hpp"
+
 #include "Hydra/compiler/Compiler.tpp"
 
 namespace Bella::CommandLineArguments {
@@ -57,6 +60,10 @@ namespace Bella::CommandLineArguments {
     inline constexpr ArgumentNameType NONE_HYPERGRAPH_CUT_CACHE_CLEANING_STRATEGY_ARGUMENT = "-n_hcccs";
     inline constexpr ArgumentNameType SHARP_SAT_HYPERGRAPH_CUT_CACHE_CLEANING_STRATEGY_ARGUMENT = "-s_hcccs";
     inline constexpr ArgumentNameType CARA_HYPERGRAPH_CUT_CACHE_CLEANING_STRATEGY_ARGUMENT = "-c_hcccs";
+
+    // SAT solvers
+    inline constexpr ArgumentNameType MINISAT_SAT_SOLVER_ARGUMENT = "-m_ss";
+    inline constexpr ArgumentNameType GLUCOSE_SAT_SOLVER_ARGUMENT = "-g_ss";
 
     // Decision heuristics
     inline constexpr ArgumentNameType RANDOM_DECISION_HEURISTIC_ARGUMENT = "-r_dh";
@@ -126,6 +133,13 @@ namespace Bella::CommandLineArguments {
      * @throw NoPartitioningHypergraphTypeIsMentionedException if no partitioning hypergraph type is mentioned
      */
     Hydra::PartitioningHypergraphTypeEnum getPartitioningHypergraphType(const ArgumentsType& arguments);
+
+    /**
+     * @param arguments the arguments
+     * @return the SAT solver
+     * @throw MoreSatSolversAreMentionedException if more SAT solvers are mentioned
+     */
+    Hydra::SatSolver::SatSolverTypeEnum getSatSolverType(const ArgumentsType& arguments);
 
     /**
      * @param arguments the arguments

@@ -40,6 +40,11 @@ namespace Hydra::SatSolver::Cadical {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
+    void CadicalSolver<VarT, LiteralT, ClauseIdT>::processGetDecisionVariableIsCalled([[maybe_unused]] const VariableSetType& currentComponentVariableSet) {
+        throw Exception::NotImplementedException("", "processGetDecisionVariableIsCalled");
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
     bool CadicalSolver<VarT, LiteralT, ClauseIdT>::processUnitPropagation([[maybe_unused]] const VariableSetType& restrictedVariableSet,
                                                                           [[maybe_unused]] LiteralReusableVectorType& impliedLiteralReusableVector,
                                                                           [[maybe_unused]] bool includeAssumptions) {
@@ -58,11 +63,6 @@ namespace Hydra::SatSolver::Cadical {
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     bool CadicalSolver<VarT, LiteralT, ClauseIdT>::isVariableAssigned([[maybe_unused]] VarT variable) const {
         throw Exception::NotImplementedException("", "isVariableAssigned");
-    }
-
-    template <typename VarT, typename LiteralT, typename ClauseIdT>
-    void CadicalSolver<VarT, LiteralT, ClauseIdT>::getDecisionVariableIsCalled() {
-        throw Exception::NotImplementedException("", "getDecisionVariableIsCalled");
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>

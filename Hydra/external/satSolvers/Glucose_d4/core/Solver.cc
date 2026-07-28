@@ -39,7 +39,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "Solver.h"
 #include "SolverTypes.h"
 
-using namespace glucose;
+using namespace glucose_d4;
 
 //=================================================================================================
 // Options:
@@ -1347,7 +1347,7 @@ lbool Solver::search(int nof_conflicts) {
                 next = pickBranchLit();
 
                 if (next == lit_Undef) {
-                    if (verbosity >= 1)
+                    if (verbosity > 0)
                         printf("c last restart ## conflicts  :  %d %d \n", conflictC,
                                decisionLevel());
                     // Model found:

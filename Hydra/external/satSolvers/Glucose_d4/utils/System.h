@@ -18,10 +18,10 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **************************************************************************************************/
 
-#ifndef Glucose_System_h
-#define Glucose_System_h
+#ifndef Glucose_d4_System_h
+#define Glucose_d4_System_h
 
-#if defined(__linux__)
+#if defined(__linux__) && defined(__GLIBC__) && (defined(__i386__) || defined(__x86_64__))
     #include <fpu_control.h>
 #endif
 
@@ -29,13 +29,13 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 
 //-------------------------------------------------------------------------------------------------
 
-namespace glucose {
+namespace glucose_d4 {
 
     static inline double cpuTime(void);   // CPU-time in seconds.
     extern double memUsed();              // Memory in mega bytes (returns 0 for unsupported architectures).
     extern double memUsedPeak();          // Peak-memory in mega bytes (returns 0 for unsupported architectures).
 
-}   // namespace glucose
+}   // namespace glucose_d4
 
 //-------------------------------------------------------------------------------------------------
 // Implementation of inline functions:
@@ -43,14 +43,14 @@ namespace glucose {
 #if defined(_MSC_VER) || defined(__MINGW32__)
     #include <time.h>
 
-static inline double glucose::cpuTime(void) { return (double)clock() / CLOCKS_PER_SEC; }
+static inline double glucose_d4::cpuTime(void) { return (double)clock() / CLOCKS_PER_SEC; }
 
 #else
     #include <sys/resource.h>
     #include <sys/time.h>
     #include <unistd.h>
 
-static inline double glucose::cpuTime(void) {
+static inline double glucose_d4::cpuTime(void) {
     struct rusage ru;
     getrusage(RUSAGE_SELF, &ru);
     return (double)ru.ru_utime.tv_sec + (double)ru.ru_utime.tv_usec / 1000000;

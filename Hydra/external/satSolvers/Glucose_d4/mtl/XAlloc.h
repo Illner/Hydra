@@ -17,14 +17,14 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **************************************************************************************************/
 
-#ifndef Glucose_XAlloc_h
-#define Glucose_XAlloc_h
+#ifndef Glucose_d4_XAlloc_h
+#define Glucose_d4_XAlloc_h
 
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-namespace glucose {
+namespace glucose_d4 {
 
     //=================================================================================================
     // Simple layer on top of malloc/realloc to catch out-of-memory situtaions and provide some typing:
@@ -41,6 +41,6 @@ namespace glucose {
     }
 
     //=================================================================================================
-}   // namespace glucose
+}   // namespace glucose_d4
 
 #endif

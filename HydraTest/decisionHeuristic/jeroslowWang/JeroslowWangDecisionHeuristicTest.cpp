@@ -56,7 +56,10 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
 
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createJeroslowWangDecisionHeuristic(formulaRepresentation.get(), satSolver.get(), false);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
-            computeDecisionHeuristic(decisionHeuristic.get(), { 1, 2, 3, 4, 5, 6, 7 }, actualResult);
+
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
+
+            computeDecisionHeuristic(decisionHeuristic.get(), currentComponentVariableSet, currentComponentVariableSet, actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -81,10 +84,11 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createJeroslowWangDecisionHeuristic(formulaRepresentation.get(), satSolver.get(), false);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4, 6, 7 }, { 4, 5, 6, 7 }, { 1, 2, 4 }, { 3, 6, 7 }, { 7 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet, actualResult);
             }
         }
         catch (const std::exception& e) {
@@ -112,10 +116,12 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
                                                                                                            IgnorePureLiteralTypeEnum::ONLY_POSITIVE);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4 }, { 1, 3, 4 }, { 2, 3, 4 }, { 3, 4 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, true, true);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, true, true);
             }
         }
         catch (const std::exception& e) {
@@ -142,10 +148,12 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
                                                                                                            IgnorePureLiteralTypeEnum::ONLY_NEGATIVE);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4 }, { 1, 3, 4 }, { 2, 3, 4 }, { 3, 4 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, true, true);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, true, true);
             }
         }
         catch (const std::exception& e) {
@@ -172,10 +180,12 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
                                                                                                            IgnorePureLiteralTypeEnum::BOTH_POSITIVE_AND_NEGATIVE);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4 }, { 1, 3, 4 }, { 2, 3, 4 }, { 3, 4 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, true, true);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, true, true);
             }
         }
         catch (const std::exception& e) {
@@ -201,7 +211,10 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
 
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createJeroslowWangDecisionHeuristic(formulaRepresentation.get(), satSolver.get(), true);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
-            computeDecisionHeuristic(decisionHeuristic.get(), { 1, 2, 3, 4, 5, 6, 7 }, actualResult);
+
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
+
+            computeDecisionHeuristic(decisionHeuristic.get(), currentComponentVariableSet, currentComponentVariableSet, actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -226,10 +239,11 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
             DecisionHeuristicAbstractUniquePtrType decisionHeuristic = createJeroslowWangDecisionHeuristic(formulaRepresentation.get(), satSolver.get(), true);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4, 6, 7 }, { 2, 4, 6, 7 }, { 3, 4, 7 }, { 1, 2 }, { 7 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet, actualResult);
             }
         }
         catch (const std::exception& e) {
@@ -257,10 +271,12 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
                                                                                                            IgnorePureLiteralTypeEnum::ONLY_POSITIVE);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4 }, { 1, 3, 4 }, { 2, 3, 4 }, { 3, 4 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, true, true);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, true, true);
             }
         }
         catch (const std::exception& e) {
@@ -287,10 +303,12 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
                                                                                                            IgnorePureLiteralTypeEnum::ONLY_NEGATIVE);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4 }, { 1, 3, 4 }, { 2, 3, 4 }, { 3, 4 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, true, true);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, true, true);
             }
         }
         catch (const std::exception& e) {
@@ -317,10 +335,12 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
                                                                                                            IgnorePureLiteralTypeEnum::BOTH_POSITIVE_AND_NEGATIVE);
             printDecisionHeuristic(decisionHeuristic.get(), actualResult);
 
+            VariableSetType currentComponentVariableSet = generateCurrentComponentVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula());
             std::vector<VariableSetType> selectedVariablesVector { { 1, 2, 3, 4 }, { 1, 3, 4 }, { 2, 3, 4 }, { 3, 4 } };
 
             for (const VariableSetType& selectedVariables : selectedVariablesVector) {
-                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, actualResult, true, true);
+                computeDecisionHeuristic(decisionHeuristic.get(), selectedVariables, currentComponentVariableSet,
+                                         actualResult, true, true);
             }
         }
         catch (const std::exception& e) {

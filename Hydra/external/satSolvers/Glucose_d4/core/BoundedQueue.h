@@ -19,14 +19,14 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **************************************************************************************************/
 
-#ifndef BoundedQueue_h
-#define BoundedQueue_h
+#ifndef Glucose_d4_BoundedQueue_h
+#define Glucose_d4_BoundedQueue_h
 
 #include "../mtl/Vec.h"
 
 //=================================================================================================
 
-namespace glucose {
+namespace glucose_d4 {
 
     template <class T>
     class bqueue {
@@ -131,7 +131,7 @@ namespace glucose {
             sumofqueue = 0;
         }
     };
-}   // namespace glucose
+}   // namespace glucose_d4
 //=================================================================================================
 
 #endif

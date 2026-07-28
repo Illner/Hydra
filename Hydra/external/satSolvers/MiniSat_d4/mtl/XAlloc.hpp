@@ -17,13 +17,13 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **************************************************************************************************/
 
-#ifndef XAlloc_h
-#define XAlloc_h
+#ifndef Minisat_d4_XAlloc_h
+#define Minisat_d4_XAlloc_h
 
 #include <errno.h>
 #include <stdlib.h>
 
-namespace minisat {
+namespace minisat_d4 {
     //=================================================================================================
     // Simple layer on top of malloc/realloc to catch out-of-memory situtaions and provide some typing:
 
@@ -36,6 +36,6 @@ namespace minisat {
         else
             return mem;
     }
-}   // namespace minisat
+}   // namespace minisat_d4
 
 #endif

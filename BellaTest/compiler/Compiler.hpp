@@ -51,14 +51,16 @@ namespace BellaTest::Compiler {
     using ContagiousFormulaRepresentationConfigurationType = Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentationConfiguration;
     using FormulaRepresentationAbstractUniquePtrType = std::unique_ptr<Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>>;
 
-    using CircuitPtrType = typename Hydra::Compiler<VarT, LiteralT, ClauseIdT>::CircuitPtrType;
-    using NumberOfModelsType = typename Hydra::Circuit::Circuit<VarT, LiteralT>::NumberOfModelsType;
+    using CircuitPtrType = Hydra::Compiler<VarT, LiteralT, ClauseIdT>::CircuitPtrType;
+    using NumberOfModelsType = Hydra::Circuit::Circuit<VarT, LiteralT>::NumberOfModelsType;
 
     using CircuitTypeEnum = Hydra::CompilerConfiguration::CircuitTypeEnum;
     using SatSolverTypeEnum = Hydra::CompilerConfiguration::SatSolverTypeEnum;
     using OmitClauseTypeEnum = Hydra::Cache::CachingScheme::OmitClauseTypeEnum;
     using FormulaInstanceEnum = HydraTest::FormulaInstance::FormulaInstanceEnum;
     using PartitioningHypergraphTypeEnum = Hydra::PartitioningHypergraphTypeEnum;
+    using GlucoseVsidsScoreTypeEnum = Hydra::SatSolver::Glucose::VsidsScoreTypeEnum;
+    using MiniSatVsidsScoreTypeEnum = Hydra::SatSolver::MiniSat::VsidsScoreTypeEnum;
     using VertexWeightTypeEnum = Hydra::CompilerConfiguration::VertexWeightTypeEnum;
     using PreprocessingTypeEnum = Hydra::Cache::CachingScheme::PreprocessingTypeEnum;
     using RecomputingHypergraphCutTypeEnum = Hydra::RecomputingHypergraphCutTypeEnum;
@@ -94,6 +96,8 @@ namespace BellaTest::Compiler {
 
         // SAT solver
         configuration.satSolverType = SatSolverTypeEnum::MINISAT;
+        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
+        configuration.miniSatSolverConfiguration.vsidsScoreType = MiniSatVsidsScoreTypeEnum::D4_V2;
 
         // Decision heuristic
         configuration.decisionHeuristicType = DecisionHeuristicTypeEnum::VSADS;

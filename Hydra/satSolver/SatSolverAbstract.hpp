@@ -4,6 +4,7 @@
 #include <cassert>
 #include <iostream>
 #include <utility>
+#include <vector>
 
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
@@ -23,6 +24,8 @@
 namespace Hydra::SatSolver {
 
     using VsidsScoreType = long double;   // 128 bits
+
+    using LargeNumberType = Hydra::Other::LargeNumberType;
 
     /**
      * SAT solver representation (abstract class)
@@ -55,6 +58,9 @@ namespace Hydra::SatSolver {
     public:
         using EquivalencePreprocessingStruct = SatSolver::EquivalencePreprocessingStruct<VarT, LiteralT>;
 
+    protected:
+        using BoolVectorType = std::vector<bool>;
+
     private:
         using VariableReusableVectorType = typename Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableReusableVectorType;
 
@@ -69,7 +75,8 @@ namespace Hydra::SatSolver {
               l_positiveLiteralTVectorSet_createEquivalencePreprocessingStruct_(), l_variableOrderReusableVector_createEquivalencePreprocessingStruct_(),
               l_positiveUnitPropagationLiteralReusableVector_createEquivalencePreprocessingStruct_(),
               l_negativeUnitPropagationLiteralReusableVector_createEquivalencePreprocessingStruct_(), initiallyImpliedLiterals_(),
-              formulaRepresentationAbstractPtr_(formulaRepresentationAbstractPtr), satSolverStatisticsPtr_(satSolverStatisticsPtr) { }
+              numberOfGetDecisionVariableCalls_(0), formulaRepresentationAbstractPtr_(formulaRepresentationAbstractPtr),
+              satSolverStatisticsPtr_(satSolverStatisticsPtr) { }
 
         SatSolverAbstract(const SatSolverAbstract&) = delete;
         SatSolverAbstract(SatSolverAbstract&&) noexcept = delete;
@@ -96,11 +103,10 @@ namespace Hydra::SatSolver {
 
     protected:
         LiteralVectorType initiallyImpliedLiterals_;
+        LargeNumberType numberOfGetDecisionVariableCalls_;
         FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr_;
 
         SatSolverStatisticsPtrType satSolverStatisticsPtr_;
-
-        inline static constexpr int S_ESTIMATED_SIZE_OF_CLAUSE_ = 4;
 
     protected:
         virtual void processInitializeSatSolver() = 0;
@@ -116,6 +122,8 @@ namespace Hydra::SatSolver {
         virtual bool processIsSatisfiable() = 0;
 
         virtual bool processIsSatisfiable(const VariableSetType& restrictedVariableSet) = 0;
+
+        virtual void processGetDecisionVariableIsCalled(const VariableSetType& currentComponentVariableSet) = 0;
 
         virtual bool processUnitPropagation(const VariableSetType& restrictedVariableSet, LiteralReusableVectorType& impliedLiteralReusableVector,
                                             bool includeAssumptions) = 0;
@@ -219,8 +227,9 @@ namespace Hydra::SatSolver {
         /**
          * The function is invoked when "getDecisionVariable" is called
          * Note: used for decays
+         * @param currentComponentVariableSet a set of variables appearing in the current component
          */
-        virtual void getDecisionVariableIsCalled() = 0;
+        void getDecisionVariableIsCalled(const VariableSetType& currentComponentVariableSet);
 
         /**
          * @param variable a variable

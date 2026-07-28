@@ -3,7 +3,6 @@
 #include <cassert>
 #include <iostream>
 #include <string>
-#include <vector>
 
 #include "Hydra/external/satSolvers/MiniSat_d4/Solver.hpp"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
@@ -12,7 +11,6 @@
 #include "Hydra/satSolver/SatSolverAbstract.hpp"
 
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
-#include "Hydra/satSolver/exceptions/SatSolverException.hpp"
 
 #include "Hydra/satSolver/enums/SatSolverTypeEnum.hpp"
 #include "Hydra/satSolver/minisat/enums/VsidsScoreTypeEnum.hpp"
@@ -21,15 +19,15 @@
 
 namespace Hydra::SatSolver::MiniSat {
 
+    namespace MiniSatCore = minisat_d4;
+
     using VsidsScoreType = Hydra::SatSolver::VsidsScoreType;
-    using FormulaSizeType = Hydra::Formula::Representation::FormulaSizeType;
 
     /**
      * MiniSat solver (final class)
      * Exceptions:
      *      SomethingCannotBeSavedAsIntException
      *      SomethingCannotBeSavedAsStdSizeTException
-     *      SomethingWentWrongWhileInitializingSatSolverException
      * @tparam VarT type used for a variable
      * @tparam LiteralT type used for a literal
      * @tparam ClauseIdT type used for a clause identifier
@@ -38,19 +36,18 @@ namespace Hydra::SatSolver::MiniSat {
     class MiniSatSolver final : public SatSolverAbstract<VarT, LiteralT, ClauseIdT> {
     private:
         using LiteralType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
+        using BoolVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::BoolVectorType;
         using VariableSetType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::VariableSetType;
         using LiteralVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralVectorType;
-        using VariableVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::VariableVectorType;
         using LiteralReusableVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralReusableVectorType;
         using SatSolverStatisticsPtrType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::SatSolverStatisticsPtrType;
         using FormulaRepresentationAbstractPtrType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::FormulaRepresentationAbstractPtrType;
 
     private:
-        using BoolVectorType = std::vector<bool>;
-        using MiniSatSolverType = minisat::Solver;
-        using LiteralMiniSatVectorType = minisat::vec<minisat::Lit>;
-        using VariableMiniSatVectorType = minisat::vec<minisat::Var>;
-        using LiteralMiniSatReusableVectorType = Container::ReusableVector::ReusableVector<minisat::Lit>;
+        using MiniSatSolverType = MiniSatCore::Solver;
+        using LiteralMiniSatVectorType = MiniSatCore::vec<MiniSatCore::Lit>;
+        using VariableMiniSatVectorType = MiniSatCore::vec<MiniSatCore::Var>;
+        using LiteralMiniSatReusableVectorType = Container::ReusableVector::ReusableVector<MiniSatCore::Lit>;
 
     public:
         MiniSatSolver(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr, bool computeInitiallyImpliedLiterals,
@@ -59,7 +56,7 @@ namespace Hydra::SatSolver::MiniSat {
             : SatSolverAbstract<VarT, LiteralT, ClauseIdT>(formulaRepresentationAbstractPtr, SatSolverTypeEnum::MINISAT, satSolverStatisticsPtr),
               activeModel_(false), solver_(),
               variableAssumptionVector_(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormulaUsedForIndexing(), false),
-              numberOfGetDecisionVariableCalls_(0), configuration_(configuration),
+              configuration_(configuration),
               l_restrictedVariableMiniSatVector_processIsSatisfiable_(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula()),
               l_firstCall_unitPropagation_(true), l_impliedLiteralMiniSatReusableVector_unitPropagation_() {
             // The variables cannot be saved as std::size_t
@@ -70,13 +67,9 @@ namespace Hydra::SatSolver::MiniSat {
             if (!Other::unsignedValueCanBeSavedAsInt<LiteralT>(this->formulaRepresentationAbstractPtr_->getNumberOfLiteralsInOriginalFormula()))
                 throw Exception::SomethingCannotBeSavedAsIntException("literals", this->formulaRepresentationAbstractPtr_->getNumberOfLiteralsInOriginalFormula());
 
-            // The clauses cannot be saved as int
-            if (!Other::unsignedValueCanBeSavedAsInt<ClauseIdT>(this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses()))
-                throw Exception::SomethingCannotBeSavedAsIntException("clauses", this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses());
-
-            // The formula size cannot be saved as int
-            if (!Other::unsignedValueCanBeSavedAsInt<FormulaSizeType>(this->formulaRepresentationAbstractPtr_->getOriginalFormulaSize()))
-                throw Exception::SomethingCannotBeSavedAsIntException("formula size", this->formulaRepresentationAbstractPtr_->getOriginalFormulaSize());
+            // The clauses cannot be saved as std::size_t
+            if (!Other::unsignedValueCanBeSavedAsStdSizeT<ClauseIdT>(this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses()))
+                throw Exception::SomethingCannotBeSavedAsStdSizeTException("clauses", this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses());
 
             this->initializeSatSolver();
 
@@ -91,7 +84,6 @@ namespace Hydra::SatSolver::MiniSat {
         bool activeModel_;
         MiniSatSolverType solver_;
         BoolVectorType variableAssumptionVector_;
-        LargeNumberType numberOfGetDecisionVariableCalls_;
 
         MiniSatSolverConfiguration configuration_;
 
@@ -103,18 +95,17 @@ namespace Hydra::SatSolver::MiniSat {
         LiteralMiniSatReusableVectorType l_impliedLiteralMiniSatReusableVector_unitPropagation_;
 
     private:
-        bool lboolIsTrue(const minisat::lbool& b) const;
-        bool lboolIsFalse(const minisat::lbool& b) const;
-        bool lboolIsUndef(const minisat::lbool& b) const;
+        static bool lboolIsTrue(const MiniSatCore::lbool& b);
+        static bool lboolIsFalse(const MiniSatCore::lbool& b);
+        static bool lboolIsUndef(const MiniSatCore::lbool& b);
 
-        minisat::Var convertVariableToVariableMiniSat(VarT variable) const;
-        VarT convertVariableMiniSatToVariable(minisat::Var variableMiniSat) const;
-        minisat::Lit convertLiteralToLiteralMiniSat(const LiteralType& literal) const;
-        LiteralType convertLiteralMiniSatToLiteral(const minisat::Lit& literalMiniSat) const;
+        static MiniSatCore::Var convertVariableToVariableMiniSat(VarT variable);
+        static VarT convertVariableMiniSatToVariable(MiniSatCore::Var variableMiniSat);
+        static MiniSatCore::Lit convertLiteralToLiteralMiniSat(const LiteralType& literal);
+        static LiteralType convertLiteralMiniSatToLiteral(const MiniSatCore::Lit& literalMiniSat);
 
         /**
          * Initialize the SAT solver
-         * @throw SomethingWentWrongWhileInitializingSatSolverException if something went wrong while initializing the SAT solver
          */
         void processInitializeSatSolver() override;
 
@@ -130,6 +121,8 @@ namespace Hydra::SatSolver::MiniSat {
 
         bool processIsSatisfiable(const VariableSetType& restrictedVariableSet) override;
 
+        void processGetDecisionVariableIsCalled(const VariableSetType& currentComponentVariableSet) override;
+
         bool processUnitPropagation(const VariableSetType& restrictedVariableSet, LiteralReusableVectorType& impliedLiteralReusableVector,
                                     bool includeAssumptions) override;
 
@@ -138,9 +131,6 @@ namespace Hydra::SatSolver::MiniSat {
 
         bool isVariableAssigned(VarT variable) const override;
 
-        void getDecisionVariableIsCalled() override;
-
-    public:
         VsidsScoreType getVsidsScore(VarT variable) const override;
 
     #ifndef NDEBUG
@@ -151,13 +141,13 @@ namespace Hydra::SatSolver::MiniSat {
          * Print the assumptions
          * Note: prefix
          */
-        void printAssumptions(std::ostream& out) const;
+        void printAssumptionsDebug(std::ostream& out) const;
 
         /**
          * Print the current formula
          * Note: prefix
          */
-        void printCurrentFormula(std::ostream& out, bool printLearntClauses = false) const;
+        void printCurrentFormulaDebug(std::ostream& out, bool printLearntClauses = false) const;
     #endif
     };
 }   // namespace Hydra::SatSolver::MiniSat

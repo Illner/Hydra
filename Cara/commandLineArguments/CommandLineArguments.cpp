@@ -48,15 +48,19 @@ namespace Cara::CommandLineArguments {
 
             commandLineArgumentsStruct.exit = true;
 
+            // Version
             std::cout << "Cara (";
             Hydra::Other::Version::printHydraVersion(std::cout);
             std::cout << ")" << std::endl;
 
+            // Build type
+            Hydra::Other::printBuildType(std::cout);
+
             return commandLineArgumentsStruct;
         }
 
-        // program < -ph | -ka | -cd | -cs > -i input_file -nsm integer [ -n | -ndc | -nsc ] [ -mmbf positive_integer ]
-        if (argc < 6 || argc > 9)
+        // program < -ph | -ka | -cd | -cs > -i input_file -nsm integer [ -mmbf positive_integer ] [ -m | -g ] [ -n | -ndc | -nsc ]
+        if (argc < 6 || argc > 10)
             throw Hydra::Exception::Other::Parser::CommandLineArguments::InvalidNumberOfArgumentsException();
 
         // Initialize the configurations
@@ -85,6 +89,9 @@ namespace Cara::CommandLineArguments {
             default:
                 break;
         }
+
+        // SAT solver
+        commandLineArgumentsStruct.compilerConfiguration.satSolverType = getSatSolverType(arguments);
 
         // Preprocessing type
         commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = getPreprocessingType(arguments);
@@ -157,7 +164,9 @@ namespace Cara::CommandLineArguments {
         commandLineArgumentsStruct.compilerConfiguration.implicitBcpVariableOrderType = Hydra::SatSolver::ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_DESCENDING;
 
         // SAT solver
-        commandLineArgumentsStruct.compilerConfiguration.satSolverType = Hydra::SatSolver::SatSolverTypeEnum::MINISAT;
+        commandLineArgumentsStruct.compilerConfiguration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
+        commandLineArgumentsStruct.compilerConfiguration.glucoseSolverConfiguration.vsidsScoreType = Hydra::SatSolver::Glucose::VsidsScoreTypeEnum::D4_V2;
+        commandLineArgumentsStruct.compilerConfiguration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
         commandLineArgumentsStruct.compilerConfiguration.miniSatSolverConfiguration.vsidsScoreType = Hydra::SatSolver::MiniSat::VsidsScoreTypeEnum::D4_V2;
 
         // Others
@@ -178,7 +187,7 @@ namespace Cara::CommandLineArguments {
         // Cara
         if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CARA_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT)) {
             if (exists)
-                throw Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
+                throw Hydra::Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
 
             exists = true;
             partitioningHypergraphType = Hydra::PartitioningHypergraphTypeEnum::CARA;
@@ -187,7 +196,7 @@ namespace Cara::CommandLineArguments {
         // Cara (speed)
         if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CARA_SPEED_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT)) {
             if (exists)
-                throw Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
+                throw Hydra::Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
 
             exists = true;
             partitioningHypergraphType = Hydra::PartitioningHypergraphTypeEnum::CARA_SPEED;
@@ -196,7 +205,7 @@ namespace Cara::CommandLineArguments {
         // PaToH or hMETIS
         if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, PATOH_HMETIS_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT)) {
             if (exists)
-                throw Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
+                throw Hydra::Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
 
             exists = true;
             partitioningHypergraphType = Hydra::PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
@@ -204,9 +213,37 @@ namespace Cara::CommandLineArguments {
 
         // No partitioning hypergraph type is mentioned
         if (!exists)
-            throw Exception::CommandLineArguments::NoPartitioningHypergraphTypeIsMentionedException();
+            throw Hydra::Exception::CommandLineArguments::NoPartitioningHypergraphTypeIsMentionedException();
 
         return partitioningHypergraphType;
+    }
+
+    Hydra::SatSolver::SatSolverTypeEnum getSatSolverType(const ArgumentsType& arguments) {
+        using SatSolverTypeEnum = Hydra::SatSolver::SatSolverTypeEnum;
+
+        bool exists = false;
+        SatSolverTypeEnum satSolverType;
+
+        // MiniSat
+        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, MINISAT_SAT_SOLVER_ARGUMENT)) {
+            exists = true;
+            satSolverType = SatSolverTypeEnum::MINISAT;
+        }
+
+        // Glucose
+        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, GLUCOSE_SAT_SOLVER_ARGUMENT)) {
+            if (exists)
+                throw Hydra::Exception::CommandLineArguments::MoreSatSolversAreMentionedException();
+
+            exists = true;
+            satSolverType = SatSolverTypeEnum::GLUCOSE;
+        }
+
+        // No SAT solver is mentioned
+        if (!exists)
+            satSolverType = SatSolverTypeEnum::MINISAT;
+
+        return satSolverType;
     }
 
     Hydra::Cache::CachingScheme::PreprocessingTypeEnum getPreprocessingType(const ArgumentsType& arguments) {
@@ -269,6 +306,9 @@ namespace Cara::CommandLineArguments {
         std::cout << NUMBER_OF_SAMPLE_MOMENTS_ARGUMENT << " integer (min: " << std::to_string(Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::S_NUMBER_OF_SAMPLE_MOMENTS_MINIMUM) << ", max: " << std::to_string(Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::S_NUMBER_OF_SAMPLE_MOMENTS_MAXIMUM) << ")";
         std::cout << " [ " << MUST_MULTIPLY_BY_FACTOR_ARGUMENT << " positive_integer (default: 1) ]";
 
+        // SAT solvers
+        std::cout << " [ " << MINISAT_SAT_SOLVER_ARGUMENT << " | " << GLUCOSE_SAT_SOLVER_ARGUMENT << " ]";
+
         // Preprocessing types
         std::cout << " [ " << NONE_PREPROCESSING_TYPE_ARGUMENT << " | " << NOT_DUPLICATE_CLAUSES_PREPROCESSING_TYPE_ARGUMENT << " | " << NOT_SUBSUMED_CLAUSES_PREPROCESSING_TYPE_ARGUMENT << " ]";
         std::cout << std::endl;
@@ -283,6 +323,11 @@ namespace Cara::CommandLineArguments {
 
         std::cout << "Files:" << std::endl;
         std::cout << "\t" << INPUT_ARGUMENT << " — specifies the CNF file name" << std::endl;
+        std::cout << std::endl;
+
+        std::cout << "SAT solvers:" << std::endl;
+        std::cout << "\t" << MINISAT_SAT_SOLVER_ARGUMENT << " — " << Hydra::SatSolver::satSolverTypeEnumToString(Hydra::SatSolver::SatSolverTypeEnum::MINISAT) << " (default)" << std::endl;
+        std::cout << "\t" << GLUCOSE_SAT_SOLVER_ARGUMENT << " — " << Hydra::SatSolver::satSolverTypeEnumToString(Hydra::SatSolver::SatSolverTypeEnum::GLUCOSE) << std::endl;
         std::cout << std::endl;
 
         std::cout << "Preprocessing types of Cara caching scheme:" << std::endl;

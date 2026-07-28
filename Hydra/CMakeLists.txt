@@ -7,7 +7,8 @@ add_library(HydraLibrary STATIC
         "other/parser/CommandLineArgumentsParser.cpp"
         "statistics/StatisticsAbstract.cpp" "statistics/Statistics.cpp" "other/version/Version.cpp"
         "other/operatingSystem/OperatingSystem.cpp" "other/memory/Memory.cpp" "other/container/vectorSet/VectorSet.cpp"
-        "other/type/arbitraryPrecisionInteger/custom/CustomArbitraryPrecisionInteger.cpp" "external/satSolvers/MiniSat_d4/Solver.cpp"
+        "other/type/arbitraryPrecisionInteger/custom/CustomArbitraryPrecisionInteger.cpp"
+        "external/satSolvers/MiniSat_d4/Solver.cpp" "external/satSolvers/Glucose_d4/core/Solver.cc"
 
         # Statistics
         "cache/Cache.cxx"

@@ -6,8 +6,15 @@ namespace Hydra::DecisionHeuristic {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     VarT DecisionHeuristicAbstract<VarT, LiteralT, ClauseIdT>::getDecisionVariable(const VariableSetType& selectedVariableSet,
+                                                                                   const VariableSetType& currentComponentVariableSet,
                                                                                    bool removeIgnoredPureVariables) const {
         assert(!selectedVariableSet.empty());   // at least one variable
+
+        #ifndef NDEBUG
+        // Check if selectedVariableSet is a subset of currentComponentVariableSet
+        for (VarT var : selectedVariableSet)
+            assert(Hydra::Other::containInSet(currentComponentVariableSet, var));
+        #endif
 
         // Statistics
         if (decisionHeuristicStatisticsPtr_) {
@@ -15,7 +22,7 @@ namespace Hydra::DecisionHeuristic {
             decisionHeuristicStatisticsPtr_->numberOfPreselectedVariablesCounter.addCount(static_cast<Statistics::LargeNumberType>(selectedVariableSet.size()));
         }
 
-        satSolverAbstractPtr_->getDecisionVariableIsCalled();
+        satSolverAbstractPtr_->getDecisionVariableIsCalled(currentComponentVariableSet);
 
         // No restriction is needed
         if (!removeIgnoredPureVariables || (ignorePureLiteralType_ == IgnorePureLiteralTypeEnum::NONE)) {

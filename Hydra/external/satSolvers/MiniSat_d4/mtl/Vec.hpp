@@ -18,8 +18,8 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **************************************************************************************************/
 
-#ifndef Vec_h
-#define Vec_h
+#ifndef Minisat_d4_Vec_h
+#define Minisat_d4_Vec_h
 
 #include <assert.h>
 #include <new>
@@ -33,7 +33,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 //
 // NOTE! Don't use this vector on datatypes that cannot be re-located in memory (with realloc)
 
-namespace minisat {
+namespace minisat_d4 {
     template <class T>
     class vec {
         T* data;
@@ -190,7 +190,7 @@ namespace minisat {
         data[pos] = data[--sz];
         return pos != -1;
     }
-}   // namespace minisat
+}   // namespace minisat_d4
 
 //=================================================================================================
 

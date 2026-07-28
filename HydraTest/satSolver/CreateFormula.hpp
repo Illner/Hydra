@@ -14,6 +14,12 @@ namespace HydraTest::SatSolver {
     inline std::unique_ptr<Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> createFormulaWithUnitClauses();
 
     /**
+     * Formula with conflicting unit clauses
+     */
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    inline std::unique_ptr<Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> createFormulaWithConflictingUnitClauses();
+
+    /**
      * Unsatisfiable formula
      */
     template <typename VarT, typename LiteralT, typename ClauseIdT>

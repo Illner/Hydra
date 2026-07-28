@@ -28,6 +28,6 @@ namespace HydraTest {
         /**
          * Save the actual result to a file
          */
-        void saveActualResultToFile(const std::string& filePath = "/Users/illner/CLionProjects/Hydra/temp.txt") const;
+        void saveActualResultToFile(const std::string& filePath = "/Users/illner/CLionProjects/HydraPublic/temp.txt") const;
     };
 }   // namespace HydraTest
