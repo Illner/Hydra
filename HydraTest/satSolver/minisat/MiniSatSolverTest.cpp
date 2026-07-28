@@ -42,6 +42,32 @@ namespace HydraTest::SatSolver::MiniSat {
     }
 
     /**
+     * Formula with conflicting unit clauses
+     */
+    TEST_CASE("[SatSolver::MiniSat] formula with conflicting unit clauses", "[SatSolver::MiniSat]") {
+        TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
+                          miniSatSolverFormulaWithConflictingUnitClausesResult);
+        std::stringstream& actualResult = test.getStringStream();
+
+        try {
+            FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaWithConflictingUnitClauses<VarT, LiteralT, ClauseIdT>();
+            printCurrentFormula(formulaRepresentation.get(), actualResult);
+
+            SatSolverAbstractUniquePtrType satSolver = std::make_unique<MiniSatSolverType>(formulaRepresentation.get(), true);
+            printSatSolver(satSolver.get(), actualResult);
+
+            bool isSatisfiable = satSolver->isSatisfiable();
+            actualResult << "Is satisfiable: " << std::to_string(isSatisfiable) << std::endl;
+        }
+        catch (const std::exception& e) {
+            actualResult << e.what() << std::endl;
+        }
+
+        // test.saveActualResultToFile();
+        REQUIRE(test.checkTest());
+    }
+
+    /**
      * Satisfiability (satisfiable formula)
      */
     TEST_CASE("[SatSolver::MiniSat] satisfiability (satisfiable formula)", "[SatSolver::MiniSat]") {

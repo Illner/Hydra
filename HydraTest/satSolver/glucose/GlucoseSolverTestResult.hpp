@@ -23,6 +23,27 @@ namespace HydraTest::SatSolver::Glucose {
                                                         "\n"
                                                         "\n";
 
+    inline std::string glucoseSolverFormulaWithConflictingUnitClausesResult = "Current formula: -1 0 1 0 2 3 0 \n"
+                                                                              "\n"
+                                                                              "SAT solver\n"
+                                                                              "Type: Glucose\n"
+                                                                              "Initially implied literals: 1\n"
+                                                                              "VSIDS score type: Glucose\n"
+                                                                              "Assumption:\n"
+                                                                              "Variable assumption:\n"
+                                                                              "\n"
+                                                                              "-------------------\n"
+                                                                              "----- Glucose -----\n"
+                                                                              "-------------------\n"
+                                                                              "Number of variables: 3\n"
+                                                                              "Number of clauses: 1\n"
+                                                                              "Number of assigned literals: 1\n"
+                                                                              "Assumptions: \n"
+                                                                              "Current formula: 2 3 0 00\n"
+                                                                              "\n"
+                                                                              "\n"
+                                                                              "Is satisfiable: 0\n";
+
     inline std::string glucoseSolverSatisfiabilitySatisfiableFormulaResult = "Current formula: 1 0 -2 0 -1 3 0 1 -5 0 -2 6 0 2 -4 0 -7 -8 0 -7 8 0 7 -8 0 \n"
                                                                              "\n"
                                                                              "SAT solver\n"

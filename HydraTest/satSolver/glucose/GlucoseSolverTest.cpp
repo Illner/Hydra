@@ -42,6 +42,32 @@ namespace HydraTest::SatSolver::Glucose {
     }
 
     /**
+     * Formula with conflicting unit clauses
+     */
+    TEST_CASE("[SatSolver::Glucose] formula with conflicting unit clauses", "[SatSolver::Glucose]") {
+        TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
+                          glucoseSolverFormulaWithConflictingUnitClausesResult);
+        std::stringstream& actualResult = test.getStringStream();
+
+        try {
+            FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaWithConflictingUnitClauses<VarT, LiteralT, ClauseIdT>();
+            printCurrentFormula(formulaRepresentation.get(), actualResult);
+
+            SatSolverAbstractUniquePtrType satSolver = std::make_unique<GlucoseSolverType>(formulaRepresentation.get(), true);
+            printSatSolver(satSolver.get(), actualResult);
+
+            bool isSatisfiable = satSolver->isSatisfiable();
+            actualResult << "Is satisfiable: " << std::to_string(isSatisfiable) << std::endl;
+        }
+        catch (const std::exception& e) {
+            actualResult << e.what() << std::endl;
+        }
+
+        // test.saveActualResultToFile();
+        REQUIRE(test.checkTest());
+    }
+
+    /**
      * Satisfiability (satisfiable formula)
      */
     TEST_CASE("[SatSolver::Glucose] satisfiability (satisfiable formula)", "[SatSolver::Glucose]") {

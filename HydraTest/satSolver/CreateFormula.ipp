@@ -52,6 +52,34 @@ namespace HydraTest::SatSolver {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
+    std::unique_ptr<Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> createFormulaWithConflictingUnitClauses() {
+        using LiteralType = typename Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
+        using FormulaType = typename Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentation<VarT, LiteralT, ClauseIdT>::FormulaType;
+        using ClauseIdVectorType = typename Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType;
+        using ContagiousFormulaRepresentationType = Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentation<VarT, LiteralT, ClauseIdT>;
+
+        LiteralType litPos1(1, true);
+        LiteralType litNeg1(1, false);
+        LiteralType litPos2(2, true);
+        LiteralType litPos3(3, true);
+        LiteralType zeroLit = Hydra::Formula::createZeroLiteral<VarT, LiteralT>();
+
+        FormulaType formula {
+            litPos1, zeroLit,            // 0
+            litPos2, litPos3, zeroLit,   // 1
+            litNeg1, zeroLit             // 2
+        };
+
+        VarT numberOfVariables = 3;
+        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contagious::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
+        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contagious::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
+
+        return std::make_unique<ContagiousFormulaRepresentationType>(std::move(formula),
+                                                                     numberOfVariables, numberOfClauses,
+                                                                     literalNumberOfOccurrences);
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
     std::unique_ptr<Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> createUnsatisfiableFormula() {
         using LiteralType = typename Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
         using FormulaType = typename Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentation<VarT, LiteralT, ClauseIdT>::FormulaType;
@@ -117,7 +145,7 @@ namespace HydraTest::SatSolver {
             litPos4, litPos5, zeroLit,   // 4
 
             litPos6, litNeg7, zeroLit,   // 5
-            litPos7, litNeg8, zeroLit,   // 6
+            litPos7, litNeg8, zeroLit    // 6
         };
 
         VarT numberOfVariables = 8;
