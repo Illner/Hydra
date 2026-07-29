@@ -31,10 +31,9 @@ Building requires:
 > [!NOTE]
 > On Windows, [Cygwin](https://cygwin.com/) is needed.
 
-Both Bella and Cara are built using their respective scripts (`bella.sh` or `cara.sh`) located in the `scripts/` directory. 
-Compilation takes place in either the `build_bella` or `build_cara` directory, depending on the tool you are building.
+Both Bella and Cara are built using their respective scripts (`bella.sh` or `cara.sh`) located in the `scripts/` directory. Compilation takes place in either the `build_bella` or `build_cara` directory, depending on the tool you are building.
 
-Replace `<tool>` with either `bella` or `cara` (and `<Tool>` with either `Bella` or `Cara`) in the commands below.
+In the commands below, replace `<tool>` with either `bella` or `cara`, and `<Tool>` with its capitalised form (that is, either `Bella` or `Cara`).
 
 ### Release
 
