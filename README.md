@@ -114,6 +114,10 @@ The corresponding binaries are in the locations mentioned above.
   `Hydra/external/partitioningHypergraphs/KaHyPar`  
   `Hydra/external/boost` (_precompiled libraries required by KaHyPar_)
 
+## Licence
+
+Hydra is released under the [MIT License](LICENSE). The bundled third-party software components in `Hydra/external/` (see above) are subject to their own licences. Some of them are restricted to academic and research use.
+
 ## Papers
 
 If you use **Bella for (s)d-DNNF/wDNNF circuits** in an academic setting, please cite the following paper describing the knowledge compiler:
