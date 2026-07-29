@@ -27,7 +27,7 @@ IF (BUILD_STATIC)
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
     # Not supported
     ELSE ()
-        message(WARNING "Static linking is supported ONLY on Linux.")
+        message(WARNING "Static linking is NOT supported on your operating system.")
     ENDIF ()
 ENDIF ()
 
