@@ -53,19 +53,19 @@ The compilation takes place in the **`build_cara`** directory. The release binar
 
 * [MiniSat 2.2.0 (d4v2 version)](https://github.com/crillab/d4v2) <br> Hydra/external/satSolvers/MiniSat_d4
 * [Glucose 3.0 (d4v2 version)](https://github.com/crillab/d4v2) <br> Hydra/external/satSolvers/Glucose_d4  
-* [MiniSat 2.2.0](https://github.com/niklasso/minisat) <br> <i> implemented, not used </i> <br> Hydra/external/satSolvers/MiniSat
+* [MiniSat 2.2.0](https://github.com/niklasso/minisat) <br> _implemented, not used_ <br> Hydra/external/satSolvers/MiniSat
 * [CaDiCaL 3.0.0](https://github.com/arminbiere/cadical) (TBD) <br> Hydra/external/satSolvers/CaDiCaL
 
 ### Hash map
 
 * [unordered_dense v4.5.0](https://github.com/martinus/unordered_dense) <br> Hydra/external/hashMaps/unordered_dense
 * [robin-hood-hashing 3.11.5](https://github.com/martinus/robin-hood-hashing) <br> Hydra/external/hashMaps/robin-hood-hashing
-* [flat_hash_map](https://github.com/skarupke/flat_hash_map) <br> <i> implemented, not used </i> <br> Hydra/external/hashMaps/flat_hash_map
+* [flat_hash_map](https://github.com/skarupke/flat_hash_map) <br> _implemented, not used_ <br> Hydra/external/hashMaps/flat_hash_map
 
 ### Hypergraph partitioning
 
-* [PaToH v3.3](https://faculty.cc.gatech.edu/~umit/software.html) <br> <i> used for Linux, and macOS </i> <br> Hydra/external/partitioningHypergraphs/PaToH
-* [hMETIS 1.5.3](https://papers.karypis.org/glaros/software/metis/overview.html) <br> <i> used only for Windows </i> <br> Hydra/external/partitioningHypergraphs/hMETIS
+* [PaToH v3.3](https://faculty.cc.gatech.edu/~umit/software.html) <br> _used for Linux, and macOS_ <br> Hydra/external/partitioningHypergraphs/PaToH
+* [hMETIS 1.5.3](https://papers.karypis.org/glaros/software/metis/overview.html) <br> _used only for Windows_ <br> Hydra/external/partitioningHypergraphs/hMETIS
 * [KaHyPar v.1.3.3](https://kahypar.org/) <br> Hydra/external/partitioningHypergraphs/KaHyPar
 
 ### Other
