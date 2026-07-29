@@ -1,9 +1,9 @@
 Hydra is licensed under the MIT License, with the exception of the external
 software components.
 
-The external software components (see the section "Used software" in the README)
-are subject to their respective licenses, which are provided alongside the
-software components in Hydra/external/.
+The external software components (see the section "Third-Party Software" in
+the README) are subject to their respective licenses, which are provided
+alongside the software components in Hydra/external/.
 
 --------------------------------------------------------------------------------
 
