@@ -18,7 +18,7 @@ namespace Cara::CommandLineArguments {
     using ArgumentNameType = typename Hydra::Other::Parser::CommandLineArguments::ArgumentNameType;
     using ArgumentValueType = typename Hydra::Other::Parser::CommandLineArguments::ArgumentValueType;
 
-    inline constexpr std::string_view DESCRIPTION = "     A #SAT solver.     ";
+    inline constexpr std::string_view DESCRIPTION = "     An isomorphism-aware #SAT solver.     ";
 
     // Files
     inline constexpr ArgumentNameType INPUT_ARGUMENT = "-i";

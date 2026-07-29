@@ -15,9 +15,9 @@ namespace Hydra::Cache::CachingScheme {
             case PreprocessingTypeEnum::NONE:
                 return "none";
             case PreprocessingTypeEnum::NOT_DUPLICATE_CLAUSES:
-                return "not duplicate clauses";
+                return "remove duplicate clauses";
             case PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES:
-                return "not subsumed clauses";
+                return "remove clauses subsumed by others";
             default:
                 return "name not set";
         }

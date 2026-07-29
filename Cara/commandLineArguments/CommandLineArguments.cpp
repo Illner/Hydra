@@ -315,14 +315,14 @@ namespace Cara::CommandLineArguments {
         std::cout << std::endl;
 
         // Arguments
-        std::cout << "Partitioning hypergraph types:" << std::endl;
-        std::cout << "\t" << PATOH_HMETIS_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " — PaToH (Linux, macOS), hMETIS (Windows)" << std::endl;
-        std::cout << "\t" << KAHYPAR_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " — KaHyPar (Linux, macOS, Windows)" << std::endl;
-        std::cout << "\t" << CARA_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " — Cara (Linux, macOS)" << std::endl;
+        std::cout << "Hypergraph partitioning:" << std::endl;
+        std::cout << "\t" << PATOH_HMETIS_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " — PaToH (Linux and macOS), hMETIS (Windows) (recommended on Linux and macOS)" << std::endl;
+        std::cout << "\t" << KAHYPAR_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " — KaHyPar (Linux, macOS, and Windows) (recommended on Windows)" << std::endl;
+        std::cout << "\t" << CARA_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " — Cara (Linux and macOS) (MCC-25 submission configuration)" << std::endl;
         std::cout << std::endl;
 
         std::cout << "Files:" << std::endl;
-        std::cout << "\t" << INPUT_ARGUMENT << " — specifies the CNF file name" << std::endl;
+        std::cout << "\t" << INPUT_ARGUMENT << " — specify the CNF file name" << std::endl;
         std::cout << std::endl;
 
         std::cout << "SAT solvers:" << std::endl;
@@ -337,8 +337,8 @@ namespace Cara::CommandLineArguments {
         std::cout << std::endl;
 
         std::cout << VERSION_ARGUMENT << " — print version information" << std::endl;
-        std::cout << NUMBER_OF_SAMPLE_MOMENTS_ARGUMENT << " — sets the number of sample moments (min: " << std::to_string(Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::S_NUMBER_OF_SAMPLE_MOMENTS_MINIMUM) << ", max: " << std::to_string(Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::S_NUMBER_OF_SAMPLE_MOMENTS_MAXIMUM) << ")" << std::endl;
-        std::cout << MUST_MULTIPLY_BY_FACTOR_ARGUMENT << " — multiplies the model count by this factor (for example, Arjun's \"MUST MULTIPLY BY\" factor) (default: 1)" << std::endl;
+        std::cout << NUMBER_OF_SAMPLE_MOMENTS_ARGUMENT << " — set the number of sample moments (min: " << std::to_string(Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::S_NUMBER_OF_SAMPLE_MOMENTS_MINIMUM) << ", max: " << std::to_string(Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::S_NUMBER_OF_SAMPLE_MOMENTS_MAXIMUM) << ")" << std::endl;
+        std::cout << MUST_MULTIPLY_BY_FACTOR_ARGUMENT << " — multiply the model count by this factor (for example, when using a preprocessor such as Arjun that reports a multiplier) (default: 1)" << std::endl;
         std::cout << std::endl;
     }
 }   // namespace Cara::CommandLineArguments
