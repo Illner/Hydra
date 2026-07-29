@@ -65,7 +65,7 @@ The compilation takes place in the **`build_cara`** directory. The release binar
 ### Hypergraph partitioning
 
 * [PaToH v3.3](https://faculty.cc.gatech.edu/~umit/software.html) <br> <i> used for Linux, and macOS </i> <br> Hydra/external/partitioningHypergraphs/PaToH
-* [hMETIS 1.5.3](http://glaros.dtc.umn.edu/gkhome/metis/hmetis/overview) <br> <i> used only for Windows </i> <br> Hydra/external/partitioningHypergraphs/hMETIS
+* [hMETIS 1.5.3](https://papers.karypis.org/glaros/software/metis/overview.html) <br> <i> used only for Windows </i> <br> Hydra/external/partitioningHypergraphs/hMETIS
 * [KaHyPar v.1.3.3](https://kahypar.org/) <br> Hydra/external/partitioningHypergraphs/KaHyPar
 
 ### Other
