@@ -19,9 +19,16 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 
 # Static linking
 option(BUILD_STATIC "Build static" OFF)
-IF (BUILD_STATIC AND (${CMAKE_SYSTEM_NAME} STREQUAL "Linux"))
-    set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
+IF (BUILD_STATIC)
+    # Linux
+    IF (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+        message(STATUS "Static linking")
+        set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
+    # Not supported
+    ELSE ()
+        message(WARNING "Static linking is supported ONLY on Linux.")
+    ENDIF ()
 ENDIF ()
 
 # "file too big" (CYGWIN)
