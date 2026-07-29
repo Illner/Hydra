@@ -876,16 +876,16 @@ namespace Bella::CommandLineArguments {
         std::cout << "\t" << sdDNNF_ARGUMENT << " — " + Hydra::Circuit::circuitTypeEnumToString(Hydra::Circuit::CircuitTypeEnum::sd_DNNF, true) << std::endl;
         std::cout << std::endl;
 
-        std::cout << "Partitioning hypergraph types:" << std::endl;
-        std::cout << "\t" << PATOH_HMETIS_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " — PaToH (Linux, macOS), hMETIS (Windows) (recommended)" << std::endl;
-        std::cout << "\t" << KAHYPAR_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " — KaHyPar (Linux, macOS, Windows)" << std::endl;
-        std::cout << "\t" << CARA_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " — Cara (Linux, macOS)" << std::endl;
+        std::cout << "Hypergraph partitioning:" << std::endl;
+        std::cout << "\t" << PATOH_HMETIS_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " — PaToH (Linux and macOS), hMETIS (Windows) (recommended on Linux and macOS)" << std::endl;
+        std::cout << "\t" << KAHYPAR_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " — KaHyPar (Linux, macOS, and Windows) (recommended on Windows)" << std::endl;
+        std::cout << "\t" << CARA_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " — Cara (Linux and macOS)" << std::endl;
         std::cout << std::endl;
 
         std::cout << "Files:" << std::endl;
-        std::cout << "\t" << INPUT_ARGUMENT << " — specifies the CNF file name" << std::endl;
-        std::cout << "\t" << STATISTICS_ARGUMENT << " — specifies the file name where the statistics will be saved" << std::endl;
-        std::cout << "\t" << OUTPUT_ARGUMENT << " — specifies the file name where the compiled circuit will be saved" << std::endl;
+        std::cout << "\t" << INPUT_ARGUMENT << " — specify the CNF file name" << std::endl;
+        std::cout << "\t" << STATISTICS_ARGUMENT << " — specify the file name where the statistics will be saved" << std::endl;
+        std::cout << "\t" << OUTPUT_ARGUMENT << " — specify the file name where the compiled circuit will be saved" << std::endl;
         std::cout << std::endl;
 
         std::cout << "SAT solvers:" << std::endl;
@@ -941,7 +941,7 @@ namespace Bella::CommandLineArguments {
         std::cout << "\t" << CLAUSE_LENGTH_HYPERGRAPH_NODE_WEIGHT_ARGUMENT << " — " << Hydra::PartitioningHypergraph::vertexWeightTypeEnumToString(Hydra::PartitioningHypergraph::VertexWeightTypeEnum::CLAUSE_LENGTH) << " (default)" << std::endl;
         std::cout << std::endl;
 
-        std::cout << "Recomputing hypergraph cut types:" << std::endl;
+        std::cout << "Hypergraph cut recomputation strategies:" << std::endl;
         std::cout << "\t" << ALWAYS_RECOMPUTING_HYPERGRAPH_CUT_ARGUMENT << " — " << recomputingHypergraphCutTypeEnumToString(Hydra::RecomputingHypergraphCutTypeEnum::ALWAYS) << std::endl;
         std::cout << "\t" << IMMENSE_UNIT_PROPAGATION_RECOMPUTING_HYPERGRAPH_CUT_ARGUMENT << " — " << recomputingHypergraphCutTypeEnumToString(Hydra::RecomputingHypergraphCutTypeEnum::IMMENSE_UNIT_PROPAGATION) << " (default)" << std::endl;
         std::cout << "\t" << FORMULA_SPLIT_RECOMPUTING_HYPERGRAPH_CUT_ARGUMENT << " — " << recomputingHypergraphCutTypeEnumToString(Hydra::RecomputingHypergraphCutTypeEnum::WHEN_CURRENT_FORMULA_IS_SPLIT) << std::endl;
@@ -949,11 +949,11 @@ namespace Bella::CommandLineArguments {
         std::cout << "\t" << IMMENSE_UNIT_PROPAGATION_OR_FORMULA_SPLIT_RECOMPUTING_HYPERGRAPH_CUT_ARGUMENT << " — " << recomputingHypergraphCutTypeEnumToString(Hydra::RecomputingHypergraphCutTypeEnum::IMMENSE_UNIT_PROPAGATION_OR_WHEN_CURRENT_FORMULA_IS_SPLIT) << std::endl;
         std::cout << std::endl;
 
-        std::cout << COUNT_ARGUMENT << " — counts the models" << std::endl;
+        std::cout << COUNT_ARGUMENT << " — count the models" << std::endl;
         std::cout << VERSION_ARGUMENT << " — print version information" << std::endl;
-        std::cout << EQUIVALENCE_SIMPLIFICATION_METHOD_ARGUMENT << " — uses the equivalence simplification method (highly recommended)" << std::endl;
-        std::cout << TIMEOUT_ARGUMENT << " — sets the compilation timeout (default: 86400 s)" << std::endl;
-        std::cout << READABLE_STATISTICS_ARGUMENT << " — the statistics file is in a form readable by a human" << std::endl;
+        std::cout << EQUIVALENCE_SIMPLIFICATION_METHOD_ARGUMENT << " — use the equivalence simplification method (highly recommended)" << std::endl;
+        std::cout << TIMEOUT_ARGUMENT << " — set the compilation timeout (default: 86400 s)" << std::endl;
+        std::cout << READABLE_STATISTICS_ARGUMENT << " — write the statistics file in a human-readable form" << std::endl;
         std::cout << std::endl;
     }
 }   // namespace Bella::CommandLineArguments
