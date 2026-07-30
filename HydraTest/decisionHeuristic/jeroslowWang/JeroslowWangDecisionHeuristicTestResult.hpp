@@ -4,7 +4,7 @@
 
 namespace HydraTest::DecisionHeuristic::JeroslowWang {
     inline std::string jeroslowWangDecisionHeuristicOneSidedResult = "Decision heuristic\n"
-                                                                     "Type: Jeroslow-Wang (one-sided)\n"
+                                                                     "Type: Jeroslow–Wang (one-sided)\n"
                                                                      "Ignore pure literal type: pure literals are not ignored\n"
                                                                      "Current formula: 1 -2 0 -4 5 0 5 6 0 -1 3 -6 0 2 3 -6 0 1 -3 4 -7 0 -2 -3 -4 7 0 \n"
                                                                      "\n"
@@ -14,7 +14,7 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
                                                                      "\n";
 
     inline std::string jeroslowWangDecisionHeuristicOneSidedSelectedVariablesResult = "Decision heuristic\n"
-                                                                                      "Type: Jeroslow-Wang (one-sided)\n"
+                                                                                      "Type: Jeroslow–Wang (one-sided)\n"
                                                                                       "Ignore pure literal type: pure literals are not ignored\n"
                                                                                       "Current formula: 1 -2 0 -4 5 0 5 6 0 -1 3 -6 0 2 3 -6 0 1 -3 4 -7 0 -2 -3 -4 7 0 \n"
                                                                                       "\n"
@@ -36,7 +36,7 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
                                                                                       "\n";
 
     inline std::string jeroslowWangDecisionHeuristicOneSidedIgnorePositivePureLiteralsResult = "Decision heuristic\n"
-                                                                                               "Type: Jeroslow-Wang (one-sided)\n"
+                                                                                               "Type: Jeroslow–Wang (one-sided)\n"
                                                                                                "Ignore pure literal type: only positive pure literals are ignored\n"
                                                                                                "Current formula: 1 0 -2 0 1 3 0 1 -4 0 -2 -3 0 -2 4 0 1 -2 3 0 \n"
                                                                                                "\n"
@@ -55,7 +55,7 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
                                                                                                "\n";
 
     inline std::string jeroslowWangDecisionHeuristicOneSidedIgnoreNegativePureLiteralsResult = "Decision heuristic\n"
-                                                                                               "Type: Jeroslow-Wang (one-sided)\n"
+                                                                                               "Type: Jeroslow–Wang (one-sided)\n"
                                                                                                "Ignore pure literal type: only negative pure literals are ignored\n"
                                                                                                "Current formula: 1 0 -2 0 1 3 0 1 -4 0 -2 -3 0 -2 4 0 1 -2 3 0 \n"
                                                                                                "\n"
@@ -74,7 +74,7 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
                                                                                                "\n";
 
     inline std::string jeroslowWangDecisionHeuristicOneSidedIgnorePureLiteralsResult = "Decision heuristic\n"
-                                                                                       "Type: Jeroslow-Wang (one-sided)\n"
+                                                                                       "Type: Jeroslow–Wang (one-sided)\n"
                                                                                        "Ignore pure literal type: both positive and negative pure literals are ignored\n"
                                                                                        "Current formula: 1 0 -2 0 1 3 0 1 -4 0 -2 -3 0 -2 4 0 1 -2 3 0 \n"
                                                                                        "\n"
@@ -93,7 +93,7 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
                                                                                        "\n";
 
     inline std::string jeroslowWangDecisionHeuristicTwoSidedResult = "Decision heuristic\n"
-                                                                     "Type: Jeroslow-Wang (two-sided)\n"
+                                                                     "Type: Jeroslow–Wang (two-sided)\n"
                                                                      "Ignore pure literal type: pure literals are not ignored\n"
                                                                      "Current formula: 1 -2 0 -4 5 0 5 6 0 -1 3 -6 0 2 3 -6 0 1 -3 4 -7 0 -2 -3 -4 7 0 \n"
                                                                      "\n"
@@ -103,7 +103,7 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
                                                                      "\n";
 
     inline std::string jeroslowWangDecisionHeuristicTwoSidedSelectedVariablesResult = "Decision heuristic\n"
-                                                                                      "Type: Jeroslow-Wang (two-sided)\n"
+                                                                                      "Type: Jeroslow–Wang (two-sided)\n"
                                                                                       "Ignore pure literal type: pure literals are not ignored\n"
                                                                                       "Current formula: 1 -2 0 -4 5 0 5 6 0 -1 3 -6 0 2 3 -6 0 1 -3 4 -7 0 -2 -3 -4 7 0 \n"
                                                                                       "\n"
@@ -125,7 +125,7 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
                                                                                       "\n";
 
     inline std::string jeroslowWangDecisionHeuristicTwoSidedIgnorePositivePureLiteralsResult = "Decision heuristic\n"
-                                                                                               "Type: Jeroslow-Wang (two-sided)\n"
+                                                                                               "Type: Jeroslow–Wang (two-sided)\n"
                                                                                                "Ignore pure literal type: only positive pure literals are ignored\n"
                                                                                                "Current formula: 1 0 -2 0 1 3 0 1 -4 0 -2 -3 0 -2 4 0 1 -2 3 0 \n"
                                                                                                "\n"
@@ -144,7 +144,7 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
                                                                                                "\n";
 
     inline std::string jeroslowWangDecisionHeuristicTwoSidedIgnoreNegativePureLiteralsResult = "Decision heuristic\n"
-                                                                                               "Type: Jeroslow-Wang (two-sided)\n"
+                                                                                               "Type: Jeroslow–Wang (two-sided)\n"
                                                                                                "Ignore pure literal type: only negative pure literals are ignored\n"
                                                                                                "Current formula: 1 0 -2 0 1 3 0 1 -4 0 -2 -3 0 -2 4 0 1 -2 3 0 \n"
                                                                                                "\n"
@@ -163,7 +163,7 @@ namespace HydraTest::DecisionHeuristic::JeroslowWang {
                                                                                                "\n";
 
     inline std::string jeroslowWangDecisionHeuristicTwoSidedIgnorePureLiteralsResult = "Decision heuristic\n"
-                                                                                       "Type: Jeroslow-Wang (two-sided)\n"
+                                                                                       "Type: Jeroslow–Wang (two-sided)\n"
                                                                                        "Ignore pure literal type: both positive and negative pure literals are ignored\n"
                                                                                        "Current formula: 1 0 -2 0 1 3 0 1 -4 0 -2 -3 0 -2 4 0 1 -2 3 0 \n"
                                                                                        "\n"
