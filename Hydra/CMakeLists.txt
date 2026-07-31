@@ -1,8 +1,6 @@
 ﻿# CMake project for Hydra
 cmake_minimum_required(VERSION 3.14)
 
-set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
-
 add_library(HydraLibrary STATIC
         "other/parser/CommandLineArgumentsParser.cpp"
         "statistics/StatisticsAbstract.cpp" "statistics/Statistics.cpp" "other/version/Version.cpp"
