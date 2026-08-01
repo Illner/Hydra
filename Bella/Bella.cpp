@@ -188,7 +188,7 @@ void core(Hydra::Compiler<VarT, LiteralT, ClauseIdT>& compiler, const CommandLin
         if (Hydra::Other::containInSet(Hydra::Circuit::supportModelCountingCircuitTypeSet, circuitPtr->getCircuitType()))
             numberOfModels = circuitPtr->modelCounting({});
         else {
-            std::cerr << "WARNING: the number of models is being computed using enumeration!" << std::endl;
+            std::cerr << "WARNING: the number of models is being computed using enumeration." << std::endl;
 
             numberOfModels = circuitPtr->modelCountingWithPolynomialDelay({}, {});
         }

@@ -332,7 +332,7 @@ namespace Hydra::Circuit::Parser {
                 ClauseIdType numberOfClausesDimacsCnfHeader = static_cast<ClauseIdType>(dimacsCnfHeaderTmp.numberOfClauses);
 
                 if (numberOfVariablesTmp != numberOfVariablesDimacsCnfHeader)
-                    std::cerr << "WARNING: the number of variables does not match the DIMACS CNF header value on line " << std::to_string(line) << "!" << std::endl;
+                    std::cerr << "WARNING: the number of variables does not match the DIMACS CNF header value on line " << std::to_string(line) << "." << std::endl;
 
                 FormulaType formula;
                 formula.reserve(numberOfClausesDimacsCnfHeader);
@@ -351,7 +351,7 @@ namespace Hydra::Circuit::Parser {
 
                 // Invalid number of lines
                 if (line != (beginLineTmp + numberOfLinesTmp + 1))
-                    std::cerr << "WARNING: the number of lines does not match on line " << std::to_string(beginLineTmp) << "!" << std::endl;
+                    std::cerr << "WARNING: the number of lines does not match on line " << std::to_string(beginLineTmp) << "." << std::endl;
 
                 circuit.createKromCLeaf(std::move(formula));
                 continue;
@@ -413,7 +413,7 @@ namespace Hydra::Circuit::Parser {
                 ClauseIdType numberOfClausesDimacsCnfHeader = static_cast<ClauseIdType>(dimacsCnfHeaderTmp.numberOfClauses);
 
                 if (numberOfVariablesTmp != numberOfVariablesDimacsCnfHeader)
-                    std::cerr << "WARNING: the number of variables does not match the DIMACS CNF header value on line " << std::to_string(line) << "!" << std::endl;
+                    std::cerr << "WARNING: the number of variables does not match the DIMACS CNF header value on line " << std::to_string(line) << "." << std::endl;
 
                 FormulaType formula;
                 formula.reserve(numberOfClausesDimacsCnfHeader);
@@ -432,7 +432,7 @@ namespace Hydra::Circuit::Parser {
 
                 // Invalid number of lines
                 if (line != (beginLineTmp + numberOfLinesTmp + 1))
-                    std::cerr << "WARNING: the number of lines does not match on line " << std::to_string(beginLineTmp) << "!" << std::endl;
+                    std::cerr << "WARNING: the number of lines does not match on line " << std::to_string(beginLineTmp) << "." << std::endl;
 
                 // switchedVariables.shrink_to_fit();
                 circuit.createRenHCLeaf(std::move(formula), std::move(switchedVariables));
@@ -446,11 +446,11 @@ namespace Hydra::Circuit::Parser {
         }
 
         if (circuit.getNumberOfNodes() != numberOfNodes)
-            std::cerr << "WARNING: the number of nodes does not match the header value!" << std::endl;
+            std::cerr << "WARNING: the number of nodes does not match the header value." << std::endl;
         if (circuit.getNumberOfEdges() != numberOfEdges)
-            std::cerr << "WARNING: the number of edges does not match the header value!" << std::endl;
+            std::cerr << "WARNING: the number of edges does not match the header value." << std::endl;
         if (circuit.getCircuitSize() != size)
-            std::cerr << "WARNING: the size does not match the header value!" << std::endl;
+            std::cerr << "WARNING: the size does not match the header value." << std::endl;
 
         circuit.setRoot();
         return circuit;

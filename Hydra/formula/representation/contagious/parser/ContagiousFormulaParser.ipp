@@ -212,14 +212,14 @@ namespace Hydra::Formula::Representation::Contagious::Parser {
                                                                                                                                  formulaRepresentationStatisticsPtr);
 
         if ((realNumberOfClauses + numberOfClausesContainingComplementaryLiterals) != numberOfClauses)
-            std::cerr << "WARNING: the number of clauses does not match the header value!" << std::endl
+            std::cerr << "WARNING: the number of clauses does not match the header value." << std::endl
                       << std::endl;
 
         #if !defined(TEST)
         if (numberOfClausesContainingComplementaryLiterals > 0) {
             std::cerr << "WARNING: " << std::to_string(numberOfClausesContainingComplementaryLiterals) << " ";
             std::cerr << ((numberOfClausesContainingComplementaryLiterals == 1) ? "clause contains" : "clauses contain");
-            std::cerr << " complementary literals!" << std::endl
+            std::cerr << " complementary literals." << std::endl
                       << std::endl;
         }
         #endif

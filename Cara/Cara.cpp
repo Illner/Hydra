@@ -52,8 +52,8 @@ void modifyConfigurationAfterParsingFormula(CommandLineArgumentsStructT& command
     if (commandLineArgumentsStruct.modelCountingType == ModelCountingTypeEnum::UNDEFINED) {
         commandLineArgumentsStruct.modelCountingType = ModelCountingTypeEnum::MC;
 
-        std::cerr << "WARNING: the model counting type has been automatically set to "
-                  << Cara::modelCountingTypeEnumToString(commandLineArgumentsStruct.modelCountingType) << "!" << std::endl;
+        std::cerr << "WARNING: the model counting type has been automatically set to \""
+                  << Cara::modelCountingTypeEnumToString(commandLineArgumentsStruct.modelCountingType) << "\"." << std::endl;
     }
 }
 
