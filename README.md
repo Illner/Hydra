@@ -85,6 +85,10 @@ The corresponding binaries are in the locations mentioned above.
   _implemented, not used_  
   `Hydra/external/satSolvers/MiniSat`
 
+* [Glucose 4.2.1](https://github.com/audemard/glucose)  
+  _work in progress_  
+  `Hydra/external/satSolvers/Glucose`
+
 * [CaDiCaL 3.0.0](https://github.com/arminbiere/cadical)  
   _work in progress_  
   `Hydra/external/satSolvers/CaDiCaL`
