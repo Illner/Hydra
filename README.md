@@ -26,7 +26,7 @@ An isomorphism-aware #SAT solver.
 **Supported OS**: Linux, macOS (Apple Silicon), and Windows
 
 Building requires:
-[CMake ≥ 3.14](https://cmake.org/),
+[CMake](https://cmake.org/),
 [Boost](https://www.boost.org/), and
 [GMP](https://gmplib.org/).
 
