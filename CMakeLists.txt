@@ -8,14 +8,34 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_OSX_DEPLOYMENT_TARGET 15.0)
 
-# Compile options
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-class-memaccess -Wno-unknown-warning-option")  # MiniSat
+# Custom macro to add the flag if supported
+include(CheckCXXCompilerFlag)
+MACRO(add_cxx_flag_if_supported FLAG_NAME)
+    check_cxx_compiler_flag("${FLAG_NAME}" HAVE_FLAG_${FLAG_NAME})
 
+    # The flag is supported
+    IF (HAVE_FLAG_${FLAG_NAME})
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FLAG_NAME}")
+    ENDIF ()
+ENDMACRO()
+
+# Flags
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 # set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -march=native")
+
+# Warning flags
+add_cxx_flag_if_supported("-Wall")
+add_cxx_flag_if_supported("-Wextra")
+add_cxx_flag_if_supported("-Wtype-limits")          # because of Clang
+add_cxx_flag_if_supported("-Wpointer-arith")
+add_cxx_flag_if_supported("-Wextra-semi-stmt")      # Clang-only
+add_cxx_flag_if_supported("-Wunreachable-code")     # Clang-only
+add_cxx_flag_if_supported("-Wdouble-promotion")
+add_cxx_flag_if_supported("-Warith-conversion")     # GCC-only
+add_cxx_flag_if_supported("-Wformat-nonliteral")
+add_cxx_flag_if_supported("-Wno-class-memaccess")   # GCC-only
 
 # Static linking
 option(BUILD_STATIC "Build static" OFF)
@@ -27,7 +47,7 @@ IF (BUILD_STATIC)
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
     # Not supported
     ELSE ()
-        message(WARNING "Static linking is NOT supported on your operating system.")
+        message(WARNING "Static linking is not supported on your operating system.")
     ENDIF ()
 ENDIF ()
 
@@ -56,8 +76,15 @@ option(BUILD_CARA "Build Cara" OFF)
 option(BUILD_TEST "Build tests" OFF)
 
 # Ensure that exactly one of the options is ON
-IF ((BUILD_BELLA AND BUILD_CARA) OR (NOT BUILD_BELLA AND NOT BUILD_CARA))
-    message(FATAL_ERROR "Exactly one of BUILD_BELLA or BUILD_CARA must be enabled!")
+IF (BUILD_BELLA AND BUILD_CARA)
+    message(FATAL_ERROR "Both BUILD_BELLA and BUILD_CARA are enabled; enable exactly one!")
+ELSEIF (NOT BUILD_BELLA AND NOT BUILD_CARA)
+    message(FATAL_ERROR "Neither BUILD_BELLA nor BUILD_CARA is enabled; enable exactly one!")
+ENDIF ()
+
+# Ensure that BUILD_TEST is built under Debug
+IF (BUILD_TEST AND NOT (CMAKE_BUILD_TYPE STREQUAL "Debug"))
+    message(FATAL_ERROR "Tests must be built under Debug!")
 ENDIF ()
 
 # Options
