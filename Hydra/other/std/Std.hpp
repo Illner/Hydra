@@ -14,6 +14,11 @@ namespace Hydra::Formula {
 namespace std {
 
     /**
+     * An overloading for std::to_string so it can also print bools
+     */
+    inline std::string to_string(bool value);
+
+    /**
      * An overloading for std::to_string so it can also print pairs
      * Note: used for StackWithLevels
      * Note: TypeT1 and TypeT2 are expected to be types which can be quickly copied
