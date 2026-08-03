@@ -4,10 +4,6 @@
 
 namespace std {
 
-    std::string to_string(bool value) {
-        return value ? "true" : "false";
-    }
-
     template <typename TypeT1, typename TypeT2>
     std::string to_string(std::pair<TypeT1, TypeT2> element) {
         return "(" + std::to_string(element.first) + ", " + std::to_string(element.second) + ")";
