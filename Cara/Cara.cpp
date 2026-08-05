@@ -32,14 +32,14 @@ void printConfigurationBeforeCompilation(const CommandLineArgumentsStructT& comm
 
     // Configuration
     std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << " SAT solver: " << Hydra::SatSolver::satSolverTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.satSolverType) << std::endl;
+    std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << " Hypergraph partitioning: " << Hydra::partitioningHypergraphTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType) << std::endl;
     std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << " Number of sample moments: " << std::to_string(commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeComponentCachingConfiguration.numberOfSampleMoments) << std::endl;
-    std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << " Partitioning hypergraph type: " << Hydra::partitioningHypergraphTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType) << std::endl;
     std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << " Preprocessing type of Cara caching scheme: " << Hydra::Cache::CachingScheme::preprocessingTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeComponentCachingConfiguration.preprocessingType) << std::endl;
     std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << std::endl;
 
     // Must-multiply-by factor
     if (commandLineArgumentsStruct.mustMultiplyByFactor > 1) {
-        std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << " Must-multiply-by factor: " << commandLineArgumentsStruct.mustMultiplyByFactor << std::endl;
+        std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << " Multiply the model count by " << commandLineArgumentsStruct.mustMultiplyByFactor << std::endl;
         std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << std::endl;
     }
 }
@@ -68,6 +68,9 @@ void core(Hydra::Compiler<VarT, LiteralT, ClauseIdT>& sharpSolver, const Command
     // Model counting type is NOT supported
     if (commandLineArgumentsStruct.modelCountingType != ModelCountingTypeEnum::MC)
         throw Cara::Exception::ModelCountingTypeIsNotSupportedException(commandLineArgumentsStruct.modelCountingType);
+
+    std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << " Counting..." << std::endl;
+    std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << std::endl;
 
     TimePointType startTime = std::chrono::steady_clock::now();
     sharpSolver.computeNumberOfModels();
