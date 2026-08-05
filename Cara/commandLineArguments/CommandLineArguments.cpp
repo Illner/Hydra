@@ -69,8 +69,8 @@ namespace Cara::CommandLineArguments {
         // Input
         commandLineArgumentsStruct.inputFilePath = Hydra::Other::Parser::CommandLineArguments::getArgumentValue(arguments, INPUT_ARGUMENT, true);
 
-        // Partitioning hypergraph type
-        commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType = getPartitioningHypergraphType(arguments);
+        // Hypergraph partitioning
+        commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType = getHypergraphPartitioningType(arguments);
 
         // Cara vs Cara (speed)
         switch (commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType) {
@@ -93,8 +93,8 @@ namespace Cara::CommandLineArguments {
         // SAT solver
         commandLineArgumentsStruct.compilerConfiguration.satSolverType = getSatSolverType(arguments);
 
-        // Preprocessing type
-        commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = getPreprocessingType(arguments);
+        // Preprocessing type of Cara caching scheme
+        commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = getPreprocessingTypeOfCaraCachingScheme(arguments);
 
         // Cara caching scheme - number of sample moments
         Hydra::Other::Parser::CommandLineArguments::getNumberOfSampleMomentsAndSetInCaraCachingSchemeConfiguration(arguments, NUMBER_OF_SAMPLE_MOMENTS_ARGUMENT,
@@ -155,7 +155,7 @@ namespace Cara::CommandLineArguments {
         commandLineArgumentsStruct.compilerConfiguration.cachingSchemeHypergraphCutCachingType = Hydra::Cache::CachingScheme::CachingSchemeTypeEnum::NONE;
         commandLineArgumentsStruct.compilerConfiguration.cacheCleaningStrategyHypergraphCutCachingType = Hydra::Cache::CacheCleaningStrategy::CacheCleaningStrategyTypeEnum::NONE;
 
-        // Partitioning hypergraph
+        // Hypergraph partitioning
         commandLineArgumentsStruct.compilerConfiguration.useEquivalenceSimplificationMethod = true;
         commandLineArgumentsStruct.compilerConfiguration.ignoreMultiOccurrentIgnoredVariables = true;
         commandLineArgumentsStruct.compilerConfiguration.caraPartitioningHypergraphConfiguration.seed = -1;
@@ -174,48 +174,48 @@ namespace Cara::CommandLineArguments {
         commandLineArgumentsStruct.compilerConfiguration.recomputingHypergraphCutType = Hydra::RecomputingHypergraphCutTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY;
     }
 
-    Hydra::PartitioningHypergraphTypeEnum getPartitioningHypergraphType(const ArgumentsType& arguments) {
+    Hydra::PartitioningHypergraphTypeEnum getHypergraphPartitioningType(const ArgumentsType& arguments) {
         bool exists = false;
-        Hydra::PartitioningHypergraphTypeEnum partitioningHypergraphType;
+        Hydra::PartitioningHypergraphTypeEnum hypergraphPartitioningType;
 
         // KaHyPar
         if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, KAHYPAR_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             exists = true;
-            partitioningHypergraphType = Hydra::PartitioningHypergraphTypeEnum::KAHYPAR;
+            hypergraphPartitioningType = Hydra::PartitioningHypergraphTypeEnum::KAHYPAR;
         }
 
         // Cara
         if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CARA_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             if (exists)
-                throw Hydra::Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
+                throw Hydra::Exception::CommandLineArguments::MoreHypergraphPartitioningTypesAreMentionedException();
 
             exists = true;
-            partitioningHypergraphType = Hydra::PartitioningHypergraphTypeEnum::CARA;
+            hypergraphPartitioningType = Hydra::PartitioningHypergraphTypeEnum::CARA;
         }
 
         // Cara (speed)
         if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CARA_SPEED_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             if (exists)
-                throw Hydra::Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
+                throw Hydra::Exception::CommandLineArguments::MoreHypergraphPartitioningTypesAreMentionedException();
 
             exists = true;
-            partitioningHypergraphType = Hydra::PartitioningHypergraphTypeEnum::CARA_SPEED;
+            hypergraphPartitioningType = Hydra::PartitioningHypergraphTypeEnum::CARA_SPEED;
         }
 
         // PaToH or hMETIS
         if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, PATOH_HMETIS_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             if (exists)
-                throw Hydra::Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
+                throw Hydra::Exception::CommandLineArguments::MoreHypergraphPartitioningTypesAreMentionedException();
 
             exists = true;
-            partitioningHypergraphType = Hydra::PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+            hypergraphPartitioningType = Hydra::PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
         }
 
-        // No partitioning hypergraph type is mentioned
+        // No hypergraph partitioning is mentioned
         if (!exists)
-            throw Hydra::Exception::CommandLineArguments::NoPartitioningHypergraphTypeIsMentionedException();
+            throw Hydra::Exception::CommandLineArguments::NoHypergraphPartitioningTypeIsMentionedException();
 
-        return partitioningHypergraphType;
+        return hypergraphPartitioningType;
     }
 
     Hydra::SatSolver::SatSolverTypeEnum getSatSolverType(const ArgumentsType& arguments) {
@@ -246,41 +246,41 @@ namespace Cara::CommandLineArguments {
         return satSolverType;
     }
 
-    Hydra::Cache::CachingScheme::PreprocessingTypeEnum getPreprocessingType(const ArgumentsType& arguments) {
+    Hydra::Cache::CachingScheme::PreprocessingTypeEnum getPreprocessingTypeOfCaraCachingScheme(const ArgumentsType& arguments) {
         using PreprocessingTypeEnum = Hydra::Cache::CachingScheme::PreprocessingTypeEnum;
 
         bool exists = false;
-        PreprocessingTypeEnum preprocessingType;
+        PreprocessingTypeEnum preprocessingTypeOfCaraCachingScheme;
 
         // None
         if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, NONE_PREPROCESSING_TYPE_ARGUMENT)) {
             exists = true;
-            preprocessingType = PreprocessingTypeEnum::NONE;
+            preprocessingTypeOfCaraCachingScheme = PreprocessingTypeEnum::NONE;
         }
 
         // Not duplicate clauses
         if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, NOT_DUPLICATE_CLAUSES_PREPROCESSING_TYPE_ARGUMENT)) {
             if (exists)
-                throw Exception::CommandLineArguments::MorePreprocessingTypesAreMentionedException();
+                throw Exception::CommandLineArguments::MorePreprocessingTypesOfCaraCachingSchemeAreMentionedException();
 
             exists = true;
-            preprocessingType = PreprocessingTypeEnum::NOT_DUPLICATE_CLAUSES;
+            preprocessingTypeOfCaraCachingScheme = PreprocessingTypeEnum::NOT_DUPLICATE_CLAUSES;
         }
 
         // Not subsumed clauses
         if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, NOT_SUBSUMED_CLAUSES_PREPROCESSING_TYPE_ARGUMENT)) {
             if (exists)
-                throw Exception::CommandLineArguments::MorePreprocessingTypesAreMentionedException();
+                throw Exception::CommandLineArguments::MorePreprocessingTypesOfCaraCachingSchemeAreMentionedException();
 
             exists = true;
-            preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
+            preprocessingTypeOfCaraCachingScheme = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         }
 
-        // No preprocessing type is mentioned
+        // No preprocessing type of Cara caching scheme is mentioned
         if (!exists)
-            preprocessingType = PreprocessingTypeEnum::NONE;
+            preprocessingTypeOfCaraCachingScheme = PreprocessingTypeEnum::NONE;
 
-        return preprocessingType;
+        return preprocessingTypeOfCaraCachingScheme;
     }
 
     void printHelp() {

@@ -9,12 +9,12 @@ namespace Cara::Exception::CommandLineArguments {
     using CommandLineArgumentsException = Hydra::Exception::CommandLineArguments::CommandLineArgumentsException;
 
     /**
-     * More preprocessing types are mentioned
+     * More preprocessing types of Cara caching scheme are mentioned
      */
-    class MorePreprocessingTypesAreMentionedException : public CommandLineArgumentsException {
+    class MorePreprocessingTypesOfCaraCachingSchemeAreMentionedException : public CommandLineArgumentsException {
     public:
-        MorePreprocessingTypesAreMentionedException()
-            : CommandLineArgumentsException("More preprocessing types are mentioned!") { }
+        MorePreprocessingTypesOfCaraCachingSchemeAreMentionedException()
+            : CommandLineArgumentsException("More preprocessing types of Cara caching scheme are mentioned!") { }
     };
 
     /**

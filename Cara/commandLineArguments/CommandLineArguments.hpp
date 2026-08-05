@@ -57,11 +57,11 @@ namespace Cara::CommandLineArguments {
 
     /**
      * @param arguments the arguments
-     * @return the partitioning hypergraph type
-     * @throw MorePartitioningHypergraphTypesAreMentionedException if more partitioning hypergraph types are mentioned
-     * @throw NoPartitioningHypergraphTypeIsMentionedException if no partitioning hypergraph type is mentioned
+     * @return the hypergraph partitioning type
+     * @throw MoreHypergraphPartitioningTypesAreMentionedException if more hypergraph partitioning types are mentioned
+     * @throw NoHypergraphPartitioningTypeIsMentionedException if no hypergraph partitioning type is mentioned
      */
-    Hydra::PartitioningHypergraphTypeEnum getPartitioningHypergraphType(const ArgumentsType& arguments);
+    Hydra::PartitioningHypergraphTypeEnum getHypergraphPartitioningType(const ArgumentsType& arguments);
 
     /**
      * @param arguments the arguments
@@ -72,10 +72,10 @@ namespace Cara::CommandLineArguments {
 
     /**
      * @param arguments the arguments
-     * @return the preprocessing type
-     * @throw MorePreprocessingTypesAreMentionedException if more preprocessing types are mentioned
+     * @return the preprocessing type of Cara caching scheme
+     * @throw MorePreprocessingTypesOfCaraCachingSchemeAreMentionedException if more preprocessing types of Cara caching scheme are mentioned
      */
-    Hydra::Cache::CachingScheme::PreprocessingTypeEnum getPreprocessingType(const ArgumentsType& arguments);
+    Hydra::Cache::CachingScheme::PreprocessingTypeEnum getPreprocessingTypeOfCaraCachingScheme(const ArgumentsType& arguments);
 
     /**
      * Print the help
