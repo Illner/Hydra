@@ -179,13 +179,13 @@ namespace Cara::CommandLineArguments {
         Hydra::PartitioningHypergraphTypeEnum partitioningHypergraphType;
 
         // KaHyPar
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, KAHYPAR_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, KAHYPAR_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             exists = true;
             partitioningHypergraphType = Hydra::PartitioningHypergraphTypeEnum::KAHYPAR;
         }
 
         // Cara
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CARA_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CARA_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             if (exists)
                 throw Hydra::Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
 
@@ -194,7 +194,7 @@ namespace Cara::CommandLineArguments {
         }
 
         // Cara (speed)
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CARA_SPEED_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CARA_SPEED_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             if (exists)
                 throw Hydra::Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
 
@@ -203,7 +203,7 @@ namespace Cara::CommandLineArguments {
         }
 
         // PaToH or hMETIS
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, PATOH_HMETIS_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, PATOH_HMETIS_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             if (exists)
                 throw Hydra::Exception::CommandLineArguments::MorePartitioningHypergraphTypesAreMentionedException();
 
@@ -296,29 +296,29 @@ namespace Cara::CommandLineArguments {
         std::cout << "./Cara " << VERSION_ARGUMENT << std::endl;
         std::cout << "./Cara";
 
-        // Partitioning hypergraph types
-        std::cout << " < " << PATOH_HMETIS_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " | " << KAHYPAR_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " | " << CARA_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " >";
+        // Hypergraph partitioning
+        std::cout << " < " << PATOH_HMETIS_HYPERGRAPH_PARTITIONING_ARGUMENT << " | " << KAHYPAR_HYPERGRAPH_PARTITIONING_ARGUMENT << " | " << CARA_HYPERGRAPH_PARTITIONING_ARGUMENT << " >";
 
         // Files
         std::cout << " " << INPUT_ARGUMENT << " input_file" << " ";
 
-        // Others
+        // Other options
         std::cout << NUMBER_OF_SAMPLE_MOMENTS_ARGUMENT << " integer (min: " << std::to_string(Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::S_NUMBER_OF_SAMPLE_MOMENTS_MINIMUM) << ", max: " << std::to_string(Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::S_NUMBER_OF_SAMPLE_MOMENTS_MAXIMUM) << ")";
         std::cout << " [ " << MUST_MULTIPLY_BY_FACTOR_ARGUMENT << " positive_integer (default: 1) ]";
 
         // SAT solvers
         std::cout << " [ " << MINISAT_SAT_SOLVER_ARGUMENT << " | " << GLUCOSE_SAT_SOLVER_ARGUMENT << " ]";
 
-        // Preprocessing types
+        // Preprocessing types of Cara caching scheme
         std::cout << " [ " << NONE_PREPROCESSING_TYPE_ARGUMENT << " | " << NOT_DUPLICATE_CLAUSES_PREPROCESSING_TYPE_ARGUMENT << " | " << NOT_SUBSUMED_CLAUSES_PREPROCESSING_TYPE_ARGUMENT << " ]";
         std::cout << std::endl;
         std::cout << std::endl;
 
         // Arguments
         std::cout << "Hypergraph partitioning:" << std::endl;
-        std::cout << "\t" << PATOH_HMETIS_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " — PaToH (Linux and macOS), hMETIS (Windows) (recommended on Linux and macOS)" << std::endl;
-        std::cout << "\t" << KAHYPAR_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " — KaHyPar (Linux, macOS, and Windows) (recommended on Windows)" << std::endl;
-        std::cout << "\t" << CARA_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT << " — Cara (Linux and macOS) (MCC-25 submission configuration)" << std::endl;
+        std::cout << "\t" << PATOH_HMETIS_HYPERGRAPH_PARTITIONING_ARGUMENT << " — PaToH (Linux and macOS), hMETIS (Windows) (recommended on Linux and macOS)" << std::endl;
+        std::cout << "\t" << KAHYPAR_HYPERGRAPH_PARTITIONING_ARGUMENT << " — KaHyPar (Linux, macOS, and Windows) (recommended on Windows)" << std::endl;
+        std::cout << "\t" << CARA_HYPERGRAPH_PARTITIONING_ARGUMENT << " — Cara (Linux and macOS) (MCC-25 submission configuration)" << std::endl;
         std::cout << std::endl;
 
         std::cout << "Files:" << std::endl;
