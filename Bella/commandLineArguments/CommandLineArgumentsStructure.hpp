@@ -25,7 +25,7 @@ namespace Bella::CommandLineArguments {
 
         bool numberOfModels;
         LargeNumberType timeout;
-        bool clausalEntailmentCheck;
+        bool checkWhetherCircuitEntailsCnfFormula;
 
         // Input
         std::string inputFilePath;

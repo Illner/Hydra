@@ -239,12 +239,12 @@ namespace Hydra::Exception {
     };
 
     /**
-     * Circuit does not imply CNF formula
+     * Circuit does not entail CNF formula
      */
-    class CircuitDoesNotImplyCnfFormulaException : public CompilerException {
+    class CircuitDoesNotEntailCnfFormulaException : public CompilerException {
     public:
-        CircuitDoesNotImplyCnfFormulaException()
-            : CompilerException("The compiled circuit does not imply the input CNF formula!") { }
+        CircuitDoesNotEntailCnfFormulaException()
+            : CompilerException("The compiled circuit does not entail the input CNF formula!") { }
     };
 
     /**

@@ -598,8 +598,8 @@ namespace Hydra::Circuit {
                                                             bool printModels = false, std::ostream& outModels = std::cout);
 
         /**
-         * Clausal entailment check
-         * For every clause, check if that clause is an implicate
+         * Check whether the circuit entails the CNF formula
+         * For every clause, check whether that clause is an implicate
          * Time complexity: linear with respect to the size of the (sub)circuit and the number of clauses
          * Assert: all clauses MUST be untouched
          * @param formulaPtr a formula pointer
@@ -608,7 +608,7 @@ namespace Hydra::Circuit {
          * @throw CircuitTypeDoesNotSupportQueryException if the circuit does not support consistency check
          */
         template <typename ClauseIdT2>
-        bool clausalEntailmentCheck(const Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT2>* formulaPtr);
+        bool checkWhetherCircuitEntailsCnfFormula(const Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT2>* formulaPtr);
 
         /**
          * Set statistics after the compilation

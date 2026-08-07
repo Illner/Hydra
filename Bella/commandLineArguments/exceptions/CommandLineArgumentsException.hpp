@@ -90,11 +90,11 @@ namespace Bella::Exception::CommandLineArguments {
     };
 
     /**
-     * More recomputing hypergraph cut types are mentioned
+     * More hypergraph cut recomputation strategies are mentioned
      */
-    class MoreRecomputingHypergraphCutTypesAreMentionedException : public CommandLineArgumentsException {
+    class MoreHypergraphCutRecomputationStrategiesAreMentionedException : public CommandLineArgumentsException {
     public:
-        MoreRecomputingHypergraphCutTypesAreMentionedException()
-            : CommandLineArgumentsException("More recomputing hypergraph cut types are mentioned!") { }
+        MoreHypergraphCutRecomputationStrategiesAreMentionedException()
+            : CommandLineArgumentsException("More hypergraph cut recomputation strategies are mentioned!") { }
     };
 }   // namespace Bella::Exception::CommandLineArguments

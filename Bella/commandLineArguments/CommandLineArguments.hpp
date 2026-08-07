@@ -82,19 +82,19 @@ namespace Bella::CommandLineArguments {
     inline constexpr ArgumentNameType STANDARD_HYPERGRAPH_NODE_WEIGHT_ARGUMENT = "-s_hnw";
     inline constexpr ArgumentNameType CLAUSE_LENGTH_HYPERGRAPH_NODE_WEIGHT_ARGUMENT = "-cl_hnw";
 
-    // Recomputing hypergraph cut types
-    inline constexpr ArgumentNameType ALWAYS_RECOMPUTING_HYPERGRAPH_CUT_ARGUMENT = "-a_rhc";
-    inline constexpr ArgumentNameType IMMENSE_UNIT_PROPAGATION_RECOMPUTING_HYPERGRAPH_CUT_ARGUMENT = "-iup_rhc";
-    inline constexpr ArgumentNameType FORMULA_SPLIT_RECOMPUTING_HYPERGRAPH_CUT_ARGUMENT = "-fs_rhc";
-    inline constexpr ArgumentNameType EMPTY_HYPERGRAPH_CUT_RECOMPUTING_HYPERGRAPH_CUT_ARGUMENT = "-ehc_rhc";
-    inline constexpr ArgumentNameType IMMENSE_UNIT_PROPAGATION_OR_FORMULA_SPLIT_RECOMPUTING_HYPERGRAPH_CUT_ARGUMENT = "-iup_fs_rhc";
+    // Hypergraph cut recomputation strategies
+    inline constexpr ArgumentNameType ALWAYS_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT = "-a_hcrs";
+    inline constexpr ArgumentNameType IMMENSE_UNIT_PROPAGATION_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT = "-iup_hcrs";
+    inline constexpr ArgumentNameType FORMULA_SPLIT_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT = "-fs_hcrs";
+    inline constexpr ArgumentNameType EMPTY_HYPERGRAPH_CUT_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT = "-ehc_hcrs";
+    inline constexpr ArgumentNameType IMMENSE_UNIT_PROPAGATION_OR_FORMULA_SPLIT_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT = "-iup_fs_hcrs";
 
-    // Partitioning hypergraph types
-    inline constexpr ArgumentNameType CARA_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT = "-cd";
-    inline constexpr ArgumentNameType KAHYPAR_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT = "-ka";
-    inline constexpr ArgumentNameType PATOH_HMETIS_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT = "-ph";
+    // Hypergraph partitioning
+    inline constexpr ArgumentNameType CARA_HYPERGRAPH_PARTITIONING_ARGUMENT = "-cd";
+    inline constexpr ArgumentNameType KAHYPAR_HYPERGRAPH_PARTITIONING_ARGUMENT = "-ka";
+    inline constexpr ArgumentNameType PATOH_HMETIS_HYPERGRAPH_PARTITIONING_ARGUMENT = "-ph";
 
-    // Others
+    // Other options
     inline constexpr ArgumentNameType HELP_ARGUMENT = "-h";
     inline constexpr ArgumentNameType COUNT_ARGUMENT = "-c";
     inline constexpr ArgumentNameType TIMEOUT_ARGUMENT = "-t";
@@ -102,6 +102,7 @@ namespace Bella::CommandLineArguments {
     inline constexpr ArgumentNameType METACENTRUM_ARGUMENT = "-m";
     inline constexpr ArgumentNameType READABLE_STATISTICS_ARGUMENT = "-r";
     inline constexpr ArgumentNameType EQUIVALENCE_SIMPLIFICATION_METHOD_ARGUMENT = "-e";
+    inline constexpr ArgumentNameType CHECK_CIRCUIT_ENTAILS_CNF_FORMULA_ARGUMENT = "-ccef";
 
     inline constexpr LargeNumberType TIMEOUT_DEFAULT = LargeNumberType(24 * 60 * 60);   // 24 hours
 
@@ -128,11 +129,11 @@ namespace Bella::CommandLineArguments {
 
     /**
      * @param arguments the arguments
-     * @return the partitioning hypergraph type
-     * @throw MorePartitioningHypergraphTypesAreMentionedException if more partitioning hypergraph types are mentioned
-     * @throw NoPartitioningHypergraphTypeIsMentionedException if no partitioning hypergraph type is mentioned
+     * @return the hypergraph partitioning type
+     * @throw MoreHypergraphPartitioningTypesAreMentionedException if more hypergraph partitioning types are mentioned
+     * @throw NoHypergraphPartitioningTypeIsMentionedException if no hypergraph partitioning type is mentioned
      */
-    Hydra::PartitioningHypergraphTypeEnum getPartitioningHypergraphType(const ArgumentsType& arguments);
+    Hydra::PartitioningHypergraphTypeEnum getHypergraphPartitioningType(const ArgumentsType& arguments);
 
     /**
      * @param arguments the arguments
@@ -185,10 +186,10 @@ namespace Bella::CommandLineArguments {
 
     /**
      * @param arguments the arguments
-     * @return the recomputing hypergraph cut type
-     * @throw MoreRecomputingHypergraphCutTypesAreMentionedException if more recomputing hypergraph cut types are mentioned
+     * @return the hypergraph cut recomputation strategy
+     * @throw MoreHypergraphCutRecomputationStrategiesAreMentionedException if more hypergraph cut recomputation strategies are mentioned
      */
-    Hydra::RecomputingHypergraphCutTypeEnum getRecomputingHypergraphCutType(const ArgumentsType& arguments);
+    Hydra::RecomputingHypergraphCutTypeEnum getHypergraphCutRecomputationStrategyType(const ArgumentsType& arguments);
 
     /**
      * Print the help

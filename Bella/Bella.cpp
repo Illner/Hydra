@@ -38,17 +38,18 @@ void printConfigurationBeforeCompilation(const CommandLineArgumentsStructT& comm
     std::cout << "Timeout: " << std::to_string(commandLineArgumentsStruct.timeout) << " s" << std::endl;
     std::cout << "SAT solver: " << Hydra::SatSolver::satSolverTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.satSolverType) << std::endl;
     std::cout << "Decision heuristic: " << Hydra::DecisionHeuristic::decisionHeuristicTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.decisionHeuristicType) << std::endl;
-    std::cout << "Partitioning hypergraph type: " << Hydra::partitioningHypergraphTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType) << std::endl;
+    std::cout << "Hypergraph partitioning: " << Hydra::partitioningHypergraphTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType) << std::endl;
+    std::cout << "Equivalence simplification method: " << (commandLineArgumentsStruct.compilerConfiguration.useEquivalenceSimplificationMethod ? "true" : "false") << std::endl;
     std::cout << "Hypergraph node weight type: " << Hydra::PartitioningHypergraph::vertexWeightTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.vertexWeightType) << std::endl;
-    std::cout << "Recomputing hypergraph cut type: " << Hydra::recomputingHypergraphCutTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.recomputingHypergraphCutType) << std::endl;
+    std::cout << "Hypergraph cut recomputation strategy: " << Hydra::recomputingHypergraphCutTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.recomputingHypergraphCutType) << std::endl;
     std::cout << "Component caching scheme: " << Hydra::Cache::CachingScheme::cachingSchemeVariantTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.cachingSchemeVariantComponentCachingType);
-    // Cara caching scheme
+    // Cara caching scheme (component caching)
     if (commandLineArgumentsStruct.compilerConfiguration.cachingSchemeVariantComponentCachingType == Hydra::Cache::CachingScheme::CachingSchemeVariantTypeEnum::CARA)
         std::cout << " (" << Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::getNumberOfSampleMomentsAsStringStatic(commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeComponentCachingConfiguration.numberOfSampleMoments) << ")";
     std::cout << std::endl;
     std::cout << "Component cache cleaning strategy: " << Hydra::Cache::CacheCleaningStrategy::cacheCleaningStrategyTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.cacheCleaningStrategyComponentCachingType) << std::endl;
     std::cout << "Hypergraph cut caching scheme: " << Hydra::Cache::CachingScheme::cachingSchemeTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.cachingSchemeHypergraphCutCachingType);
-    // Cara caching scheme
+    // Cara caching scheme (hypergraph cut caching)
     if (commandLineArgumentsStruct.compilerConfiguration.cachingSchemeHypergraphCutCachingType == Hydra::Cache::CachingScheme::CachingSchemeTypeEnum::CARA)
         std::cout << " (" << Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::getNumberOfSampleMomentsAsStringStatic(commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeHypergraphCutCachingConfiguration.numberOfSampleMoments) << ")";
     std::cout << std::endl;
@@ -67,6 +68,9 @@ void core(Hydra::Compiler<VarT, LiteralT, ClauseIdT>& compiler, const CommandLin
     using CircuitPtrType = typename Hydra::Compiler<VarT, LiteralT, ClauseIdT>::CircuitPtrType;
     using NumberOfModelsType = typename Hydra::Circuit::Circuit<VarT, LiteralT>::NumberOfModelsType;
     using NodeTypeCounterType = typename Hydra::Circuit::Circuit<VarT, LiteralT>::NodeTypeCounterType;
+
+    std::cout << "Compiling..." << std::endl;
+    std::cout << std::endl;
 
     TimePointType startTime = std::chrono::steady_clock::now();
     compiler.compile();
@@ -132,13 +136,15 @@ void core(Hydra::Compiler<VarT, LiteralT, ClauseIdT>& compiler, const CommandLin
     }
     std::cout << std::endl;
 
-    // Check if the compiled circuit implies the input CNF formula
-    if (false && commandLineArgumentsStruct.clausalEntailmentCheck) {
-        std::cout << "Checking if circuit |= CNF formula" << std::endl;
-        bool doesCircuitImplyCnfFormula = circuitPtr->clausalEntailmentCheck(compiler.getFormulaPtr());
-        if (!doesCircuitImplyCnfFormula)
-            throw Hydra::Exception::CircuitDoesNotImplyCnfFormulaException();
+    // Check whether the compiled circuit entails the input CNF formula
+    if (commandLineArgumentsStruct.checkWhetherCircuitEntailsCnfFormula) {
+        std::cout << "Checking whether the compiled circuit entails the input CNF formula..." << std::endl;
 
+        // The compiled circuit does NOT entail the input CNF formula
+        if (!circuitPtr->checkWhetherCircuitEntailsCnfFormula(compiler.getFormulaPtr()))
+            throw Hydra::Exception::CircuitDoesNotEntailCnfFormulaException();
+
+        std::cout << "compiled circuit |= input CNF formula" << std::endl;
         std::cout << std::endl;
     }
 

@@ -1053,7 +1053,7 @@ namespace Hydra::Circuit {
 
     template <typename VarT, typename LiteralT>
     template <typename ClauseIdT2>
-    bool Circuit<VarT, LiteralT>::clausalEntailmentCheck(const Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT2>* formulaPtr) {
+    bool Circuit<VarT, LiteralT>::checkWhetherCircuitEntailsCnfFormula(const Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT2>* formulaPtr) {
         // The root is not set
         if (!root_.has_value())
             throw Exception::Circuit::RootIsNotSetException();

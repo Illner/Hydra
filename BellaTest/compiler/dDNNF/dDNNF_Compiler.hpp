@@ -100,10 +100,10 @@ namespace BellaTest::Compiler::dDNNF {
 
         CircuitPtrType circuitPtr = compiler.getCompiledCircuitPtr();
 
-        // Check if the compiled circuit implies the CNF formula
-        bool doesCircuitImplyCnfFormula = circuitPtr->clausalEntailmentCheck(compiler.getFormulaPtr());
-        if (!doesCircuitImplyCnfFormula)
-            throw Hydra::Exception::CircuitDoesNotImplyCnfFormulaException();
+        // Check whether the compiled circuit entails the CNF formula
+        bool doesCircuitEntailCnfFormula = circuitPtr->checkWhetherCircuitEntailsCnfFormula(compiler.getFormulaPtr());
+        if (!doesCircuitEntailCnfFormula)
+            throw Hydra::Exception::CircuitDoesNotEntailCnfFormulaException();
 
         NumberOfModelsType numberOfModels = circuitPtr->modelCounting({});
 
