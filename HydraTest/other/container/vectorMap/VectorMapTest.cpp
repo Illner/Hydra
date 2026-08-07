@@ -11,8 +11,11 @@
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/other/Other.hpp"
 #include "Hydra/other/container/vectorMap/VectorMap.hpp"
+#include "Hydra/other/stdExt/InsertionOperator.hpp"
 
 namespace HydraTest::Container::VectorMap {
+
+    using namespace Hydra::Other::StdExt::InsertionOperator;
 
     //region Types
     using TypeT = char8_t;
@@ -52,7 +55,7 @@ namespace HydraTest::Container::VectorMap {
 
         const TypeT& noValueRepresentative = vectorMap.getNoValueRepresentative();
 
-        actualResult << std::to_string(noValueRepresentative) << std::endl;
+        actualResult << noValueRepresentative << std::endl;
     }
 
     void printTitle(const std::string& title, std::stringstream& actualResult, int numberOfDelimiters = 15) {
@@ -176,7 +179,7 @@ namespace HydraTest::Container::VectorMap {
     void insertElementsVectorMap(Hydra::Container::VectorMap::VectorMap<TypeT>& vectorMap, const std::vector<std::pair<KeyType, TypeT>>& elementVector,
                                  std::stringstream& actualResult, bool checkExistence) {
         for (const std::pair<KeyType, TypeT>& element : elementVector) {
-            actualResult << "Add element: " << std::to_string(element) << std::endl;
+            actualResult << "Add element: " << element << std::endl;
             actualResult << std::endl;
 
             vectorMap.insert(element.first, element.second, checkExistence);
@@ -195,11 +198,11 @@ namespace HydraTest::Container::VectorMap {
             if (exists) {
                 // Find
                 const TypeT& valueFind = vectorMap.find(key);
-                actualResult << " (" << std::to_string(valueFind) << ")";
+                actualResult << " (" << valueFind << ")";
 
                 // Subscript operator
                 const TypeT& valueSubscriptOperator = vectorMap[key];
-                actualResult << " [" << std::to_string(valueSubscriptOperator) << "]";
+                actualResult << " [" << valueSubscriptOperator << "]";
             }
 
             actualResult << std::endl;
@@ -1611,7 +1614,7 @@ namespace HydraTest::Container::VectorMap {
 
             // Find
             const LiteralType& value = vectorMap.find(2);
-            actualResult << "2: " << std::to_string(value) << std::endl;
+            actualResult << "2: " << value << std::endl;
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
