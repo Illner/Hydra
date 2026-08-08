@@ -5,8 +5,8 @@
 #include <vector>
 
 #include "HydraTest/TemplateTest.hpp"
-#include "HydraTest/catch.hpp"
 #include "HydraTest/circuit/node/NodeTestResult.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 
 #include "Hydra/circuit/Circuit.hpp"
 #include "Hydra/circuit/node/NodeAbstract.hpp"

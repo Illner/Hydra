@@ -1,7 +1,7 @@
 #include <string>
 
 #include "HydraTest/TemplateTest.hpp"
-#include "HydraTest/catch.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 
 #include "BellaTest/compiler/CreateFormula.hpp"
 #include "BellaTest/compiler/wDNNF/wDNNF_Compiler.hpp"

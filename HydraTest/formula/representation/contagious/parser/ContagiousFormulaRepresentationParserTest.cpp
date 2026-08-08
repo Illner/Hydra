@@ -5,7 +5,7 @@
 #include <string>
 
 #include "HydraTest/TemplateTest.hpp"
-#include "HydraTest/catch.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 #include "HydraTest/formula/representation/contagious/parser/ContagiousFormulaRepresentationParserTestFormula.hpp"
 #include "HydraTest/formula/representation/contagious/parser/ContagiousFormulaRepresentationParserTestInput.hpp"
 #include "HydraTest/formula/representation/contagious/parser/ContagiousFormulaRepresentationParserTestResult.hpp"

@@ -2,9 +2,9 @@
 #include <vector>
 
 #include "HydraTest/TemplateTest.hpp"
-#include "HydraTest/catch.hpp"
 #include "HydraTest/circuit/CreateCircuit.hpp"
 #include "HydraTest/circuit/copySubcircuit/CircuitCopySubcircuitTestResult.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 
 #include "Hydra/circuit/Circuit.hpp"
 #include "Hydra/formula/Literal.hpp"

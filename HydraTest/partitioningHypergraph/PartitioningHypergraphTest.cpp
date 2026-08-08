@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "HydraTest/TemplateTest.hpp"
-#include "HydraTest/catch.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 #include "HydraTest/partitioningHypergraph/PartitioningHypergraphTestResult.hpp"
 
 #include "Hydra/formula/Literal.hpp"
@@ -402,7 +402,7 @@ namespace HydraTest::PartitioningHypergraph {
 
         FormulaType formula {
             litNeg1, litPos2, zeroLit,   // 0
-            litPos3, litNeg4, zeroLit,   // 1
+            litPos3, litNeg4, zeroLit    // 1
         };
 
         VarT numberOfVariables = 4;

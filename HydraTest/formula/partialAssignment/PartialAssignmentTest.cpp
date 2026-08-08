@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "HydraTest/TemplateTest.hpp"
-#include "HydraTest/catch.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 #include "HydraTest/formula/partialAssignment/PartialAssignmentTestResult.hpp"
 
 #include "Hydra/formula/Literal.hpp"

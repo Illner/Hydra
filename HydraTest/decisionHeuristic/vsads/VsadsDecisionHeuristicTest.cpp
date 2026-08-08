@@ -2,10 +2,10 @@
 #include <vector>
 
 #include "HydraTest/TemplateTest.hpp"
-#include "HydraTest/catch.hpp"
 #include "HydraTest/decisionHeuristic/CreateFormula.hpp"
 #include "HydraTest/decisionHeuristic/DecisionHeuristic.hpp"
 #include "HydraTest/decisionHeuristic/vsads/VsadsDecisionHeuristicTestResult.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 
 #include "Hydra/decisionHeuristic/vsads/VsadsDecisionHeuristic.hpp"
 

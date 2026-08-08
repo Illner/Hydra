@@ -5,7 +5,7 @@
 #include "HydraTest/cache/cachingScheme/CachingScheme.hpp"
 #include "HydraTest/cache/cachingScheme/CreateFormula.hpp"
 #include "HydraTest/cache/cachingScheme/standard/StandardCachingSchemeTestResult.hpp"
-#include "HydraTest/catch.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 
 #include "Hydra/cache/cachingScheme/standard/StandardCachingScheme.hpp"
 

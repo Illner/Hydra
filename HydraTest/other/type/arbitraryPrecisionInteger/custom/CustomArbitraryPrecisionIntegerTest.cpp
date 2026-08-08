@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "HydraTest/TemplateTest.hpp"
-#include "HydraTest/catch.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 #include "HydraTest/other/type/arbitraryPrecisionInteger/custom/CustomArbitraryPrecisionIntegerTestResult.hpp"
 
 #include "Hydra/other/type/arbitraryPrecisionInteger/custom/CustomArbitraryPrecisionInteger.hpp"

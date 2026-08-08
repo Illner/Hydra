@@ -4,9 +4,9 @@
 #include <vector>
 
 #include "HydraTest/TemplateTest.hpp"
-#include "HydraTest/catch.hpp"
 #include "HydraTest/circuit/query/CircuitQueryTestCircuit.hpp"
 #include "HydraTest/circuit/query/CircuitQueryTestResult.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 
 #include "Hydra/circuit/Circuit.hpp"
 #include "Hydra/circuit/parser/CircuitParser.hpp"

@@ -2,9 +2,9 @@
 #include <string>
 
 #include "HydraTest/TemplateTest.hpp"
-#include "HydraTest/catch.hpp"
 #include "HydraTest/circuit/parser/CircuitParserTestInput.hpp"
 #include "HydraTest/circuit/parser/CircuitParserTestResult.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 
 #include "Hydra/circuit/Circuit.hpp"
 #include "Hydra/circuit/parser/CircuitParser.hpp"

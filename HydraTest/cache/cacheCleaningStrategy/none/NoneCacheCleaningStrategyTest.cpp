@@ -4,7 +4,7 @@
 #include "HydraTest/cache/cacheCleaningStrategy/CacheCleaningStrategy.hpp"
 #include "HydraTest/cache/cacheCleaningStrategy/CreateFormula.hpp"
 #include "HydraTest/cache/cacheCleaningStrategy/none/NoneCacheCleaningStrategyTestResult.hpp"
-#include "HydraTest/catch.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 
 #include "Hydra/cache/cacheCleaningStrategy/none/NoneCacheCleaningStrategy.hpp"
 
