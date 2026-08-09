@@ -2,6 +2,8 @@
 
 #include "./ReusableVector.hpp"
 
+#include "Hydra/other/stdExt/InsertionOperator.hpp"
+
 namespace Hydra::Container::ReusableVector {
 
     template <typename TypeT>
@@ -222,14 +224,16 @@ namespace Hydra::Container::ReusableVector {
     #ifndef NDEBUG
     template <typename TypeT>
     void ReusableVector<TypeT>::printReusableVectorDebug(std::ostream& out) const {
+        using namespace Hydra::Other::StdExt::InsertionOperator;
+
         out << "Vector:";
         for (const TypeT& x : reusableVector_)
-            out << " " << std::to_string(x);
+            out << " " << x;
         out << std::endl;
 
         out << "Reusable vector:";
         for (auto it = cbegin(); it != cend(); ++it)
-            out << " " << std::to_string(*it);
+            out << " " << *it;
         out << std::endl;
 
         out << "Number of active elements: " << std::to_string(size()) << std::endl;
