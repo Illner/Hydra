@@ -20,6 +20,7 @@ build_cara
 ## Others
 .DS_Store
 /temp.txt
+/TODO.md
 /cnfFormulae/tmp.cnf
 
 # Binary files of compiled MiniSat
