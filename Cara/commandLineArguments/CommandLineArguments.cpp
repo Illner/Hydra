@@ -171,7 +171,7 @@ namespace Cara::CommandLineArguments {
 
         // Others
         commandLineArgumentsStruct.compilerConfiguration.vertexWeightType = Hydra::PartitioningHypergraph::VertexWeightTypeEnum::STANDARD;
-        commandLineArgumentsStruct.compilerConfiguration.recomputingHypergraphCutType = Hydra::RecomputingHypergraphCutTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY;
+        commandLineArgumentsStruct.compilerConfiguration.hypergraphCutRecomputationStrategyType = Hydra::HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY;
     }
 
     Hydra::PartitioningHypergraphTypeEnum getHypergraphPartitioningType(const ArgumentsType& arguments) {

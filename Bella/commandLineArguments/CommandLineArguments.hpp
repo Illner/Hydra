@@ -189,7 +189,7 @@ namespace Bella::CommandLineArguments {
      * @return the hypergraph cut recomputation strategy
      * @throw MoreHypergraphCutRecomputationStrategiesAreMentionedException if more hypergraph cut recomputation strategies are mentioned
      */
-    Hydra::RecomputingHypergraphCutTypeEnum getHypergraphCutRecomputationStrategyType(const ArgumentsType& arguments);
+    Hydra::HypergraphCutRecomputationStrategyTypeEnum getHypergraphCutRecomputationStrategyType(const ArgumentsType& arguments);
 
     /**
      * Print the help

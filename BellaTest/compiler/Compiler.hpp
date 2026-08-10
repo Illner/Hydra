@@ -63,11 +63,11 @@ namespace BellaTest::Compiler {
     using MiniSatVsidsScoreTypeEnum = Hydra::SatSolver::MiniSat::VsidsScoreTypeEnum;
     using VertexWeightTypeEnum = Hydra::CompilerConfiguration::VertexWeightTypeEnum;
     using PreprocessingTypeEnum = Hydra::Cache::CachingScheme::PreprocessingTypeEnum;
-    using RecomputingHypergraphCutTypeEnum = Hydra::RecomputingHypergraphCutTypeEnum;
     using CachingSchemeTypeEnum = Hydra::CompilerConfiguration::CachingSchemeTypeEnum;
     using DecisionHeuristicTypeEnum = Hydra::CompilerConfiguration::DecisionHeuristicTypeEnum;
     using SubsumptionTypeEnum = Hydra::Formula::Representation::Contagious::SubsumptionTypeEnum;
     using CacheCleaningStrategyTypeEnum = Hydra::CompilerConfiguration::CacheCleaningStrategyTypeEnum;
+    using HypergraphCutRecomputationStrategyTypeEnum = Hydra::HypergraphCutRecomputationStrategyTypeEnum;
     using ImplicitBcpVariableOrderTypeEnum = Hydra::CompilerConfiguration::ImplicitBcpVariableOrderTypeEnum;
     using VariableSubsumptionWithMappingTypeEnum = Hydra::Formula::Representation::Contagious::VariableSubsumptionWithMappingTypeEnum;
     //endregion
@@ -109,7 +109,7 @@ namespace BellaTest::Compiler {
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.recomputingHypergraphCutType = RecomputingHypergraphCutTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY;
+        configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY;
 
         #if OPERATING_SYSTEM_WINDOWS
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;

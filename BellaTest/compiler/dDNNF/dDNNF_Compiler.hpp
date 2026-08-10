@@ -42,9 +42,9 @@ namespace BellaTest::Compiler::dDNNF {
     using CachingSchemeTypeEnum = Compiler::CachingSchemeTypeEnum;
     using DecisionHeuristicTypeEnum = Compiler::DecisionHeuristicTypeEnum;
     using CacheCleaningStrategyTypeEnum = Compiler::CacheCleaningStrategyTypeEnum;
-    using RecomputingHypergraphCutTypeEnum = Compiler::RecomputingHypergraphCutTypeEnum;
     using ImplicitBcpVariableOrderTypeEnum = Compiler::ImplicitBcpVariableOrderTypeEnum;
     using VariableSubsumptionWithMappingTypeEnum = Compiler::VariableSubsumptionWithMappingTypeEnum;
+    using HypergraphCutRecomputationStrategyTypeEnum = Compiler::HypergraphCutRecomputationStrategyTypeEnum;
     //endregion
 
     inline CompilerConfigurationType createDefaultCompilerConfiguration() {

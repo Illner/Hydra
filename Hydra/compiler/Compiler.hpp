@@ -57,7 +57,6 @@
 #include "Hydra/circuit/node/enums/DecomposabilityTypeEnum.hpp"
 #include "Hydra/compiler/enums/IgnorePureLiteralTypeEnum.hpp"
 #include "Hydra/compiler/enums/PartitioningHypergraphTypeEnum.hpp"
-#include "Hydra/compiler/enums/RecomputingHypergraphCutTypeEnum.hpp"
 #include "Hydra/decisionHeuristic/enums/DecisionHeuristicTypeEnum.hpp"
 #include "Hydra/satSolver/enums/SatSolverTypeEnum.hpp"
 
@@ -225,7 +224,8 @@ namespace Hydra {
             assert(configuration_.numberOfVariablesThresholdForBruteForceApproach <= S_MAX_NUMBER_OF_VARIABLES_FOR_BRUTE_FORCE_APPROACH_);
             #endif
 
-            assert(configuration_.percentageThresholdOfImmenseUnitPropagationRecomputingHypergraphCut >= 0 && configuration_.percentageThresholdOfImmenseUnitPropagationRecomputingHypergraphCut <= 1);
+            assert(configuration_.percentageThresholdOfImmenseUnitPropagationHypergraphCutRecomputationStrategy >= 0 &&
+                   configuration_.percentageThresholdOfImmenseUnitPropagationHypergraphCutRecomputationStrategy <= 1);
 
             // Statistics
             if (compilerStatisticsPtr_)

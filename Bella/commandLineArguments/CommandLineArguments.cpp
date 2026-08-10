@@ -153,7 +153,7 @@ namespace Bella::CommandLineArguments {
 
         // Others
         commandLineArgumentsStruct.compilerConfiguration.vertexWeightType = getHypergraphNodeWeightType(arguments);
-        commandLineArgumentsStruct.compilerConfiguration.recomputingHypergraphCutType = getHypergraphCutRecomputationStrategyType(arguments);
+        commandLineArgumentsStruct.compilerConfiguration.hypergraphCutRecomputationStrategyType = getHypergraphCutRecomputationStrategyType(arguments);
         commandLineArgumentsStruct.checkWhetherCircuitEntailsCnfFormula = Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CHECK_CIRCUIT_ENTAILS_CNF_FORMULA_ARGUMENT);
         commandLineArgumentsStruct.compilerConfiguration.useEquivalenceSimplificationMethod = Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, EQUIVALENCE_SIMPLIFICATION_METHOD_ARGUMENT);
 
@@ -720,14 +720,14 @@ namespace Bella::CommandLineArguments {
         return vertexWeightType;
     }
 
-    Hydra::RecomputingHypergraphCutTypeEnum getHypergraphCutRecomputationStrategyType(const ArgumentsType& arguments) {
+    Hydra::HypergraphCutRecomputationStrategyTypeEnum getHypergraphCutRecomputationStrategyType(const ArgumentsType& arguments) {
         bool exists = false;
-        Hydra::RecomputingHypergraphCutTypeEnum hypergraphCutRecomputationStrategyType;
+        Hydra::HypergraphCutRecomputationStrategyTypeEnum hypergraphCutRecomputationStrategyType;
 
         // Always
         if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, ALWAYS_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT)) {
             exists = true;
-            hypergraphCutRecomputationStrategyType = Hydra::RecomputingHypergraphCutTypeEnum::ALWAYS;
+            hypergraphCutRecomputationStrategyType = Hydra::HypergraphCutRecomputationStrategyTypeEnum::ALWAYS;
         }
 
         // Immense unit propagation
@@ -736,7 +736,7 @@ namespace Bella::CommandLineArguments {
                 throw Exception::CommandLineArguments::MoreHypergraphCutRecomputationStrategiesAreMentionedException();
 
             exists = true;
-            hypergraphCutRecomputationStrategyType = Hydra::RecomputingHypergraphCutTypeEnum::IMMENSE_UNIT_PROPAGATION;
+            hypergraphCutRecomputationStrategyType = Hydra::HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION;
         }
 
         // Formula split
@@ -745,7 +745,7 @@ namespace Bella::CommandLineArguments {
                 throw Exception::CommandLineArguments::MoreHypergraphCutRecomputationStrategiesAreMentionedException();
 
             exists = true;
-            hypergraphCutRecomputationStrategyType = Hydra::RecomputingHypergraphCutTypeEnum::WHEN_CURRENT_FORMULA_IS_SPLIT;
+            hypergraphCutRecomputationStrategyType = Hydra::HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_FORMULA_IS_SPLIT;
         }
 
         // Empty hypergraph cut
@@ -754,7 +754,7 @@ namespace Bella::CommandLineArguments {
                 throw Exception::CommandLineArguments::MoreHypergraphCutRecomputationStrategiesAreMentionedException();
 
             exists = true;
-            hypergraphCutRecomputationStrategyType = Hydra::RecomputingHypergraphCutTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY;
+            hypergraphCutRecomputationStrategyType = Hydra::HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY;
         }
 
         // Immense unit propagation or formula split
@@ -763,12 +763,12 @@ namespace Bella::CommandLineArguments {
                 throw Exception::CommandLineArguments::MoreHypergraphCutRecomputationStrategiesAreMentionedException();
 
             exists = true;
-            hypergraphCutRecomputationStrategyType = Hydra::RecomputingHypergraphCutTypeEnum::IMMENSE_UNIT_PROPAGATION_OR_WHEN_CURRENT_FORMULA_IS_SPLIT;
+            hypergraphCutRecomputationStrategyType = Hydra::HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION_OR_WHEN_CURRENT_FORMULA_IS_SPLIT;
         }
 
         // Default
         if (!exists)
-            hypergraphCutRecomputationStrategyType = Hydra::RecomputingHypergraphCutTypeEnum::IMMENSE_UNIT_PROPAGATION;
+            hypergraphCutRecomputationStrategyType = Hydra::HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION;
 
         return hypergraphCutRecomputationStrategyType;
     }
@@ -941,11 +941,11 @@ namespace Bella::CommandLineArguments {
         std::cout << std::endl;
 
         std::cout << "Hypergraph cut recomputation strategies:" << std::endl;
-        std::cout << "\t" << ALWAYS_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT << " — " << recomputingHypergraphCutTypeEnumToString(Hydra::RecomputingHypergraphCutTypeEnum::ALWAYS) << std::endl;
-        std::cout << "\t" << IMMENSE_UNIT_PROPAGATION_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT << " — " << recomputingHypergraphCutTypeEnumToString(Hydra::RecomputingHypergraphCutTypeEnum::IMMENSE_UNIT_PROPAGATION) << " (default)" << std::endl;
-        std::cout << "\t" << FORMULA_SPLIT_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT << " — " << recomputingHypergraphCutTypeEnumToString(Hydra::RecomputingHypergraphCutTypeEnum::WHEN_CURRENT_FORMULA_IS_SPLIT) << std::endl;
-        std::cout << "\t" << EMPTY_HYPERGRAPH_CUT_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT << " — " << recomputingHypergraphCutTypeEnumToString(Hydra::RecomputingHypergraphCutTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY) << std::endl;
-        std::cout << "\t" << IMMENSE_UNIT_PROPAGATION_OR_FORMULA_SPLIT_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT << " — " << recomputingHypergraphCutTypeEnumToString(Hydra::RecomputingHypergraphCutTypeEnum::IMMENSE_UNIT_PROPAGATION_OR_WHEN_CURRENT_FORMULA_IS_SPLIT) << std::endl;
+        std::cout << "\t" << ALWAYS_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT << " — " << hypergraphCutRecomputationStrategyTypeEnumToString(Hydra::HypergraphCutRecomputationStrategyTypeEnum::ALWAYS) << std::endl;
+        std::cout << "\t" << IMMENSE_UNIT_PROPAGATION_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT << " — " << hypergraphCutRecomputationStrategyTypeEnumToString(Hydra::HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION) << " (default)" << std::endl;
+        std::cout << "\t" << FORMULA_SPLIT_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT << " — " << hypergraphCutRecomputationStrategyTypeEnumToString(Hydra::HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_FORMULA_IS_SPLIT) << std::endl;
+        std::cout << "\t" << EMPTY_HYPERGRAPH_CUT_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT << " — " << hypergraphCutRecomputationStrategyTypeEnumToString(Hydra::HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY) << std::endl;
+        std::cout << "\t" << IMMENSE_UNIT_PROPAGATION_OR_FORMULA_SPLIT_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT << " — " << hypergraphCutRecomputationStrategyTypeEnumToString(Hydra::HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION_OR_WHEN_CURRENT_FORMULA_IS_SPLIT) << std::endl;
         std::cout << std::endl;
 
         std::cout << COUNT_ARGUMENT << " — count the models" << std::endl;

@@ -41,7 +41,7 @@ void printConfigurationBeforeCompilation(const CommandLineArgumentsStructT& comm
     std::cout << "Hypergraph partitioning: " << Hydra::partitioningHypergraphTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType) << std::endl;
     std::cout << "Equivalence simplification method: " << (commandLineArgumentsStruct.compilerConfiguration.useEquivalenceSimplificationMethod ? "true" : "false") << std::endl;
     std::cout << "Hypergraph node weight type: " << Hydra::PartitioningHypergraph::vertexWeightTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.vertexWeightType) << std::endl;
-    std::cout << "Hypergraph cut recomputation strategy: " << Hydra::recomputingHypergraphCutTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.recomputingHypergraphCutType) << std::endl;
+    std::cout << "Hypergraph cut recomputation strategy: " << Hydra::hypergraphCutRecomputationStrategyTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.hypergraphCutRecomputationStrategyType) << std::endl;
     std::cout << "Component caching scheme: " << Hydra::Cache::CachingScheme::cachingSchemeVariantTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.cachingSchemeVariantComponentCachingType);
     // Cara caching scheme (component caching)
     if (commandLineArgumentsStruct.compilerConfiguration.cachingSchemeVariantComponentCachingType == Hydra::Cache::CachingScheme::CachingSchemeVariantTypeEnum::CARA)

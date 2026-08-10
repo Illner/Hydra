@@ -4926,69 +4926,69 @@ namespace CaraTest::SharpSolver {
 
     /**
      * Partitioning hypergraph
-     *      recomputing hypergraph cut: always
+     *      hypergraph cut recomputation strategy: always
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (recomputing hypergraph cut: always)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: always)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
-        configuration.recomputingHypergraphCutType = RecomputingHypergraphCutTypeEnum::ALWAYS;
+        configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::ALWAYS;
 
         process(configuration, true);
     }
 
     /**
      * Partitioning hypergraph
-     *      recomputing hypergraph cut: immense unit propagation - 0.2
+     *      hypergraph cut recomputation strategy: immense unit propagation - 0.2
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (recomputing hypergraph cut: immense unit propagation - 0.2)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: immense unit propagation - 0.2)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
-        configuration.percentageThresholdOfImmenseUnitPropagationRecomputingHypergraphCut = 0.2;
-        configuration.recomputingHypergraphCutType = RecomputingHypergraphCutTypeEnum::IMMENSE_UNIT_PROPAGATION;
+        configuration.percentageThresholdOfImmenseUnitPropagationHypergraphCutRecomputationStrategy = 0.2;
+        configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION;
 
         process(configuration, true);
     }
 
     /**
      * Partitioning hypergraph
-     *      recomputing hypergraph cut: immense unit propagation - 0.5
+     *      hypergraph cut recomputation strategy: immense unit propagation - 0.5
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (recomputing hypergraph cut: immense unit propagation - 0.5)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: immense unit propagation - 0.5)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
-        configuration.percentageThresholdOfImmenseUnitPropagationRecomputingHypergraphCut = 0.5;
-        configuration.recomputingHypergraphCutType = RecomputingHypergraphCutTypeEnum::IMMENSE_UNIT_PROPAGATION;
+        configuration.percentageThresholdOfImmenseUnitPropagationHypergraphCutRecomputationStrategy = 0.5;
+        configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION;
 
         process(configuration, true);
     }
 
     /**
      * Partitioning hypergraph
-     *      recomputing hypergraph cut: immense unit propagation - 0.8
+     *      hypergraph cut recomputation strategy: immense unit propagation - 0.8
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (recomputing hypergraph cut: immense unit propagation - 0.8)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: immense unit propagation - 0.8)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
-        configuration.percentageThresholdOfImmenseUnitPropagationRecomputingHypergraphCut = 0.8;
-        configuration.recomputingHypergraphCutType = RecomputingHypergraphCutTypeEnum::IMMENSE_UNIT_PROPAGATION;
+        configuration.percentageThresholdOfImmenseUnitPropagationHypergraphCutRecomputationStrategy = 0.8;
+        configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION;
 
         process(configuration, true);
     }
 
     /**
      * Partitioning hypergraph
-     *      recomputing hypergraph cut: when current formula is split
+     *      hypergraph cut recomputation strategy: when current formula is split
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (recomputing hypergraph cut: when current formula is split)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: when current formula is split)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
-        configuration.recomputingHypergraphCutType = RecomputingHypergraphCutTypeEnum::WHEN_CURRENT_FORMULA_IS_SPLIT;
+        configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_FORMULA_IS_SPLIT;
 
         process(configuration, true);
     }
 
     /**
      * Partitioning hypergraph
-     *      recomputing hypergraph cut: when current hypergraph cut is empty
+     *      hypergraph cut recomputation strategy: when current hypergraph cut is empty
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (recomputing hypergraph cut: when current hypergraph cut is empty)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: when current hypergraph cut is empty)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
-        configuration.recomputingHypergraphCutType = RecomputingHypergraphCutTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY;
+        configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY;
 
         process(configuration, true);
     }
