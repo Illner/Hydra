@@ -296,8 +296,9 @@ namespace Bella::CommandLineArguments {
             circuitType = Hydra::Circuit::CircuitTypeEnum::nwDNNF;
         }
 
+        /*
         // Bella
-        if (false && Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, Bella_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, Bella_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreCircuitTypesAreMentionedException();
 
@@ -306,7 +307,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // posBella
-        if (false && Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, posBella_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, posBella_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreCircuitTypesAreMentionedException();
 
@@ -315,7 +316,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // negBella
-        if (false && Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, negBella_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, negBella_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreCircuitTypesAreMentionedException();
 
@@ -324,13 +325,14 @@ namespace Bella::CommandLineArguments {
         }
 
         // Krom-Bella
-        if (false && Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, Krom_Bella_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, Krom_Bella_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreCircuitTypesAreMentionedException();
 
             exists = true;
             circuitType = Hydra::Circuit::CircuitTypeEnum::Krom_Bella;
         }
+        */
 
         // No circuit type is mentioned
         if (!exists)
