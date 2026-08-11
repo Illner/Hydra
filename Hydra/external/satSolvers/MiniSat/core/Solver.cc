@@ -504,7 +504,7 @@ struct reduceDB_lt {
 };
 void Solver::reduceDB() {
     int i, j;
-    double extra_lim = cla_inc / learnts.size();   // Remove any clause below this activity
+    float extra_lim = (float)(cla_inc / learnts.size());   // Remove any clause below this activity
 
     sort(learnts, reduceDB_lt(ca));
     // Don't delete binary or locked clauses. From the rest, delete clauses from the first half
@@ -798,7 +798,7 @@ void Solver::toDimacs(const char* file, const vec<Lit>& assumps) {
     fclose(f);
 }
 
-void Solver::toDimacs(FILE* f, const vec<Lit>& assumps) {
+void Solver::toDimacs(FILE* f, [[maybe_unused]] const vec<Lit>& assumps) {
     // Handle case when solver is in contradictory state:
     if (!ok) {
         fprintf(f, "p cnf 1 2\n1 0\n-1 0\n");
