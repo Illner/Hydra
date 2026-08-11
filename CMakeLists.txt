@@ -28,14 +28,17 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 # Warning flags
 add_cxx_flag_if_supported("-Wall")
 add_cxx_flag_if_supported("-Wextra")
-add_cxx_flag_if_supported("-Wtype-limits")          # because of Clang
+add_cxx_flag_if_supported("-Wtype-limits")              # because of Clang
 add_cxx_flag_if_supported("-Wpointer-arith")
-add_cxx_flag_if_supported("-Wextra-semi-stmt")      # Clang-only
-add_cxx_flag_if_supported("-Wunreachable-code")     # Clang-only
-add_cxx_flag_if_supported("-Wdouble-promotion")
-add_cxx_flag_if_supported("-Warith-conversion")     # GCC-only
+add_cxx_flag_if_supported("-Wextra-semi-stmt")          # Clang-only
+add_cxx_flag_if_supported("-Wunreachable-code")         # Clang-only
+# add_cxx_flag_if_supported("-Wdouble-promotion")
+add_cxx_flag_if_supported("-Warith-conversion")         # GCC-only
 add_cxx_flag_if_supported("-Wformat-nonliteral")
-add_cxx_flag_if_supported("-Wno-class-memaccess")   # GCC-only
+add_cxx_flag_if_supported("-Wno-class-memaccess")       # GCC-only
+add_cxx_flag_if_supported("-Wno-macro-redefined")       # Clang-only    # SAT solvers
+add_cxx_flag_if_supported("-Wno-character-conversion")  # Clang-only
+add_cxx_flag_if_supported("-Wno-tautological-unsigned-zero-compare")    # Clang-only
 
 # Static linking
 option(BUILD_STATIC "Build static" OFF)
