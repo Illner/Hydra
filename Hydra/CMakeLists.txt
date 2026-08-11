@@ -32,7 +32,7 @@ IF (CMAKE_SYSTEM_NAME STREQUAL "CYGWIN")
 ELSE ()
     find_package(Boost REQUIRED CONFIG)
 ENDIF ()
-target_include_directories(HydraLibrary PUBLIC ${Boost_INCLUDE_DIRS})
+target_include_directories(HydraLibrary SYSTEM PUBLIC ${Boost_INCLUDE_DIRS})
 
 # GMP
 find_library(GMPLibrary NAMES gmp)
