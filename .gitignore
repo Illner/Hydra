@@ -17,6 +17,10 @@ build_cara
 /.idea/codeStyles/Project.xml
 /.idea/codeStyles/codeStyleConfig.xml
 
+## Claude
+/.claude
+/.claude/settings.local.json
+
 ## Others
 .DS_Store
 /temp.txt
