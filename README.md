@@ -95,7 +95,7 @@ The corresponding binaries are in the locations mentioned above.
 
 ### Hash Maps
 
-* [unordered_dense v4.5.0](https://github.com/martinus/unordered_dense)  
+* [unordered_dense v4.9.1](https://github.com/martinus/unordered_dense)  
   `Hydra/external/hashMaps/unordered_dense`
 
 * [robin-hood-hashing 3.11.5](https://github.com/martinus/robin-hood-hashing)  
@@ -111,7 +111,7 @@ The corresponding binaries are in the locations mentioned above.
   _used on Linux and macOS_  
   `Hydra/external/partitioningHypergraphs/PaToH`
 
-* [hMETIS 1.5.3](https://papers.karypis.org/glaros/software/metis/overview.html)  
+* [hMETIS 1.5.3](https://papers.karypis.org/glaros/software/metis/overview.html#hmetis---hypergraph--circuit-partitioning)  
   _used only on Windows_  
   `Hydra/external/partitioningHypergraphs/hMETIS`
 
@@ -119,6 +119,11 @@ The corresponding binaries are in the locations mentioned above.
   _used on Linux, macOS, and Windows_  
   `Hydra/external/partitioningHypergraphs/KaHyPar`  
   `Hydra/external/boost` (_precompiled libraries required by KaHyPar_)
+
+### Unit Testing
+
+* [Catch2 v2.13.10](https://github.com/catchorg/Catch2)  
+  `HydraTest/external/unitTesting/Catch2`
 
 ## Licence
 
