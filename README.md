@@ -12,14 +12,14 @@ A knowledge compiler for:
 - wDNNF, pwDNNF, and nwDNNF circuits.
 
 > [!IMPORTANT]
-> This repository contains the source code. For precompiled binaries (statically linked on Linux) and the full description, please visit the [BellaCompiler repository](https://github.com/Illner/BellaCompiler).
+> This repository contains the source code. For precompiled binaries and the full description, please visit the [BellaCompiler repository](https://github.com/Illner/BellaCompiler).
 
 ## Cara
 
 An isomorphism-aware #SAT solver.
 
 > [!IMPORTANT]
-> This repository contains the source code. For precompiled binaries (statically linked on Linux) and the full description, please visit the [CaraSolver repository](https://github.com/Illner/CaraSolver).
+> This repository contains the source code. For precompiled binaries and the full description, please visit the [CaraSolver repository](https://github.com/Illner/CaraSolver).
 
 ## Build Instructions
 
