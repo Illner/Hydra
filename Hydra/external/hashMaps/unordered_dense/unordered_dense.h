@@ -1,7 +1,7 @@
 ///////////////////////// ankerl::unordered_dense::{map, set} /////////////////////////
 
 // A fast & densely stored hashmap and hashset based on robin-hood backward shift deletion.
-// Version 4.9.0
+// Version 4.9.1
 // https://github.com/martinus/unordered_dense
 //
 // Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -32,7 +32,7 @@
 // see https://semver.org/spec/v2.0.0.html
 #define ANKERL_UNORDERED_DENSE_VERSION_MAJOR 4 // NOLINT(cppcoreguidelines-macro-usage) incompatible API changes
 #define ANKERL_UNORDERED_DENSE_VERSION_MINOR 9 // NOLINT(cppcoreguidelines-macro-usage) backwards compatible functionality
-#define ANKERL_UNORDERED_DENSE_VERSION_PATCH 0 // NOLINT(cppcoreguidelines-macro-usage) backwards compatible bug fixes
+#define ANKERL_UNORDERED_DENSE_VERSION_PATCH 1 // NOLINT(cppcoreguidelines-macro-usage) backwards compatible bug fixes
 
 // API versioning with inline namespace, see https://www.foonathan.net/2018/11/inline-namespaces/
 
@@ -849,8 +849,11 @@ private:
         // reallocates -- and it used to do so with the block already allocated and owned by
         // nobody, which leaked it. Reserving first means the only allocation still outstanding
         // when something fails is one that has not happened yet, and the push_back below cannot
-        // fail because the capacity is already there.
-        m_blocks.reserve(m_blocks.size() + 1);
+        // fail because the capacity is already there. Grow geometrically to avoid reallocation
+        // on every new segment.
+        if (m_blocks.size() == m_blocks.capacity()) {
+            m_blocks.reserve((std::max)(std::size_t{1}, m_blocks.capacity() * 2));
+        }
         pointer block = std::allocator_traits<Allocator>::allocate(ba, num_elements_in_block);
         m_blocks.push_back(block);
     }
