@@ -5,16 +5,18 @@
 #include <vector>
 
 #include "HydraTest/TemplateTest.hpp"
-#include "HydraTest/catch.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 #include "HydraTest/other/container/stackWithLevels/StackWithLevelsTestResult.hpp"
 
 #include "Hydra/other/Other.hpp"
 #include "Hydra/other/container/stackWithLevels/StackWithLevels.hpp"
-#include "Hydra/other/std/Std.hpp"
+#include "Hydra/other/stdExt/InsertionOperator.hpp"
 
 #include "Hydra/other/container/exceptions/StackWithLevelsException.hpp"
 
 namespace HydraTest::Container::StackWithLevels {
+
+    using namespace Hydra::Other::StdExt::InsertionOperator;
 
     using LargeNumberType = Hydra::Container::StackWithLevels::LargeNumberType;
 
@@ -44,7 +46,7 @@ namespace HydraTest::Container::StackWithLevels {
 
         for (auto element : elementVector) {
             if (print)
-                actualResult << "Add element: " << std::to_string(element) << std::endl;
+                actualResult << "Add element: " << element << std::endl;
 
             try {
                 stackWithLevels.addElement(element);
@@ -405,7 +407,7 @@ namespace HydraTest::Container::StackWithLevels {
             printStackWithLevels(pairStackWithLevels, actualResult);
 
             actualResult << "Remove current level" << std::endl;
-            pairStackWithLevels.removeCurrentLevel([&actualResult](TypeTPairType element) -> void { actualResult << "Removed element: " << std::to_string(element) << std::endl; });
+            pairStackWithLevels.removeCurrentLevel([&actualResult](TypeTPairType element) -> void { actualResult << "Removed element: " << element << std::endl; });
 
             printStackWithLevels(pairStackWithLevels, actualResult);
         }
@@ -565,7 +567,7 @@ namespace HydraTest::Container::StackWithLevels {
             printStackWithLevels(pairStackWithLevels, actualResult);
 
             actualResult << "Clear" << std::endl;
-            pairStackWithLevels.clear([&actualResult](TypeTPairType element) -> void { actualResult << "Removed element: " << std::to_string(element) << std::endl; });
+            pairStackWithLevels.clear([&actualResult](TypeTPairType element) -> void { actualResult << "Removed element: " << element << std::endl; });
 
             printStackWithLevels(pairStackWithLevels, actualResult);
         }

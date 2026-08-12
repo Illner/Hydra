@@ -4,8 +4,8 @@
 #include "Hydra/cache/cachingScheme/enums/CachingSchemeTypeEnum.hpp"
 #include "Hydra/cache/cachingScheme/enums/CachingSchemeVariantTypeEnum.hpp"
 #include "Hydra/circuit/enums/CircuitTypeEnum.hpp"
+#include "Hydra/compiler/enums/HypergraphCutRecomputationStrategyTypeEnum.hpp"
 #include "Hydra/compiler/enums/PartitioningHypergraphTypeEnum.hpp"
-#include "Hydra/compiler/enums/RecomputingHypergraphCutTypeEnum.hpp"
 #include "Hydra/decisionHeuristic/enums/DecisionHeuristicTypeEnum.hpp"
 #include "Hydra/partitioningHypergraph/enums/VertexWeightTypeEnum.hpp"
 #include "Hydra/satSolver/enums/ImplicitBcpVariableOrderTypeEnum.hpp"
@@ -133,10 +133,10 @@ namespace Hydra {
         std::size_t notEnoughVariablesForComputingHypergraphCut = 6;     // 0 = ignore
         std::size_t tooManyVariablesForComputingHypergraphCut = 5'000;   // 0 = ignore
         VertexWeightTypeEnum vertexWeightType = VertexWeightTypeEnum::STANDARD;
-        double percentageThresholdOfImmenseUnitPropagationRecomputingHypergraphCut = 0.7;   // percentage
-        RecomputingHypergraphCutTypeEnum recomputingHypergraphCutType = RecomputingHypergraphCutTypeEnum::ALWAYS;
+        double percentageThresholdOfImmenseUnitPropagationHypergraphCutRecomputationStrategy = 0.7;   // percentage
         PartitioningHypergraphTypeEnum partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
         ImplicitBcpVariableOrderTypeEnum implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::VARIABLE_INDEX;
+        HypergraphCutRecomputationStrategyTypeEnum hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::ALWAYS;
         CaraPartitioningHypergraphConfigurationType caraPartitioningHypergraphConfiguration;
         PatohPartitioningHypergraphConfigurationType patohPartitioningHypergraphConfiguration;
         HmetisPartitioningHypergraphConfigurationType hmetisPartitioningHypergraphConfiguration;

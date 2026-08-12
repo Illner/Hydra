@@ -19,21 +19,21 @@ namespace Hydra::Exception::CommandLineArguments {
     };
 
     /**
-     * More partitioning hypergraph types are mentioned
+     * More hypergraph partitioning types are mentioned
      */
-    class MorePartitioningHypergraphTypesAreMentionedException : public CommandLineArgumentsException {
+    class MoreHypergraphPartitioningTypesAreMentionedException : public CommandLineArgumentsException {
     public:
-        MorePartitioningHypergraphTypesAreMentionedException()
-            : CommandLineArgumentsException("More partitioning hypergraph types are mentioned!") { }
+        MoreHypergraphPartitioningTypesAreMentionedException()
+            : CommandLineArgumentsException("More hypergraph partitioning types are mentioned!") { }
     };
 
     /**
-     * No partitioning hypergraph type is mentioned
+     * No hypergraph partitioning type is mentioned
      */
-    class NoPartitioningHypergraphTypeIsMentionedException : public CommandLineArgumentsException {
+    class NoHypergraphPartitioningTypeIsMentionedException : public CommandLineArgumentsException {
     public:
-        NoPartitioningHypergraphTypeIsMentionedException()
-            : CommandLineArgumentsException("No partitioning hypergraph type is mentioned!") { }
+        NoHypergraphPartitioningTypeIsMentionedException()
+            : CommandLineArgumentsException("No hypergraph partitioning type is mentioned!") { }
     };
 
     /**

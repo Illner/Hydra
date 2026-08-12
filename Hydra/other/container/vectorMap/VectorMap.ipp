@@ -2,6 +2,8 @@
 
 #include "./VectorMap.hpp"
 
+#include "Hydra/other/stdExt/InsertionOperator.hpp"
+
 namespace Hydra::Container::VectorMap {
 
     template <typename TypeT>
@@ -140,11 +142,13 @@ namespace Hydra::Container::VectorMap {
     #ifndef NDEBUG
     template <typename TypeT>
     void VectorMap<TypeT>::printVectorMapDebug(std::ostream& out) {
+        using namespace Hydra::Other::StdExt::InsertionOperator;
+
         out << "Vector map:" << std::endl;
 
         std::sort(addedKeyVector_.begin(), addedKeyVector_.end());
         for (std::size_t key : addedKeyVector_)
-            out << "\t" << std::to_string(key) << ": " << std::to_string(valueVector_[key]) << std::endl;
+            out << "\t" << std::to_string(key) << ": " << valueVector_[key] << std::endl;
 
         out << "Added keys:";
         for (std::size_t key : addedKeyVector_)

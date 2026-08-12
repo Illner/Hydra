@@ -5,7 +5,7 @@
 #include <string>
 
 #include "HydraTest/TemplateTest.hpp"
-#include "HydraTest/catch.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 #include "HydraTest/formulaInstance/FormulaInstanceNumberOfModelsResult.hpp"
 
 #include "BellaTest/compiler/Compiler.hpp"
@@ -42,9 +42,9 @@ namespace BellaTest::Compiler::dDNNF {
     using CachingSchemeTypeEnum = Compiler::CachingSchemeTypeEnum;
     using DecisionHeuristicTypeEnum = Compiler::DecisionHeuristicTypeEnum;
     using CacheCleaningStrategyTypeEnum = Compiler::CacheCleaningStrategyTypeEnum;
-    using RecomputingHypergraphCutTypeEnum = Compiler::RecomputingHypergraphCutTypeEnum;
     using ImplicitBcpVariableOrderTypeEnum = Compiler::ImplicitBcpVariableOrderTypeEnum;
     using VariableSubsumptionWithMappingTypeEnum = Compiler::VariableSubsumptionWithMappingTypeEnum;
+    using HypergraphCutRecomputationStrategyTypeEnum = Compiler::HypergraphCutRecomputationStrategyTypeEnum;
     //endregion
 
     inline CompilerConfigurationType createDefaultCompilerConfiguration() {
@@ -100,10 +100,10 @@ namespace BellaTest::Compiler::dDNNF {
 
         CircuitPtrType circuitPtr = compiler.getCompiledCircuitPtr();
 
-        // Check if the compiled circuit implies the CNF formula
-        bool doesCircuitImplyCnfFormula = circuitPtr->clausalEntailmentCheck(compiler.getFormulaPtr());
-        if (!doesCircuitImplyCnfFormula)
-            throw Hydra::Exception::CircuitDoesNotImplyCnfFormulaException();
+        // Check whether the compiled circuit entails the CNF formula
+        bool doesCircuitEntailCnfFormula = circuitPtr->checkWhetherCircuitEntailsCnfFormula(compiler.getFormulaPtr());
+        if (!doesCircuitEntailCnfFormula)
+            throw Hydra::Exception::CircuitDoesNotEntailCnfFormulaException();
 
         NumberOfModelsType numberOfModels = circuitPtr->modelCounting({});
 

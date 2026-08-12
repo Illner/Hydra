@@ -18,27 +18,27 @@ namespace Cara::CommandLineArguments {
     using ArgumentNameType = typename Hydra::Other::Parser::CommandLineArguments::ArgumentNameType;
     using ArgumentValueType = typename Hydra::Other::Parser::CommandLineArguments::ArgumentValueType;
 
-    inline constexpr std::string_view DESCRIPTION = "     A #SAT solver.     ";
+    inline constexpr std::string_view DESCRIPTION = "     An isomorphism-aware #SAT solver.     ";
 
     // Files
     inline constexpr ArgumentNameType INPUT_ARGUMENT = "-i";
 
-    // Partitioning hypergraph types
-    inline constexpr ArgumentNameType CARA_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT = "-cd";
-    inline constexpr ArgumentNameType KAHYPAR_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT = "-ka";
-    inline constexpr ArgumentNameType CARA_SPEED_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT = "-cs";
-    inline constexpr ArgumentNameType PATOH_HMETIS_PARTITIONING_HYPERGRAPH_TYPE_ARGUMENT = "-ph";
+    // Hypergraph partitioning
+    inline constexpr ArgumentNameType CARA_HYPERGRAPH_PARTITIONING_ARGUMENT = "-cd";
+    inline constexpr ArgumentNameType KAHYPAR_HYPERGRAPH_PARTITIONING_ARGUMENT = "-ka";
+    inline constexpr ArgumentNameType CARA_SPEED_HYPERGRAPH_PARTITIONING_ARGUMENT = "-cs";
+    inline constexpr ArgumentNameType PATOH_HMETIS_HYPERGRAPH_PARTITIONING_ARGUMENT = "-ph";
 
     // SAT solvers
     inline constexpr ArgumentNameType MINISAT_SAT_SOLVER_ARGUMENT = "-m";
     inline constexpr ArgumentNameType GLUCOSE_SAT_SOLVER_ARGUMENT = "-g";
 
-    // Preprocessing types
+    // Preprocessing types of Cara caching scheme
     inline constexpr ArgumentNameType NONE_PREPROCESSING_TYPE_ARGUMENT = "-n";
     inline constexpr ArgumentNameType NOT_SUBSUMED_CLAUSES_PREPROCESSING_TYPE_ARGUMENT = "-nsc";
     inline constexpr ArgumentNameType NOT_DUPLICATE_CLAUSES_PREPROCESSING_TYPE_ARGUMENT = "-ndc";
 
-    // Others
+    // Other options
     inline constexpr ArgumentNameType HELP_ARGUMENT = "-h";
     inline constexpr ArgumentNameType VERSION_ARGUMENT = "-v";
     inline constexpr ArgumentNameType MUST_MULTIPLY_BY_FACTOR_ARGUMENT = "-mmbf";
@@ -57,11 +57,11 @@ namespace Cara::CommandLineArguments {
 
     /**
      * @param arguments the arguments
-     * @return the partitioning hypergraph type
-     * @throw MorePartitioningHypergraphTypesAreMentionedException if more partitioning hypergraph types are mentioned
-     * @throw NoPartitioningHypergraphTypeIsMentionedException if no partitioning hypergraph type is mentioned
+     * @return the hypergraph partitioning type
+     * @throw MoreHypergraphPartitioningTypesAreMentionedException if more hypergraph partitioning types are mentioned
+     * @throw NoHypergraphPartitioningTypeIsMentionedException if no hypergraph partitioning type is mentioned
      */
-    Hydra::PartitioningHypergraphTypeEnum getPartitioningHypergraphType(const ArgumentsType& arguments);
+    Hydra::PartitioningHypergraphTypeEnum getHypergraphPartitioningType(const ArgumentsType& arguments);
 
     /**
      * @param arguments the arguments
@@ -72,10 +72,10 @@ namespace Cara::CommandLineArguments {
 
     /**
      * @param arguments the arguments
-     * @return the preprocessing type
-     * @throw MorePreprocessingTypesAreMentionedException if more preprocessing types are mentioned
+     * @return the preprocessing type of Cara caching scheme
+     * @throw MorePreprocessingTypesOfCaraCachingSchemeAreMentionedException if more preprocessing types of Cara caching scheme are mentioned
      */
-    Hydra::Cache::CachingScheme::PreprocessingTypeEnum getPreprocessingType(const ArgumentsType& arguments);
+    Hydra::Cache::CachingScheme::PreprocessingTypeEnum getPreprocessingTypeOfCaraCachingScheme(const ArgumentsType& arguments);
 
     /**
      * Print the help

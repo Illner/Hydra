@@ -271,7 +271,7 @@ namespace Hydra::Other {
     }
 
     void printWarningAboutIgnoringRemainingArgumentsExceptOne(const Parser::CommandLineArguments::ArgumentNameType& notIgnoredArgumentName) {
-        std::cerr << "WARNING: only the argument \"" << notIgnoredArgumentName << "\" is considered; the remaining arguments are ignored!" << std::endl;
+        std::cerr << "WARNING: only the argument \"" << notIgnoredArgumentName << "\" is considered; the remaining arguments are ignored." << std::endl;
         std::cerr << std::endl;
     }
 

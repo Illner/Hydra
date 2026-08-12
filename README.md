@@ -2,7 +2,7 @@
 
 Hydra is the development repository for the **Bella knowledge compiler** and the **Cara #SAT solver**.
 
-**Supported OS**: Linux, macOS (Intel & Apple Silicon), Windows
+<!-- **Version**: v2.1.0 (in development, not yet released) -->
 
 ## Bella
 
@@ -12,94 +12,155 @@ A knowledge compiler for:
 - wDNNF, pwDNNF, and nwDNNF circuits.
 
 > [!IMPORTANT]
-> This repository contains the source code. For compiled binaries and the full description, please visit the <a href="https://github.com/Illner/BellaCompiler" target="_blank">BellaCompiler repository</a>.
+> This repository contains the source code. For precompiled binaries (statically linked on Linux) and the full description, please visit the [BellaCompiler repository](https://github.com/Illner/BellaCompiler).
 
 ## Cara
 
 An isomorphism-aware #SAT solver.
 
 > [!IMPORTANT]
-> This repository contains the source code. For compiled binaries and the full description, please visit the <a href="https://github.com/Illner/CaraSolver" target="_blank">CaraSolver repository</a>.
+> This repository contains the source code. For precompiled binaries (statically linked on Linux) and the full description, please visit the [CaraSolver repository](https://github.com/Illner/CaraSolver).
 
 ## Build Instructions
 
-The following tools are required:
-<a href="https://cmake.org/" target="_blank">CMake</a>,
-<a href="https://www.boost.org/" target="_blank">Boost</a>, and
-<a href="https://gmplib.org/" target="_blank">GMP</a>.
+**Supported OS**: Linux, macOS (Apple Silicon), and Windows
+
+Building requires:
+[CMake](https://cmake.org/),
+[Boost](https://www.boost.org/), and
+[GMP](https://gmplib.org/).
 
 > [!NOTE]
-> On Windows, <a href="https://cygwin.com/" target="_blank">Cygwin</a> is needed.
+> On Windows, [Cygwin](https://cygwin.com/) is needed.
 
-### Building Bella
+Both Bella and Cara are built using their respective scripts (`bella.sh` or `cara.sh`) located in the `scripts/` directory. Compilation takes place in either the `build_bella` or `build_cara` directory, depending on the tool you are building.
 
-```console
-./bella.sh
-```
+In the commands below, replace `<tool>` with either `bella` or `cara`, and `<Tool>` with its capitalised form (that is, either `Bella` or `Cara`).
 
-The compilation takes place in the **`build_bella`** directory. The release binary can be found at: **`build_bella/Release/Bella/`**
-
-### Building Cara
+### Release
 
 ```console
-./cara.sh
+./scripts/<tool>.sh --release
 ```
 
-The compilation takes place in the **`build_cara`** directory. The release binary can be found at: **`build_cara/Release/Cara/`**
+The release binary is located in `build_<tool>/Release/<Tool>/`.
 
-## Used software
+### Debug
 
-### SAT solver
+```console
+./scripts/<tool>.sh --debug
+```
 
-* <a href="https://github.com/crillab/d4v2" target="_blank"> MiniSat 2.2.0 (d4v2 version) </a> <br> Hydra/external/satSolvers/MiniSat_d4
-* <a href="https://github.com/crillab/d4v2" target="_blank"> Glucose 3.0 (d4v2 version) </a> <br> Hydra/external/satSolvers/Glucose_d4  
-* <a href="https://github.com/niklasso/minisat" target="_blank"> MiniSat 2.2.0 </a> <br> <i> implemented, not used </i> <br> Hydra/external/satSolvers/MiniSat
-* <a href="https://github.com/arminbiere/cadical" target="_blank"> CaDiCaL 3.0.0 </a> (TBD) <br> Hydra/external/satSolvers/CaDiCaL
+The debug binary is located in `build_<tool>/Debug/<Tool>/`.
 
-### Hash map
+### Test
 
-* <a href="https://github.com/martinus/unordered_dense" target="_blank"> unordered_dense v4.5.0 </a> <br> Hydra/external/hashMaps/unordered_dense
-* <a href="https://github.com/martinus/robin-hood-hashing" target="_blank"> robin-hood-hashing 3.11.5 </a> <br> Hydra/external/hashMaps/robin-hood-hashing
-* <a href="https://github.com/skarupke/flat_hash_map" target="_blank"> flat_hash_map </a> <br> <i> implemented, not used </i> <br> Hydra/external/hashMaps/flat_hash_map
+```console
+./scripts/<tool>.sh --test
+```
 
-### Hypergraph partitioning
+The test binaries are located in `build_<tool>/Test/HydraTest/` and `build_<tool>/Test/<Tool>Test/`.
 
-* <a href="https://faculty.cc.gatech.edu/~umit/software.html" target="_blank"> PaToH v3.3 </a> <br> <i> used for Linux, and macOS </i> <br> Hydra/external/partitioningHypergraphs/PaToH
-* <a href="http://glaros.dtc.umn.edu/gkhome/metis/hmetis/overview" target="_blank"> hMETIS 1.5.3 </a> <br> <i> used only for Windows </i> <br> Hydra/external/partitioningHypergraphs/hMETIS
-* <a href="https://kahypar.org/" target="_blank"> KaHyPar v.1.3.3 </a> <br> Hydra/external/partitioningHypergraphs/KaHyPar
+### All (Release, Debug, and Test)
 
-### Other
+```console
+./scripts/<tool>.sh
+./scripts/<tool>.sh --all
+./scripts/<tool>.sh --release --debug --test
+```
 
-* <a href="https://www.boost.org/" target="_blank"> Boost </a> <br> Hydra/external/boost
+The corresponding binaries are in the locations mentioned above.
+
+## Third-Party Software
+
+### SAT Solvers
+
+* [MiniSat 2.2.0 (d4v2 version)](https://github.com/crillab/d4v2)  
+  `Hydra/external/satSolvers/MiniSat_d4`
+
+* [Glucose 3.0 (d4v2 version)](https://github.com/crillab/d4v2)  
+  `Hydra/external/satSolvers/Glucose_d4`
+
+* [MiniSat 2.2.0](https://github.com/niklasso/minisat)  
+  _implemented, not used_  
+  `Hydra/external/satSolvers/MiniSat`
+
+* [Glucose 4.2.1](https://github.com/audemard/glucose)  
+  _work in progress_  
+  `Hydra/external/satSolvers/Glucose`
+
+* [CaDiCaL 3.0.0](https://github.com/arminbiere/cadical)  
+  _work in progress_  
+  `Hydra/external/satSolvers/CaDiCaL`
+
+### Hash Maps
+
+* [unordered_dense v4.9.1](https://github.com/martinus/unordered_dense)  
+  `Hydra/external/hashMaps/unordered_dense`
+
+* [robin-hood-hashing 3.11.5](https://github.com/martinus/robin-hood-hashing)  
+  `Hydra/external/hashMaps/robin-hood-hashing`
+
+* [flat_hash_map](https://github.com/skarupke/flat_hash_map)  
+  _implemented, not used_  
+  `Hydra/external/hashMaps/flat_hash_map`
+
+### Hypergraph Partitioning
+
+* [PaToH v3.3](https://faculty.cc.gatech.edu/~umit/software.html)  
+  _used on Linux and macOS_  
+  `Hydra/external/partitioningHypergraphs/PaToH`
+
+* [hMETIS 1.5.3](https://papers.karypis.org/glaros/software/metis/overview.html#hmetis---hypergraph--circuit-partitioning)  
+  _used only on Windows_  
+  `Hydra/external/partitioningHypergraphs/hMETIS`
+
+* [KaHyPar v.1.3.3](https://kahypar.org/)  
+  _used on Linux, macOS, and Windows_  
+  `Hydra/external/partitioningHypergraphs/KaHyPar`  
+  `Hydra/external/boost` (_precompiled libraries required by KaHyPar_)
+
+### Unit Testing
+
+* [Catch2 v2.13.10](https://github.com/catchorg/Catch2)  
+  `HydraTest/external/unitTesting/Catch2`
+
+## Licence
+
+Hydra is released under the [MIT License](LICENSE). The bundled third-party software components in `Hydra/external/` (see above) are subject to their own licences. Some of them are restricted to academic and research use.
 
 ## Papers
 
 If you use **Bella for (s)d-DNNF/wDNNF circuits** in an academic setting, please cite the following paper describing the knowledge compiler:
 
-    @article{Illner_Kucera_2024, 
-        author  = {Illner, Petr and Kučera, Petr}, 
-        title   = {A Compiler for Weak Decomposable Negation Normal Form}, 
-        volume  = {38}, 
-        url     = {https://ojs.aaai.org/index.php/AAAI/article/view/28926}, 
-        DOI     = {10.1609/aaai.v38i9.28926}, 
-        number  = {9}, 
-        journal = {Proceedings of the AAAI Conference on Artificial Intelligence},
-        year    = {2024}, 
-        month   = {Mar.}, 
-        pages   = {10562-10570} 
-    }
+```bibtex
+@article{Illner_Kucera_2024, 
+    author  = {Illner, Petr and Ku\v{c}era, Petr}, 
+    title   = {A Compiler for Weak Decomposable Negation Normal Form}, 
+    volume  = {38}, 
+    url     = {https://ojs.aaai.org/index.php/AAAI/article/view/28926}, 
+    DOI     = {10.1609/aaai.v38i9.28926}, 
+    number  = {9}, 
+    journal = {Proceedings of the AAAI Conference on Artificial Intelligence},
+    year    = {2024}, 
+    month   = {Mar.}, 
+    pages   = {10562-10570} 
+}
+```
 
 If you use **Bella for pwDNNF/nwDNNF circuits** or **Cara** in an academic setting, please cite the following paper describing the knowledge compiler and caching scheme:
 
-    @article{Illner_2025, 
-        author  = {Illner, Petr}, 
-        title   = {New Compilation Languages Based on Restricted Weak Decomposability}, 
-        volume  = {39}, 
-        url     = {https://ojs.aaai.org/index.php/AAAI/article/view/33643}, 
-        DOI     = {10.1609/aaai.v39i14.33643}, 
-        number  = {14}, 
-        journal = {Proceedings of the AAAI Conference on Artificial Intelligence}, 
-        year    = {2025}, 
-        month   = {Apr.}, 
-        pages   = {14987-14996} 
-    }
+```bibtex
+@article{Illner_2025, 
+    author  = {Illner, Petr}, 
+    title   = {New Compilation Languages Based on Restricted Weak Decomposability}, 
+    volume  = {39}, 
+    url     = {https://ojs.aaai.org/index.php/AAAI/article/view/33643}, 
+    DOI     = {10.1609/aaai.v39i14.33643}, 
+    number  = {14}, 
+    journal = {Proceedings of the AAAI Conference on Artificial Intelligence}, 
+    year    = {2025}, 
+    month   = {Apr.}, 
+    pages   = {14987-14996} 
+}
+```

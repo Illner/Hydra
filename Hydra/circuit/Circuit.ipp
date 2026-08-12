@@ -974,7 +974,7 @@ namespace Hydra::Circuit {
         #if !defined(TEST)
         // Formula leaves
         if (Other::containInSet(formulaLeavesCircuitTypeSet, circuitType))
-            std::cerr << "WARNING: the circuit contains formula leaves for which model counting based on enumeration is being used => time complexity is exponential!" << std::endl;
+            std::cerr << "WARNING: the circuit contains formula leaves for which model counting based on enumeration is being used, so the time complexity is exponential." << std::endl;
         #endif
 
         // Partial assignment
@@ -1053,7 +1053,7 @@ namespace Hydra::Circuit {
 
     template <typename VarT, typename LiteralT>
     template <typename ClauseIdT2>
-    bool Circuit<VarT, LiteralT>::clausalEntailmentCheck(const Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT2>* formulaPtr) {
+    bool Circuit<VarT, LiteralT>::checkWhetherCircuitEntailsCnfFormula(const Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT2>* formulaPtr) {
         // The root is not set
         if (!root_.has_value())
             throw Exception::Circuit::RootIsNotSetException();

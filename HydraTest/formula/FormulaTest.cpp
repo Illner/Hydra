@@ -3,7 +3,7 @@
 #include <string>
 
 #include "HydraTest/TemplateTest.hpp"
-#include "HydraTest/catch.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 #include "HydraTest/formula/FormulaTestResult.hpp"
 
 #include "Hydra/formula/Literal.hpp"

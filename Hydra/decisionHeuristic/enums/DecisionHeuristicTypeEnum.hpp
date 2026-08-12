@@ -36,9 +36,9 @@ namespace Hydra::DecisionHeuristic {
             case DecisionHeuristicTypeEnum::RANDOM:
                 return "random";
             case DecisionHeuristicTypeEnum::JEROSLOW_WANG_ONE_SIDED:
-                return "Jeroslow-Wang (one-sided)";
+                return "Jeroslow–Wang (one-sided)";
             case DecisionHeuristicTypeEnum::JEROSLOW_WANG_TWO_SIDED:
-                return "Jeroslow-Wang (two-sided)";
+                return "Jeroslow–Wang (two-sided)";
             case DecisionHeuristicTypeEnum::DLCS:
                 return "dynamic largest combined sum (DLCS)";
             case DecisionHeuristicTypeEnum::DLIS:

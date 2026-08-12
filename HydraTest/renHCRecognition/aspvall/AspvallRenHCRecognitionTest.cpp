@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "HydraTest/TemplateTest.hpp"
-#include "HydraTest/catch.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 #include "HydraTest/renHCRecognition/CreateFormula.hpp"
 #include "HydraTest/renHCRecognition/RenHCRecognition.hpp"
 #include "HydraTest/renHCRecognition/aspvall/AspvallRenHCRecognitionTestResult.hpp"

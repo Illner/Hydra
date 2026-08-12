@@ -6,7 +6,7 @@
 
 #include "HydraTest/TemplateTest.hpp"
 #include "HydraTest/cache/CacheTestResult.hpp"
-#include "HydraTest/catch.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 
 #include "Hydra/cache/Cache.hpp"
 #include "Hydra/cache/CacheBucketStructure.hpp"

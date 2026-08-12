@@ -1,6 +1,6 @@
 /*
- *  Catch v2.13.8
- *  Generated: 2022-01-03 21:20:09.589503
+ *  Catch v2.13.10
+ *  Generated: 2022-10-16 11:01:23.452308
  *  ----------------------------------------------------------
  *  This file has been merged from multiple headers. Please don't edit it directly
  *  Copyright (c) 2022 Two Blue Cubes Ltd. All rights reserved.
@@ -15,7 +15,7 @@
 
 #define CATCH_VERSION_MAJOR 2
 #define CATCH_VERSION_MINOR 13
-#define CATCH_VERSION_PATCH 8
+#define CATCH_VERSION_PATCH 10
 
 #ifdef __clang__
 #    pragma clang system_header
@@ -69,6 +69,9 @@
 // See e.g.:
 // https://opensource.apple.com/source/CarbonHeaders/CarbonHeaders-18.1/TargetConditionals.h.auto.html
 #ifdef __APPLE__
+#  ifndef __has_extension
+#    define __has_extension(x) 0
+#  endif
 #  include <TargetConditionals.h>
 #  if (defined(TARGET_OS_OSX) && TARGET_OS_OSX == 1) || \
       (defined(TARGET_OS_MAC) && TARGET_OS_MAC == 1)
@@ -677,12 +680,12 @@ namespace Catch {
     auto operator += ( std::string& lhs, StringRef const& sr ) -> std::string&;
     auto operator << ( std::ostream& os, StringRef const& sr ) -> std::ostream&;
 
-    constexpr auto operator "" _sr( char const* rawChars, std::size_t size ) noexcept -> StringRef {
+    constexpr auto operator ""_sr( char const* rawChars, std::size_t size ) noexcept -> StringRef {
         return StringRef( rawChars, size );
     }
 } // namespace Catch
 
-constexpr auto operator "" _catch_sr( char const* rawChars, std::size_t size ) noexcept -> Catch::StringRef {
+constexpr auto operator ""_catch_sr( char const* rawChars, std::size_t size ) noexcept -> Catch::StringRef {
     return Catch::StringRef( rawChars, size );
 }
 
@@ -2707,7 +2710,7 @@ namespace Catch {
         INTERNAL_CATCH_TRY { \
             CATCH_INTERNAL_START_WARNINGS_SUPPRESSION \
             CATCH_INTERNAL_SUPPRESS_PARENTHESES_WARNINGS \
-            catchAssertionHandler.handleExpr( Catch::Decomposer() <= __VA_ARGS__ ); \
+            catchAssertionHandler.handleExpr( Catch::Decomposer() <= __VA_ARGS__ ); /* NOLINT(bugprone-chained-comparison) */ \
             CATCH_INTERNAL_STOP_WARNINGS_SUPPRESSION \
         } INTERNAL_CATCH_CATCH( catchAssertionHandler ) \
         INTERNAL_CATCH_REACT( catchAssertionHandler ) \
@@ -3177,8 +3180,8 @@ namespace Detail {
 } // end namespace Detail
 
 namespace literals {
-    Detail::Approx operator "" _a(long double val);
-    Detail::Approx operator "" _a(unsigned long long val);
+    Detail::Approx operator ""_a(long double val);
+    Detail::Approx operator ""_a(unsigned long long val);
 } // end namespace literals
 
 template<>
@@ -4643,7 +4646,7 @@ public:
     }
 };
 
-// TODOs: Ideally this would be also constrained against the various char types,
+// TODO: Ideally this would be also constrained against the various char types,
 //       but I don't expect users to run into that in practice.
 template <typename T>
 typename std::enable_if<std::is_integral<T>::value && !std::is_same<T, bool>::value,
@@ -6508,7 +6511,7 @@ namespace Catch {
             // thanks @milleniumbug
             *reinterpret_cast<char volatile*>(p) = *reinterpret_cast<char const volatile*>(p);
         }
-        // TODOs equivalent keep_memory()
+        // TODO equivalent keep_memory()
 #pragma optimize("", on)
 
         namespace Detail {
@@ -7395,8 +7398,6 @@ namespace Catch {
             template <typename T, bool Destruct>
             struct ObjectStorage
             {
-                using TStorage = typename std::aligned_storage<sizeof(T), std::alignment_of<T>::value>::type;
-
                 ObjectStorage() : data() {}
 
                 ObjectStorage(const ObjectStorage& other)
@@ -7439,7 +7440,7 @@ namespace Catch {
                     return *static_cast<T*>(static_cast<void*>(&data));
                 }
 
-                TStorage data;
+                struct { alignas(T) unsigned char data[sizeof(T)]; }  data;
             };
         }
 
@@ -7922,10 +7923,10 @@ namespace Detail {
 } // end namespace Detail
 
 namespace literals {
-    Detail::Approx operator "" _a(long double val) {
+    Detail::Approx operator ""_a(long double val) {
         return Detail::Approx(val);
     }
-    Detail::Approx operator "" _a(unsigned long long val) {
+    Detail::Approx operator ""_a(unsigned long long val) {
         return Detail::Approx(val);
     }
 } // end namespace literals
@@ -7949,7 +7950,7 @@ namespace Catch {
     #if defined(__i386__) || defined(__x86_64__)
         #define CATCH_TRAP() __asm__("int $3\n" : : ) /* NOLINT */
     #elif defined(__aarch64__)
-        #define CATCH_TRAP()  __asm__(".inst 0xd4200000")
+        #define CATCH_TRAP()  __asm__(".inst 0xd43e0000")
     #endif
 
 #elif defined(CATCH_PLATFORM_IPHONE)
@@ -10173,7 +10174,10 @@ namespace {
 
 #elif defined( CATCH_CONFIG_COLOUR_ANSI ) //////////////////////////////////////
 
-#include <unistd.h>
+#if defined( CATCH_PLATFORM_LINUX ) || defined( CATCH_PLATFORM_MAC )
+#    define CATCH_INTERNAL_HAS_ISATTY
+#    include <unistd.h>
+#endif
 
 namespace Catch {
 namespace {
@@ -10222,7 +10226,8 @@ namespace {
 #if defined(CATCH_PLATFORM_MAC) || defined(CATCH_PLATFORM_IPHONE)
             !isDebuggerActive() &&
 #endif
-#if !(defined(__DJGPP__) && defined(__STRICT_ANSI__))
+#if defined( CATCH_INTERNAL_HAS_ISATTY ) && \
+    !( defined( __DJGPP__ ) && defined( __STRICT_ANSI__ ) )
             isatty(STDOUT_FILENO)
 #else
             false
@@ -13392,6 +13397,10 @@ namespace Catch {
                     filename.erase(0, lastSlash);
                     filename[0] = '#';
                 }
+                else
+                {
+                    filename.insert(0, "#");
+                }
 
                 auto lastDot = filename.find_last_of('.');
                 if (lastDot != std::string::npos) {
@@ -13554,7 +13563,7 @@ namespace Catch {
 
             // Handle list request
             if( Option<std::size_t> listed = list( m_config ) )
-                return static_cast<int>( *listed );
+                return (std::min) (MaxExitCode, static_cast<int>(*listed));
 
             TestGroup tests { m_config };
             auto const totals = tests.execute();
@@ -15387,7 +15396,7 @@ namespace Catch {
     }
 
     Version const& libraryVersion() {
-        static Version version( 2, 13, 8, "", 0 );
+        static Version version( 2, 13, 10, "", 0 );
         return version;
     }
 
@@ -16211,7 +16220,8 @@ public:
     }
 
     void print() const {
-        return; // CHANGE
+        return; // ADDED
+
         printSourceInfo();
         if (stats.totals.assertions.total() > 0) {
             printResultType();
@@ -16605,7 +16615,8 @@ void ConsoleReporter::lazyPrint() {
 }
 
 void ConsoleReporter::lazyPrintWithoutClosingBenchmarkTable() {
-    return; // CHANGE
+    return; // ADDED
+
     if (!currentTestRunInfo.used)
         lazyPrintRunInfo();
     if (!currentGroupInfo.used)
@@ -17428,7 +17439,7 @@ namespace Catch {
 
     void XmlReporter::testGroupEnded( TestGroupStats const& testGroupStats ) {
         StreamingReporterBase::testGroupEnded( testGroupStats );
-        // TODOs: Check testGroupStats.aborting and act accordingly.
+        // TODO: Check testGroupStats.aborting and act accordingly.
         m_xml.scopedElement( "OverallResults" )
             .writeAttribute( "successes", testGroupStats.totals.assertions.passed )
             .writeAttribute( "failures", testGroupStats.totals.assertions.failed )
@@ -17523,12 +17534,20 @@ namespace Catch {
 
 #ifndef __OBJC__
 
+#ifndef CATCH_INTERNAL_CDECL
+#ifdef _MSC_VER
+#define CATCH_INTERNAL_CDECL __cdecl
+#else
+#define CATCH_INTERNAL_CDECL
+#endif
+#endif
+
 #if defined(CATCH_CONFIG_WCHAR) && defined(CATCH_PLATFORM_WINDOWS) && defined(_UNICODE) && !defined(DO_NOT_USE_WMAIN)
 // Standard C/C++ Win32 Unicode wmain entry point
-extern "C" int wmain (int argc, wchar_t * argv[], wchar_t * []) {
+extern "C" int CATCH_INTERNAL_CDECL wmain (int argc, wchar_t * argv[], wchar_t * []) {
 #else
 // Standard C/C++ main entry point
-int main (int argc, char * argv[]) {
+int CATCH_INTERNAL_CDECL main (int argc, char * argv[]) {
 #endif
 
     return Catch::Session().run( argc, argv );
@@ -17891,7 +17910,7 @@ using Catch::Detail::Approx;
 #define INFO( msg ) (void)(0)
 #define UNSCOPED_INFO( msg ) (void)(0)
 #define WARN( msg ) (void)(0)
-#define CAPTURE( msg ) (void)(0)
+#define CAPTURE( ... ) (void)(0)
 
 #define TEST_CASE( ... )  INTERNAL_CATCH_TESTCASE_NO_REGISTRATION(INTERNAL_CATCH_UNIQUE_NAME( C_A_T_C_H_T_E_S_T_ ))
 #define TEST_CASE_METHOD( className, ... ) INTERNAL_CATCH_TESTCASE_NO_REGISTRATION(INTERNAL_CATCH_UNIQUE_NAME( C_A_T_C_H_T_E_S_T_ ))

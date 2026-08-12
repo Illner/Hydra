@@ -2,6 +2,8 @@
 
 #include "./StackWithLevels.hpp"
 
+#include "Hydra/other/stdExt/InsertionOperator.hpp"
+
 namespace Hydra::Container::StackWithLevels {
 
     template <typename TypeT, typename LevelTypeT>
@@ -36,8 +38,14 @@ namespace Hydra::Container::StackWithLevels {
         #ifndef NDEBUG
         // Check if the element already exists in the stack
         for (TypeT elementTmp : stack_) {
-            if (elementTmp == element)
-                throw Exception::Container::StackWithLevels::AttemptToAddElementMultipleTimesException(element);
+            if (elementTmp == element) {
+                using namespace Hydra::Other::StdExt::InsertionOperator;
+
+                std::stringstream stringStreamTmp;
+                stringStreamTmp << element;
+
+                throw Exception::Container::StackWithLevels::AttemptToAddElementMultipleTimesException(stringStreamTmp.str());
+            }
         }
         #endif
 
@@ -102,6 +110,8 @@ namespace Hydra::Container::StackWithLevels {
     #ifndef NDEBUG
     template <typename TypeT, typename LevelTypeT>
     void StackWithLevels<TypeT, LevelTypeT>::printStackWithLevelsDebug(std::ostream& out) const {
+        using namespace Hydra::Other::StdExt::InsertionOperator;
+
         out << "Stack (with levels):";
 
         auto levelIt = stackLevel_.cbegin();
@@ -114,7 +124,7 @@ namespace Hydra::Container::StackWithLevels {
                 ++levelIt;
             }
 
-            out << " " << std::to_string(stack_[i]);
+            out << " " << stack_[i];
         }
 
         for (; levelIt != stackLevel_.cend(); ++levelIt)

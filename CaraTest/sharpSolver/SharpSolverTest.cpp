@@ -1,7 +1,7 @@
 #include <string>
 
 #include "HydraTest/TemplateTest.hpp"
-#include "HydraTest/catch.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 #include "HydraTest/formulaInstance/CreateFormula.hpp"
 
 #include "CaraTest/sharpSolver/SharpSolver.hpp"
@@ -5118,69 +5118,69 @@ namespace CaraTest::SharpSolver {
 
     /**
      * Partitioning hypergraph
-     *      recomputing hypergraph cut: always
+     *      hypergraph cut recomputation strategy: always
      */
-    TEST_CASE("[SharpSolver] partitioning hypergraph (recomputing hypergraph cut: always)", "[SharpSolver]") {
+    TEST_CASE("[SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: always)", "[SharpSolver]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
-        configuration.recomputingHypergraphCutType = RecomputingHypergraphCutTypeEnum::ALWAYS;
+        configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::ALWAYS;
 
         process(configuration, false);
     }
 
     /**
      * Partitioning hypergraph
-     *      recomputing hypergraph cut: immense unit propagation - 0.2
+     *      hypergraph cut recomputation strategy: immense unit propagation - 0.2
      */
-    TEST_CASE("[SharpSolver] partitioning hypergraph (recomputing hypergraph cut: immense unit propagation - 0.2)", "[SharpSolver]") {
+    TEST_CASE("[SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: immense unit propagation - 0.2)", "[SharpSolver]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
-        configuration.percentageThresholdOfImmenseUnitPropagationRecomputingHypergraphCut = 0.2;
-        configuration.recomputingHypergraphCutType = RecomputingHypergraphCutTypeEnum::IMMENSE_UNIT_PROPAGATION;
+        configuration.percentageThresholdOfImmenseUnitPropagationHypergraphCutRecomputationStrategy = 0.2;
+        configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION;
 
         process(configuration, false);
     }
 
     /**
      * Partitioning hypergraph
-     *      recomputing hypergraph cut: immense unit propagation - 0.5
+     *      hypergraph cut recomputation strategy: immense unit propagation - 0.5
      */
-    TEST_CASE("[SharpSolver] partitioning hypergraph (recomputing hypergraph cut: immense unit propagation - 0.5)", "[SharpSolver]") {
+    TEST_CASE("[SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: immense unit propagation - 0.5)", "[SharpSolver]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
-        configuration.percentageThresholdOfImmenseUnitPropagationRecomputingHypergraphCut = 0.5;
-        configuration.recomputingHypergraphCutType = RecomputingHypergraphCutTypeEnum::IMMENSE_UNIT_PROPAGATION;
+        configuration.percentageThresholdOfImmenseUnitPropagationHypergraphCutRecomputationStrategy = 0.5;
+        configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION;
 
         process(configuration, false);
     }
 
     /**
      * Partitioning hypergraph
-     *      recomputing hypergraph cut: immense unit propagation - 0.8
+     *      hypergraph cut recomputation strategy: immense unit propagation - 0.8
      */
-    TEST_CASE("[SharpSolver] partitioning hypergraph (recomputing hypergraph cut: immense unit propagation - 0.8)", "[SharpSolver]") {
+    TEST_CASE("[SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: immense unit propagation - 0.8)", "[SharpSolver]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
-        configuration.percentageThresholdOfImmenseUnitPropagationRecomputingHypergraphCut = 0.8;
-        configuration.recomputingHypergraphCutType = RecomputingHypergraphCutTypeEnum::IMMENSE_UNIT_PROPAGATION;
+        configuration.percentageThresholdOfImmenseUnitPropagationHypergraphCutRecomputationStrategy = 0.8;
+        configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION;
 
         process(configuration, false);
     }
 
     /**
      * Partitioning hypergraph
-     *      recomputing hypergraph cut: when current formula is split
+     *      hypergraph cut recomputation strategy: when current formula is split
      */
-    TEST_CASE("[SharpSolver] partitioning hypergraph (recomputing hypergraph cut: when current formula is split)", "[SharpSolver]") {
+    TEST_CASE("[SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: when current formula is split)", "[SharpSolver]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
-        configuration.recomputingHypergraphCutType = RecomputingHypergraphCutTypeEnum::WHEN_CURRENT_FORMULA_IS_SPLIT;
+        configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_FORMULA_IS_SPLIT;
 
         process(configuration, false);
     }
 
     /**
      * Partitioning hypergraph
-     *      recomputing hypergraph cut: when current hypergraph cut is empty
+     *      hypergraph cut recomputation strategy: when current hypergraph cut is empty
      */
-    TEST_CASE("[SharpSolver] partitioning hypergraph (recomputing hypergraph cut: when current hypergraph cut is empty)", "[SharpSolver]") {
+    TEST_CASE("[SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: when current hypergraph cut is empty)", "[SharpSolver]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
-        configuration.recomputingHypergraphCutType = RecomputingHypergraphCutTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY;
+        configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY;
 
         process(configuration, false);
     }

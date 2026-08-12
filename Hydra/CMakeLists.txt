@@ -1,8 +1,6 @@
 ﻿# CMake project for Hydra
 cmake_minimum_required(VERSION 3.14)
 
-set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
-
 add_library(HydraLibrary STATIC
         "other/parser/CommandLineArgumentsParser.cpp"
         "statistics/StatisticsAbstract.cpp" "statistics/Statistics.cpp" "other/version/Version.cpp"
@@ -34,13 +32,13 @@ IF (CMAKE_SYSTEM_NAME STREQUAL "CYGWIN")
 ELSE ()
     find_package(Boost REQUIRED CONFIG)
 ENDIF ()
-target_include_directories(HydraLibrary PUBLIC ${Boost_INCLUDE_DIRS})
+target_include_directories(HydraLibrary SYSTEM PUBLIC ${Boost_INCLUDE_DIRS})
 
 # GMP
 find_library(GMPLibrary NAMES gmp)
 # GMP was NOT found
 IF (NOT GMPLibrary)
-    message(FATAL_ERROR "GMP was NOT found! Please install GMP!")
+    message(FATAL_ERROR "GMP was not found; please install GMP!")
 ENDIF ()
 target_link_libraries(HydraLibrary PRIVATE ${GMPLibrary})
 
@@ -60,7 +58,7 @@ FUNCTION(find_and_check_library LIBRARY_VAR LIBRARY_NAME LIBRARY_PATH)
 
     # The library was NOT found
     IF (NOT ${LIBRARY_VAR})
-        message(FATAL_ERROR "${LIBRARY_NAME} was NOT found in ${LIBRARY_PATH}!")
+        message(FATAL_ERROR "\"${LIBRARY_NAME}\" was not found in \"${LIBRARY_PATH}\"!")
     # The library was found
     ELSE ()
         target_link_libraries(HydraLibrary PRIVATE ${${LIBRARY_VAR}})
@@ -109,5 +107,5 @@ ELSEIF (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     find_and_check_library(BoostKaHyParLibrary "libmini_boost.a" "${BOOST_KAHYPAR_HOME}/Linux/")
 # Not supported
 ELSE ()
-    message(FATAL_ERROR "Your operating system (${CMAKE_SYSTEM_NAME}) is NOT supported!")
+    message(FATAL_ERROR "Your operating system \"${CMAKE_SYSTEM_NAME}\" is not supported!")
 ENDIF ()

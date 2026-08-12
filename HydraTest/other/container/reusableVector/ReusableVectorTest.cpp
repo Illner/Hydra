@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "HydraTest/TemplateTest.hpp"
-#include "HydraTest/catch.hpp"
+#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
 #include "HydraTest/other/container/reusableVector/ReusableVectorTestResult.hpp"
 
 #include "Hydra/formula/Literal.hpp"
@@ -15,8 +15,11 @@
 #include "Hydra/other/container/reusableVector/ReusableVector.hpp"
 #include "Hydra/other/hashMap/HashMap.hpp"
 #include "Hydra/other/operatingSystem/OperatingSystem.hpp"
+#include "Hydra/other/stdExt/InsertionOperator.hpp"
 
 namespace HydraTest::Container::ReusableVector {
+
+    using namespace Hydra::Other::StdExt::InsertionOperator;
 
     //region Types
     using TypeT = char8_t;
@@ -51,7 +54,7 @@ namespace HydraTest::Container::ReusableVector {
     void printReusableVectorUsingIterator(const Hydra::Container::ReusableVector::ReusableVector<TypeT>& reusableVector, std::stringstream& actualResult) {
         actualResult << "Reusable vector:";
         for (auto it = reusableVector.cbegin(); it != reusableVector.cend(); ++it)
-            actualResult << " " << std::to_string(*it);
+            actualResult << " " << *it;
         actualResult << std::endl;
     }
 
@@ -61,7 +64,7 @@ namespace HydraTest::Container::ReusableVector {
 
         for (std::size_t i = 0; i < reusableVector.size(); ++i) {
             const TypeT& element = reusableVector[i];
-            actualResult << " " << std::to_string(element);
+            actualResult << " " << element;
         }
 
         actualResult << std::endl
@@ -72,7 +75,7 @@ namespace HydraTest::Container::ReusableVector {
     void printSet(const Hydra::Other::HashMap::SetType<TypeT>& set, std::stringstream& actualResult) {
         actualResult << "Set:";
         for (const TypeT& element : Hydra::Other::sortUnorderedSet(set))
-            actualResult << " " << std::to_string(element);
+            actualResult << " " << element;
         actualResult << std::endl;
     }
 
@@ -103,7 +106,7 @@ namespace HydraTest::Container::ReusableVector {
 
         actualResult << "Container:";
         for (const TypeT& element : Hydra::Other::sortUnorderedSet(set))
-            actualResult << " " << std::to_string(element);
+            actualResult << " " << element;
         actualResult << std::endl
                      << std::endl;
 
@@ -119,7 +122,7 @@ namespace HydraTest::Container::ReusableVector {
 
         actualResult << "Container:";
         for (const TypeT& element : vector)
-            actualResult << " " << std::to_string(element);
+            actualResult << " " << element;
         actualResult << std::endl
                      << std::endl;
 
@@ -200,7 +203,7 @@ namespace HydraTest::Container::ReusableVector {
     void backReusableVector(const Hydra::Container::ReusableVector::ReusableVector<TypeT>& reusableVector, std::stringstream& actualResult) {
         const TypeT& lastElement = reusableVector.back();
 
-        actualResult << "Last element: " << std::to_string(lastElement) << std::endl;
+        actualResult << "Last element: " << lastElement << std::endl;
         actualResult << std::endl;
     }
 

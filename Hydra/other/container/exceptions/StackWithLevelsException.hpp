@@ -3,7 +3,6 @@
 #include <string>
 
 #include "Hydra/other/Other.hpp"
-#include "Hydra/other/std/Std.hpp"
 
 #include "Hydra/other/container/exceptions/ContainerException.hpp"
 
@@ -35,10 +34,9 @@ namespace Hydra::Exception::Container::StackWithLevels {
     /**
      * Attempt to add an element multiple times
      */
-    template <typename TypeT>
     class AttemptToAddElementMultipleTimesException : public StackWithLevelsException {
     public:
-        explicit AttemptToAddElementMultipleTimesException(TypeT element)
-            : StackWithLevelsException("Attempt to add the element (" + std::to_string(element) + ") multiple times!") { }
+        explicit AttemptToAddElementMultipleTimesException(const std::string& elementString)
+            : StackWithLevelsException("Attempt to add the element (" + elementString + ") multiple times!") { }
     };
 }   // namespace Hydra::Exception::Container::StackWithLevels

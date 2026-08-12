@@ -247,31 +247,31 @@ namespace Hydra {
                                                                               bool split, VarT numberOfVariablesBeforeUnitPropagation,
                                                                               VarT numberOfVariablesAfterUnitPropagation) const {
         // The current hypergraph cut is empty
-        if (Other::containInSet(emptyCutRecomputingHypergraphCutTypeSet, configuration_.recomputingHypergraphCutType)) {
+        if (Other::containInSet(emptyCutHypergraphCutRecomputationStrategyTypeSet, configuration_.hypergraphCutRecomputationStrategyType)) {
             if (restrictedHypergraphCut.empty())
                 return true;
         }
 
         // The current formula is split
-        if (Other::containInSet(formulaSplitRecomputingHypergraphCutTypeSet, configuration_.recomputingHypergraphCutType)) {
+        if (Other::containInSet(formulaSplitHypergraphCutRecomputationStrategyTypeSet, configuration_.hypergraphCutRecomputationStrategyType)) {
             if (split)
                 return true;
         }
 
-        switch (configuration_.recomputingHypergraphCutType) {
-            case RecomputingHypergraphCutTypeEnum::ALWAYS:
+        switch (configuration_.hypergraphCutRecomputationStrategyType) {
+            case HypergraphCutRecomputationStrategyTypeEnum::ALWAYS:
                 return true;
-            case RecomputingHypergraphCutTypeEnum::IMMENSE_UNIT_PROPAGATION:
-            case RecomputingHypergraphCutTypeEnum::IMMENSE_UNIT_PROPAGATION_OR_WHEN_CURRENT_FORMULA_IS_SPLIT:
-                if (static_cast<double>(numberOfVariablesAfterUnitPropagation) / static_cast<double>(numberOfVariablesBeforeUnitPropagation) <= configuration_.percentageThresholdOfImmenseUnitPropagationRecomputingHypergraphCut)
+            case HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION:
+            case HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION_OR_WHEN_CURRENT_FORMULA_IS_SPLIT:
+                if (static_cast<double>(numberOfVariablesAfterUnitPropagation) / static_cast<double>(numberOfVariablesBeforeUnitPropagation) <= configuration_.percentageThresholdOfImmenseUnitPropagationHypergraphCutRecomputationStrategy)
                     return true;
 
                 return false;
-            case RecomputingHypergraphCutTypeEnum::WHEN_CURRENT_FORMULA_IS_SPLIT:
-            case RecomputingHypergraphCutTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY:
+            case HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_FORMULA_IS_SPLIT:
+            case HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY:
                 return false;
             default:
-                throw Exception::NotImplementedException(recomputingHypergraphCutTypeEnumToString(configuration_.recomputingHypergraphCutType),
+                throw Exception::NotImplementedException(hypergraphCutRecomputationStrategyTypeEnumToString(configuration_.hypergraphCutRecomputationStrategyType),
                                                          "Hydra::Compiler::shouldHypergraphCutBeRecomputed");
         }
     }
