@@ -297,7 +297,7 @@ namespace Cara::CommandLineArguments {
         std::cout << "./Cara";
 
         // Hypergraph partitioning
-        std::cout << " < " << PATOH_HMETIS_HYPERGRAPH_PARTITIONING_ARGUMENT << " | " << KAHYPAR_HYPERGRAPH_PARTITIONING_ARGUMENT << " | " << CARA_HYPERGRAPH_PARTITIONING_ARGUMENT << " >";
+        std::cout << " < " << PATOH_HMETIS_HYPERGRAPH_PARTITIONING_ARGUMENT << " | " << KAHYPAR_HYPERGRAPH_PARTITIONING_ARGUMENT << " | " << CARA_HYPERGRAPH_PARTITIONING_ARGUMENT << " | " << CARA_SPEED_HYPERGRAPH_PARTITIONING_ARGUMENT << " >";
 
         // Files
         std::cout << " " << INPUT_ARGUMENT << " input_file" << " ";
@@ -319,6 +319,7 @@ namespace Cara::CommandLineArguments {
         std::cout << "\t" << PATOH_HMETIS_HYPERGRAPH_PARTITIONING_ARGUMENT << " — PaToH (Linux and macOS), hMETIS (Windows) (recommended on Linux and macOS)" << std::endl;
         std::cout << "\t" << KAHYPAR_HYPERGRAPH_PARTITIONING_ARGUMENT << " — KaHyPar (Linux, macOS, and Windows) (recommended on Windows)" << std::endl;
         std::cout << "\t" << CARA_HYPERGRAPH_PARTITIONING_ARGUMENT << " — Cara (Linux and macOS) (MCC-25 submission configuration)" << std::endl;
+        std::cout << "\t" << CARA_SPEED_HYPERGRAPH_PARTITIONING_ARGUMENT << " — Cara (speed) (Linux and macOS) (MCC-26 submission configuration)" << std::endl;
         std::cout << std::endl;
 
         std::cout << "Files:" << std::endl;
