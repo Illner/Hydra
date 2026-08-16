@@ -2,19 +2,19 @@
 
 #include <string>
 
-namespace HydraTest::Container::ContagiousOccurrenceList {
-    inline std::string contagiousOccurrenceListConstructorResult = "contagiousOccurrenceList1:\n"
+namespace HydraTest::Container::ContiguousOccurrenceList {
+    inline std::string contiguousOccurrenceListConstructorResult = "contiguousOccurrenceList1:\n"
                                                                    "Occurrence list: 2 2 2 2 \n"
                                                                    "Separator: 2\n"
                                                                    "Literal offset (end offset): 1: 0 (0) -1: 2 (2) \n"
                                                                    "\n"
-                                                                   "contagiousOccurrenceList2:\n"
+                                                                   "contiguousOccurrenceList2:\n"
                                                                    "Occurrence list: 4 4 4 4 4 4 4 4 4 4 \n"
                                                                    "Separator: 4\n"
                                                                    "Literal offset (end offset): 1: 0 (0) -1: 2 (2) 2: 3 (3) -2: 6 (6) \n"
                                                                    "\n";
 
-    inline std::string contagiousOccurrenceListCopyAndMoveResult = "Occurrence list: 4 4 4 4 4 4 4 4 4 4 \n"
+    inline std::string contiguousOccurrenceListCopyAndMoveResult = "Occurrence list: 4 4 4 4 4 4 4 4 4 4 \n"
                                                                    "Separator: 4\n"
                                                                    "Literal offset (end offset): 1: 0 (0) -1: 2 (2) 2: 3 (3) -2: 6 (6) \n"
                                                                    "\n"
@@ -33,7 +33,7 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
                                                                    "Literal offset (end offset): 1: 0 (0) -1: 2 (2) 2: 3 (3) -2: 6 (6) \n"
                                                                    "\n";
 
-    inline std::string contagiousOccurrenceListAddOccurrenceResult = "Occurrence list: 4 4 4 4 4 4 4 4 4 4 \n"
+    inline std::string contiguousOccurrenceListAddOccurrenceResult = "Occurrence list: 4 4 4 4 4 4 4 4 4 4 \n"
                                                                      "Separator: 4\n"
                                                                      "Literal offset (end offset): 1: 0 (0) -1: 2 (2) 2: 3 (3) -2: 6 (6) \n"
                                                                      "\n"
@@ -84,7 +84,7 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
                                                                      "Attempt to add a duplicate occurrence (literal: -2, literalT: 5, complementary literal: 1, clause ID: 3)!\n"
                                                                      "\n";
 
-    inline std::string contagiousOccurrenceListRemoveOccurrenceResult = "Occurrence list: 0 5 5 1 3 5 0 2 4 5 \n"
+    inline std::string contiguousOccurrenceListRemoveOccurrenceResult = "Occurrence list: 0 5 5 1 3 5 0 2 4 5 \n"
                                                                         "Separator: 5\n"
                                                                         "Literal offset (end offset): 1: 0 (1) -1: 2 (2) 2: 3 (5) -2: 6 (9) \n"
                                                                         "\n"
@@ -134,7 +134,7 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
                                                                         "Literal offset (end offset): 1: 0 (0) -1: 2 (2) 2: 3 (3) -2: 6 (6) \n"
                                                                         "\n";
 
-    inline std::string contagiousOccurrenceListGetOccurrencesResult = "Occurrence list: 0 5 5 1 3 5 0 2 4 5 \n"
+    inline std::string contiguousOccurrenceListGetOccurrencesResult = "Occurrence list: 0 5 5 1 3 5 0 2 4 5 \n"
                                                                       "Separator: 5\n"
                                                                       "Literal offset (end offset): 1: 0 (1) -1: 2 (2) 2: 3 (5) -2: 6 (9) \n"
                                                                       "\n"
@@ -198,7 +198,7 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
                                                                       "-2: 0 2 4 \n"
                                                                       "\n";
 
-    inline std::string contagiousOccurrenceListExistsResult = "Occurrence list: 0 5 5 3 5 5 0 4 5 5 \n"
+    inline std::string contiguousOccurrenceListExistsResult = "Occurrence list: 0 5 5 3 5 5 0 4 5 5 \n"
                                                               "Separator: 5\n"
                                                               "Literal offset (end offset): 1: 0 (1) -1: 2 (2) 2: 3 (4) -2: 6 (8) \n"
                                                               "\n"
@@ -230,7 +230,7 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
                                                               "Exists: 0\n"
                                                               "\n";
 
-    inline std::string contagiousOccurrenceListRemoveOccurrencesResult = "Occurrence list: 0 5 5 1 3 5 0 2 4 5 \n"
+    inline std::string contiguousOccurrenceListRemoveOccurrencesResult = "Occurrence list: 0 5 5 1 3 5 0 2 4 5 \n"
                                                                          "Separator: 5\n"
                                                                          "Literal offset (end offset): 1: 0 (1) -1: 2 (2) 2: 3 (5) -2: 6 (9) \n"
                                                                          "\n"
@@ -240,7 +240,7 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
                                                                          "Literal offset (end offset): 1: 0 (1) -1: 2 (2) 2: 3 (5) -2: 6 (7) \n"
                                                                          "\n";
 
-    inline std::string contagiousOccurrenceListRemoveOccurrencesEmptyResult = "Occurrence list: 0 5 5 1 3 5 0 2 4 5 \n"
+    inline std::string contiguousOccurrenceListRemoveOccurrencesEmptyResult = "Occurrence list: 0 5 5 1 3 5 0 2 4 5 \n"
                                                                               "Separator: 5\n"
                                                                               "Literal offset (end offset): 1: 0 (1) -1: 2 (2) 2: 3 (5) -2: 6 (9) \n"
                                                                               "\n"
@@ -250,7 +250,7 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
                                                                               "Literal offset (end offset): 1: 0 (1) -1: 2 (2) 2: 3 (5) -2: 6 (9) \n"
                                                                               "\n";
 
-    inline std::string contagiousOccurrenceListRemoveOccurrencesKeepAllResult = "Occurrence list: 0 5 5 1 3 5 0 2 4 5 \n"
+    inline std::string contiguousOccurrenceListRemoveOccurrencesKeepAllResult = "Occurrence list: 0 5 5 1 3 5 0 2 4 5 \n"
                                                                                 "Separator: 5\n"
                                                                                 "Literal offset (end offset): 1: 0 (1) -1: 2 (2) 2: 3 (5) -2: 6 (9) \n"
                                                                                 "\n"
@@ -260,7 +260,7 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
                                                                                 "Literal offset (end offset): 1: 0 (1) -1: 2 (2) 2: 3 (5) -2: 6 (9) \n"
                                                                                 "\n";
 
-    inline std::string contagiousOccurrenceListRemoveOccurrencesRemoveAllResult = "Occurrence list: 0 5 5 1 3 5 0 2 4 5 \n"
+    inline std::string contiguousOccurrenceListRemoveOccurrencesRemoveAllResult = "Occurrence list: 0 5 5 1 3 5 0 2 4 5 \n"
                                                                                   "Separator: 5\n"
                                                                                   "Literal offset (end offset): 1: 0 (1) -1: 2 (2) 2: 3 (5) -2: 6 (9) \n"
                                                                                   "\n"
@@ -269,4 +269,4 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
                                                                                   "Separator: 5\n"
                                                                                   "Literal offset (end offset): 1: 0 (1) -1: 2 (2) 2: 3 (3) -2: 6 (9) \n"
                                                                                   "\n";
-}   // namespace HydraTest::Container::ContagiousOccurrenceList
+}   // namespace HydraTest::Container::ContiguousOccurrenceList

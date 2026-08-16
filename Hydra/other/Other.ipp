@@ -26,7 +26,7 @@ namespace Hydra::Other {
 
     template <typename TypeT>
     bool clauseIdCanBeSavedAsTypeT(LargeNumberType numberOfClauseId) noexcept {
-        LargeNumberType tmp = std::numeric_limits<TypeT>::max();   // O, which can be "considered" as the separator (ContagiousOccurrenceList), is not included
+        LargeNumberType tmp = std::numeric_limits<TypeT>::max();   // O, which can be "considered" as the separator (ContiguousOccurrenceList), is not included
 
         if (numberOfClauseId <= tmp)
             return true;

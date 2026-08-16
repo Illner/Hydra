@@ -45,7 +45,7 @@ add_executable(HydraTest "HydraTest.cpp"
         "other/container/reusableVector/ReusableVectorTest.cpp"
         "other/container/stackWithLevels/StackWithLevelsTest.cpp"
         "other/container/variableStateVector/VariableStateVectorTest.cpp"
-        "other/container/contagiousOccurrenceList/ContagiousOccurrenceListTest.cpp"
+        "other/container/contiguousOccurrenceList/ContiguousOccurrenceListTest.cpp"
         "other/container/computeConnectedComponents/ComputeConnectedComponentsTest.cpp"
 
         # Type

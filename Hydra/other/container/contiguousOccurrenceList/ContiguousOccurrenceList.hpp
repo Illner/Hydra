@@ -12,14 +12,14 @@
 #include "Hydra/other/Other.hpp"
 #include "Hydra/other/hashMap/HashMap.hpp"
 
-#include "Hydra/other/container/exceptions/ContagiousOccurrenceListException.hpp"
+#include "Hydra/other/container/exceptions/ContiguousOccurrenceListException.hpp"
 
-namespace Hydra::Container::ContagiousOccurrenceList {
+namespace Hydra::Container::ContiguousOccurrenceList {
 
     using FormulaSizeType = Hydra::Formula::Representation::FormulaSizeType;
 
     /**
-     * Contagious occurrence list representation
+     * Contiguous occurrence list representation
      * Copy and move methods (default) are allowed!
      * Invariant: AT LEAST ONE variable
      * Invariant: every variable can appear in a clause AT MOST ONCE
@@ -32,7 +32,7 @@ namespace Hydra::Container::ContagiousOccurrenceList {
      * @tparam ClauseIdT type used for a clause identifier
      */
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    class ContagiousOccurrenceList {
+    class ContiguousOccurrenceList {
         static_assert(Formula::Literal<VarT, LiteralT>::isValidVarT::value, "Invalid VarT type!");
         static_assert(Formula::Literal<VarT, LiteralT>::isValidLiteralT::value, "Invalid LiteralT type!");
         static_assert(Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::isValidClauseT::value, "Invalid ClauseIdT type!");
@@ -50,7 +50,7 @@ namespace Hydra::Container::ContagiousOccurrenceList {
         using ConstIteratorType = typename OccurrenceListType::const_iterator;
 
     public:
-        ContagiousOccurrenceList(ClauseIdT numberOfClauses, const ClauseIdVectorType& literalNumberOfOccurrences)
+        ContiguousOccurrenceList(ClauseIdT numberOfClauses, const ClauseIdVectorType& literalNumberOfOccurrences)
             : separator_(numberOfClauses), literalTOffset_(), literalTEndOffset_(),
               occurrenceList_((literalNumberOfOccurrences.size() - 2) /* number of all literals */ + std::accumulate(literalNumberOfOccurrences.begin(), literalNumberOfOccurrences.end(), static_cast<FormulaSizeType>(0)) /* formula size */, separator_) {
             assert(literalNumberOfOccurrences.size() > 2);
@@ -61,11 +61,11 @@ namespace Hydra::Container::ContagiousOccurrenceList {
             initializeDataStructures(literalNumberOfOccurrences);
         }
 
-        ContagiousOccurrenceList(const ContagiousOccurrenceList&) = default;
-        ContagiousOccurrenceList(ContagiousOccurrenceList&&) noexcept = default;
+        ContiguousOccurrenceList(const ContiguousOccurrenceList&) = default;
+        ContiguousOccurrenceList(ContiguousOccurrenceList&&) noexcept = default;
 
-        ContagiousOccurrenceList& operator=(const ContagiousOccurrenceList&) = default;
-        ContagiousOccurrenceList& operator=(ContagiousOccurrenceList&&) noexcept = default;
+        ContiguousOccurrenceList& operator=(const ContiguousOccurrenceList&) = default;
+        ContiguousOccurrenceList& operator=(ContiguousOccurrenceList&&) noexcept = default;
 
     private:
         ClauseIdT separator_;
@@ -173,9 +173,9 @@ namespace Hydra::Container::ContagiousOccurrenceList {
 
     #ifndef NDEBUG
     public:
-        void printContagiousOccurrenceListDebug(std::ostream& out) const;
+        void printContiguousOccurrenceListDebug(std::ostream& out) const;
     #endif
     };
-}   // namespace Hydra::Container::ContagiousOccurrenceList
+}   // namespace Hydra::Container::ContiguousOccurrenceList
 
-#include "./ContagiousOccurrenceList.ipp"
+#include "./ContiguousOccurrenceList.ipp"

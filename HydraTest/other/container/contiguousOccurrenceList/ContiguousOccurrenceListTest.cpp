@@ -6,13 +6,13 @@
 
 #include "HydraTest/TemplateTest.hpp"
 #include "HydraTest/external/unitTesting/Catch2/catch.hpp"
-#include "HydraTest/other/container/contagiousOccurrenceList/ContagiousOccurrenceListTestResult.hpp"
+#include "HydraTest/other/container/contiguousOccurrenceList/ContiguousOccurrenceListTestResult.hpp"
 
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/other/Other.hpp"
-#include "Hydra/other/container/contagiousOccurrenceList/ContagiousOccurrenceList.hpp"
+#include "Hydra/other/container/contiguousOccurrenceList/ContiguousOccurrenceList.hpp"
 
-namespace HydraTest::Container::ContagiousOccurrenceList {
+namespace HydraTest::Container::ContiguousOccurrenceList {
 
     //region Types
     using VarT = char8_t;
@@ -20,17 +20,17 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
     using ClauseIdT = char8_t;
 
     using LiteralType = Hydra::Formula::Literal<VarT, LiteralT>::LiteralType;
-    using FormulaSizeType = Hydra::Container::ContagiousOccurrenceList::FormulaSizeType;
+    using FormulaSizeType = Hydra::Container::ContiguousOccurrenceList::FormulaSizeType;
     using LiteralVectorType = Hydra::Formula::Literal<VarT, LiteralT>::LiteralVectorType;
     using VariableVectorType = Hydra::Formula::Literal<VarT, LiteralT>::VariableVectorType;
 
     using ClauseIdVectorType = std::vector<ClauseIdT>;
-    using ContagiousOccurrenceListType = Hydra::Container::ContagiousOccurrenceList::ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>;
+    using ContiguousOccurrenceListType = Hydra::Container::ContiguousOccurrenceList::ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>;
     //endregion
 
     //region Functions
-    void printContagiousOccurrenceList(const ContagiousOccurrenceListType& contagiousOccurrenceList, std::stringstream& actualResult) {
-        contagiousOccurrenceList.printContagiousOccurrenceListDebug(actualResult);
+    void printContiguousOccurrenceList(const ContiguousOccurrenceListType& contiguousOccurrenceList, std::stringstream& actualResult) {
+        contiguousOccurrenceList.printContiguousOccurrenceListDebug(actualResult);
         actualResult << std::endl;
     }
 
@@ -41,12 +41,12 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
         actualResult << std::endl;
     }
 
-    void printGetClauseIdVectorAndSet(const ContagiousOccurrenceListType& contagiousOccurrenceList,
+    void printGetClauseIdVectorAndSet(const ContiguousOccurrenceListType& contiguousOccurrenceList,
                                       const LiteralVectorType& literalVector, const VariableVectorType& variableVector, std::stringstream& actualResult) {
         // Variable
         actualResult << "Variable: " << std::endl;
         for (VarT var : variableVector) {
-            ClauseIdT numberOfOccurrencesTmp = contagiousOccurrenceList.getNumberOfVariableOccurrences(var);
+            ClauseIdT numberOfOccurrencesTmp = contiguousOccurrenceList.getNumberOfVariableOccurrences(var);
             actualResult << std::to_string(var) << ": " << std::to_string(numberOfOccurrencesTmp) << std::endl;
         }
         actualResult << std::endl;
@@ -54,8 +54,8 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
         // Vector
         actualResult << "Vector:" << std::endl;
         for (const LiteralType& lit : literalVector) {
-            ClauseIdT numberOfOccurrencesTmp = contagiousOccurrenceList.getNumberOfOccurrences(lit);
-            ClauseIdVectorType clauseIdVectorTmp = contagiousOccurrenceList.getClauseIdVector(lit);
+            ClauseIdT numberOfOccurrencesTmp = contiguousOccurrenceList.getNumberOfOccurrences(lit);
+            ClauseIdVectorType clauseIdVectorTmp = contiguousOccurrenceList.getClauseIdVector(lit);
             actualResult << lit << " (" << std::to_string(numberOfOccurrencesTmp) << "): ";
             for (ClauseIdT clauseId : clauseIdVectorTmp)
                 actualResult << std::to_string(clauseId) << " ";
@@ -66,7 +66,7 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
         // Set
         actualResult << "Set:" << std::endl;
         for (const LiteralType& lit : literalVector) {
-            ClauseIdVectorType clauseIdVectorTmp = Hydra::Other::sortUnorderedSet(contagiousOccurrenceList.getClauseIdSet(lit));
+            ClauseIdVectorType clauseIdVectorTmp = Hydra::Other::sortUnorderedSet(contiguousOccurrenceList.getClauseIdSet(lit));
             actualResult << lit << ": ";
             for (ClauseIdT clauseId : clauseIdVectorTmp)
                 actualResult << std::to_string(clauseId) << " ";
@@ -76,43 +76,43 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
     }
     //endregion
 
-    //region ContagiousOccurrenceList
-    ContagiousOccurrenceListType createContagiousOccurrenceList() {
-        ContagiousOccurrenceListType contagiousOccurrenceList(5, { 0, 0, 1, 0, 2, 3 });
+    //region ContiguousOccurrenceList
+    ContiguousOccurrenceListType createContiguousOccurrenceList() {
+        ContiguousOccurrenceListType contiguousOccurrenceList(5, { 0, 0, 1, 0, 2, 3 });
 
         LiteralType litPos1(1, true);
         LiteralType litPos2(2, true);
         LiteralType litNeg2(2, false);
 
-        contagiousOccurrenceList.addOccurrence(litPos1.getLiteralT(), 0);
+        contiguousOccurrenceList.addOccurrence(litPos1.getLiteralT(), 0);
 
-        contagiousOccurrenceList.addOccurrence(litPos2.getLiteralT(), 1);
-        contagiousOccurrenceList.addOccurrence(litPos2.getLiteralT(), 3);
+        contiguousOccurrenceList.addOccurrence(litPos2.getLiteralT(), 1);
+        contiguousOccurrenceList.addOccurrence(litPos2.getLiteralT(), 3);
 
-        contagiousOccurrenceList.addOccurrence(litNeg2.getLiteralT(), 0);
-        contagiousOccurrenceList.addOccurrence(litNeg2.getLiteralT(), 2);
-        contagiousOccurrenceList.addOccurrence(litNeg2.getLiteralT(), 4);
+        contiguousOccurrenceList.addOccurrence(litNeg2.getLiteralT(), 0);
+        contiguousOccurrenceList.addOccurrence(litNeg2.getLiteralT(), 2);
+        contiguousOccurrenceList.addOccurrence(litNeg2.getLiteralT(), 4);
 
-        return contagiousOccurrenceList;
+        return contiguousOccurrenceList;
     }
     //endregion
 
     /**
      * Constructor
      */
-    TEST_CASE("[Container::ContagiousOccurrenceList] constructor", "[Container::ContagiousOccurrenceList]") {
+    TEST_CASE("[Container::ContiguousOccurrenceList] constructor", "[Container::ContiguousOccurrenceList]") {
         TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
-                          contagiousOccurrenceListConstructorResult);
+                          contiguousOccurrenceListConstructorResult);
         std::stringstream& actualResult = test.getStringStream();
 
         try {
-            actualResult << "contagiousOccurrenceList1:" << std::endl;
-            ContagiousOccurrenceListType contagiousOccurrenceList1(2, { 0, 0, 1, 1 });
-            printContagiousOccurrenceList(contagiousOccurrenceList1, actualResult);
+            actualResult << "contiguousOccurrenceList1:" << std::endl;
+            ContiguousOccurrenceListType contiguousOccurrenceList1(2, { 0, 0, 1, 1 });
+            printContiguousOccurrenceList(contiguousOccurrenceList1, actualResult);
 
-            actualResult << "contagiousOccurrenceList2:" << std::endl;
-            ContagiousOccurrenceListType contagiousOccurrenceList2(4, { 0, 0, 1, 0, 2, 3 });
-            printContagiousOccurrenceList(contagiousOccurrenceList2, actualResult);
+            actualResult << "contiguousOccurrenceList2:" << std::endl;
+            ContiguousOccurrenceListType contiguousOccurrenceList2(4, { 0, 0, 1, 0, 2, 3 });
+            printContiguousOccurrenceList(contiguousOccurrenceList2, actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -125,24 +125,24 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
     /**
      * Copy and move
      */
-    TEST_CASE("[Container::ContagiousOccurrenceList] copy and move", "[Container::ContagiousOccurrenceList]") {
+    TEST_CASE("[Container::ContiguousOccurrenceList] copy and move", "[Container::ContiguousOccurrenceList]") {
         TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
-                          contagiousOccurrenceListCopyAndMoveResult);
+                          contiguousOccurrenceListCopyAndMoveResult);
         std::stringstream& actualResult = test.getStringStream();
 
         try {
-            ContagiousOccurrenceListType contagiousOccurrenceList1(4, { 0, 0, 1, 0, 2, 3 });
-            printContagiousOccurrenceList(contagiousOccurrenceList1, actualResult);
+            ContiguousOccurrenceListType contiguousOccurrenceList1(4, { 0, 0, 1, 0, 2, 3 });
+            printContiguousOccurrenceList(contiguousOccurrenceList1, actualResult);
 
             actualResult << "Copy method" << std::endl;
-            ContagiousOccurrenceListType contagiousOccurrenceList2 = contagiousOccurrenceList1;
-            contagiousOccurrenceList2.addOccurrence(LiteralType(1, true).getLiteralT(), 0);
-            printContagiousOccurrenceList(contagiousOccurrenceList1, actualResult);
-            printContagiousOccurrenceList(contagiousOccurrenceList2, actualResult);
+            ContiguousOccurrenceListType contiguousOccurrenceList2 = contiguousOccurrenceList1;
+            contiguousOccurrenceList2.addOccurrence(LiteralType(1, true).getLiteralT(), 0);
+            printContiguousOccurrenceList(contiguousOccurrenceList1, actualResult);
+            printContiguousOccurrenceList(contiguousOccurrenceList2, actualResult);
 
             actualResult << "Move method" << std::endl;
-            ContagiousOccurrenceListType contagiousOccurrenceList3 = std::move(contagiousOccurrenceList1);
-            printContagiousOccurrenceList(contagiousOccurrenceList3, actualResult);
+            ContiguousOccurrenceListType contiguousOccurrenceList3 = std::move(contiguousOccurrenceList1);
+            printContiguousOccurrenceList(contiguousOccurrenceList3, actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -155,14 +155,14 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
     /**
      * Add occurrence
      */
-    TEST_CASE("[Container::ContagiousOccurrenceList] add occurrence", "[Container::ContagiousOccurrenceList]") {
+    TEST_CASE("[Container::ContiguousOccurrenceList] add occurrence", "[Container::ContiguousOccurrenceList]") {
         TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
-                          contagiousOccurrenceListAddOccurrenceResult);
+                          contiguousOccurrenceListAddOccurrenceResult);
         std::stringstream& actualResult = test.getStringStream();
 
         try {
-            ContagiousOccurrenceListType contagiousOccurrenceList(4, { 0, 0, 1, 0, 2, 3 });
-            printContagiousOccurrenceList(contagiousOccurrenceList, actualResult);
+            ContiguousOccurrenceListType contiguousOccurrenceList(4, { 0, 0, 1, 0, 2, 3 });
+            printContiguousOccurrenceList(contiguousOccurrenceList, actualResult);
 
             LiteralType litPos1(1, true);
             LiteralType litNeg1(1, false);
@@ -188,8 +188,8 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
                 try {
                     actualResult << "Literal: " << occurrencePair.first
                                  << ", clause ID: " << std::to_string(occurrencePair.second) << std::endl;
-                    contagiousOccurrenceList.addOccurrence(occurrencePair.first, occurrencePair.second);
-                    printContagiousOccurrenceList(contagiousOccurrenceList, actualResult);
+                    contiguousOccurrenceList.addOccurrence(occurrencePair.first, occurrencePair.second);
+                    printContiguousOccurrenceList(contiguousOccurrenceList, actualResult);
                 }
                 catch (const std::exception& e) {
                     actualResult << e.what() << std::endl
@@ -208,14 +208,14 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
     /**
      * Remove occurrence
      */
-    TEST_CASE("[Container::ContagiousOccurrenceList] remove occurrence", "[Container::ContagiousOccurrenceList]") {
+    TEST_CASE("[Container::ContiguousOccurrenceList] remove occurrence", "[Container::ContiguousOccurrenceList]") {
         TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
-                          contagiousOccurrenceListRemoveOccurrenceResult);
+                          contiguousOccurrenceListRemoveOccurrenceResult);
         std::stringstream& actualResult = test.getStringStream();
 
         try {
-            ContagiousOccurrenceListType contagiousOccurrenceList = createContagiousOccurrenceList();
-            printContagiousOccurrenceList(contagiousOccurrenceList, actualResult);
+            ContiguousOccurrenceListType contiguousOccurrenceList = createContiguousOccurrenceList();
+            printContiguousOccurrenceList(contiguousOccurrenceList, actualResult);
 
             LiteralType litPos1(1, true);
             LiteralType litNeg1(1, false);
@@ -238,8 +238,8 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
                 try {
                     actualResult << "Literal: " << occurrencePair.first
                                  << ", clause ID: " << std::to_string(occurrencePair.second) << std::endl;
-                    contagiousOccurrenceList.removeOccurrence(occurrencePair.first, occurrencePair.second);
-                    printContagiousOccurrenceList(contagiousOccurrenceList, actualResult);
+                    contiguousOccurrenceList.removeOccurrence(occurrencePair.first, occurrencePair.second);
+                    printContiguousOccurrenceList(contiguousOccurrenceList, actualResult);
                 }
                 catch (const std::exception& e) {
                     actualResult << e.what() << std::endl
@@ -258,14 +258,14 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
     /**
      * Get occurrences
      */
-    TEST_CASE("[Container::ContagiousOccurrenceList] get occurrences", "[Container::ContagiousOccurrenceList]") {
+    TEST_CASE("[Container::ContiguousOccurrenceList] get occurrences", "[Container::ContiguousOccurrenceList]") {
         TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
-                          contagiousOccurrenceListGetOccurrencesResult);
+                          contiguousOccurrenceListGetOccurrencesResult);
         std::stringstream& actualResult = test.getStringStream();
 
         try {
-            ContagiousOccurrenceListType contagiousOccurrenceList = createContagiousOccurrenceList();
-            printContagiousOccurrenceList(contagiousOccurrenceList, actualResult);
+            ContiguousOccurrenceListType contiguousOccurrenceList = createContiguousOccurrenceList();
+            printContiguousOccurrenceList(contiguousOccurrenceList, actualResult);
 
             LiteralType litPos1(1, true);
             LiteralType litNeg1(1, false);
@@ -276,21 +276,21 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
             LiteralVectorType literalVector { litPos1, litNeg1, litPos2, litNeg2 };
 
             actualResult << "Initialized:" << std::endl;
-            printGetClauseIdVectorAndSet(contagiousOccurrenceList, literalVector, variableVector, actualResult);
+            printGetClauseIdVectorAndSet(contiguousOccurrenceList, literalVector, variableVector, actualResult);
 
             actualResult << "Removing:" << std::endl;
-            contagiousOccurrenceList.removeOccurrence(litPos1, 0);
-            contagiousOccurrenceList.removeOccurrence(litNeg2, 2);
-            contagiousOccurrenceList.removeOccurrence(litPos2, 3);
-            printContagiousOccurrenceList(contagiousOccurrenceList, actualResult);
-            printGetClauseIdVectorAndSet(contagiousOccurrenceList, literalVector, variableVector, actualResult);
+            contiguousOccurrenceList.removeOccurrence(litPos1, 0);
+            contiguousOccurrenceList.removeOccurrence(litNeg2, 2);
+            contiguousOccurrenceList.removeOccurrence(litPos2, 3);
+            printContiguousOccurrenceList(contiguousOccurrenceList, actualResult);
+            printGetClauseIdVectorAndSet(contiguousOccurrenceList, literalVector, variableVector, actualResult);
 
             actualResult << "Adding:" << std::endl;
-            contagiousOccurrenceList.addOccurrence(litPos1, 0);
-            contagiousOccurrenceList.addOccurrence(litNeg2, 2);
-            contagiousOccurrenceList.addOccurrence(litPos2, 3);
-            printContagiousOccurrenceList(contagiousOccurrenceList, actualResult);
-            printGetClauseIdVectorAndSet(contagiousOccurrenceList, literalVector, variableVector, actualResult);
+            contiguousOccurrenceList.addOccurrence(litPos1, 0);
+            contiguousOccurrenceList.addOccurrence(litNeg2, 2);
+            contiguousOccurrenceList.addOccurrence(litPos2, 3);
+            printContiguousOccurrenceList(contiguousOccurrenceList, actualResult);
+            printGetClauseIdVectorAndSet(contiguousOccurrenceList, literalVector, variableVector, actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -303,23 +303,23 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
     /**
      * Exists
      */
-    TEST_CASE("[Container::ContagiousOccurrenceList] exists", "[Container::ContagiousOccurrenceList]") {
+    TEST_CASE("[Container::ContiguousOccurrenceList] exists", "[Container::ContiguousOccurrenceList]") {
         TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
-                          contagiousOccurrenceListExistsResult);
+                          contiguousOccurrenceListExistsResult);
         std::stringstream& actualResult = test.getStringStream();
 
         try {
-            ContagiousOccurrenceListType contagiousOccurrenceList = createContagiousOccurrenceList();
+            ContiguousOccurrenceListType contiguousOccurrenceList = createContiguousOccurrenceList();
 
             LiteralType litPos1(1, true);
             LiteralType litNeg1(1, false);
             LiteralType litPos2(2, true);
             LiteralType litNeg2(2, false);
 
-            contagiousOccurrenceList.removeOccurrence(litNeg2, 2);
-            contagiousOccurrenceList.removeOccurrence(litPos2, 1);
+            contiguousOccurrenceList.removeOccurrence(litNeg2, 2);
+            contiguousOccurrenceList.removeOccurrence(litPos2, 1);
 
-            printContagiousOccurrenceList(contagiousOccurrenceList, actualResult);
+            printContiguousOccurrenceList(contiguousOccurrenceList, actualResult);
 
             std::vector<std::pair<LiteralType, ClauseIdT>> occurrenceVector {
                 { litPos1, 0 },
@@ -337,7 +337,7 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
                 actualResult << "Literal: " << occurrencePair.first
                              << ", clause ID: " << std::to_string(occurrencePair.second) << std::endl;
 
-                bool existsTmp = contagiousOccurrenceList.occurrenceExists(occurrencePair.first, occurrencePair.second);
+                bool existsTmp = contiguousOccurrenceList.occurrenceExists(occurrencePair.first, occurrencePair.second);
                 actualResult << "Exists: " << std::to_string(existsTmp) << std::endl;
                 actualResult << std::endl;
             }
@@ -353,19 +353,19 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
     /**
      * Remove occurrences
      */
-    TEST_CASE("[Container::ContagiousOccurrenceList] remove occurrences", "[Container::ContagiousOccurrenceList]") {
+    TEST_CASE("[Container::ContiguousOccurrenceList] remove occurrences", "[Container::ContiguousOccurrenceList]") {
         TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
-                          contagiousOccurrenceListRemoveOccurrencesResult);
+                          contiguousOccurrenceListRemoveOccurrencesResult);
         std::stringstream& actualResult = test.getStringStream();
 
         try {
-            ContagiousOccurrenceListType contagiousOccurrenceList = createContagiousOccurrenceList();
-            printContagiousOccurrenceList(contagiousOccurrenceList, actualResult);
+            ContiguousOccurrenceListType contiguousOccurrenceList = createContiguousOccurrenceList();
+            printContiguousOccurrenceList(contiguousOccurrenceList, actualResult);
 
             LiteralType litNeg2(2, false);
-            ClauseIdVectorType removedClauseVector = contagiousOccurrenceList.removeOccurrence(litNeg2, { 1, 2 });
+            ClauseIdVectorType removedClauseVector = contiguousOccurrenceList.removeOccurrence(litNeg2, { 1, 2 });
             printRemovedClauses(removedClauseVector, actualResult);
-            printContagiousOccurrenceList(contagiousOccurrenceList, actualResult);
+            printContiguousOccurrenceList(contiguousOccurrenceList, actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -378,19 +378,19 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
     /**
      * Remove occurrences (empty)
      */
-    TEST_CASE("[Container::ContagiousOccurrenceList] remove occurrences (empty)", "[Container::ContagiousOccurrenceList]") {
+    TEST_CASE("[Container::ContiguousOccurrenceList] remove occurrences (empty)", "[Container::ContiguousOccurrenceList]") {
         TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
-                          contagiousOccurrenceListRemoveOccurrencesEmptyResult);
+                          contiguousOccurrenceListRemoveOccurrencesEmptyResult);
         std::stringstream& actualResult = test.getStringStream();
 
         try {
-            ContagiousOccurrenceListType contagiousOccurrenceList = createContagiousOccurrenceList();
-            printContagiousOccurrenceList(contagiousOccurrenceList, actualResult);
+            ContiguousOccurrenceListType contiguousOccurrenceList = createContiguousOccurrenceList();
+            printContiguousOccurrenceList(contiguousOccurrenceList, actualResult);
 
             LiteralType litNeg1(1, false);
-            ClauseIdVectorType removedClauseVector = contagiousOccurrenceList.removeOccurrence(litNeg1, { 0, 1, 2 });
+            ClauseIdVectorType removedClauseVector = contiguousOccurrenceList.removeOccurrence(litNeg1, { 0, 1, 2 });
             printRemovedClauses(removedClauseVector, actualResult);
-            printContagiousOccurrenceList(contagiousOccurrenceList, actualResult);
+            printContiguousOccurrenceList(contiguousOccurrenceList, actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -403,19 +403,19 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
     /**
      * Remove occurrences (keep all)
      */
-    TEST_CASE("[Container::ContagiousOccurrenceList] remove occurrences (keep all)", "[Container::ContagiousOccurrenceList]") {
+    TEST_CASE("[Container::ContiguousOccurrenceList] remove occurrences (keep all)", "[Container::ContiguousOccurrenceList]") {
         TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
-                          contagiousOccurrenceListRemoveOccurrencesKeepAllResult);
+                          contiguousOccurrenceListRemoveOccurrencesKeepAllResult);
         std::stringstream& actualResult = test.getStringStream();
 
         try {
-            ContagiousOccurrenceListType contagiousOccurrenceList = createContagiousOccurrenceList();
-            printContagiousOccurrenceList(contagiousOccurrenceList, actualResult);
+            ContiguousOccurrenceListType contiguousOccurrenceList = createContiguousOccurrenceList();
+            printContiguousOccurrenceList(contiguousOccurrenceList, actualResult);
 
             LiteralType litPos2(2, true);
-            ClauseIdVectorType removedClauseVector = contagiousOccurrenceList.removeOccurrence(litPos2, { 1, 2, 3 });
+            ClauseIdVectorType removedClauseVector = contiguousOccurrenceList.removeOccurrence(litPos2, { 1, 2, 3 });
             printRemovedClauses(removedClauseVector, actualResult);
-            printContagiousOccurrenceList(contagiousOccurrenceList, actualResult);
+            printContiguousOccurrenceList(contiguousOccurrenceList, actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -428,19 +428,19 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
     /**
      * Remove occurrences (remove all)
      */
-    TEST_CASE("[Container::ContagiousOccurrenceList] remove occurrences (remove all)", "[Container::ContagiousOccurrenceList]") {
+    TEST_CASE("[Container::ContiguousOccurrenceList] remove occurrences (remove all)", "[Container::ContiguousOccurrenceList]") {
         TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
-                          contagiousOccurrenceListRemoveOccurrencesRemoveAllResult);
+                          contiguousOccurrenceListRemoveOccurrencesRemoveAllResult);
         std::stringstream& actualResult = test.getStringStream();
 
         try {
-            ContagiousOccurrenceListType contagiousOccurrenceList = createContagiousOccurrenceList();
-            printContagiousOccurrenceList(contagiousOccurrenceList, actualResult);
+            ContiguousOccurrenceListType contiguousOccurrenceList = createContiguousOccurrenceList();
+            printContiguousOccurrenceList(contiguousOccurrenceList, actualResult);
 
             LiteralType litPos2(2, true);
-            ClauseIdVectorType removedClauseVector = contagiousOccurrenceList.removeOccurrence(litPos2, { 0, 2, 4 });
+            ClauseIdVectorType removedClauseVector = contiguousOccurrenceList.removeOccurrence(litPos2, { 0, 2, 4 });
             printRemovedClauses(removedClauseVector, actualResult);
-            printContagiousOccurrenceList(contagiousOccurrenceList, actualResult);
+            printContiguousOccurrenceList(contiguousOccurrenceList, actualResult);
         }
         catch (const std::exception& e) {
             actualResult << e.what() << std::endl;
@@ -449,4 +449,4 @@ namespace HydraTest::Container::ContagiousOccurrenceList {
         // test.saveActualResultToFile();
         REQUIRE(test.checkTest());
     }
-}   // namespace HydraTest::Container::ContagiousOccurrenceList
+}   // namespace HydraTest::Container::ContiguousOccurrenceList

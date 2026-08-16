@@ -111,7 +111,7 @@ namespace Hydra::Formula::Representation::Contagious {
                 const LiteralType& lit = *clauseIt;
 
                 // Occurrence list iterating
-                for (auto it = contagiousOccurrenceList_.begin(lit.getLiteralT()); it != contagiousOccurrenceList_.end(lit.getLiteralT()); ++it) {
+                for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != contiguousOccurrenceList_.end(lit.getLiteralT()); ++it) {
                     if (*it == clauseId)
                         continue;
 
@@ -129,7 +129,7 @@ namespace Hydra::Formula::Representation::Contagious {
                     LiteralT complementaryLiteralT = lit.getComplementaryLiteralT();
 
                     // Occurrence list iterating
-                    for (auto it = contagiousOccurrenceList_.begin(complementaryLiteralT); it != contagiousOccurrenceList_.end(complementaryLiteralT); ++it) {
+                    for (auto it = contiguousOccurrenceList_.begin(complementaryLiteralT); it != contiguousOccurrenceList_.end(complementaryLiteralT); ++it) {
                         // if (*it == clauseId)
                         //     continue;
 
@@ -187,9 +187,9 @@ namespace Hydra::Formula::Representation::Contagious {
                 ClauseIdT numberOfOccurrencesTmp = 0;
 
                 if (considerOnlyVariables)
-                    numberOfOccurrencesTmp = contagiousOccurrenceList_.getNumberOfVariableOccurrences(lit.getVariable());
+                    numberOfOccurrencesTmp = contiguousOccurrenceList_.getNumberOfVariableOccurrences(lit.getVariable());
                 else
-                    numberOfOccurrencesTmp = contagiousOccurrenceList_.getNumberOfOccurrences(lit.getLiteralT());
+                    numberOfOccurrencesTmp = contiguousOccurrenceList_.getNumberOfOccurrences(lit.getLiteralT());
 
                 if (numberOfOccurrencesTmp <= minNumberOfOccurrences) {
                     minNumberOfOccurrences = numberOfOccurrencesTmp;
@@ -202,7 +202,7 @@ namespace Hydra::Formula::Representation::Contagious {
             assert(minComplementaryLiteralT != 0);   // minComplementaryLiteralT has been set
 
             // Occurrence list iterating
-            for (auto it = contagiousOccurrenceList_.begin(minLiteralT); it != contagiousOccurrenceList_.end(minLiteralT); ++it) {
+            for (auto it = contiguousOccurrenceList_.begin(minLiteralT); it != contiguousOccurrenceList_.end(minLiteralT); ++it) {
                 if (*it == clauseId)
                     continue;
 
@@ -226,7 +226,7 @@ namespace Hydra::Formula::Representation::Contagious {
             // The complementary literal
             if (considerOnlyVariables) {
                 // Occurrence list iterating
-                for (auto it = contagiousOccurrenceList_.begin(minComplementaryLiteralT); it != contagiousOccurrenceList_.end(minComplementaryLiteralT); ++it) {
+                for (auto it = contiguousOccurrenceList_.begin(minComplementaryLiteralT); it != contiguousOccurrenceList_.end(minComplementaryLiteralT); ++it) {
                     // if (*it == clauseId)
                     //     continue;
 

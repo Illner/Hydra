@@ -9,7 +9,7 @@
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
 #include "Hydra/other/Other.hpp"
-#include "Hydra/other/container/contagiousOccurrenceList/ContagiousOccurrenceList.hpp"
+#include "Hydra/other/container/contiguousOccurrenceList/ContiguousOccurrenceList.hpp"
 #include "Hydra/other/container/stackWithLevels/StackWithLevels.hpp"
 #include "Hydra/other/container/variableStateVector/VariableStateVector.hpp"
 #include "Hydra/renHCRecognition/RenHCRecognitionAbstract.hpp"
@@ -59,7 +59,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
         using VariableStateVectorAspType = Container::VariableStateVector::VariableStateVector<VarAspT, LiteralAspT>;
         using ClauseIdStackWithLevelsAspType = Container::StackWithLevels::StackWithLevels<ClauseIdAspT, ClauseIdAspT>;
         using OccurrencePairStackWithLevelsAspType = Container::StackWithLevels::StackWithLevels<OccurrencePairAspType, FormulaSizeType>;
-        using ContagiousOccurrenceListAspType = Container::ContagiousOccurrenceList::ContagiousOccurrenceList<VarAspT, LiteralAspT, ClauseIdAspT>;
+        using ContiguousOccurrenceListAspType = Container::ContiguousOccurrenceList::ContiguousOccurrenceList<VarAspT, LiteralAspT, ClauseIdAspT>;
 
     public:
         using AspvallRenHCRecognitionAspStruct = AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>;
@@ -80,7 +80,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
                                                                   ignorePureLiteralType, initialFormula, renHCRecognitionStatisticsPtr),
               formula_(std::move(formula)),
               numberOfOriginalVariables_(static_cast<VarAspT>(formulaRepresentationAbstractPtr->getNumberOfVariablesInOriginalFormula())),
-              contagiousOccurrenceList_(aspvallRenHCRecognitionStruct.numberOfClauses, literalNumberOfOccurrences),
+              contiguousOccurrenceList_(aspvallRenHCRecognitionStruct.numberOfClauses, literalNumberOfOccurrences),
               aspvallRenHCRecognitionStruct_(std::move(aspvallRenHCRecognitionStruct)),
               l_processedOriginalClauseVector_(initialFormula ? formulaRepresentationAbstractPtr->getNumberOfOriginalClauses() : 0, false),
               l_processedOriginalClauseStack_(),
@@ -113,7 +113,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
                                                                   renHCRecognitionStatisticsPtr),
               formula_(std::move(formula)),
               numberOfOriginalVariables_(static_cast<VarAspT>(formulaRepresentationAbstractPtr->getNumberOfVariablesInOriginalFormula())),
-              contagiousOccurrenceList_(aspvallRenHCRecognitionStruct.numberOfClauses, literalNumberOfOccurrences),
+              contiguousOccurrenceList_(aspvallRenHCRecognitionStruct.numberOfClauses, literalNumberOfOccurrences),
               aspvallRenHCRecognitionStruct_(std::move(aspvallRenHCRecognitionStruct)),
               l_processedOriginalClauseVector_(formulaRepresentationAbstractPtr->getNumberOfOriginalClauses(), false),
               l_processedOriginalClauseStack_(),
@@ -135,7 +135,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
     private:
         FormulaAspType formula_;
         VarAspT numberOfOriginalVariables_;
-        ContagiousOccurrenceListAspType contagiousOccurrenceList_;
+        ContiguousOccurrenceListAspType contiguousOccurrenceList_;
         AspvallRenHCRecognitionAspStruct aspvallRenHCRecognitionStruct_;
 
         // Local auxiliary data structures for processSetAssignedLiteral

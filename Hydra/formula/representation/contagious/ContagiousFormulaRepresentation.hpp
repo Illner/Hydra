@@ -10,7 +10,7 @@
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
 #include "Hydra/other/Other.hpp"
 #include "Hydra/other/container/computeConnectedComponents/ComputeConnectedComponents.hpp"
-#include "Hydra/other/container/contagiousOccurrenceList/ContagiousOccurrenceList.hpp"
+#include "Hydra/other/container/contiguousOccurrenceList/ContiguousOccurrenceList.hpp"
 #include "Hydra/other/container/fixedVector/FixedVector.hpp"
 #include "Hydra/other/hashMap/HashMap.hpp"
 #include "Hydra/other/parser/Parser.hpp"
@@ -88,7 +88,7 @@ namespace Hydra::Formula::Representation::Contagious {
         using MappingFromVariableToVariableSetType = Other::HashMap::MapType<VarT, VariableSetType>;
         using ContagiousFormulaRepresentationPtrType = const ContagiousFormulaRepresentation<VarT, LiteralT, ClauseIdT>*;
         using ComputeConnectedComponentsType = Container::ComputeConnectedComponents::ComputeConnectedComponents<VarT, LiteralT>;
-        using ContagiousOccurrenceListType = Container::ContagiousOccurrenceList::ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>;
+        using ContiguousOccurrenceListType = Container::ContiguousOccurrenceList::ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>;
 
     public:
         using FormulaType = std::vector<LiteralType>;
@@ -196,7 +196,7 @@ namespace Hydra::Formula::Representation::Contagious {
               l_forbiddenVariableSet_oneLiteralWatchingAlgorithmVariableSubsumption_(), l_removeVariableSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmVariableSubsumption_(),
               l_variableSubsumptionWatcherVector_oneLiteralWatchingAlgorithmVariableSubsumption_(), configuration_(configuration), clauseIdWatcher_(),
               currentComponentClausesStack_(), currentComponentClausesFixedVector_(0, numberOfClauses), clauseNumberOfSatisfiedLiterals_(),
-              clauseNumberOfUnsatisfiedLiterals_(), contagiousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences),
+              clauseNumberOfUnsatisfiedLiterals_(), contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences),
               numberOfPositiveLiteralsInClauseVector_(), numberOfNegativeLiteralsInClauseVector_(),
               d_currentComponentVariableSetStack_() {
             assert(originalFormula_.size() > 1);
@@ -231,7 +231,7 @@ namespace Hydra::Formula::Representation::Contagious {
               l_forbiddenVariableSet_oneLiteralWatchingAlgorithmVariableSubsumption_(), l_removeVariableSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmVariableSubsumption_(),
               l_variableSubsumptionWatcherVector_oneLiteralWatchingAlgorithmVariableSubsumption_(), configuration_(configuration), clauseIdWatcher_(),
               currentComponentClausesStack_(), currentComponentClausesFixedVector_(0, numberOfClauses), clauseNumberOfSatisfiedLiterals_(),
-              clauseNumberOfUnsatisfiedLiterals_(), contagiousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences),
+              clauseNumberOfUnsatisfiedLiterals_(), contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences),
               numberOfPositiveLiteralsInClauseVector_(), numberOfNegativeLiteralsInClauseVector_(),
               d_currentComponentVariableSetStack_() {
             assert(originalFormula_.size() > 1);
@@ -266,7 +266,7 @@ namespace Hydra::Formula::Representation::Contagious {
               l_forbiddenVariableSet_oneLiteralWatchingAlgorithmVariableSubsumption_(), l_removeVariableSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmVariableSubsumption_(),
               l_variableSubsumptionWatcherVector_oneLiteralWatchingAlgorithmVariableSubsumption_(), configuration_(configuration), clauseIdWatcher_(),
               currentComponentClausesStack_(), currentComponentClausesFixedVector_(0, numberOfClauses), clauseNumberOfSatisfiedLiterals_(),
-              clauseNumberOfUnsatisfiedLiterals_(), contagiousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences),
+              clauseNumberOfUnsatisfiedLiterals_(), contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences),
               numberOfPositiveLiteralsInClauseVector_(), numberOfNegativeLiteralsInClauseVector_() {
             initializeDataStructures();
         }
@@ -291,7 +291,7 @@ namespace Hydra::Formula::Representation::Contagious {
               l_forbiddenVariableSet_oneLiteralWatchingAlgorithmVariableSubsumption_(), l_removeVariableSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmVariableSubsumption_(),
               l_variableSubsumptionWatcherVector_oneLiteralWatchingAlgorithmVariableSubsumption_(), configuration_(configuration), clauseIdWatcher_(),
               currentComponentClausesStack_(), currentComponentClausesFixedVector_(0, numberOfClauses), clauseNumberOfSatisfiedLiterals_(),
-              clauseNumberOfUnsatisfiedLiterals_(), contagiousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences),
+              clauseNumberOfUnsatisfiedLiterals_(), contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences),
               numberOfPositiveLiteralsInClauseVector_(), numberOfNegativeLiteralsInClauseVector_() {
             initializeDataStructures();
         }
@@ -344,7 +344,7 @@ namespace Hydra::Formula::Representation::Contagious {
         FixedVectorType currentComponentClausesFixedVector_;
         ClauseSizeVectorType clauseNumberOfSatisfiedLiterals_;
         ClauseSizeVectorType clauseNumberOfUnsatisfiedLiterals_;
-        ContagiousOccurrenceListType contagiousOccurrenceList_;
+        ContiguousOccurrenceListType contiguousOccurrenceList_;
         ClauseSizeVectorType numberOfPositiveLiteralsInClauseVector_;
         ClauseSizeVectorType numberOfNegativeLiteralsInClauseVector_;
 

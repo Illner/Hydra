@@ -1,11 +1,11 @@
 #pragma once
 
-#include "./ContagiousOccurrenceList.hpp"
+#include "./ContiguousOccurrenceList.hpp"
 
-namespace Hydra::Container::ContagiousOccurrenceList {
+namespace Hydra::Container::ContiguousOccurrenceList {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    void ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::initializeDataStructures(const ClauseIdVectorType& literalNumberOfOccurrences) {
+    void ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::initializeDataStructures(const ClauseIdVectorType& literalNumberOfOccurrences) {
         literalTOffset_.reserve(literalNumberOfOccurrences.size());
         literalTEndOffset_.reserve(literalNumberOfOccurrences.size());
 
@@ -22,12 +22,12 @@ namespace Hydra::Container::ContagiousOccurrenceList {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    void ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::addOccurrence(const LiteralType& lit, ClauseIdT clauseId) {
+    void ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::addOccurrence(const LiteralType& lit, ClauseIdT clauseId) {
         addOccurrence(lit.getLiteralT(), clauseId);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    void ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::addOccurrence(LiteralT literalT, ClauseIdT clauseId) {
+    void ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::addOccurrence(LiteralT literalT, ClauseIdT clauseId) {
         assert(clauseId != separator_);
         assert(literalT != 0 && literalT != 1);
         assert(literalT < literalTOffset_.size());
@@ -36,7 +36,7 @@ namespace Hydra::Container::ContagiousOccurrenceList {
         // Check duplicities (lit)
         for (auto it = begin(literalT); it != end(literalT); ++it) {
             if (*it == clauseId)
-                throw Exception::Container::ContagiousOccurrenceList::AttemptToAddDuplicateOccurrenceException<VarT, LiteralT, ClauseIdT>(literalT, clauseId, false);
+                throw Exception::Container::ContiguousOccurrenceList::AttemptToAddDuplicateOccurrenceException<VarT, LiteralT, ClauseIdT>(literalT, clauseId, false);
         }
 
         // Check duplicities (~lit)
@@ -44,7 +44,7 @@ namespace Hydra::Container::ContagiousOccurrenceList {
         LiteralT complementaryLiteralT = complementaryLitTmp.getLiteralT();
         for (auto it = begin(complementaryLiteralT); it != end(complementaryLiteralT); ++it) {
             if (*it == clauseId)
-                throw Exception::Container::ContagiousOccurrenceList::AttemptToAddDuplicateOccurrenceException<VarT, LiteralT, ClauseIdT>(literalT, clauseId, true);
+                throw Exception::Container::ContiguousOccurrenceList::AttemptToAddDuplicateOccurrenceException<VarT, LiteralT, ClauseIdT>(literalT, clauseId, true);
         }
         #endif
 
@@ -53,11 +53,11 @@ namespace Hydra::Container::ContagiousOccurrenceList {
         // Last literal
         if (literalT == (literalTOffset_.size() - 1)) {
             if (literalTEndOffset_[literalT] == (occurrenceList_.size() - 1))
-                throw Exception::Container::ContagiousOccurrenceList::OverflowException<VarT, LiteralT>(literalT, literalTOffset_[literalT], literalTEndOffset_[literalT]);
+                throw Exception::Container::ContiguousOccurrenceList::OverflowException<VarT, LiteralT>(literalT, literalTOffset_[literalT], literalTEndOffset_[literalT]);
         }
         // First / mid literal
         else if (literalTEndOffset_[literalT] + 1 == literalTOffset_[literalT + 1])
-            throw Exception::Container::ContagiousOccurrenceList::OverflowException<VarT, LiteralT>(literalT, literalTOffset_[literalT], literalTEndOffset_[literalT]);
+            throw Exception::Container::ContiguousOccurrenceList::OverflowException<VarT, LiteralT>(literalT, literalTOffset_[literalT], literalTEndOffset_[literalT]);
         #endif
 
         occurrenceList_[literalTEndOffset_[literalT]] = clauseId;
@@ -65,12 +65,12 @@ namespace Hydra::Container::ContagiousOccurrenceList {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    void ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::removeOccurrence(const LiteralType& lit, ClauseIdT clauseId) {
+    void ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::removeOccurrence(const LiteralType& lit, ClauseIdT clauseId) {
         removeOccurrence(lit.getLiteralT(), clauseId);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    void ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::removeOccurrence(LiteralT literalT, ClauseIdT clauseId) {
+    void ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::removeOccurrence(LiteralT literalT, ClauseIdT clauseId) {
         assert(clauseId != separator_);
         assert(literalT != 0 && literalT != 1);
         assert(literalT < literalTOffset_.size());
@@ -86,18 +86,18 @@ namespace Hydra::Container::ContagiousOccurrenceList {
             }
         }
 
-        throw Exception::Container::ContagiousOccurrenceList::AttemptToRemoveOccurrenceDoesNotExistException<VarT, LiteralT, ClauseIdT>(literalT, clauseId);
+        throw Exception::Container::ContiguousOccurrenceList::AttemptToRemoveOccurrenceDoesNotExistException<VarT, LiteralT, ClauseIdT>(literalT, clauseId);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    typename ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType
-    ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::removeOccurrence(const LiteralType& lit, const ClauseIdSetType& keepClauseIdSet) {
+    typename ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType
+    ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::removeOccurrence(const LiteralType& lit, const ClauseIdSetType& keepClauseIdSet) {
         return removeOccurrence(lit.getLiteralT(), keepClauseIdSet);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    typename ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType
-    ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::removeOccurrence(LiteralT literalT, const ClauseIdSetType& keepClauseIdSet) {
+    typename ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType
+    ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::removeOccurrence(LiteralT literalT, const ClauseIdSetType& keepClauseIdSet) {
         assert(literalT != 0 && literalT != 1);
         assert(literalT < literalTOffset_.size());
 
@@ -134,13 +134,13 @@ namespace Hydra::Container::ContagiousOccurrenceList {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::removeOccurrence(const LiteralType& lit, ClauseIdT firstClauseId, ClauseIdT lastClauseId,
+    bool ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::removeOccurrence(const LiteralType& lit, ClauseIdT firstClauseId, ClauseIdT lastClauseId,
                                                                                bool atMostTwoOccurrences) {
         return removeOccurrence(lit.getLiteralT(), firstClauseId, lastClauseId, atMostTwoOccurrences);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::removeOccurrence(LiteralT literalT, ClauseIdT firstClauseId, ClauseIdT lastClauseId,
+    bool ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::removeOccurrence(LiteralT literalT, ClauseIdT firstClauseId, ClauseIdT lastClauseId,
                                                                                bool atMostTwoOccurrences) {
         assert(lastClauseId <= separator_);
         assert(firstClauseId < lastClauseId);
@@ -175,12 +175,12 @@ namespace Hydra::Container::ContagiousOccurrenceList {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::occurrenceExists(const LiteralType& lit, ClauseIdT clauseId) const {
+    bool ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::occurrenceExists(const LiteralType& lit, ClauseIdT clauseId) const {
         return occurrenceExists(lit.getLiteralT(), clauseId);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::occurrenceExists(LiteralT literalT, ClauseIdT clauseId) const {
+    bool ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::occurrenceExists(LiteralT literalT, ClauseIdT clauseId) const {
         assert(clauseId != separator_);
         assert(literalT != 0 && literalT != 1);
         assert(literalT < literalTOffset_.size());
@@ -195,14 +195,14 @@ namespace Hydra::Container::ContagiousOccurrenceList {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    typename ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType
-    ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::getClauseIdVector(const LiteralType& lit) const {
+    typename ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType
+    ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::getClauseIdVector(const LiteralType& lit) const {
         return getClauseIdVector(lit.getLiteralT());
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    typename ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType
-    ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::getClauseIdVector(LiteralT literalT) const {
+    typename ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType
+    ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::getClauseIdVector(LiteralT literalT) const {
         assert(literalT != 0 && literalT != 1);
         assert(literalT < literalTOffset_.size());
 
@@ -217,14 +217,14 @@ namespace Hydra::Container::ContagiousOccurrenceList {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    typename ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::ClauseIdSetType
-    ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::getClauseIdSet(const LiteralType& lit) const {
+    typename ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::ClauseIdSetType
+    ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::getClauseIdSet(const LiteralType& lit) const {
         return getClauseIdSet(lit.getLiteralT());
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    typename ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::ClauseIdSetType
-    ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::getClauseIdSet(LiteralT literalT) const {
+    typename ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::ClauseIdSetType
+    ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::getClauseIdSet(LiteralT literalT) const {
         assert(literalT != 0 && literalT != 1);
         assert(literalT < literalTOffset_.size());
 
@@ -238,12 +238,12 @@ namespace Hydra::Container::ContagiousOccurrenceList {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    ClauseIdT ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::getNumberOfOccurrences(const LiteralType& lit) const {
+    ClauseIdT ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::getNumberOfOccurrences(const LiteralType& lit) const {
         return getNumberOfOccurrences(lit.getLiteralT());
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    ClauseIdT ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::getNumberOfOccurrences(LiteralT literalT) const {
+    ClauseIdT ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::getNumberOfOccurrences(LiteralT literalT) const {
         assert(literalT != 0 && literalT != 1);
         assert(literalT < literalTOffset_.size());
 
@@ -251,7 +251,7 @@ namespace Hydra::Container::ContagiousOccurrenceList {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    ClauseIdT ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::getNumberOfVariableOccurrences(VarT var) const {
+    ClauseIdT ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::getNumberOfVariableOccurrences(VarT var) const {
         assert(var > 0);
 
         return getNumberOfOccurrences(Formula::getPositiveLiteralT<VarT, LiteralT>(var)) +
@@ -259,14 +259,14 @@ namespace Hydra::Container::ContagiousOccurrenceList {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    typename ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::ConstIteratorType
-    ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::begin(const LiteralType& lit) const noexcept {
+    typename ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::ConstIteratorType
+    ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::begin(const LiteralType& lit) const noexcept {
         return begin(lit.getLiteralT());
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    typename ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::ConstIteratorType
-    ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::begin(LiteralT literalT) const noexcept {
+    typename ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::ConstIteratorType
+    ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::begin(LiteralT literalT) const noexcept {
         assert(literalT != 0 && literalT != 1);
         assert(literalT < literalTOffset_.size());
 
@@ -277,14 +277,14 @@ namespace Hydra::Container::ContagiousOccurrenceList {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    typename ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::ConstIteratorType
-    ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::end(const LiteralType& lit) const noexcept {
+    typename ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::ConstIteratorType
+    ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::end(const LiteralType& lit) const noexcept {
         return end(lit.getLiteralT());
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    typename ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::ConstIteratorType
-    ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::end(LiteralT literalT) const noexcept {
+    typename ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::ConstIteratorType
+    ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::end(LiteralT literalT) const noexcept {
         assert(literalT != 0 && literalT != 1);
         assert(literalT < literalTOffset_.size());
 
@@ -296,7 +296,7 @@ namespace Hydra::Container::ContagiousOccurrenceList {
 
     #ifndef NDEBUG
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    void ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::printContagiousOccurrenceListDebug(std::ostream& out) const {
+    void ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::printContiguousOccurrenceListDebug(std::ostream& out) const {
         out << "Occurrence list: ";
         for (ClauseIdT clauseId : occurrenceList_)
             out << std::to_string(clauseId) << " ";
@@ -313,4 +313,4 @@ namespace Hydra::Container::ContagiousOccurrenceList {
         out << std::endl;
     }
     #endif
-}   // namespace Hydra::Container::ContagiousOccurrenceList
+}   // namespace Hydra::Container::ContiguousOccurrenceList

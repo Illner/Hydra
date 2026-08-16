@@ -124,7 +124,7 @@ namespace Hydra::Formula::Representation::Contagious {
                 const LiteralType& lit = originalFormula_[i];
 
                 // Occurrence list
-                contagiousOccurrenceList_.addOccurrence(lit.getLiteralT(), clauseId);
+                contiguousOccurrenceList_.addOccurrence(lit.getLiteralT(), clauseId);
 
                 // Positive literal
                 if (lit.isPositive())
@@ -312,7 +312,7 @@ namespace Hydra::Formula::Representation::Contagious {
         currentComponentClausesStack_.emplace_back(static_cast<ClauseIdT>(currentComponentClausesFixedVector_.size()));
 
         // lit
-        for (auto it = contagiousOccurrenceList_.begin(lit.getLiteralT()); it != contagiousOccurrenceList_.end(lit.getLiteralT()); ++it) {
+        for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != contiguousOccurrenceList_.end(lit.getLiteralT()); ++it) {
             ClauseIdT clauseId = *it;
 
             assert(!this->isClauseSatisfied(clauseId));   // clause is not satisfied
@@ -330,7 +330,7 @@ namespace Hydra::Formula::Representation::Contagious {
 
                 assert(lit != litTmp);
 
-                contagiousOccurrenceList_.removeOccurrence(litTmp.getLiteralT(), clauseId);
+                contiguousOccurrenceList_.removeOccurrence(litTmp.getLiteralT(), clauseId);
 
                 // The variable is free
                 if (isVariableFree(varTmp))
@@ -345,7 +345,7 @@ namespace Hydra::Formula::Representation::Contagious {
         }
 
         // ~lit
-        for (auto it = contagiousOccurrenceList_.begin(complementaryLit.getLiteralT()); it != contagiousOccurrenceList_.end(complementaryLit.getLiteralT()); ++it) {
+        for (auto it = contiguousOccurrenceList_.begin(complementaryLit.getLiteralT()); it != contiguousOccurrenceList_.end(complementaryLit.getLiteralT()); ++it) {
             ClauseIdT clauseId = *it;
 
             assert(!this->isClauseSatisfied(clauseId));   // clause is not satisfied
@@ -386,7 +386,7 @@ namespace Hydra::Formula::Representation::Contagious {
         LiteralType complementaryLit = ~lit;
 
         // lit
-        for (auto it = contagiousOccurrenceList_.begin(lit.getLiteralT()); it != contagiousOccurrenceList_.end(lit.getLiteralT()); ++it) {
+        for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != contiguousOccurrenceList_.end(lit.getLiteralT()); ++it) {
             ClauseIdT clauseId = *it;
 
             assert(this->isClauseSatisfied(clauseId));   // clause is satisfied
@@ -405,7 +405,7 @@ namespace Hydra::Formula::Representation::Contagious {
                 if (isVariableFree(varTmp))
                     unfreeVariableVector.emplace_back(varTmp);
 
-                contagiousOccurrenceList_.addOccurrence(litTmp.getLiteralT(), clauseId);
+                contiguousOccurrenceList_.addOccurrence(litTmp.getLiteralT(), clauseId);
             }
         }
 
@@ -414,7 +414,7 @@ namespace Hydra::Formula::Representation::Contagious {
         currentComponentClausesStack_.pop_back();
 
         // ~lit
-        for (auto it = contagiousOccurrenceList_.begin(complementaryLit.getLiteralT()); it != contagiousOccurrenceList_.end(complementaryLit.getLiteralT()); ++it) {
+        for (auto it = contiguousOccurrenceList_.begin(complementaryLit.getLiteralT()); it != contiguousOccurrenceList_.end(complementaryLit.getLiteralT()); ++it) {
             ClauseIdT clauseId = *it;
 
             assert(!this->isClauseSatisfied(clauseId));   // clause is not satisfied
@@ -438,7 +438,7 @@ namespace Hydra::Formula::Representation::Contagious {
             currentComponentFormulaSize_ += getCurrentClauseSize(clauseId);
 
             for (auto clauseIt = beginClause(clauseId); clauseIt != this->endClause(); ++clauseIt)
-                contagiousOccurrenceList_.addOccurrence(clauseIt->getLiteralT(), clauseId);
+                contiguousOccurrenceList_.addOccurrence(clauseIt->getLiteralT(), clauseId);
         }
 
         // Current component clauses
@@ -455,7 +455,7 @@ namespace Hydra::Formula::Representation::Contagious {
             currentComponentFormulaSize_ -= getCurrentClauseSize(clauseId);
 
             for (auto clauseIt = beginClause(clauseId); clauseIt != this->endClause(); ++clauseIt)
-                contagiousOccurrenceList_.removeOccurrence(clauseIt->getLiteralT(), clauseId);
+                contiguousOccurrenceList_.removeOccurrence(clauseIt->getLiteralT(), clauseId);
         }
 
         // Current component clauses
@@ -483,11 +483,11 @@ namespace Hydra::Formula::Representation::Contagious {
             LiteralT negLiteralT = getNegativeLiteralT<VarT, LiteralT>(var);
 
             // Positive literal
-            for (auto it = contagiousOccurrenceList_.begin(posLiteralT); it != contagiousOccurrenceList_.end(posLiteralT); ++it)
+            for (auto it = contiguousOccurrenceList_.begin(posLiteralT); it != contiguousOccurrenceList_.end(posLiteralT); ++it)
                 l_computeConnectedComponents_processComputeConnectedComponents_.addConnection(l_watchedVariableVector_processComputeConnectedComponents_[*it], var);
 
             // Negative literal
-            for (auto it = contagiousOccurrenceList_.begin(negLiteralT); it != contagiousOccurrenceList_.end(negLiteralT); ++it)
+            for (auto it = contiguousOccurrenceList_.begin(negLiteralT); it != contiguousOccurrenceList_.end(negLiteralT); ++it)
                 l_computeConnectedComponents_processComputeConnectedComponents_.addConnection(l_watchedVariableVector_processComputeConnectedComponents_[*it], var);
         }
 
@@ -734,7 +734,7 @@ namespace Hydra::Formula::Representation::Contagious {
         assert(!this->isVariableAssigned(lit.getVariable()));           // variable is not assigned
         assert(isVariableInCurrentComponentDebug(lit.getVariable()));   // variable is in the current component
 
-        for (auto it = contagiousOccurrenceList_.begin(lit.getLiteralT()); it != contagiousOccurrenceList_.end(lit.getLiteralT()); ++it) {
+        for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != contiguousOccurrenceList_.end(lit.getLiteralT()); ++it) {
             // Unit clause
             if (getCurrentClauseSize(*it) == 1)
                 return true;
@@ -776,7 +776,7 @@ namespace Hydra::Formula::Representation::Contagious {
         assert(!this->isVariableAssigned(createLiteralFromLiteralT<VarT, LiteralT>(literalT).getVariable()));           // variable is not assigned
         assert(isVariableInCurrentComponentDebug(createLiteralFromLiteralT<VarT, LiteralT>(literalT).getVariable()));   // variable is in the current component
 
-        return contagiousOccurrenceList_.getNumberOfOccurrences(literalT);
+        return contiguousOccurrenceList_.getNumberOfOccurrences(literalT);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
@@ -787,7 +787,7 @@ namespace Hydra::Formula::Representation::Contagious {
 
         ClauseSizeCounterType clauseSizeCounter(this->S_ESTIMATED_NUMBER_OF_CLAUSE_SIZES_);
 
-        for (auto it = contagiousOccurrenceList_.begin(literalT); it != contagiousOccurrenceList_.end(literalT); ++it) {
+        for (auto it = contiguousOccurrenceList_.begin(literalT); it != contiguousOccurrenceList_.end(literalT); ++it) {
             ClauseSizeType clauseSize = getCurrentClauseSize(*it);
 
             if (auto itTmp = clauseSizeCounter.find(clauseSize); itTmp != clauseSizeCounter.end())
@@ -806,7 +806,7 @@ namespace Hydra::Formula::Representation::Contagious {
 
         ClauseIdT numberOfBinaryClauses = 0;
 
-        for (auto it = contagiousOccurrenceList_.begin(literalT); it != contagiousOccurrenceList_.end(literalT); ++it) {
+        for (auto it = contiguousOccurrenceList_.begin(literalT); it != contiguousOccurrenceList_.end(literalT); ++it) {
             ClauseSizeType clauseSize = getCurrentClauseSize(*it);
 
             if (clauseSize == 2)
@@ -876,7 +876,7 @@ namespace Hydra::Formula::Representation::Contagious {
 
         // Occurrence list
         for (const LiteralType& lit : newConnectedComponentStruct.pureLiteralVector) {
-            pureVariableRemovedClausesVector.push_back(contagiousOccurrenceList_.removeOccurrence(lit.getLiteralT(), newCurrentComponentClauseSet));
+            pureVariableRemovedClausesVector.push_back(contiguousOccurrenceList_.removeOccurrence(lit.getLiteralT(), newCurrentComponentClauseSet));
         }
 
         assert(pureVariableRemovedClausesVector.size() == newConnectedComponentStruct.pureLiteralVector.size());
@@ -909,7 +909,7 @@ namespace Hydra::Formula::Representation::Contagious {
             LiteralT literalT = currentConnectedComponentStruct.pureLiteralVector[i].getLiteralT();
 
             for (ClauseIdT clauseId : pureVariableRemovedClausesVector[i])
-                contagiousOccurrenceList_.addOccurrence(literalT, clauseId);
+                contiguousOccurrenceList_.addOccurrence(literalT, clauseId);
         }
     }
 
@@ -1107,7 +1107,7 @@ namespace Hydra::Formula::Representation::Contagious {
         clauseIdReusableVector.clear();
 
         // Positive literal
-        for (auto it = contagiousOccurrenceList_.begin(posLiteralT); it != contagiousOccurrenceList_.end(posLiteralT); ++it) {
+        for (auto it = contiguousOccurrenceList_.begin(posLiteralT); it != contiguousOccurrenceList_.end(posLiteralT); ++it) {
             ClauseIdT clauseId = *it;
 
             // Ignored clause
@@ -1118,7 +1118,7 @@ namespace Hydra::Formula::Representation::Contagious {
         }
 
         // Negative literal
-        for (auto it = contagiousOccurrenceList_.begin(negLiteralT); it != contagiousOccurrenceList_.end(negLiteralT); ++it) {
+        for (auto it = contiguousOccurrenceList_.begin(negLiteralT); it != contiguousOccurrenceList_.end(negLiteralT); ++it) {
             ClauseIdT clauseId = *it;
 
             // Ignored clause
@@ -1153,7 +1153,7 @@ namespace Hydra::Formula::Representation::Contagious {
             LiteralT posLiteralT = getPositiveLiteralT<VarT, LiteralT>(var);
 
             // Positive literal
-            for (auto it = contagiousOccurrenceList_.begin(posLiteralT); it != contagiousOccurrenceList_.end(posLiteralT); ++it) {
+            for (auto it = contiguousOccurrenceList_.begin(posLiteralT); it != contiguousOccurrenceList_.end(posLiteralT); ++it) {
                 ClauseIdT clauseId = *it;
 
                 // The clause has already been added
@@ -1171,7 +1171,7 @@ namespace Hydra::Formula::Representation::Contagious {
             LiteralT negLiteralT = getNegativeLiteralT<VarT, LiteralT>(var);
 
             // Negative literal
-            for (auto it = contagiousOccurrenceList_.begin(negLiteralT); it != contagiousOccurrenceList_.end(negLiteralT); ++it) {
+            for (auto it = contiguousOccurrenceList_.begin(negLiteralT); it != contiguousOccurrenceList_.end(negLiteralT); ++it) {
                 ClauseIdT clauseId = *it;
 
                 // The clause has already been added
@@ -1341,7 +1341,7 @@ namespace Hydra::Formula::Representation::Contagious {
         }
 
         // Occurrence list
-        contagiousOccurrenceList_.printContagiousOccurrenceListDebug(out);
+        contiguousOccurrenceList_.printContiguousOccurrenceListDebug(out);
 
         // Current component clauses
         out << "Current component clauses (fixed vector):" << std::endl;
