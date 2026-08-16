@@ -1,4 +1,4 @@
-#include "./CommandLineArgumentsParser.hpp"
+#include "./CommandLineArgumentParser.hpp"
 
 #include <cassert>
 
@@ -7,9 +7,9 @@
 
 #include "Hydra/cache/cachingScheme/exceptions/CachingSchemeException.hpp"
 #include "Hydra/compiler/exceptions/ParserException.hpp"
-#include "Hydra/other/parser/exceptions/CommandLineArgumentsParserException.hpp"
+#include "Hydra/other/parser/commandLineArgument/exceptions/CommandLineArgumentParserException.hpp"
 
-namespace Hydra::Other::Parser::CommandLineArguments {
+namespace Hydra::Other::Parser::CommandLineArgument {
 
     bool argumentExists(const ArgumentsType& arguments, const ArgumentNameType& argumentName) {
         bool exists = false;
@@ -19,7 +19,7 @@ namespace Hydra::Other::Parser::CommandLineArguments {
             if (*it == argumentName) {
                 // Multi-occurrence
                 if (exists)
-                    throw Exception::Other::Parser::CommandLineArguments::ArgumentIsMentionedMultipleTimesException(argumentName);
+                    throw Exception::Other::Parser::CommandLineArgument::ArgumentIsMentionedMultipleTimesException(argumentName);
 
                 exists = true;
             }
@@ -38,7 +38,7 @@ namespace Hydra::Other::Parser::CommandLineArguments {
             // Hit
             if (*it == argumentName) {
                 if (exists)
-                    throw Exception::Other::Parser::CommandLineArguments::ArgumentIsMentionedMultipleTimesException(argumentName);
+                    throw Exception::Other::Parser::CommandLineArgument::ArgumentIsMentionedMultipleTimesException(argumentName);
 
                 exists = true;
 
@@ -47,7 +47,7 @@ namespace Hydra::Other::Parser::CommandLineArguments {
                     // The argument value starts with "-"
                     if ((*(it + 1))[0] == '-') {
                         if (mandatoryArgumentValue)
-                            throw Exception::Other::Parser::CommandLineArguments::InvalidArgumentValueException(argumentName, *(it + 1));
+                            throw Exception::Other::Parser::CommandLineArgument::InvalidArgumentValueException(argumentName, *(it + 1));
                         else
                             continue;
                     }
@@ -57,7 +57,7 @@ namespace Hydra::Other::Parser::CommandLineArguments {
                 // The argument value does not exist
                 else {
                     if (mandatoryArgumentValue)
-                        throw Exception::Other::Parser::CommandLineArguments::InvalidArgumentValueException(argumentName, "not set");
+                        throw Exception::Other::Parser::CommandLineArgument::InvalidArgumentValueException(argumentName, "not set");
                     else
                         continue;
                 }
@@ -65,7 +65,7 @@ namespace Hydra::Other::Parser::CommandLineArguments {
         }
 
         if (required && !exists)
-            throw Exception::Other::Parser::CommandLineArguments::RequiredArgumentIsMissingException(argumentName);
+            throw Exception::Other::Parser::CommandLineArgument::RequiredArgumentIsMissingException(argumentName);
 
         return argumentValue;
     }
@@ -93,8 +93,8 @@ namespace Hydra::Other::Parser::CommandLineArguments {
                 caraCachingSchemeConfiguration.numberOfSampleMoments = static_cast<NumberOfSampleMomentsType>(numberOfSampleMoments);
             }
             catch (const Hydra::Exception::Parser::SomethingIsExpectedButAnotherSymbolIsDetectedException& e) {
-                throw Hydra::Exception::Other::Parser::CommandLineArguments::NumberOfSampleMomentsIsNotNumberCaraCachingSchemeException(numberOfSampleMomentsString, cacheType);
+                throw Hydra::Exception::Other::Parser::CommandLineArgument::NumberOfSampleMomentsIsNotNumberCaraCachingSchemeException(numberOfSampleMomentsString, cacheType);
             }
         }
     }
-}   // namespace Hydra::Other::Parser::CommandLineArguments
+}   // namespace Hydra::Other::Parser::CommandLineArgument

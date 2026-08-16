@@ -10,7 +10,7 @@
 #include "Bella/commandLineArguments/exceptions/CommandLineArgumentsException.hpp"
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
 #include "Hydra/compiler/exceptions/ParserException.hpp"
-#include "Hydra/other/parser/exceptions/CommandLineArgumentsParserException.hpp"
+#include "Hydra/other/parser/commandLineArgument/exceptions/CommandLineArgumentParserException.hpp"
 
 #include "Hydra/cache/cachingScheme/enums/OmitClauseTypeEnum.hpp"
 #include "Hydra/cache/enums/CacheTypeEnum.hpp"
@@ -34,7 +34,7 @@ namespace Bella::CommandLineArguments {
         ArgumentsType arguments(argv, argv + argc);
 
         // Help
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, HELP_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, HELP_ARGUMENT)) {
             // program -h
             if (argc > 2)
                 Hydra::Other::printWarningAboutIgnoringRemainingArgumentsExceptOne(HELP_ARGUMENT);
@@ -47,7 +47,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Version
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, VERSION_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, VERSION_ARGUMENT)) {
             // program -v
             if (argc > 2)
                 Hydra::Other::printWarningAboutIgnoringRemainingArgumentsExceptOne(VERSION_ARGUMENT);
@@ -67,10 +67,10 @@ namespace Bella::CommandLineArguments {
 
         // program < -w | -pw | -nw | -b | -pb | -nb | -kb | -d | -sd > < -ph | -ka | -cd > -i input_file
         if (argc < 5)
-            throw Hydra::Exception::Other::Parser::CommandLineArguments::InvalidNumberOfArgumentsException();
+            throw Hydra::Exception::Other::Parser::CommandLineArgument::InvalidNumberOfArgumentsException();
 
         // Input
-        commandLineArgumentsStruct.inputFilePath = Hydra::Other::Parser::CommandLineArguments::getArgumentValue(arguments, INPUT_ARGUMENT, true);
+        commandLineArgumentsStruct.inputFilePath = Hydra::Other::Parser::CommandLineArgument::getArgumentValue(arguments, INPUT_ARGUMENT, true);
 
         // Circuit type
         commandLineArgumentsStruct.compilerConfiguration.circuitType = getCircuitType(arguments);
@@ -119,9 +119,9 @@ namespace Bella::CommandLineArguments {
             case Hydra::Cache::CachingScheme::CachingSchemeVariantTypeEnum::CARA:
                 commandLineArgumentsStruct.compilerConfiguration.cachingSchemeComponentCachingType = Hydra::Cache::CachingScheme::CachingSchemeTypeEnum::CARA;
 
-                Hydra::Other::Parser::CommandLineArguments::getNumberOfSampleMomentsAndSetInCaraCachingSchemeConfiguration(arguments, CARA_COMPONENT_CACHING_SCHEME_ARGUMENT,
-                                                                                                                           commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeComponentCachingConfiguration,
-                                                                                                                           CacheTypeEnum::COMPONENT, false);
+                Hydra::Other::Parser::CommandLineArgument::getNumberOfSampleMomentsAndSetInCaraCachingSchemeConfiguration(arguments, CARA_COMPONENT_CACHING_SCHEME_ARGUMENT,
+                                                                                                                          commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeComponentCachingConfiguration,
+                                                                                                                          CacheTypeEnum::COMPONENT, false);
 
                 // A variable to literal mapping
                 if (Hydra::Other::containInSet(Hydra::Circuit::caraCachingSchemeVariableToLiteralMappingCircuitTypeSet, commandLineArgumentsStruct.compilerConfiguration.circuitType)) {
@@ -147,21 +147,21 @@ namespace Bella::CommandLineArguments {
 
         // Cara caching scheme
         if (commandLineArgumentsStruct.compilerConfiguration.cachingSchemeHypergraphCutCachingType == Hydra::Cache::CachingScheme::CachingSchemeTypeEnum::CARA)
-            Hydra::Other::Parser::CommandLineArguments::getNumberOfSampleMomentsAndSetInCaraCachingSchemeConfiguration(arguments, CARA_HYPERGRAPH_CUT_CACHING_SCHEME_ARGUMENT,
-                                                                                                                       commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeHypergraphCutCachingConfiguration,
-                                                                                                                       CacheTypeEnum::HYPERGRAPH_CUT, false);
+            Hydra::Other::Parser::CommandLineArgument::getNumberOfSampleMomentsAndSetInCaraCachingSchemeConfiguration(arguments, CARA_HYPERGRAPH_CUT_CACHING_SCHEME_ARGUMENT,
+                                                                                                                      commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeHypergraphCutCachingConfiguration,
+                                                                                                                      CacheTypeEnum::HYPERGRAPH_CUT, false);
 
         // Others
         commandLineArgumentsStruct.compilerConfiguration.vertexWeightType = getHypergraphNodeWeightType(arguments);
         commandLineArgumentsStruct.compilerConfiguration.hypergraphCutRecomputationStrategyType = getHypergraphCutRecomputationStrategyType(arguments);
-        commandLineArgumentsStruct.checkWhetherCircuitEntailsCnfFormula = Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CHECK_CIRCUIT_ENTAILS_CNF_FORMULA_ARGUMENT);
-        commandLineArgumentsStruct.compilerConfiguration.useEquivalenceSimplificationMethod = Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, EQUIVALENCE_SIMPLIFICATION_METHOD_ARGUMENT);
+        commandLineArgumentsStruct.checkWhetherCircuitEntailsCnfFormula = Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, CHECK_CIRCUIT_ENTAILS_CNF_FORMULA_ARGUMENT);
+        commandLineArgumentsStruct.compilerConfiguration.useEquivalenceSimplificationMethod = Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, EQUIVALENCE_SIMPLIFICATION_METHOD_ARGUMENT);
 
         // Metacentrum
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, METACENTRUM_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, METACENTRUM_ARGUMENT)) {
             // program -m < -w | -pw | -nw | -b | -pb | -nb | -kb | -d | -sd > < -ph | -ka | -cd > [-e] [-ccef] -i input_file -s statistics_file -t positive_integer
             if (argc < 10)
-                throw Hydra::Exception::Other::Parser::CommandLineArguments::InvalidNumberOfArgumentsException();
+                throw Hydra::Exception::Other::Parser::CommandLineArgument::InvalidNumberOfArgumentsException();
 
             commandLineArgumentsStruct.numberOfModels = false;
 
@@ -173,21 +173,21 @@ namespace Bella::CommandLineArguments {
 
             // Statistics
             commandLineArgumentsStruct.statisticsAddLabels = false;
-            commandLineArgumentsStruct.statisticsFilePath = Hydra::Other::Parser::CommandLineArguments::getArgumentValue(arguments, STATISTICS_ARGUMENT, true);
+            commandLineArgumentsStruct.statisticsFilePath = Hydra::Other::Parser::CommandLineArgument::getArgumentValue(arguments, STATISTICS_ARGUMENT, true);
         }
         // Standard usage
         else {
-            commandLineArgumentsStruct.numberOfModels = Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, COUNT_ARGUMENT);
+            commandLineArgumentsStruct.numberOfModels = Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, COUNT_ARGUMENT);
 
             // Timeout
             commandLineArgumentsStruct.timeout = getTimeout(arguments, false);
 
             // Output
-            commandLineArgumentsStruct.outputFilePath = Hydra::Other::Parser::CommandLineArguments::getArgumentValue(arguments, OUTPUT_ARGUMENT, false);
+            commandLineArgumentsStruct.outputFilePath = Hydra::Other::Parser::CommandLineArgument::getArgumentValue(arguments, OUTPUT_ARGUMENT, false);
 
             // Statistics
-            commandLineArgumentsStruct.statisticsAddLabels = Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, READABLE_STATISTICS_ARGUMENT);
-            commandLineArgumentsStruct.statisticsFilePath = Hydra::Other::Parser::CommandLineArguments::getArgumentValue(arguments, STATISTICS_ARGUMENT, false);
+            commandLineArgumentsStruct.statisticsAddLabels = Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, READABLE_STATISTICS_ARGUMENT);
+            commandLineArgumentsStruct.statisticsFilePath = Hydra::Other::Parser::CommandLineArgument::getArgumentValue(arguments, STATISTICS_ARGUMENT, false);
         }
 
         /**
@@ -231,7 +231,7 @@ namespace Bella::CommandLineArguments {
     }
 
     LargeNumberType getTimeout(const ArgumentsType& arguments, bool required) {
-        ArgumentValueType timeoutString = Hydra::Other::Parser::CommandLineArguments::getArgumentValue(arguments, TIMEOUT_ARGUMENT, required);
+        ArgumentValueType timeoutString = Hydra::Other::Parser::CommandLineArgument::getArgumentValue(arguments, TIMEOUT_ARGUMENT, required);
 
         // The argument does not exist
         if (timeoutString.empty())
@@ -255,13 +255,13 @@ namespace Bella::CommandLineArguments {
         Hydra::Circuit::CircuitTypeEnum circuitType = Hydra::Circuit::CircuitTypeEnum::NNF;
 
         // d-DNNF
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, dDNNF_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, dDNNF_ARGUMENT)) {
             exists = true;
             circuitType = Hydra::Circuit::CircuitTypeEnum::d_DNNF;
         }
 
         // sd-DNNF
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, sdDNNF_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, sdDNNF_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreCircuitTypesAreMentionedException();
 
@@ -270,7 +270,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // wDNNF
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, wDNNF_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, wDNNF_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreCircuitTypesAreMentionedException();
 
@@ -279,7 +279,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // pwDNNF
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, pwDNNF_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, pwDNNF_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreCircuitTypesAreMentionedException();
 
@@ -288,7 +288,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // nwDNNF
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, nwDNNF_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, nwDNNF_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreCircuitTypesAreMentionedException();
 
@@ -346,13 +346,13 @@ namespace Bella::CommandLineArguments {
         Hydra::PartitioningHypergraphTypeEnum hypergraphPartitioningType;
 
         // KaHyPar
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, KAHYPAR_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, KAHYPAR_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             exists = true;
             hypergraphPartitioningType = Hydra::PartitioningHypergraphTypeEnum::KAHYPAR;
         }
 
         // Cara
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CARA_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, CARA_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             if (exists)
                 throw Hydra::Exception::CommandLineArguments::MoreHypergraphPartitioningTypesAreMentionedException();
 
@@ -361,7 +361,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // PaToH or hMETIS
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, PATOH_HMETIS_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, PATOH_HMETIS_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             if (exists)
                 throw Hydra::Exception::CommandLineArguments::MoreHypergraphPartitioningTypesAreMentionedException();
 
@@ -383,13 +383,13 @@ namespace Bella::CommandLineArguments {
         SatSolverTypeEnum satSolverType;
 
         // MiniSat
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, MINISAT_SAT_SOLVER_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, MINISAT_SAT_SOLVER_ARGUMENT)) {
             exists = true;
             satSolverType = SatSolverTypeEnum::MINISAT;
         }
 
         // Glucose
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, GLUCOSE_SAT_SOLVER_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, GLUCOSE_SAT_SOLVER_ARGUMENT)) {
             if (exists)
                 throw Hydra::Exception::CommandLineArguments::MoreSatSolversAreMentionedException();
 
@@ -409,13 +409,13 @@ namespace Bella::CommandLineArguments {
         Hydra::DecisionHeuristic::DecisionHeuristicTypeEnum decisionHeuristicType;
 
         // Random
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, RANDOM_DECISION_HEURISTIC_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, RANDOM_DECISION_HEURISTIC_ARGUMENT)) {
             exists = true;
             decisionHeuristicType = Hydra::DecisionHeuristic::DecisionHeuristicTypeEnum::RANDOM;
         }
 
         // Dynamic largest combined sum (DLCS)
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, DLCS_DECISION_HEURISTIC_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, DLCS_DECISION_HEURISTIC_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreDecisionHeuristicsAreMentionedException();
 
@@ -424,7 +424,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Dynamic largest individual sum (DLIS)
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, DLIS_DECISION_HEURISTIC_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, DLIS_DECISION_HEURISTIC_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreDecisionHeuristicsAreMentionedException();
 
@@ -433,7 +433,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Exact unit propagation count (EUPC)
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, EUPC_DECISION_HEURISTIC_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, EUPC_DECISION_HEURISTIC_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreDecisionHeuristicsAreMentionedException();
 
@@ -442,7 +442,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Approximate unit propagation count (AUPC)
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, AUPC_DECISION_HEURISTIC_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, AUPC_DECISION_HEURISTIC_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreDecisionHeuristicsAreMentionedException();
 
@@ -451,7 +451,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Variable state independent decaying sum (VSIDS)
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, VSIDS_DECISION_HEURISTIC_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, VSIDS_DECISION_HEURISTIC_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreDecisionHeuristicsAreMentionedException();
 
@@ -460,7 +460,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Variable state aware decaying sum (VSADS)
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, VSADS_DECISION_HEURISTIC_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, VSADS_DECISION_HEURISTIC_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreDecisionHeuristicsAreMentionedException();
 
@@ -469,7 +469,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // DLCS + DLIS as a tie-breaker (DLCS-DLIS)
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, DLCS_DLIS_DECISION_HEURISTIC_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, DLCS_DLIS_DECISION_HEURISTIC_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreDecisionHeuristicsAreMentionedException();
 
@@ -478,7 +478,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Jeroslow-Wang (one-sided)
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, JEROSLOW_WANG_ONE_SIDED_DECISION_HEURISTIC_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, JEROSLOW_WANG_ONE_SIDED_DECISION_HEURISTIC_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreDecisionHeuristicsAreMentionedException();
 
@@ -487,7 +487,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Jeroslow-Wang (two-sided)
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, JEROSLOW_WANG_TWO_SIDED_DECISION_HEURISTIC_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, JEROSLOW_WANG_TWO_SIDED_DECISION_HEURISTIC_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreDecisionHeuristicsAreMentionedException();
 
@@ -507,13 +507,13 @@ namespace Bella::CommandLineArguments {
         Hydra::Cache::CachingScheme::CachingSchemeVariantTypeEnum componentCachingSchemeVariantType;
 
         // None
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, NONE_COMPONENT_CACHING_SCHEME_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, NONE_COMPONENT_CACHING_SCHEME_ARGUMENT)) {
             exists = true;
             componentCachingSchemeVariantType = Hydra::Cache::CachingScheme::CachingSchemeVariantTypeEnum::NONE;
         }
 
         // Standard
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, STANDARD_COMPONENT_CACHING_SCHEME_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, STANDARD_COMPONENT_CACHING_SCHEME_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreComponentCachingSchemesAreMentionedException();
 
@@ -522,7 +522,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Hybrid
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, HYBRID_COMPONENT_CACHING_SCHEME_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, HYBRID_COMPONENT_CACHING_SCHEME_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreComponentCachingSchemesAreMentionedException();
 
@@ -531,7 +531,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Basic
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, BASIC_COMPONENT_CACHING_SCHEME_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, BASIC_COMPONENT_CACHING_SCHEME_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreComponentCachingSchemesAreMentionedException();
 
@@ -540,7 +540,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // I
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, I_COMPONENT_CACHING_SCHEME_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, I_COMPONENT_CACHING_SCHEME_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreComponentCachingSchemesAreMentionedException();
 
@@ -549,7 +549,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Cara
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CARA_COMPONENT_CACHING_SCHEME_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, CARA_COMPONENT_CACHING_SCHEME_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreComponentCachingSchemesAreMentionedException();
 
@@ -569,13 +569,13 @@ namespace Bella::CommandLineArguments {
         Hydra::Cache::CacheCleaningStrategy::CacheCleaningStrategyTypeEnum cacheCleaningStrategyType;
 
         // None
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, NONE_COMPONENT_CACHE_CLEANING_STRATEGY_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, NONE_COMPONENT_CACHE_CLEANING_STRATEGY_ARGUMENT)) {
             exists = true;
             cacheCleaningStrategyType = Hydra::Cache::CacheCleaningStrategy::CacheCleaningStrategyTypeEnum::NONE;
         }
 
         // sharpSAT
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, SHARP_SAT_COMPONENT_CACHE_CLEANING_STRATEGY_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, SHARP_SAT_COMPONENT_CACHE_CLEANING_STRATEGY_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreComponentCacheCleaningStrategiesAreMentionedException();
 
@@ -584,7 +584,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Cara
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CARA_COMPONENT_CACHE_CLEANING_STRATEGY_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, CARA_COMPONENT_CACHE_CLEANING_STRATEGY_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreComponentCacheCleaningStrategiesAreMentionedException();
 
@@ -604,13 +604,13 @@ namespace Bella::CommandLineArguments {
         Hydra::Cache::CachingScheme::CachingSchemeTypeEnum hypergraphCutCachingSchemeType;
 
         // None
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, NONE_HYPERGRAPH_CUT_CACHING_SCHEME_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, NONE_HYPERGRAPH_CUT_CACHING_SCHEME_ARGUMENT)) {
             exists = true;
             hypergraphCutCachingSchemeType = Hydra::Cache::CachingScheme::CachingSchemeTypeEnum::NONE;
         }
 
         // Standard
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, STANDARD_HYPERGRAPH_CUT_CACHING_SCHEME_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, STANDARD_HYPERGRAPH_CUT_CACHING_SCHEME_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreHypergraphCutCachingSchemesAreMentionedException();
 
@@ -619,7 +619,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Hybrid
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, HYBRID_HYPERGRAPH_CUT_CACHING_SCHEME_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, HYBRID_HYPERGRAPH_CUT_CACHING_SCHEME_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreHypergraphCutCachingSchemesAreMentionedException();
 
@@ -628,7 +628,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Basic
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, BASIC_HYPERGRAPH_CUT_CACHING_SCHEME_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, BASIC_HYPERGRAPH_CUT_CACHING_SCHEME_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreHypergraphCutCachingSchemesAreMentionedException();
 
@@ -637,7 +637,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Cara
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CARA_HYPERGRAPH_CUT_CACHING_SCHEME_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, CARA_HYPERGRAPH_CUT_CACHING_SCHEME_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreHypergraphCutCachingSchemesAreMentionedException();
 
@@ -657,13 +657,13 @@ namespace Bella::CommandLineArguments {
         Hydra::Cache::CacheCleaningStrategy::CacheCleaningStrategyTypeEnum cacheCleaningStrategyType;
 
         // None
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, NONE_HYPERGRAPH_CUT_CACHE_CLEANING_STRATEGY_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, NONE_HYPERGRAPH_CUT_CACHE_CLEANING_STRATEGY_ARGUMENT)) {
             exists = true;
             cacheCleaningStrategyType = Hydra::Cache::CacheCleaningStrategy::CacheCleaningStrategyTypeEnum::NONE;
         }
 
         // sharpSAT
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, SHARP_SAT_HYPERGRAPH_CUT_CACHE_CLEANING_STRATEGY_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, SHARP_SAT_HYPERGRAPH_CUT_CACHE_CLEANING_STRATEGY_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreHypergraphCutCacheCleaningStrategiesAreMentionedException();
 
@@ -672,7 +672,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Cara
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CARA_HYPERGRAPH_CUT_CACHE_CLEANING_STRATEGY_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, CARA_HYPERGRAPH_CUT_CACHE_CLEANING_STRATEGY_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreHypergraphCutCacheCleaningStrategiesAreMentionedException();
 
@@ -692,13 +692,13 @@ namespace Bella::CommandLineArguments {
         Hydra::PartitioningHypergraph::VertexWeightTypeEnum vertexWeightType;
 
         // None
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, NONE_HYPERGRAPH_NODE_WEIGHT_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, NONE_HYPERGRAPH_NODE_WEIGHT_ARGUMENT)) {
             exists = true;
             vertexWeightType = Hydra::PartitioningHypergraph::VertexWeightTypeEnum::NONE;
         }
 
         // Standard
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, STANDARD_HYPERGRAPH_NODE_WEIGHT_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, STANDARD_HYPERGRAPH_NODE_WEIGHT_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreHypergraphNodeWeightTypesAreMentionedException();
 
@@ -707,7 +707,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Clause length
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CLAUSE_LENGTH_HYPERGRAPH_NODE_WEIGHT_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, CLAUSE_LENGTH_HYPERGRAPH_NODE_WEIGHT_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreHypergraphNodeWeightTypesAreMentionedException();
 
@@ -727,13 +727,13 @@ namespace Bella::CommandLineArguments {
         Hydra::HypergraphCutRecomputationStrategyTypeEnum hypergraphCutRecomputationStrategyType;
 
         // Always
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, ALWAYS_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, ALWAYS_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT)) {
             exists = true;
             hypergraphCutRecomputationStrategyType = Hydra::HypergraphCutRecomputationStrategyTypeEnum::ALWAYS;
         }
 
         // Immense unit propagation
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, IMMENSE_UNIT_PROPAGATION_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, IMMENSE_UNIT_PROPAGATION_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreHypergraphCutRecomputationStrategiesAreMentionedException();
 
@@ -742,7 +742,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Formula split
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, FORMULA_SPLIT_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, FORMULA_SPLIT_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreHypergraphCutRecomputationStrategiesAreMentionedException();
 
@@ -751,7 +751,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Empty hypergraph cut
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, EMPTY_HYPERGRAPH_CUT_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, EMPTY_HYPERGRAPH_CUT_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreHypergraphCutRecomputationStrategiesAreMentionedException();
 
@@ -760,7 +760,7 @@ namespace Bella::CommandLineArguments {
         }
 
         // Immense unit propagation or formula split
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, IMMENSE_UNIT_PROPAGATION_OR_FORMULA_SPLIT_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, IMMENSE_UNIT_PROPAGATION_OR_FORMULA_SPLIT_HYPERGRAPH_CUT_RECOMPUTATION_STRATEGY_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MoreHypergraphCutRecomputationStrategiesAreMentionedException();
 

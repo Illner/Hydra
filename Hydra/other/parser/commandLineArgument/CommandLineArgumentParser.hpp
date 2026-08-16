@@ -8,7 +8,7 @@
 
 #include "Hydra/cache/cachingScheme/cara/CaraCachingScheme.tpp"
 
-namespace Hydra::Other::Parser::CommandLineArguments {
+namespace Hydra::Other::Parser::CommandLineArgument {
 
     using ArgumentValueType = std::string;
     using ArgumentNameType = std::string_view;
@@ -53,4 +53,4 @@ namespace Hydra::Other::Parser::CommandLineArguments {
     void getNumberOfSampleMomentsAndSetInCaraCachingSchemeConfiguration(const ArgumentsType& arguments, const ArgumentNameType& argumentName,
                                                                         Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration& caraCachingSchemeConfiguration,
                                                                         Cache::CacheTypeEnum cacheType, bool mandatoryArgumentValue);
-}   // namespace Hydra::Other::Parser::CommandLineArguments
+}   // namespace Hydra::Other::Parser::CommandLineArgument

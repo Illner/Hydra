@@ -7,7 +7,7 @@
 
 #include "Hydra/cache/enums/CacheTypeEnum.hpp"
 
-namespace Hydra::Exception::Other::Parser::CommandLineArguments {
+namespace Hydra::Exception::Other::Parser::CommandLineArgument {
 
     /**
      * Command line arguments parser exception (main)
@@ -65,4 +65,4 @@ namespace Hydra::Exception::Other::Parser::CommandLineArguments {
         NumberOfSampleMomentsIsNotNumberCaraCachingSchemeException(const std::string& numberOfSampleMomentsString, Hydra::Cache::CacheTypeEnum cacheType)
             : CommandLineArgumentsParserException("Cara caching scheme (" + Hydra::Cache::cacheTypeEnumToString(cacheType) + ") - the number of sample moments (" + numberOfSampleMomentsString + ") is not a number!") { }
     };
-}   // namespace Hydra::Exception::Other::Parser::CommandLineArguments
+}   // namespace Hydra::Exception::Other::Parser::CommandLineArgument

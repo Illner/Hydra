@@ -2,19 +2,19 @@
 
 #include "Bella/commandLineArguments/CommandLineArgumentsStructure.hpp"
 #include "Hydra/other/Other.hpp"
-#include "Hydra/other/parser/CommandLineArgumentsParser.hpp"
+#include "Hydra/other/parser/commandLineArgument/CommandLineArgumentParser.hpp"
 #include "Hydra/other/version/Version.hpp"
 
 #include "Bella/commandLineArguments/exceptions/CommandLineArgumentsException.hpp"
-#include "Hydra/other/parser/exceptions/CommandLineArgumentsParserException.hpp"
+#include "Hydra/other/parser/commandLineArgument/exceptions/CommandLineArgumentParserException.hpp"
 
 #include "Hydra/compiler/Compiler.tpp"
 
 namespace Bella::CommandLineArguments {
 
-    using ArgumentsType = typename Hydra::Other::Parser::CommandLineArguments::ArgumentsType;
-    using ArgumentNameType = typename Hydra::Other::Parser::CommandLineArguments::ArgumentNameType;
-    using ArgumentValueType = typename Hydra::Other::Parser::CommandLineArguments::ArgumentValueType;
+    using ArgumentsType = typename Hydra::Other::Parser::CommandLineArgument::ArgumentsType;
+    using ArgumentNameType = typename Hydra::Other::Parser::CommandLineArgument::ArgumentNameType;
+    using ArgumentValueType = typename Hydra::Other::Parser::CommandLineArgument::ArgumentValueType;
 
     // Circuit types - standard
     inline constexpr ArgumentNameType dDNNF_ARGUMENT = "-d";

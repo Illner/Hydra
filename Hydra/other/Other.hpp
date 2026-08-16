@@ -12,7 +12,7 @@
 #include <vector>
 
 #include "Hydra/other/hashMap/HashMap.hpp"
-#include "Hydra/other/parser/CommandLineArgumentsParser.hpp"
+#include "Hydra/other/parser/commandLineArgument/CommandLineArgumentParser.hpp"
 #include "Hydra/other/std/Std.hpp"
 
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
@@ -185,7 +185,7 @@ namespace Hydra::Other {
      * Print a warning about ignoring the remaining arguments except for notIgnoredArgumentName
      * @param notIgnoredArgumentName the only argument which is not ignored (for example, help, version)
      */
-    inline void printWarningAboutIgnoringRemainingArgumentsExceptOne(const Parser::CommandLineArguments::ArgumentNameType& notIgnoredArgumentName);
+    inline void printWarningAboutIgnoringRemainingArgumentsExceptOne(const Parser::CommandLineArgument::ArgumentNameType& notIgnoredArgumentName);
 
     /**
      * prefix --------------------
