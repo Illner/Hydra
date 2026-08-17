@@ -81,6 +81,7 @@ namespace Hydra::Formula::Representation {
     public:
         using ClauseSizeType = VarT;
         using VertexWeightType = int;
+        using FormulaType = std::vector<LiteralType>;
         using ClauseIdVectorType = std::vector<ClauseIdT>;
         using ClauseStringType = std::basic_string<LiteralT>;
         using VectorSetType = Container::VectorSet::VectorSet;

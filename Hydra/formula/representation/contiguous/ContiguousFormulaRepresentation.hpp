@@ -76,6 +76,9 @@ namespace Hydra::Formula::Representation::Contiguous {
         using PureVariableRemovedClausesVectorType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::PureVariableRemovedClausesVectorType;
         using FormulaRepresentationStatisticsPtrType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::FormulaRepresentationStatisticsPtrType;
 
+    public:
+        using FormulaType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::FormulaType;
+
     private:
         using ConnectedComponentStruct = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ConnectedComponentStruct;
 
@@ -89,9 +92,6 @@ namespace Hydra::Formula::Representation::Contiguous {
         using ContiguousFormulaRepresentationPtrType = const ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>*;
         using ComputeConnectedComponentsType = Container::ComputeConnectedComponents::ComputeConnectedComponents<VarT, LiteralT>;
         using ContiguousOccurrenceListType = Container::ContiguousOccurrenceList::ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>;
-
-    public:
-        using FormulaType = std::vector<LiteralType>;
 
     private:
         using OmitClauseTypeEnum = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::OmitClauseTypeEnum;

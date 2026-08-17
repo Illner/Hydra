@@ -46,10 +46,10 @@ namespace HydraTest::PartitioningHypergraph {
     using LiteralVectorType = typename Hydra::Formula::Literal<VarT, LiteralT>::LiteralVectorType;
     using VariableVectorType = typename Hydra::Formula::Literal<VarT, LiteralT>::VariableVectorType;
     using VariableSortedVectorType = typename Hydra::Formula::Literal<VarT, LiteralT>::VariableSortedVectorType;
+    using FormulaType = typename Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::FormulaType;
     using PartvecType = typename Hydra::PartitioningHypergraph::PartitioningHypergraphAbstract<VarT, LiteralT, ClauseIdT>::PartvecType;
     using ClauseIdSetType = typename Hydra::PartitioningHypergraph::PartitioningHypergraphAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdSetType;
     using VertexWeightType = typename Hydra::PartitioningHypergraph::PartitioningHypergraphAbstract<VarT, LiteralT, ClauseIdT>::VertexWeightType;
-    using FormulaType = typename Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>::FormulaType;
     using ClauseIdVectorType = typename Hydra::PartitioningHypergraph::PartitioningHypergraphAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType;
     using OccurrenceListStruct = typename Hydra::PartitioningHypergraph::PartitioningHypergraphAbstract<VarT, LiteralT, ClauseIdT>::OccurrenceListStruct;
     using ClauseIdVectorMapType = typename Hydra::PartitioningHypergraph::PartitioningHypergraphAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdVectorMapType;

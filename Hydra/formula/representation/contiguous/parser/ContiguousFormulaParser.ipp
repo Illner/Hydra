@@ -45,7 +45,7 @@ namespace Hydra::Formula::Representation::Contiguous::Parser {
                                                                                            const ContiguousFormulaRepresentationConfiguration& configuration,
                                                                                            FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType formulaRepresentationStatisticsPtr) {
         using LiteralType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
-        using FormulaType = typename ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>::FormulaType;
+        using FormulaType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::FormulaType;
         using ClauseSizeType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseSizeType;
         using VariableSetType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableSetType;
         using ClauseIdVectorType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType;
