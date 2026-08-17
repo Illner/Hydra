@@ -31,7 +31,7 @@ namespace BellaTest::Compiler::dDNNF {
     using NumberOfModelsType = Compiler::NumberOfModelsType;
     using CompilerConfigurationType = Compiler::CompilerConfigurationType;
     using FormulaRepresentationAbstractUniquePtrType = Compiler::FormulaRepresentationAbstractUniquePtrType;
-    using ContagiousFormulaRepresentationConfigurationType = Compiler::ContagiousFormulaRepresentationConfigurationType;
+    using ContiguousFormulaRepresentationConfigurationType = Compiler::ContiguousFormulaRepresentationConfigurationType;
 
     using CircuitTypeEnum = Compiler::CircuitTypeEnum;
     using SatSolverTypeEnum = Compiler::SatSolverTypeEnum;
@@ -56,10 +56,10 @@ namespace BellaTest::Compiler::dDNNF {
     }
 
     inline NumberOfModelsType computeNumberOfModels(FormulaInstanceEnum formulaInstance, CompilerConfigurationType compilerConfiguration,
-                                                    const ContagiousFormulaRepresentationConfigurationType& contagiousFormulaRepresentationConfiguration,
+                                                    const ContiguousFormulaRepresentationConfigurationType& contiguousFormulaRepresentationConfiguration,
                                                     CacheSizeTypeEnum cacheSizeTypeSharpSatCacheCleaningStrategy, bool useStatistics) {
         FormulaRepresentationAbstractUniquePtrType formulaRepresentationAbstractUniquePtr = parseFormula(formulaInstance,
-                                                                                                         contagiousFormulaRepresentationConfiguration);
+                                                                                                         contiguousFormulaRepresentationConfiguration);
 
         // Cache size
         if (cacheSizeTypeSharpSatCacheCleaningStrategy != CacheSizeTypeEnum::IGNORE) {
@@ -111,7 +111,7 @@ namespace BellaTest::Compiler::dDNNF {
     }
 
     inline void process(const CompilerConfigurationType& compilerConfiguration, bool allInstances,
-                        const ContagiousFormulaRepresentationConfigurationType& contagiousFormulaRepresentationConfiguration = ContagiousFormulaRepresentationConfigurationType(),
+                        const ContiguousFormulaRepresentationConfigurationType& contiguousFormulaRepresentationConfiguration = ContiguousFormulaRepresentationConfigurationType(),
                         CacheSizeTypeEnum cacheSizeTypeSharpSatCacheCleaningStrategy = CacheSizeTypeEnum::IGNORE,
                         bool useStatistics = true) {
         // 4step
@@ -124,7 +124,7 @@ namespace BellaTest::Compiler::dDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration,
+                                                                          contiguousFormulaRepresentationConfiguration,
                                                                           cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                           useStatistics);
                 actualResult << numberOfModels << std::endl;
@@ -147,7 +147,7 @@ namespace BellaTest::Compiler::dDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration,
+                                                                          contiguousFormulaRepresentationConfiguration,
                                                                           cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                           useStatistics);
                 actualResult << numberOfModels << std::endl;
@@ -170,7 +170,7 @@ namespace BellaTest::Compiler::dDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration,
+                                                                          contiguousFormulaRepresentationConfiguration,
                                                                           cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                           useStatistics);
                 actualResult << numberOfModels << std::endl;
@@ -193,7 +193,7 @@ namespace BellaTest::Compiler::dDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration,
+                                                                          contiguousFormulaRepresentationConfiguration,
                                                                           cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                           useStatistics);
                 actualResult << numberOfModels << std::endl;
@@ -216,7 +216,7 @@ namespace BellaTest::Compiler::dDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration,
+                                                                          contiguousFormulaRepresentationConfiguration,
                                                                           cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                           useStatistics);
                 actualResult << numberOfModels << std::endl;
@@ -239,7 +239,7 @@ namespace BellaTest::Compiler::dDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration,
+                                                                          contiguousFormulaRepresentationConfiguration,
                                                                           cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                           useStatistics);
                 actualResult << numberOfModels << std::endl;
@@ -262,7 +262,7 @@ namespace BellaTest::Compiler::dDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration,
+                                                                          contiguousFormulaRepresentationConfiguration,
                                                                           cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                           useStatistics);
                 actualResult << numberOfModels << std::endl;
@@ -285,7 +285,7 @@ namespace BellaTest::Compiler::dDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration,
+                                                                          contiguousFormulaRepresentationConfiguration,
                                                                           cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                           useStatistics);
                 actualResult << numberOfModels << std::endl;
@@ -308,7 +308,7 @@ namespace BellaTest::Compiler::dDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration,
+                                                                          contiguousFormulaRepresentationConfiguration,
                                                                           cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                           useStatistics);
                 actualResult << numberOfModels << std::endl;
@@ -331,7 +331,7 @@ namespace BellaTest::Compiler::dDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration,
+                                                                          contiguousFormulaRepresentationConfiguration,
                                                                           cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                           useStatistics);
                 actualResult << numberOfModels << std::endl;
@@ -355,7 +355,7 @@ namespace BellaTest::Compiler::dDNNF {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration,
+                                                                              contiguousFormulaRepresentationConfiguration,
                                                                               cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                               useStatistics);
                     actualResult << numberOfModels << std::endl;
@@ -378,7 +378,7 @@ namespace BellaTest::Compiler::dDNNF {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration,
+                                                                              contiguousFormulaRepresentationConfiguration,
                                                                               cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                               useStatistics);
                     actualResult << numberOfModels << std::endl;
@@ -401,7 +401,7 @@ namespace BellaTest::Compiler::dDNNF {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration,
+                                                                              contiguousFormulaRepresentationConfiguration,
                                                                               cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                               useStatistics);
                     actualResult << numberOfModels << std::endl;
@@ -424,7 +424,7 @@ namespace BellaTest::Compiler::dDNNF {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration,
+                                                                              contiguousFormulaRepresentationConfiguration,
                                                                               cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                               useStatistics);
                     actualResult << numberOfModels << std::endl;
@@ -447,7 +447,7 @@ namespace BellaTest::Compiler::dDNNF {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration,
+                                                                              contiguousFormulaRepresentationConfiguration,
                                                                               cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                               useStatistics);
                     actualResult << numberOfModels << std::endl;
@@ -470,7 +470,7 @@ namespace BellaTest::Compiler::dDNNF {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration,
+                                                                              contiguousFormulaRepresentationConfiguration,
                                                                               cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                               useStatistics);
                     actualResult << numberOfModels << std::endl;
@@ -493,7 +493,7 @@ namespace BellaTest::Compiler::dDNNF {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration,
+                                                                              contiguousFormulaRepresentationConfiguration,
                                                                               cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                               useStatistics);
                     actualResult << numberOfModels << std::endl;
@@ -516,7 +516,7 @@ namespace BellaTest::Compiler::dDNNF {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration,
+                                                                              contiguousFormulaRepresentationConfiguration,
                                                                               cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                               useStatistics);
                     actualResult << numberOfModels << std::endl;
@@ -539,7 +539,7 @@ namespace BellaTest::Compiler::dDNNF {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration,
+                                                                              contiguousFormulaRepresentationConfiguration,
                                                                               cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                               useStatistics);
                     actualResult << numberOfModels << std::endl;
@@ -563,7 +563,7 @@ namespace BellaTest::Compiler::dDNNF {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration,
+                                                                              contiguousFormulaRepresentationConfiguration,
                                                                               cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                               useStatistics);
                     actualResult << numberOfModels << std::endl;
@@ -587,7 +587,7 @@ namespace BellaTest::Compiler::dDNNF {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration,
+                                                                              contiguousFormulaRepresentationConfiguration,
                                                                               cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                               useStatistics);
                     actualResult << numberOfModels << std::endl;
@@ -610,7 +610,7 @@ namespace BellaTest::Compiler::dDNNF {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, compilerConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration,
+                                                                              contiguousFormulaRepresentationConfiguration,
                                                                               cacheSizeTypeSharpSatCacheCleaningStrategy,
                                                                               useStatistics);
                     actualResult << numberOfModels << std::endl;

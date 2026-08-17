@@ -12,7 +12,7 @@
 #include "Hydra/cache/cachingScheme/cara/CaraCachingScheme.hpp"
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
-#include "Hydra/formula/representation/contagious/ContagiousFormulaRepresentation.hpp"
+#include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.hpp"
 #include "Hydra/other/Other.hpp"
 
 #include "Hydra/cache/cachingScheme/enums/OmitClauseTypeEnum.hpp"
@@ -35,7 +35,7 @@ namespace HydraTest::Cache::CacheCleaningStrategy {
     using CacheRecordStruct = typename Hydra::Cache::Cache<VarT, LiteralT, ClauseIdT, CacheValueT>::CacheRecordStruct;
     using VariableVectorType = typename Hydra::Cache::Cache<VarT, LiteralT, ClauseIdT, CacheValueT>::VariableVectorType;
     using LiteralType = typename Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
-    using FormulaType = typename Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentation<VarT, LiteralT, ClauseIdT>::FormulaType;
+    using FormulaType = typename Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>::FormulaType;
     using ClauseIdVectorType = typename Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType;
     using CacheValuePtrAndIdPairOptionalType = typename Hydra::Cache::Cache<VarT, LiteralT, ClauseIdT, CacheValueT>::CacheValuePtrAndIdPairOptionalType;
     using FormulaRepresentationAbstractPtrType = typename Hydra::Cache::Cache<VarT, LiteralT, ClauseIdT, CacheValueT>::FormulaRepresentationAbstractPtrType;
@@ -47,7 +47,7 @@ namespace HydraTest::Cache::CacheCleaningStrategy {
     using BasicCachingSchemeType = Hydra::Cache::CachingScheme::Basic::BasicCachingScheme<VarT, LiteralT, ClauseIdT>;
     using FormulaRepresentationAbstractType = Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>;
     using CachingSchemeAbstractUniquePtrType = std::unique_ptr<Hydra::Cache::CachingScheme::CachingSchemeAbstract<VarT, LiteralT, ClauseIdT>>;
-    using ContagiousFormulaRepresentationType = Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentation<VarT, LiteralT, ClauseIdT>;
+    using ContiguousFormulaRepresentationType = Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>;
     using FormulaRepresentationAbstractUniquePtrType = std::unique_ptr<Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>>;
     using CacheCleaningStrategyAbstractPtrType = const Hydra::Cache::CacheCleaningStrategy::CacheCleaningStrategyAbstract<VarT, LiteralT, ClauseIdT, CacheValueT>*;
     using CacheCleaningStrategyAbstractUniquePtrType = std::unique_ptr<Hydra::Cache::CacheCleaningStrategy::CacheCleaningStrategyAbstract<VarT, LiteralT, ClauseIdT, CacheValueT>>;

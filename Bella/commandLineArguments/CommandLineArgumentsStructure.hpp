@@ -5,7 +5,7 @@
 #include "Hydra/other/Other.hpp"
 
 #include "Hydra/compiler/Compiler.tpp"
-#include "Hydra/formula/representation/contagious/ContagiousFormulaRepresentation.tpp"
+#include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.tpp"
 
 namespace Bella::CommandLineArguments {
 
@@ -18,7 +18,7 @@ namespace Bella::CommandLineArguments {
     struct CommandLineArgumentsStruct {
     public:
         using CompilerConfigurationType = typename Hydra::CompilerConfiguration;
-        using ContagiousFormulaRepresentationConfigurationType = typename Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentationConfiguration;
+        using ContiguousFormulaRepresentationConfigurationType = typename Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentationConfiguration;
 
     public:
         bool exit = false;   // help, version
@@ -38,6 +38,6 @@ namespace Bella::CommandLineArguments {
         std::string statisticsFilePath;
 
         CompilerConfigurationType compilerConfiguration;
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
     };
 }   // namespace Bella::CommandLineArguments

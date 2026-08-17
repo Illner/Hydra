@@ -15,14 +15,14 @@
 #include "Hydra/satSolver/minisat/enums/VsidsScoreTypeEnum.hpp"
 
 #include "Hydra/compiler/Compiler.tpp"
-#include "Hydra/formula/representation/contagious/ContagiousFormulaRepresentation.tpp"
+#include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.tpp"
 
 namespace Cara::CommandLineArguments {
 
     CommandLineArgumentsStruct parseCommandLineArguments(int argc, char* argv[]) {
         CommandLineArgumentsStruct commandLineArgumentsStruct;
         commandLineArgumentsStruct.compilerConfiguration = Hydra::CompilerConfiguration();
-        commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration = Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentationConfiguration();
+        commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration = Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentationConfiguration();
 
         // Arguments
         ArgumentsType arguments(argv, argv + argc);
@@ -121,16 +121,16 @@ namespace Cara::CommandLineArguments {
 
     void initializeConfigurations(CommandLineArgumentsStruct& commandLineArgumentsStruct) {
         /**
-         * Contagious formula representation configuration
+         * Contiguous formula representation configuration
          */
         // Subsumption
-        commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration.subsumptionType = Hydra::Formula::Representation::Contagious::SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
-        commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = Hydra::Formula::Representation::Contagious::VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration.subsumptionType = Hydra::Formula::Representation::Contiguous::SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = Hydra::Formula::Representation::Contiguous::VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
         // Recognitions
-        commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration.recognitionTypeStruct.kromC = false;       // Krom-C
-        commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration.recognitionTypeStruct.hornC = false;       // Horn-C
-        commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration.recognitionTypeStruct.antiHornC = false;   // anti-Horn-C
+        commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration.recognitionTypeStruct.kromC = false;       // Krom-C
+        commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration.recognitionTypeStruct.hornC = false;       // Horn-C
+        commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration.recognitionTypeStruct.antiHornC = false;   // anti-Horn-C
 
         /**
          * Compiler configuration

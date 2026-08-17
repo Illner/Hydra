@@ -6,15 +6,15 @@ namespace Hydra::Formula::Representation {
 
     enum class FormulaRepresentationTypeEnum {
         STANDARD,
-        CONTAGIOUS
+        CONTIGUOUS
     };
 
     inline std::string formulaRepresentationEnumToString(FormulaRepresentationTypeEnum formulaRepresentationType) noexcept {
         switch (formulaRepresentationType) {
             case FormulaRepresentationTypeEnum::STANDARD:
                 return "standard";
-            case FormulaRepresentationTypeEnum::CONTAGIOUS:
-                return "contagious";
+            case FormulaRepresentationTypeEnum::CONTIGUOUS:
+                return "contiguous";
             default:
                 return "name not set";
         }

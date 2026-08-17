@@ -11,13 +11,13 @@
 
 #include "Hydra/cache/cachingScheme/CachingSchemeAbstract.hpp"
 #include "Hydra/cache/cachingScheme/none/NoneCachingScheme.hpp"
-#include "Hydra/formula/representation/contagious/ContagiousFormulaRepresentation.tpp"
+#include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.tpp"
 #include "Hydra/other/Other.hpp"
 
 #include "Hydra/cache/exceptions/CacheException.hpp"
 
 #include "Hydra/cache/enums/CacheTypeEnum.hpp"
-#include "Hydra/formula/representation/contagious/enums/SubsumptionTypeEnum.hpp"
+#include "Hydra/formula/representation/contiguous/enums/SubsumptionTypeEnum.hpp"
 
 namespace HydraTest::Cache::CachingScheme {
 
@@ -38,7 +38,7 @@ namespace HydraTest::Cache::CachingScheme {
     using ConnectedComponentStructure = HydraTest::Cache::CachingScheme::ConnectedComponentStructure;
 
     using CacheTypeEnum = Hydra::Cache::CacheTypeEnum;
-    using SubsumptionTypeEnum = Hydra::Formula::Representation::Contagious::SubsumptionTypeEnum;
+    using SubsumptionTypeEnum = Hydra::Formula::Representation::Contiguous::SubsumptionTypeEnum;
     using IgnorePureLiteralTypeEnum = HydraTest::Cache::CachingScheme::IgnorePureLiteralTypeEnum;
     //endregion
 
@@ -307,14 +307,14 @@ namespace HydraTest::Cache::CachingScheme {
         };
 
         VarT numberOfVariables = 8;
-        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contagious::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
-        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contagious::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
+        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contiguous::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
+        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contiguous::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
 
         // Configuration
-        ContagiousFormulaRepresentationConfigurationType configuration;
+        ContiguousFormulaRepresentationConfigurationType configuration;
         configuration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        return std::make_unique<ContagiousFormulaRepresentationType>(std::move(formula),
+        return std::make_unique<ContiguousFormulaRepresentationType>(std::move(formula),
                                                                      numberOfVariables, numberOfClauses,
                                                                      literalNumberOfOccurrences,
                                                                      configuration);

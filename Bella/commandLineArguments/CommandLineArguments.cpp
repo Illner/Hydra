@@ -17,18 +17,18 @@
 #include "Hydra/satSolver/minisat/enums/VsidsScoreTypeEnum.hpp"
 
 #include "Hydra/compiler/Compiler.tpp"
-#include "Hydra/formula/representation/contagious/ContagiousFormulaRepresentation.tpp"
+#include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.tpp"
 
 namespace Bella::CommandLineArguments {
 
     CommandLineArgumentsStruct parseCommandLineArguments(int argc, char* argv[]) {
         using CacheTypeEnum = Hydra::Cache::CacheTypeEnum;
-        using SubsumptionTypeEnum = Hydra::Formula::Representation::Contagious::SubsumptionTypeEnum;
-        using VariableSubsumptionWithMappingTypeEnum = Hydra::Formula::Representation::Contagious::VariableSubsumptionWithMappingTypeEnum;
+        using SubsumptionTypeEnum = Hydra::Formula::Representation::Contiguous::SubsumptionTypeEnum;
+        using VariableSubsumptionWithMappingTypeEnum = Hydra::Formula::Representation::Contiguous::VariableSubsumptionWithMappingTypeEnum;
 
         CommandLineArgumentsStruct commandLineArgumentsStruct;
         commandLineArgumentsStruct.compilerConfiguration = Hydra::CompilerConfiguration();
-        commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration = Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentationConfiguration();
+        commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration = Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentationConfiguration();
 
         // Arguments
         ArgumentsType arguments(argv, argv + argc);
@@ -191,19 +191,19 @@ namespace Bella::CommandLineArguments {
         }
 
         /**
-         * Contagious formula representation configuration
+         * Contiguous formula representation configuration
          */
-        commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
-        commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
         // Recognition of Krom-C
         if (Hydra::Other::containInSet(Hydra::Circuit::kromCLeavesCircuitTypeSet, commandLineArgumentsStruct.compilerConfiguration.circuitType))
-            commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration.recognitionTypeStruct.kromC = true;
+            commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration.recognitionTypeStruct.kromC = true;
         // Recognition of Horn-C
         if (Hydra::Other::containInSet(Hydra::Circuit::hornCLeavesCircuitTypeSet, commandLineArgumentsStruct.compilerConfiguration.circuitType))
-            commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration.recognitionTypeStruct.hornC = true;
+            commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration.recognitionTypeStruct.hornC = true;
         // Recognition of anti-Horn-C
         if (Hydra::Other::containInSet(Hydra::Circuit::antiHornCLeavesCircuitTypeSet, commandLineArgumentsStruct.compilerConfiguration.circuitType))
-            commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration.recognitionTypeStruct.antiHornC = true;
+            commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration.recognitionTypeStruct.antiHornC = true;
 
         /**
          * Compiler configuration

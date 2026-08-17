@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
-#include "Hydra/formula/representation/contagious/ContagiousFormulaRepresentation.hpp"
+#include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.hpp"
 #include "Hydra/other/hashMap/HashMap.hpp"
 
 namespace HydraTest::Formula::StructuralRestrictedRepresentation {

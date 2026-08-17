@@ -13,8 +13,8 @@
 
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
-#include "Hydra/formula/representation/contagious/ContagiousFormulaRepresentation.hpp"
-#include "Hydra/formula/representation/contagious/ContagiousFormulaRepresentation.tpp"
+#include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.hpp"
+#include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.tpp"
 #include "Hydra/other/Other.hpp"
 #include "Hydra/other/container/computeConnectedComponents/ConnectedComponentStructure.hpp"
 #include "Hydra/other/operatingSystem/OperatingSystem.hpp"
@@ -29,7 +29,7 @@
 
 #include "Hydra/compiler/enums/IgnorePureLiteralTypeEnum.hpp"
 #include "Hydra/compiler/enums/PartitioningHypergraphTypeEnum.hpp"
-#include "Hydra/formula/representation/contagious/enums/VariableSubsumptionWithMappingTypeEnum.hpp"
+#include "Hydra/formula/representation/contiguous/enums/VariableSubsumptionWithMappingTypeEnum.hpp"
 #include "Hydra/partitioningHypergraph/enums/VertexWeightTypeEnum.hpp"
 
 namespace HydraTest::PartitioningHypergraph {
@@ -49,7 +49,7 @@ namespace HydraTest::PartitioningHypergraph {
     using PartvecType = typename Hydra::PartitioningHypergraph::PartitioningHypergraphAbstract<VarT, LiteralT, ClauseIdT>::PartvecType;
     using ClauseIdSetType = typename Hydra::PartitioningHypergraph::PartitioningHypergraphAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdSetType;
     using VertexWeightType = typename Hydra::PartitioningHypergraph::PartitioningHypergraphAbstract<VarT, LiteralT, ClauseIdT>::VertexWeightType;
-    using FormulaType = typename Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentation<VarT, LiteralT, ClauseIdT>::FormulaType;
+    using FormulaType = typename Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>::FormulaType;
     using ClauseIdVectorType = typename Hydra::PartitioningHypergraph::PartitioningHypergraphAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType;
     using OccurrenceListStruct = typename Hydra::PartitioningHypergraph::PartitioningHypergraphAbstract<VarT, LiteralT, ClauseIdT>::OccurrenceListStruct;
     using ClauseIdVectorMapType = typename Hydra::PartitioningHypergraph::PartitioningHypergraphAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdVectorMapType;
@@ -66,8 +66,8 @@ namespace HydraTest::PartitioningHypergraph {
     using KahyparPartitioningHypergraphType = Hydra::PartitioningHypergraph::Kahypar::KahyparPartitioningHypergraph<VarT, LiteralT, ClauseIdT>;
     using FormulaRepresentationAbstractPtrType = const Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>*;
     using PartitioningHypergraphAbstractPtrType = const Hydra::PartitioningHypergraph::PartitioningHypergraphAbstract<VarT, LiteralT, ClauseIdT>*;
-    using ContagiousFormulaRepresentationConfiguration = Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentationConfiguration;
-    using ContagiousFormulaRepresentationType = Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentation<VarT, LiteralT, ClauseIdT>;
+    using ContiguousFormulaRepresentationConfiguration = Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentationConfiguration;
+    using ContiguousFormulaRepresentationType = Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>;
     using EquivalencePreprocessingStructureType = Hydra::SatSolver::EquivalencePreprocessingStruct<VarT, LiteralT>::EquivalencePreprocessingStructureType;
     using FormulaRepresentationAbstractUniquePtrType = std::unique_ptr<Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>>;
     using PartitioningHypergraphAbstractUniquePtrType = std::unique_ptr<Hydra::PartitioningHypergraph::PartitioningHypergraphAbstract<VarT, LiteralT, ClauseIdT>>;
@@ -82,7 +82,7 @@ namespace HydraTest::PartitioningHypergraph {
     using IgnorePureLiteralTypeEnum = Hydra::IgnorePureLiteralTypeEnum;
     using PartitioningHypergraphTypeEnum = Hydra::PartitioningHypergraphTypeEnum;
     using VertexWeightTypeEnum = Hydra::PartitioningHypergraph::VertexWeightTypeEnum;
-    using VariableSubsumptionWithMappingTypeEnum = Hydra::Formula::Representation::Contagious::VariableSubsumptionWithMappingTypeEnum;
+    using VariableSubsumptionWithMappingTypeEnum = Hydra::Formula::Representation::Contiguous::VariableSubsumptionWithMappingTypeEnum;
     //endregion
 
     struct EquivalenceStruct {
@@ -343,14 +343,14 @@ namespace HydraTest::PartitioningHypergraph {
                               litPos3, litNeg4, litPos7, zeroLit };
 
         VarT numberOfVariables = 8;
-        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contagious::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
-        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contagious::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
+        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contiguous::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
+        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contiguous::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
 
         // Configuration
-        ContagiousFormulaRepresentationConfiguration configuration;
+        ContiguousFormulaRepresentationConfiguration configuration;
         configuration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        FormulaRepresentationAbstractUniquePtrType formulaRepresentation = std::make_unique<ContagiousFormulaRepresentationType>(std::move(formula),
+        FormulaRepresentationAbstractUniquePtrType formulaRepresentation = std::make_unique<ContiguousFormulaRepresentationType>(std::move(formula),
                                                                                                                                  numberOfVariables, numberOfClauses,
                                                                                                                                  literalNumberOfOccurrences,
                                                                                                                                  configuration);
@@ -382,10 +382,10 @@ namespace HydraTest::PartitioningHypergraph {
                               litPos2, zeroLit };
 
         VarT numberOfVariables = 4;
-        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contagious::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
-        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contagious::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
+        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contiguous::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
+        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contiguous::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
 
-        FormulaRepresentationAbstractUniquePtrType formulaRepresentation = std::make_unique<ContagiousFormulaRepresentationType>(std::move(formula),
+        FormulaRepresentationAbstractUniquePtrType formulaRepresentation = std::make_unique<ContiguousFormulaRepresentationType>(std::move(formula),
                                                                                                                                  numberOfVariables, numberOfClauses,
                                                                                                                                  literalNumberOfOccurrences);
         return formulaRepresentation;
@@ -406,10 +406,10 @@ namespace HydraTest::PartitioningHypergraph {
         };
 
         VarT numberOfVariables = 4;
-        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contagious::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
-        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contagious::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
+        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contiguous::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
+        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contiguous::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
 
-        FormulaRepresentationAbstractUniquePtrType formulaRepresentation = std::make_unique<ContagiousFormulaRepresentationType>(std::move(formula),
+        FormulaRepresentationAbstractUniquePtrType formulaRepresentation = std::make_unique<ContiguousFormulaRepresentationType>(std::move(formula),
                                                                                                                                  numberOfVariables, numberOfClauses,
                                                                                                                                  literalNumberOfOccurrences);
         return formulaRepresentation;
@@ -437,14 +437,14 @@ namespace HydraTest::PartitioningHypergraph {
         };
 
         VarT numberOfVariables = 5;
-        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contagious::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
-        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contagious::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
+        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contiguous::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
+        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contiguous::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
 
         // Configuration
-        ContagiousFormulaRepresentationConfiguration configuration;
+        ContiguousFormulaRepresentationConfiguration configuration;
         configuration.variableSubsumptionWithMappingType = variableSubsumptionWithMappingType;
 
-        FormulaRepresentationAbstractUniquePtrType formulaRepresentation = std::make_unique<ContagiousFormulaRepresentationType>(std::move(formula),
+        FormulaRepresentationAbstractUniquePtrType formulaRepresentation = std::make_unique<ContiguousFormulaRepresentationType>(std::move(formula),
                                                                                                                                  numberOfVariables, numberOfClauses,
                                                                                                                                  literalNumberOfOccurrences,
                                                                                                                                  configuration);
@@ -503,14 +503,14 @@ namespace HydraTest::PartitioningHypergraph {
         };
 
         VarT numberOfVariables = 16;
-        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contagious::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
-        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contagious::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
+        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contiguous::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
+        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contiguous::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
 
         // Configuration
-        ContagiousFormulaRepresentationConfiguration configuration;
+        ContiguousFormulaRepresentationConfiguration configuration;
         configuration.variableSubsumptionWithMappingType = variableSubsumptionWithMappingType;
 
-        FormulaRepresentationAbstractUniquePtrType formulaRepresentation = std::make_unique<ContagiousFormulaRepresentationType>(std::move(formula),
+        FormulaRepresentationAbstractUniquePtrType formulaRepresentation = std::make_unique<ContiguousFormulaRepresentationType>(std::move(formula),
                                                                                                                                  numberOfVariables, numberOfClauses,
                                                                                                                                  literalNumberOfOccurrences,
                                                                                                                                  configuration);
@@ -575,10 +575,10 @@ namespace HydraTest::PartitioningHypergraph {
         };
 
         VarT numberOfVariables = 24;
-        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contagious::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
-        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contagious::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
+        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contiguous::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
+        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contiguous::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
 
-        FormulaRepresentationAbstractUniquePtrType formulaRepresentation = std::make_unique<ContagiousFormulaRepresentationType>(std::move(formula),
+        FormulaRepresentationAbstractUniquePtrType formulaRepresentation = std::make_unique<ContiguousFormulaRepresentationType>(std::move(formula),
                                                                                                                                  numberOfVariables, numberOfClauses,
                                                                                                                                  literalNumberOfOccurrences);
 
@@ -624,14 +624,14 @@ namespace HydraTest::PartitioningHypergraph {
         };
 
         VarT numberOfVariables = 7;
-        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contagious::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
-        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contagious::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
+        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contiguous::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
+        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contiguous::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
 
         // Configuration
-        ContagiousFormulaRepresentationConfiguration configuration;
+        ContiguousFormulaRepresentationConfiguration configuration;
         configuration.variableSubsumptionWithMappingType = variableSubsumptionWithMappingType;
 
-        FormulaRepresentationAbstractUniquePtrType formulaRepresentation = std::make_unique<ContagiousFormulaRepresentationType>(std::move(formula),
+        FormulaRepresentationAbstractUniquePtrType formulaRepresentation = std::make_unique<ContiguousFormulaRepresentationType>(std::move(formula),
                                                                                                                                  numberOfVariables, numberOfClauses,
                                                                                                                                  literalNumberOfOccurrences,
                                                                                                                                  configuration);

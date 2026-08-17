@@ -8,7 +8,7 @@
 #include <iterator>
 
 #include "Hydra/compiler/Compiler.hpp"
-#include "Hydra/formula/representation/contagious/parser/ContagiousFormulaParser.hpp"
+#include "Hydra/formula/representation/contiguous/parser/ContiguousFormulaParser.hpp"
 #include "Hydra/other/Other.hpp"
 #include "Hydra/other/parser/Parser.hpp"
 #include "Hydra/statistics/Statistics.hpp"
@@ -17,12 +17,12 @@
 
 #include "Cara/sharpSolver/enums/ModelCountingTypeEnum.hpp"
 #include "Hydra/compiler/enums/PartitioningHypergraphTypeEnum.hpp"
-#include "Hydra/formula/representation/contagious/enums/VariableSubsumptionWithMappingTypeEnum.hpp"
+#include "Hydra/formula/representation/contiguous/enums/VariableSubsumptionWithMappingTypeEnum.hpp"
 #include "Hydra/other/enums/TemplateTypeEnum.hpp"
 #include "Hydra/partitioningHypergraph/enums/VertexWeightTypeEnum.hpp"
 
 #include "Hydra/compiler/Compiler.tpp"
-#include "Hydra/formula/representation/contagious/ContagiousFormulaRepresentation.tpp"
+#include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.tpp"
 
 using AtomicBoolType = std::atomic<bool>;
 using AtomicBoolPtrType = const AtomicBoolType*;
