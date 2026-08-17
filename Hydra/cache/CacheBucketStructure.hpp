@@ -14,6 +14,7 @@
 namespace Hydra::Cache {
 
     using IdType = unsigned long long int;   // at least 64 bits
+
     using IdNodeType = Hydra::Circuit::IdNodeType;
 
     /**
