@@ -1,7 +1,7 @@
 ///////////////////////// ankerl::unordered_dense::{map, set} /////////////////////////
 
 // A fast & densely stored hashmap and hashset based on robin-hood backward shift deletion.
-// Version 4.9.1
+// Version 4.9.2
 // https://github.com/martinus/unordered_dense
 //
 // Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -32,7 +32,7 @@
 // see https://semver.org/spec/v2.0.0.html
 #define ANKERL_UNORDERED_DENSE_VERSION_MAJOR 4 // NOLINT(cppcoreguidelines-macro-usage) incompatible API changes
 #define ANKERL_UNORDERED_DENSE_VERSION_MINOR 9 // NOLINT(cppcoreguidelines-macro-usage) backwards compatible functionality
-#define ANKERL_UNORDERED_DENSE_VERSION_PATCH 1 // NOLINT(cppcoreguidelines-macro-usage) backwards compatible bug fixes
+#define ANKERL_UNORDERED_DENSE_VERSION_PATCH 2 // NOLINT(cppcoreguidelines-macro-usage) backwards compatible bug fixes
 
 // API versioning with inline namespace, see https://www.foonathan.net/2018/11/inline-namespaces/
 
@@ -241,13 +241,13 @@ inline void mum(std::uint64_t* a, std::uint64_t* b) {
                 b = r4(p + len - 4);
             } else if (ANKERL_UNORDERED_DENSE_LIKELY(len > 0))
                 ANKERL_UNORDERED_DENSE_LIKELY_ATTR {
+                    // b stays zero: r3 packs all len bytes it is given into a, and there are at
+                    // most three of them.
                     a = r3(p, len);
-                    b = 0;
                 }
-            else {
-                a = 0;
-                b = 0;
-            }
+            // ... and an empty input needs no branch of its own: it hashes whatever a and b were
+            // declared with, which is the zero it has to be. Assigning it again here is what a
+            // deletion sweep of this file kept pointing at.
         }
     else {
         std::size_t i = len;
@@ -1186,6 +1186,22 @@ private:
     static_assert(std::is_trivially_destructible_v<Bucket>, "assert there's no need to call destructor / std::destroy");
     static_assert(std::is_trivially_copyable_v<Bucket>, "assert we can just memset / memcpy");
 
+    // m_dist_and_fingerprint packs two fields into one integer, and these are what keeps them from
+    // reaching into each other. A bucket type is something a user can supply, so this is checked
+    // here rather than assumed.
+    //
+    // The fingerprint has to stay strictly below dist_inc. A mask that overlaps it lets hash bits
+    // add to the distance a bucket claims, which silently reorders the robin hood sequence that
+    // every probe depends on -- and a mask that reaches the bit above turns a fresh bucket into one
+    // that reads as further from home than it is. Fewer fingerprint bits than dist_inc allows is
+    // merely a weaker fingerprint, so the bound is one-sided.
+    static_assert(Bucket::fingerprint_mask < Bucket::dist_inc,
+                  "the fingerprint must fit strictly below dist_inc, or it changes the distance");
+    // And dist_inc has to be a single bit, because the distance is incremented by adding it: two
+    // bits set would carry into the fingerprint on the very first step away from home.
+    static_assert(0 != Bucket::dist_inc && 0 == (Bucket::dist_inc & (Bucket::dist_inc - 1)),
+                  "dist_inc must be a power of two, so that adding it only touches the distance");
+
     value_container_type m_values{}; // Contains all the key-value pairs in one densely stored container. No holes.
     bucket_container_type m_buckets{};
     std::size_t m_max_bucket_capacity = 0;
@@ -1295,7 +1311,16 @@ private:
 
     [[nodiscard]] constexpr auto calc_shifts_for_size(std::size_t s) const -> std::uint8_t {
         auto shifts = initial_shifts;
-        while (shifts > 0 && static_cast<std::size_t>(static_cast<float>(calc_num_buckets(shifts)) * max_load_factor()) < s) {
+        // Stopping once the array is as large as it may get is what keeps this from running off the
+        // end. calc_num_buckets() saturates at max_bucket_count(), so past that point the capacity
+        // being compared stops growing while the loop keeps decrementing -- and for any size above
+        // max_bucket_count() * max_load_factor() it used to walk all the way to zero. A shift of
+        // zero then asks calc_num_buckets() for `1 << 64`, which is undefined and in practice one:
+        // a table sized for billions of elements would come back with a single bucket and a mask of
+        // zero, and the next probe reads past the end of it. Reachable from rehash(), which does not
+        // allocate the values and so has nothing to fail first.
+        while (shifts > 0 && calc_num_buckets(shifts) < max_bucket_count() &&
+               static_cast<std::size_t>(static_cast<float>(calc_num_buckets(shifts)) * max_load_factor()) < s) {
             --shifts;
         }
         return shifts;
@@ -1516,13 +1541,17 @@ private:
 
     void clear_and_fill_buckets_from_values() {
         clear_buckets();
-        for (value_idx_type value_idx = 0, end_idx = static_cast<value_idx_type>(m_values.size()); value_idx < end_idx;
-             ++value_idx) {
+        // Counted in std::size_t, for the reason spelled out in replace(): max_size() is exactly
+        // what value_idx_type can hold, so a container of precisely that many has a size that is
+        // not representable in it and the cast wraps to zero. Latent here rather than live -- a
+        // table at max_size() already has the smallest shift, so rehash() and reserve() early out
+        // before reaching this -- but the rule is the same and only one place was following it.
+        for (std::size_t value_idx = 0, end_idx = m_values.size(); value_idx < end_idx; ++value_idx) {
             auto const& key = get_key(m_values[value_idx]);
             auto [dist_and_fingerprint, bucket] = next_while_less(key);
 
             // we know for certain that key has not yet been inserted, so no need to check it.
-            place_and_shift_up({dist_and_fingerprint, value_idx}, bucket);
+            place_and_shift_up({dist_and_fingerprint, static_cast<value_idx_type>(value_idx)}, bucket);
         }
     }
 
@@ -2069,10 +2098,16 @@ public:
         m_values = std::move(container);
 
         // can't use clear_and_fill_buckets_from_values() because container elements might not be unique
-        auto value_idx = value_idx_type{};
+        //
+        // Counted in std::size_t rather than in value_idx_type. max_size() is exactly the number
+        // values that type can hold, so a container of precisely that many has a size that is not
+        // representable in it: the cast wrapped to zero, the loop below never ran once, and the
+        // table came back reporting size() elements with no bucket pointing at any of them. Every
+        // index the loop produces is representable -- it is the count that is not.
+        auto value_idx = std::size_t{};
 
         // loop until we reach the end of the container. duplicated entries will be replaced with back().
-        while (value_idx != static_cast<value_idx_type>(m_values.size())) {
+        while (value_idx != m_values.size()) {
             auto const& key = get_key(m_values[value_idx]);
 
             auto hash = mixed_hash(key);
@@ -2095,12 +2130,12 @@ public:
             }
 
             if (key_found) {
-                if (value_idx != static_cast<value_idx_type>(m_values.size() - 1)) {
+                if (value_idx != m_values.size() - 1) {
                     m_values[value_idx] = std::move(m_values.back());
                 }
                 m_values.pop_back();
             } else {
-                place_and_shift_up({dist_and_fingerprint, value_idx}, bucket_idx);
+                place_and_shift_up({dist_and_fingerprint, static_cast<value_idx_type>(value_idx)}, bucket_idx);
                 ++value_idx;
             }
         }
