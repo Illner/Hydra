@@ -138,7 +138,7 @@ namespace Bella::CommandLineArguments {
                 break;
             default:
                 throw Hydra::Exception::NotImplementedException(Hydra::Cache::CachingScheme::cachingSchemeVariantTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.cachingSchemeVariantComponentCachingType),
-                                                                "Hydra::Other::parseCommandLineArguments");
+                                                                "Bella::CommandLineArguments::parseCommandLineArguments");
         }
 
         // Hypergraph cut caching
