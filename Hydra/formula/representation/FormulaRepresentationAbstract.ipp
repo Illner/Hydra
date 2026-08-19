@@ -682,6 +682,7 @@ namespace Hydra::Formula::Representation {
         out << "Original formula size: " << std::to_string(originalFormulaSize_) << std::endl;
         out << "Number of original clauses: " << std::to_string(numberOfOriginalClauses_) << std::endl;
         out << "Maximum original clause size: " << std::to_string(getMaxOriginalClauseSize()) << std::endl;
+        out << "Number of original variables: " << std::to_string(getNumberOfVariablesInOriginalFormula()) << std::endl;
 
         out << "Assignment stack:";
         for (const LiteralType& lit : d_assignmentStack_)
