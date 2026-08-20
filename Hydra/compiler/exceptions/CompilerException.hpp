@@ -64,6 +64,15 @@ namespace Hydra::Exception {
     };
 
     /**
+     * Inconsistent data structure
+     */
+    class InconsistentDataStructureException : public CompilerException {
+    public:
+        InconsistentDataStructureException(const std::string& inconsistentDataStructure, const std::string& functionName)
+            : CompilerException("Inconsistent data structure: " + inconsistentDataStructure, functionName) { }
+    };
+
+    /**
      * File does not exist
      */
     class FileDoesNotExistException : public CompilerException {
