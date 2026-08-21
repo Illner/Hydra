@@ -47,7 +47,7 @@ namespace Hydra::Circuit::Parser {
 
     /**
      * Parse a circuit in the DIMACS NNF format
-     * Note: DIMACS NNF header must be already processed
+     * Note: DIMACS NNF header must already be processed
      * @return the parsed circuit
      * @throw ParserCircuitException, SomethingIsExpectedButEndOfStreamIsDetectedException,
      * SomethingIsExpectedButAnotherSymbolIsDetectedException if the DIMACS NNF format is invalid

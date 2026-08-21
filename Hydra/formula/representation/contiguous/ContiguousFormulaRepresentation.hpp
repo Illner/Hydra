@@ -367,7 +367,7 @@ namespace Hydra::Formula::Representation::Contiguous {
 
         /**
          * Sort the clauses in the reusable vector
-         * Note: clauseIdReusableVector MUST be already filled
+         * Note: clauseIdReusableVector MUST already be filled
          * Note: first, the clauses are grouped by their sizes, and then, for each group, the clauses are sorted by their literals/variables
          * @param clauseIdReusableVector a reusable vector of clauses that will be sorted
          * @param considerOnlyVariables should be considered only variables, not literals
@@ -376,7 +376,7 @@ namespace Hydra::Formula::Representation::Contiguous {
 
         /**
          * Remove the duplicate clauses from the reusable vector
-         * Note: clauseIdReusableVector MUST be already filled
+         * Note: clauseIdReusableVector MUST already be filled
          * Side effect: clauseIdReusableVector will be sorted if it has not already been sorted (!alreadySorted)
          * @param clauseIdReusableVector a reusable vector of clauses from which the duplicate clauses will be removed
          * @param considerOnlyVariables should be considered only variables, not literals
