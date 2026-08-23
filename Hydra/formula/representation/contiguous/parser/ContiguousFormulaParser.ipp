@@ -7,8 +7,8 @@
 
 namespace Hydra::Formula::Representation::Contiguous::Parser {
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIterator>
-    std::unique_ptr<FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> parseCnfFormula(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIteratorT>
+    std::unique_ptr<FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> parseCnfFormula(InputIteratorT& begin, const InputIteratorT& end,
                                                                                               const Other::Parser::DimacsCnfHeaderStruct& dimacsCnfHeaderStruct,
                                                                                               unsigned int& line,
                                                                                               bool forbidClausesContainingComplementaryLiterals,
@@ -16,31 +16,31 @@ namespace Hydra::Formula::Representation::Contiguous::Parser {
                                                                                               FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType formulaRepresentationStatisticsPtr) {
         Cara::ModelCountingTypeEnum dummyModelCountingType = Cara::ModelCountingTypeEnum::UNDEFINED;
 
-        return parseCnfFormula<VarT, LiteralT, ClauseIdT, InputIterator>(begin, end,
-                                                                         static_cast<VarT>(dimacsCnfHeaderStruct.numberOfVariables),
-                                                                         static_cast<ClauseIdT>(dimacsCnfHeaderStruct.numberOfClauses),
-                                                                         dimacsCnfHeaderStruct.size,
-                                                                         line, dummyModelCountingType, forbidClausesContainingComplementaryLiterals,
-                                                                         configuration, formulaRepresentationStatisticsPtr);
+        return parseCnfFormula<VarT, LiteralT, ClauseIdT, InputIteratorT>(begin, end,
+                                                                          static_cast<VarT>(dimacsCnfHeaderStruct.numberOfVariables),
+                                                                          static_cast<ClauseIdT>(dimacsCnfHeaderStruct.numberOfClauses),
+                                                                          dimacsCnfHeaderStruct.size,
+                                                                          line, dummyModelCountingType, forbidClausesContainingComplementaryLiterals,
+                                                                          configuration, formulaRepresentationStatisticsPtr);
     }
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIterator>
-    std::unique_ptr<FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> parseCnfFormula(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIteratorT>
+    std::unique_ptr<FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> parseCnfFormula(InputIteratorT& begin, const InputIteratorT& end,
                                                                                               const Other::Parser::DimacsCnfHeaderStruct& dimacsCnfHeaderStruct,
                                                                                               unsigned int& line, Cara::ModelCountingTypeEnum& modelCountingType,
                                                                                               bool forbidClausesContainingComplementaryLiterals,
                                                                                               const ContiguousFormulaRepresentationConfiguration& configuration,
                                                                                               FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType formulaRepresentationStatisticsPtr) {
-        return parseCnfFormula<VarT, LiteralT, ClauseIdT, InputIterator>(begin, end,
-                                                                         static_cast<VarT>(dimacsCnfHeaderStruct.numberOfVariables),
-                                                                         static_cast<ClauseIdT>(dimacsCnfHeaderStruct.numberOfClauses),
-                                                                         dimacsCnfHeaderStruct.size,
-                                                                         line, modelCountingType, forbidClausesContainingComplementaryLiterals,
-                                                                         configuration, formulaRepresentationStatisticsPtr);
+        return parseCnfFormula<VarT, LiteralT, ClauseIdT, InputIteratorT>(begin, end,
+                                                                          static_cast<VarT>(dimacsCnfHeaderStruct.numberOfVariables),
+                                                                          static_cast<ClauseIdT>(dimacsCnfHeaderStruct.numberOfClauses),
+                                                                          dimacsCnfHeaderStruct.size,
+                                                                          line, modelCountingType, forbidClausesContainingComplementaryLiterals,
+                                                                          configuration, formulaRepresentationStatisticsPtr);
     }
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIterator>
-    std::unique_ptr<FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> parseCnfFormula(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIteratorT>
+    std::unique_ptr<FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> parseCnfFormula(InputIteratorT& begin, const InputIteratorT& end,
                                                                                               VarT numberOfVariables, ClauseIdT numberOfClauses,
                                                                                               LargeNumberType size, unsigned int& line,
                                                                                               Cara::ModelCountingTypeEnum& modelCountingType,

@@ -37,22 +37,22 @@ namespace Hydra::Other::Parser {
      * The new line symbol (\\n) will remain.
      * @return true if the end of the stream has been reached. Otherwise, false is returned.
      */
-    template <std::input_iterator InputIterator>
-    inline bool skipLine(InputIterator& begin, const InputIterator& end);
+    template <std::input_iterator InputIteratorT>
+    inline bool skipLine(InputIteratorT& begin, const InputIteratorT& end);
 
     /**
      * Skip all whitespaces, excluding the new line symbol (\\n)
      * @return true if the end of the stream has been reached. Otherwise, false is returned.
      */
-    template <std::input_iterator InputIterator>
-    inline bool skipWhitespacesExcludingNewLineSymbol(InputIterator& begin, const InputIterator& end);
+    template <std::input_iterator InputIteratorT>
+    inline bool skipWhitespacesExcludingNewLineSymbol(InputIteratorT& begin, const InputIteratorT& end);
 
     /**
      * Parse all whitespaces, excluding the new line symbol (\\n)
      * @return true if at least one whitespace has been parsed. Otherwise, false is returned.
      */
-    template <std::input_iterator InputIterator>
-    inline bool parseWhitespacesExcludingNewLineSymbol(InputIterator& begin, const InputIterator& end);
+    template <std::input_iterator InputIteratorT>
+    inline bool parseWhitespacesExcludingNewLineSymbol(InputIteratorT& begin, const InputIteratorT& end);
 
     /**
      * Parse a string
@@ -64,8 +64,8 @@ namespace Hydra::Other::Parser {
      * @throw SomethingIsExpectedButAnotherSymbolIsDetectedException if an invalid symbol is detected
      * @throw SomethingIsExpectedButEndOfStreamIsDetectedException if the end of the stream is detected while a string is expected
      */
-    template <std::input_iterator InputIterator>
-    inline std::string parseString(InputIterator& begin, const InputIterator& end, unsigned int line = 0, bool clearWhitespacesBeforeString = true,
+    template <std::input_iterator InputIteratorT>
+    inline std::string parseString(InputIteratorT& begin, const InputIteratorT& end, unsigned int line = 0, bool clearWhitespacesBeforeString = true,
                                    std::size_t expectedSizeOfParsedString = 5, bool toLowercase = false);
 
     /**
@@ -75,8 +75,8 @@ namespace Hydra::Other::Parser {
      * @throw SomethingIsExpectedButEndOfStreamIsDetectedException if the end of the stream is detected while a number is expected
      * @throw SomethingIsExpectedButAnotherSymbolIsDetectedException if an invalid symbol is detected
      */
-    template <typename NumberT, std::input_iterator InputIterator>
-    inline NumberT parsePositiveNumber(InputIterator& begin, const InputIterator& end,
+    template <typename NumberT, std::input_iterator InputIteratorT>
+    inline NumberT parsePositiveNumber(InputIteratorT& begin, const InputIteratorT& end,
                                        unsigned int line = 0, bool clearWhitespacesBeforeNumber = true);
 
     /**
@@ -85,8 +85,8 @@ namespace Hydra::Other::Parser {
      * @return a vector of parsed positive numbers
      * @throw SomethingIsExpectedButAnotherSymbolIsDetectedException if an invalid symbol is detected
      */
-    template <typename NumberT, std::input_iterator InputIterator>
-    inline std::vector<NumberT> parseAllPositiveNumbersOnLine(InputIterator& begin, const InputIterator& end,
+    template <typename NumberT, std::input_iterator InputIteratorT>
+    inline std::vector<NumberT> parseAllPositiveNumbersOnLine(InputIteratorT& begin, const InputIteratorT& end,
                                                               unsigned int line = 0,
                                                               std::size_t expectedCountOfParsedPositiveNumbers = 1);
 
@@ -98,8 +98,8 @@ namespace Hydra::Other::Parser {
      * @throw SomethingIsExpectedButEndOfStreamIsDetectedException if the end of the stream is detected while a literal is expected
      * @throw SomethingIsExpectedButAnotherSymbolIsDetectedException if an invalid symbol is detected
      */
-    template <typename VarT, typename LiteralT, std::input_iterator InputIterator>
-    inline Formula::Literal<VarT, LiteralT> parseLiteral(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, std::input_iterator InputIteratorT>
+    inline Formula::Literal<VarT, LiteralT> parseLiteral(InputIteratorT& begin, const InputIteratorT& end,
                                                          unsigned int line = 0,
                                                          const HashMap::MapType<VarT, VarT>& mappingFromIndexToVar = {});
 
@@ -111,8 +111,8 @@ namespace Hydra::Other::Parser {
      * @return a vector of parsed literals
      * @throw SomethingIsExpectedButAnotherSymbolIsDetectedException if an invalid symbol is detected
      */
-    template <typename VarT, typename LiteralT, std::input_iterator InputIterator>
-    inline std::vector<Formula::Literal<VarT, LiteralT>> parseAllLiteralsOnLine(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, std::input_iterator InputIteratorT>
+    inline std::vector<Formula::Literal<VarT, LiteralT>> parseAllLiteralsOnLine(InputIteratorT& begin, const InputIteratorT& end,
                                                                                 unsigned int line = 0,
                                                                                 LiteralT expectedCountOfParsedLiterals = 1,
                                                                                 const HashMap::MapType<VarT, VarT>& mappingFromIndexToVar = {});
@@ -124,8 +124,8 @@ namespace Hydra::Other::Parser {
      * @throw SomethingIsExpectedButAnotherSymbolIsDetectedException if an invalid symbol is detected
      * @throw SomethingIsExpectedButEndOfStreamIsDetectedException if the end of the stream is detected while the DIMACS CNF header is expected
      */
-    template <std::input_iterator InputIterator>
-    inline DimacsCnfHeaderStruct parseDimacsCnfHeader(InputIterator& begin, const InputIterator& end, unsigned int& line);
+    template <std::input_iterator InputIteratorT>
+    inline DimacsCnfHeaderStruct parseDimacsCnfHeader(InputIteratorT& begin, const InputIteratorT& end, unsigned int& line);
 
     /**
      * Parse all the consecutive comment lines
@@ -136,15 +136,15 @@ namespace Hydra::Other::Parser {
      * @throw SomethingIsExpectedButAnotherSymbolIsDetectedException [Cara] if an invalid symbol is detected
      * @throw MoreDifferentModelCountingHeadersExistException [Cara] if more different model counting headers exist
      */
-    template <std::input_iterator InputIterator>
-    inline bool parseCommentLines(InputIterator& begin, const InputIterator& end, unsigned int& line, Cara::ModelCountingTypeEnum& modelCountingType);
+    template <std::input_iterator InputIteratorT>
+    inline bool parseCommentLines(InputIteratorT& begin, const InputIteratorT& end, unsigned int& line, Cara::ModelCountingTypeEnum& modelCountingType);
 
     /**
      * Parse the new line symbol
      * @return true if the end of the stream has been reached. Otherwise, false is returned.
      */
-    template <std::input_iterator InputIterator>
-    inline bool parseNewLineSymbol(InputIterator& begin, const InputIterator& end, unsigned int& line);
+    template <std::input_iterator InputIteratorT>
+    inline bool parseNewLineSymbol(InputIteratorT& begin, const InputIteratorT& end, unsigned int& line);
 
     /**
      * Parse a DIMACS clause
@@ -156,8 +156,8 @@ namespace Hydra::Other::Parser {
      * @throw ClauseContainsPairOfComplementaryLiteralsException if the clause contains a pair of complementary literals
      * @throw SomethingIsExpectedButEndOfStreamIsDetectedException if the end of the stream is detected while the end of the clause (0) is expected
      */
-    template <typename VarT, typename LiteralT, std::input_iterator InputIterator>
-    inline std::vector<Formula::Literal<VarT, LiteralT>> parseDimacsClause(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, std::input_iterator InputIteratorT>
+    inline std::vector<Formula::Literal<VarT, LiteralT>> parseDimacsClause(InputIteratorT& begin, const InputIteratorT& end,
                                                                            unsigned int& line,
                                                                            LiteralT expectedParsedClauseSize = 1,
                                                                            const HashMap::MapType<VarT, VarT>& mappingFromIndexToVar = {});

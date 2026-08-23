@@ -59,8 +59,8 @@ namespace Hydra::Circuit {
     class Circuit;
 
     namespace Parser {
-        template <typename VarT2, typename LiteralT2, std::input_iterator InputIterator2>
-        Circuit<VarT2, LiteralT2> parseCircuit(InputIterator2& begin, const InputIterator2& end,
+        template <typename VarT2, typename LiteralT2, std::input_iterator InputIteratorT2>
+        Circuit<VarT2, LiteralT2> parseCircuit(InputIteratorT2& begin, const InputIteratorT2& end,
                                                IdNodeType numberOfNodes, LargeNumberType numberOfEdges,
                                                VarT2 numberOfVariables, LargeNumberType size, unsigned int& line);
     }
@@ -626,8 +626,8 @@ namespace Hydra::Circuit {
         }
 
     private:
-        template <typename VarT2, typename LiteralT2, std::input_iterator InputIterator2>
-        friend Circuit<VarT2, LiteralT2> Parser::parseCircuit(InputIterator2& begin, const InputIterator2& end,
+        template <typename VarT2, typename LiteralT2, std::input_iterator InputIteratorT2>
+        friend Circuit<VarT2, LiteralT2> Parser::parseCircuit(InputIteratorT2& begin, const InputIteratorT2& end,
                                                               IdNodeType numberOfNodes, LargeNumberType numberOfEdges,
                                                               VarT2 numberOfVariables, LargeNumberType size, unsigned int& line);
 

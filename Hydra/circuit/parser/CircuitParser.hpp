@@ -42,8 +42,8 @@ namespace Hydra::Circuit::Parser {
      * @throw InvalidDimacsNnfHeaderException if the DIMACS NNF header is invalid
      * @throw SomethingCannotBeSavedAsStdSizeTException if the nodes/variables cannot be saved as std::size_t
      */
-    template <std::input_iterator InputIterator>
-    inline DimacsNnfHeaderStruct parseDimacsNnfHeader(InputIterator& begin, const InputIterator& end, unsigned int& line);
+    template <std::input_iterator InputIteratorT>
+    inline DimacsNnfHeaderStruct parseDimacsNnfHeader(InputIteratorT& begin, const InputIteratorT& end, unsigned int& line);
 
     /**
      * Parse a circuit in the DIMACS NNF format
@@ -52,13 +52,13 @@ namespace Hydra::Circuit::Parser {
      * @throw ParserCircuitException, SomethingIsExpectedButEndOfStreamIsDetectedException,
      * SomethingIsExpectedButAnotherSymbolIsDetectedException if the DIMACS NNF format is invalid
      */
-    template <typename VarT, typename LiteralT, std::input_iterator InputIterator>
-    inline Circuit<VarT, LiteralT> parseCircuit(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, std::input_iterator InputIteratorT>
+    inline Circuit<VarT, LiteralT> parseCircuit(InputIteratorT& begin, const InputIteratorT& end,
                                                 const DimacsNnfHeaderStruct& dimacsNnfHeaderStruct,
                                                 unsigned int& line);
 
-    template <typename VarT, typename LiteralT, std::input_iterator InputIterator>
-    inline Circuit<VarT, LiteralT> parseCircuit(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, std::input_iterator InputIteratorT>
+    inline Circuit<VarT, LiteralT> parseCircuit(InputIteratorT& begin, const InputIteratorT& end,
                                                 IdNodeType numberOfNodes, LargeNumberType numberOfEdges,
                                                 VarT numberOfVariables, LargeNumberType size, unsigned int& line);
 

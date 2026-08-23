@@ -138,15 +138,15 @@ namespace Hydra::Other {
      * Note: e_1, e_2, ..., e_N
      * @return a string stream containing the content of the container
      */
-    template <std::input_iterator InputIterator>
-    inline std::stringstream createStringStreamFromContainer(const InputIterator& begin, const InputIterator& end);
+    template <std::input_iterator InputIteratorT>
+    inline std::stringstream createStringStreamFromContainer(const InputIteratorT& begin, const InputIteratorT& end);
 
     /**
      * Note: std::to_string(e_1), std::to_string(e_2), ..., std::to_string(e_N)
      * @return a string stream containing the content of the container
      */
-    template <std::input_iterator InputIterator>
-    inline std::stringstream createStringStreamFromContainerWithToStringConversion(const InputIterator& begin, const InputIterator& end);
+    template <std::input_iterator InputIteratorT>
+    inline std::stringstream createStringStreamFromContainerWithToStringConversion(const InputIteratorT& begin, const InputIteratorT& end);
 
     /**
      * Note: std::to_string(k_1) -> v_1, ..., std::to_string(k_N) -> v_N

@@ -172,8 +172,8 @@ namespace Hydra::Other {
         return std::binary_search(sortedVector.cbegin(), sortedVector.cend(), element);
     }
 
-    template <std::input_iterator InputIterator>
-    std::stringstream createStringStreamFromContainer(const InputIterator& begin, const InputIterator& end) {
+    template <std::input_iterator InputIteratorT>
+    std::stringstream createStringStreamFromContainer(const InputIteratorT& begin, const InputIteratorT& end) {
         bool firstElement = true;
         std::stringstream stringStream;
 
@@ -189,8 +189,8 @@ namespace Hydra::Other {
         return stringStream;
     }
 
-    template <std::input_iterator InputIterator>
-    std::stringstream createStringStreamFromContainerWithToStringConversion(const InputIterator& begin, const InputIterator& end) {
+    template <std::input_iterator InputIteratorT>
+    std::stringstream createStringStreamFromContainerWithToStringConversion(const InputIteratorT& begin, const InputIteratorT& end) {
         bool firstElement = true;
         std::stringstream stringStream;
 

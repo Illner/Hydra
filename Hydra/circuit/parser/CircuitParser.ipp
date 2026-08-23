@@ -4,8 +4,8 @@
 
 namespace Hydra::Circuit::Parser {
 
-    template <std::input_iterator InputIterator>
-    DimacsNnfHeaderStruct parseDimacsNnfHeader(InputIterator& begin, const InputIterator& end, unsigned int& line) {
+    template <std::input_iterator InputIteratorT>
+    DimacsNnfHeaderStruct parseDimacsNnfHeader(InputIteratorT& begin, const InputIteratorT& end, unsigned int& line) {
         bool isDimacsNnfHeaderParsed = false;
         DimacsNnfHeaderStruct dimacsNnfHeaderStruct { 0, 0, 0, 0 };
 
@@ -88,19 +88,19 @@ namespace Hydra::Circuit::Parser {
         return dimacsNnfHeaderStruct;
     }
 
-    template <typename VarT, typename LiteralT, std::input_iterator InputIterator>
-    Circuit<VarT, LiteralT> parseCircuit(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, std::input_iterator InputIteratorT>
+    Circuit<VarT, LiteralT> parseCircuit(InputIteratorT& begin, const InputIteratorT& end,
                                          const DimacsNnfHeaderStruct& dimacsNnfHeaderStruct,
                                          unsigned int& line) {
-        return parseCircuit<VarT, LiteralT, InputIterator>(begin, end,
-                                                           static_cast<IdNodeType>(dimacsNnfHeaderStruct.numberOfNodes),
-                                                           dimacsNnfHeaderStruct.numberOfEdges,
-                                                           static_cast<VarT>(dimacsNnfHeaderStruct.numberOfVariables),
-                                                           dimacsNnfHeaderStruct.size, line);
+        return parseCircuit<VarT, LiteralT, InputIteratorT>(begin, end,
+                                                            static_cast<IdNodeType>(dimacsNnfHeaderStruct.numberOfNodes),
+                                                            dimacsNnfHeaderStruct.numberOfEdges,
+                                                            static_cast<VarT>(dimacsNnfHeaderStruct.numberOfVariables),
+                                                            dimacsNnfHeaderStruct.size, line);
     }
 
-    template <typename VarT, typename LiteralT, std::input_iterator InputIterator>
-    Circuit<VarT, LiteralT> parseCircuit(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, std::input_iterator InputIteratorT>
+    Circuit<VarT, LiteralT> parseCircuit(InputIteratorT& begin, const InputIteratorT& end,
                                          IdNodeType numberOfNodes, LargeNumberType numberOfEdges,
                                          VarT numberOfVariables, LargeNumberType size, unsigned int& line) {
         using ClauseType = typename Circuit<VarT, LiteralT>::ClauseType;
@@ -301,7 +301,7 @@ namespace Hydra::Circuit::Parser {
                 if (numberOfVariablesTmp == 0)
                     throw Exception::Circuit::Parser::CircuitParserException("The Krom-C leaf on line " + std::to_string(line) + " must have at least one variable!");
 
-                VariableVectorType variableVector = Other::Parser::parseAllPositiveNumbersOnLine<VarT, InputIterator>(begin, end, line, numberOfVariablesTmp);
+                VariableVectorType variableVector = Other::Parser::parseAllPositiveNumbersOnLine<VarT, InputIteratorT>(begin, end, line, numberOfVariablesTmp);
 
                 // Invalid number of variables
                 if (numberOfVariablesTmp != variableVector.size())
@@ -342,9 +342,9 @@ namespace Hydra::Circuit::Parser {
                     if (begin == end)
                         throw Exception::Parser::SomethingIsExpectedButEndOfStreamIsDetectedException("A clause");
 
-                    LiteralVectorType clauseTmp = Other::Parser::parseDimacsClause<VarT, LiteralT, InputIterator>(begin, end, line,
-                                                                                                                  S_ESTIMATED_SIZE_OF_CLAUSE_IN_FORMULA_LEAF_,
-                                                                                                                  mappingFromIndexToVar);
+                    LiteralVectorType clauseTmp = Other::Parser::parseDimacsClause<VarT, LiteralT, InputIteratorT>(begin, end, line,
+                                                                                                                   S_ESTIMATED_SIZE_OF_CLAUSE_IN_FORMULA_LEAF_,
+                                                                                                                   mappingFromIndexToVar);
                     ClauseType clause(std::move(clauseTmp));
                     formula.push_back(std::move(clause));
                 }
@@ -377,7 +377,7 @@ namespace Hydra::Circuit::Parser {
                 if (numberOfVariablesTmp == 0)
                     throw Exception::Circuit::Parser::CircuitParserException("The renH-C leaf on line " + std::to_string(line) + " must have at least one variable!");
 
-                LiteralVectorType literalVector = Other::Parser::parseAllLiteralsOnLine<VarT, LiteralT, InputIterator>(begin, end, line, numberOfVariablesTmp);
+                LiteralVectorType literalVector = Other::Parser::parseAllLiteralsOnLine<VarT, LiteralT, InputIteratorT>(begin, end, line, numberOfVariablesTmp);
 
                 // Invalid number of variables
                 if (numberOfVariablesTmp != literalVector.size())
@@ -423,9 +423,9 @@ namespace Hydra::Circuit::Parser {
                     if (begin == end)
                         throw Exception::Parser::SomethingIsExpectedButEndOfStreamIsDetectedException("A clause");
 
-                    LiteralVectorType clauseTmp = Other::Parser::parseDimacsClause<VarT, LiteralT, InputIterator>(begin, end, line,
-                                                                                                                  S_ESTIMATED_SIZE_OF_CLAUSE_IN_FORMULA_LEAF_,
-                                                                                                                  mappingFromIndexToVar);
+                    LiteralVectorType clauseTmp = Other::Parser::parseDimacsClause<VarT, LiteralT, InputIteratorT>(begin, end, line,
+                                                                                                                   S_ESTIMATED_SIZE_OF_CLAUSE_IN_FORMULA_LEAF_,
+                                                                                                                   mappingFromIndexToVar);
                     ClauseType clause(std::move(clauseTmp));
                     formula.push_back(std::move(clause));
                 }

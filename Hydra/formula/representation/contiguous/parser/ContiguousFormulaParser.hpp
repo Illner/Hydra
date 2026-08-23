@@ -29,23 +29,23 @@ namespace Hydra::Formula::Representation::Contiguous::Parser {
      * @throw ClauseContainsPairOfComplementaryLiteralsException [forbidClausesContainingComplementaryLiterals] if a clause contains a pair of complementary literals
      * @throw SomethingIsExpectedButEndOfStreamIsDetectedException, SomethingIsExpectedButAnotherSymbolIsDetectedException if the DIMACS CNF format is invalid
      */
-    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIterator>
-    inline std::unique_ptr<FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> parseCnfFormula(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIteratorT>
+    inline std::unique_ptr<FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> parseCnfFormula(InputIteratorT& begin, const InputIteratorT& end,
                                                                                                      const Other::Parser::DimacsCnfHeaderStruct& dimacsCnfHeaderStruct,
                                                                                                      unsigned int& line, bool forbidClausesContainingComplementaryLiterals = true,
                                                                                                      const ContiguousFormulaRepresentationConfiguration& configuration = ContiguousFormulaRepresentationConfiguration(),
                                                                                                      FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType formulaRepresentationStatisticsPtr = nullptr);
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIterator>
-    inline std::unique_ptr<FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> parseCnfFormula(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIteratorT>
+    inline std::unique_ptr<FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> parseCnfFormula(InputIteratorT& begin, const InputIteratorT& end,
                                                                                                      const Other::Parser::DimacsCnfHeaderStruct& dimacsCnfHeaderStruct,
                                                                                                      unsigned int& line, Cara::ModelCountingTypeEnum& modelCountingType,
                                                                                                      bool forbidClausesContainingComplementaryLiterals = true,
                                                                                                      const ContiguousFormulaRepresentationConfiguration& configuration = ContiguousFormulaRepresentationConfiguration(),
                                                                                                      FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType formulaRepresentationStatisticsPtr = nullptr);
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIterator>
-    inline std::unique_ptr<FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> parseCnfFormula(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIteratorT>
+    inline std::unique_ptr<FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> parseCnfFormula(InputIteratorT& begin, const InputIteratorT& end,
                                                                                                      VarT numberOfVariables, ClauseIdT numberOfClauses,
                                                                                                      LargeNumberType size, unsigned int& line,
                                                                                                      Cara::ModelCountingTypeEnum& modelCountingType,

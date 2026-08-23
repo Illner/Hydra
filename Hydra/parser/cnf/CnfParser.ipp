@@ -14,33 +14,33 @@
 
 namespace Hydra::Parser::Cnf {
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIterator>
-    ParsedFormulaStruct<VarT, LiteralT, ClauseIdT> parseCnfFormula(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIteratorT>
+    ParsedFormulaStruct<VarT, LiteralT, ClauseIdT> parseCnfFormula(InputIteratorT& begin, const InputIteratorT& end,
                                                                    const Other::Parser::DimacsCnfHeaderStruct& dimacsCnfHeaderStruct,
                                                                    unsigned int& line, bool forbidClausesContainingComplementaryLiterals) {
         Cara::ModelCountingTypeEnum dummyModelCountingType = Cara::ModelCountingTypeEnum::UNDEFINED;
 
-        return parseCnfFormula<VarT, LiteralT, ClauseIdT, InputIterator>(begin, end,
-                                                                         static_cast<VarT>(dimacsCnfHeaderStruct.numberOfVariables),
-                                                                         static_cast<ClauseIdT>(dimacsCnfHeaderStruct.numberOfClauses),
-                                                                         dimacsCnfHeaderStruct.size,
-                                                                         line, dummyModelCountingType, forbidClausesContainingComplementaryLiterals);
+        return parseCnfFormula<VarT, LiteralT, ClauseIdT, InputIteratorT>(begin, end,
+                                                                          static_cast<VarT>(dimacsCnfHeaderStruct.numberOfVariables),
+                                                                          static_cast<ClauseIdT>(dimacsCnfHeaderStruct.numberOfClauses),
+                                                                          dimacsCnfHeaderStruct.size,
+                                                                          line, dummyModelCountingType, forbidClausesContainingComplementaryLiterals);
     }
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIterator>
-    ParsedFormulaStruct<VarT, LiteralT, ClauseIdT> parseCnfFormula(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIteratorT>
+    ParsedFormulaStruct<VarT, LiteralT, ClauseIdT> parseCnfFormula(InputIteratorT& begin, const InputIteratorT& end,
                                                                    const Other::Parser::DimacsCnfHeaderStruct& dimacsCnfHeaderStruct,
                                                                    unsigned int& line, Cara::ModelCountingTypeEnum& modelCountingType,
                                                                    bool forbidClausesContainingComplementaryLiterals) {
-        return parseCnfFormula<VarT, LiteralT, ClauseIdT, InputIterator>(begin, end,
-                                                                         static_cast<VarT>(dimacsCnfHeaderStruct.numberOfVariables),
-                                                                         static_cast<ClauseIdT>(dimacsCnfHeaderStruct.numberOfClauses),
-                                                                         dimacsCnfHeaderStruct.size,
-                                                                         line, modelCountingType, forbidClausesContainingComplementaryLiterals);
+        return parseCnfFormula<VarT, LiteralT, ClauseIdT, InputIteratorT>(begin, end,
+                                                                          static_cast<VarT>(dimacsCnfHeaderStruct.numberOfVariables),
+                                                                          static_cast<ClauseIdT>(dimacsCnfHeaderStruct.numberOfClauses),
+                                                                          dimacsCnfHeaderStruct.size,
+                                                                          line, modelCountingType, forbidClausesContainingComplementaryLiterals);
     }
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIterator>
-    ParsedFormulaStruct<VarT, LiteralT, ClauseIdT> parseCnfFormula(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIteratorT>
+    ParsedFormulaStruct<VarT, LiteralT, ClauseIdT> parseCnfFormula(InputIteratorT& begin, const InputIteratorT& end,
                                                                    VarT numberOfVariables, ClauseIdT numberOfClauses,
                                                                    LargeNumberType size, unsigned int& line,
                                                                    Cara::ModelCountingTypeEnum& modelCountingType,
