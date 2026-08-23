@@ -37,8 +37,8 @@ namespace HydraTest::Formula::Representation::Contiguous::Parser {
         std::istreambuf_iterator<char> end;
 
         auto header = Hydra::Other::Parser::parseDimacsCnfHeader(begin, end, line);
-        return Hydra::Formula::Representation::Contiguous::Parser::parseFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, header, line,
-                                                                                                                                           forbidClausesContainingComplementaryLiterals);
+        return Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, header, line,
+                                                                                                                                              forbidClausesContainingComplementaryLiterals);
     }
 
     FormulaRepresentationAbstractUniquePtrType parseFormula(const std::string& formulaString, ModelCountingTypeEnum& modelCountingType) {
@@ -50,7 +50,7 @@ namespace HydraTest::Formula::Representation::Contiguous::Parser {
 
         Hydra::Other::Parser::parseCommentLines(begin, end, line, modelCountingType);
         auto header = Hydra::Other::Parser::parseDimacsCnfHeader(begin, end, line);
-        return Hydra::Formula::Representation::Contiguous::Parser::parseFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, header, line, modelCountingType);
+        return Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, header, line, modelCountingType);
     }
     //endregion
 

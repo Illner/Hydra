@@ -167,7 +167,7 @@ namespace HydraTest::DecisionHeuristic {
         std::istreambuf_iterator<char> end;
 
         auto header = Hydra::Other::Parser::parseDimacsCnfHeader(begin, end, line);
-        return Hydra::Formula::Representation::Contiguous::Parser::parseFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, header, line);
+        return Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, header, line);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
