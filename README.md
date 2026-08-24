@@ -2,7 +2,7 @@
 
 Hydra is the development repository for the **Bella knowledge compiler** and the **Cara #SAT solver**.
 
-<!-- **Version**: v2.1.0 (in development, not yet released) -->
+**Version**: v2.2.0 (in development, not yet released)
 
 ## Bella
 
@@ -95,7 +95,7 @@ The corresponding binaries are in the locations mentioned above.
 
 ### Hash Maps
 
-* [unordered_dense v4.9.1](https://github.com/martinus/unordered_dense)  
+* [unordered_dense v4.9.2](https://github.com/martinus/unordered_dense)  
   `Hydra/external/hashMaps/unordered_dense`
 
 * [robin-hood-hashing 3.11.5](https://github.com/martinus/robin-hood-hashing)  
@@ -119,6 +119,13 @@ The corresponding binaries are in the locations mentioned above.
   _used on Linux, macOS, and Windows_  
   `Hydra/external/partitioningHypergraphs/KaHyPar`  
   `Hydra/external/boost` (_precompiled libraries required by KaHyPar_)
+
+### CNF Preprocessors
+
+* [bipe v1.1.0](https://github.com/jm62300/bipe)  
+  _work in progress_  
+  _used for Bella and Cara_  
+  `Hydra/external/cnfPreprocessors/bipe`
 
 ### Unit Testing
 
