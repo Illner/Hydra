@@ -12,7 +12,7 @@
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hxx"
 #include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.tpp"
 
-namespace Hydra::Formula::Representation::Contiguous::Parser {
+namespace Hydra::Formula::Representation::Contiguous::Parser::Cnf {
 
     using LargeNumberType = Hydra::Parser::Cnf::LargeNumberType;
 
@@ -52,6 +52,6 @@ namespace Hydra::Formula::Representation::Contiguous::Parser {
                                                                                                      bool forbidClausesContainingComplementaryLiterals = true,
                                                                                                      const ContiguousFormulaRepresentationConfiguration& configuration = ContiguousFormulaRepresentationConfiguration(),
                                                                                                      FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType formulaRepresentationStatisticsPtr = nullptr);
-}   // namespace Hydra::Formula::Representation::Contiguous::Parser
+}   // namespace Hydra::Formula::Representation::Contiguous::Parser::Cnf
 
-#include "./ContiguousFormulaParser.ipp"
+#include "./ContiguousFormulaCnfParser.ipp"

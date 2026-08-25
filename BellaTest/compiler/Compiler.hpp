@@ -12,7 +12,7 @@
 #include "Hydra/circuit/Circuit.hpp"
 #include "Hydra/compiler/Compiler.hpp"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
-#include "Hydra/formula/representation/contiguous/parser/ContiguousFormulaParser.hpp"
+#include "Hydra/formula/representation/contiguous/parser/cnf/ContiguousFormulaCnfParser.hpp"
 #include "Hydra/other/operatingSystem/OperatingSystem.hpp"
 #include "Hydra/other/parser/Parser.hpp"
 #include "Hydra/statistics/Statistics.hpp"
@@ -241,6 +241,6 @@ namespace BellaTest::Compiler {
         std::istreambuf_iterator<char> end;
 
         auto header = Hydra::Other::Parser::parseDimacsCnfHeader(begin, end, line);
-        return Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, header, line, false, contiguousFormulaRepresentationConfiguration);
+        return Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, header, line, false, contiguousFormulaRepresentationConfiguration);
     }
 }   // namespace BellaTest::Compiler

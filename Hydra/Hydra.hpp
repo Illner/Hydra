@@ -8,7 +8,6 @@
 #include <iterator>
 
 #include "Hydra/compiler/Compiler.hpp"
-#include "Hydra/formula/representation/contiguous/parser/ContiguousFormulaParser.hpp"
 #include "Hydra/other/Other.hpp"
 #include "Hydra/other/parser/Parser.hpp"
 #include "Hydra/statistics/Statistics.hpp"

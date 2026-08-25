@@ -2,6 +2,8 @@
 
 #include "./CreateFormula.hpp"
 
+#include "Hydra/formula/representation/contiguous/parser/cnf/ContiguousFormulaCnfParser.hpp"
+
 namespace HydraTest::DecisionHeuristic {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
@@ -167,7 +169,7 @@ namespace HydraTest::DecisionHeuristic {
         std::istreambuf_iterator<char> end;
 
         auto header = Hydra::Other::Parser::parseDimacsCnfHeader(begin, end, line);
-        return Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, header, line);
+        return Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, header, line);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>

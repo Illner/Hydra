@@ -1,11 +1,11 @@
 #pragma once
 
-#include "./ContiguousFormulaParser.hpp"
+#include "./ContiguousFormulaCnfParser.hpp"
 
 #include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.hpp"
 #include "Hydra/parser/cnf/ParsedFormulaStructure.hpp"
 
-namespace Hydra::Formula::Representation::Contiguous::Parser {
+namespace Hydra::Formula::Representation::Contiguous::Parser::Cnf {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIteratorT>
     std::unique_ptr<FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> parseCnfFormula(InputIteratorT& begin, const InputIteratorT& end,
@@ -73,4 +73,4 @@ namespace Hydra::Formula::Representation::Contiguous::Parser {
 
         return formulaRepresentation;
     }
-}   // namespace Hydra::Formula::Representation::Contiguous::Parser
+}   // namespace Hydra::Formula::Representation::Contiguous::Parser::Cnf

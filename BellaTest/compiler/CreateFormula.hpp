@@ -5,7 +5,6 @@
 
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
 #include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.hpp"
-#include "Hydra/formula/representation/contiguous/parser/ContiguousFormulaParser.hpp"
 #include "Hydra/other/parser/Parser.hpp"
 
 namespace BellaTest::Compiler {

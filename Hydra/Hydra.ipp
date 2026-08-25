@@ -2,6 +2,8 @@
 
 #include "./Hydra.hpp"
 
+#include "Hydra/formula/representation/contiguous/parser/cnf/ContiguousFormulaCnfParser.hpp"
+
 template <typename CommandLineArgumentsStructT>
 void initialAdjustmentToConfiguration(CommandLineArgumentsStructT& commandLineArgumentsStruct) {
     // No variable subsumption => no vertex weights
@@ -99,7 +101,7 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
                 using LiteralT = char8_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR8_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -118,7 +120,7 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
                 using LiteralT = char16_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR16_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -141,7 +143,7 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
                 using LiteralT = char16_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR16_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -160,7 +162,7 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
                 using LiteralT = char32_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR32_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -183,7 +185,7 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
                 using LiteralT = char32_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR32_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -220,7 +222,7 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
                 using LiteralT = char8_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR8_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -239,7 +241,7 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
                 using LiteralT = char16_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR16_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -262,7 +264,7 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
                 using LiteralT = char16_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR16_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -281,7 +283,7 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
                 using LiteralT = char32_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR32_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -304,7 +306,7 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
                 using LiteralT = char32_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR32_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -341,7 +343,7 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
                 using LiteralT = char8_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR8_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -360,7 +362,7 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
                 using LiteralT = char16_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR16_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -383,7 +385,7 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
                 using LiteralT = char16_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR16_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -402,7 +404,7 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
                 using LiteralT = char32_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR32_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -425,7 +427,7 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
                 using LiteralT = char32_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR32_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
