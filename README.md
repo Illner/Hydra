@@ -125,7 +125,7 @@ The corresponding binaries are in the locations mentioned above.
 * [bipe v1.1.0](https://github.com/jm62300/bipe)  
   _work in progress_  
   _used for Bella and Cara_  
-  `Hydra/external/cnfPreprocessors/bipe`
+  `Hydra/external/preprocessors/cnf/bipe`
 
 ### Unit Testing
 
