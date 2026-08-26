@@ -8,6 +8,7 @@
 
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/other/Other.hpp"
+#include "Hydra/other/container/vectorSet/VectorSet.hpp"
 
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
 #include "Hydra/compiler/exceptions/ParserException.hpp"
@@ -47,11 +48,11 @@ namespace Hydra::Parser::Cnf {
                                                                    bool forbidClausesContainingComplementaryLiterals) {
         using ParsedFormulaStruct = ParsedFormulaStruct<VarT, LiteralT, ClauseIdT>;
 
-        using LiteralType = typename ParsedFormulaStruct::LiteralType;
-        using FormulaType = typename ParsedFormulaStruct::FormulaType;
-        using ClauseSizeType = typename ParsedFormulaStruct::ClauseSizeType;
-        using ClauseIdVectorType = typename ParsedFormulaStruct::ClauseIdVectorType;
-        using VariableSetType = typename Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableSetType;
+        using LiteralType = ParsedFormulaStruct::LiteralType;
+        using FormulaType = ParsedFormulaStruct::FormulaType;
+        using VectorSetType = Container::VectorSet::VectorSet;
+        using ClauseSizeType = ParsedFormulaStruct::ClauseSizeType;
+        using ClauseIdVectorType = ParsedFormulaStruct::ClauseIdVectorType;
 
         // The formula size + the number of clauses cannot be saved as std::size_t
         LargeNumberType tmp = size + static_cast<LargeNumberType>(numberOfClauses);
@@ -68,6 +69,10 @@ namespace Hydra::Parser::Cnf {
         ClauseIdT realNumberOfClauses = 0;
         ClauseIdT numberOfClausesContainingComplementaryLiterals = 0;
 
+        // Data structures to detect complementary and duplicate literals in a clause
+        VectorSetType positiveLiteralVectorSet(numberOfVariables + 1);
+        VectorSetType negativeLiteralVectorSet(numberOfVariables + 1);
+
         constexpr ClauseSizeType S_ESTIMATED_SIZE_OF_CLAUSE_ = 4;
 
         // Size is not set
@@ -79,10 +84,6 @@ namespace Hydra::Parser::Cnf {
         FormulaType formula;
         formula.reserve(size + numberOfClauses);
         ClauseIdVectorType literalNumberOfOccurrences(static_cast<typename ClauseIdVectorType::size_type>(LiteralT(2) + LiteralT(2) * static_cast<LiteralT>(numberOfVariables)), 0);
-
-        // Auxiliary data structures    // TODO
-        VariableSetType positiveLiteralSet(numberOfVariables);
-        VariableSetType negativeLiteralSet(numberOfVariables);
 
         while (begin != end) {
             if (Other::Parser::skipWhitespacesExcludingNewLineSymbol(begin, end))
@@ -103,9 +104,9 @@ namespace Hydra::Parser::Cnf {
 
             // Clear data structures
             bool clauseIsEmpty = true;
-            positiveLiteralSet.clear();
-            negativeLiteralSet.clear();
             ClauseSizeType clauseSize = 0;
+            positiveLiteralVectorSet.clear();
+            negativeLiteralVectorSet.clear();
             bool clauseContainsComplementaryLiterals = false;
 
             // Parse a clause
@@ -134,41 +135,41 @@ namespace Hydra::Parser::Cnf {
                 // Positive literal
                 if (parsedLiteral.isPositive()) {
                     // Duplicate literal
-                    if (Other::containInSet(positiveLiteralSet, parsedVariable)) {
+                    if (positiveLiteralVectorSet.contains(parsedVariable)) {
                         ++sizeContainingDuplicateLiterals;
 
                         continue;
                     }
 
                     // Complementary literal
-                    if (Other::containInSet(negativeLiteralSet, parsedVariable)) {
+                    if (negativeLiteralVectorSet.contains(parsedVariable)) {
                         if (forbidClausesContainingComplementaryLiterals)
                             throw Exception::Parser::ClauseContainsPairOfComplementaryLiteralsException(line);
 
                         clauseContainsComplementaryLiterals = true;
                     }
 
-                    positiveLiteralSet.emplace(parsedVariable);
+                    positiveLiteralVectorSet.emplace(parsedVariable);
                 }
 
                 // Negative literal
                 else {
                     // Duplicate literal
-                    if (Other::containInSet(negativeLiteralSet, parsedVariable)) {
+                    if (negativeLiteralVectorSet.contains(parsedVariable)) {
                         ++sizeContainingDuplicateLiterals;
 
                         continue;
                     }
 
                     // Complementary literal
-                    if (Other::containInSet(positiveLiteralSet, parsedVariable)) {
+                    if (positiveLiteralVectorSet.contains(parsedVariable)) {
                         if (forbidClausesContainingComplementaryLiterals)
                             throw Exception::Parser::ClauseContainsPairOfComplementaryLiteralsException(line);
 
                         clauseContainsComplementaryLiterals = true;
                     }
 
-                    negativeLiteralSet.emplace(parsedVariable);
+                    negativeLiteralVectorSet.emplace(parsedVariable);
                 }
 
                 ++clauseSize;
