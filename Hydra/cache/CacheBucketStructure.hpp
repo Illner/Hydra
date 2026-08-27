@@ -45,7 +45,7 @@ namespace Hydra::Cache {
 
     public:
         explicit CacheBucketStruct(IdType id) noexcept
-            : id(id), value() { };
+            : id(id), value() { }
 
         CacheBucketStruct(const CacheBucketStruct&) = delete;
         CacheBucketStruct(CacheBucketStruct&&) noexcept = default;

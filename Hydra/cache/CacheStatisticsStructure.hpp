@@ -26,7 +26,7 @@ namespace Hydra::Cache {
             : numberOfCalls_(0),
               minNumberOfVariables_(formulaRepresentationAbstractPtr->getNumberOfVariablesInOriginalFormula()), maxNumberOfVariables_(0), sumNumberOfVariables_(0),
               minNumberOfClauses_(formulaRepresentationAbstractPtr->getNumberOfOriginalClauses()), maxNumberOfClauses_(0), sumNumberOfClauses_(0),
-              minFormulaSize_(formulaRepresentationAbstractPtr->getOriginalFormulaSize()), maxFormulaSize_(0), sumFormulaSize_(0) { };
+              minFormulaSize_(formulaRepresentationAbstractPtr->getOriginalFormulaSize()), maxFormulaSize_(0), sumFormulaSize_(0) { }
 
         CacheStatisticsStruct(const CacheStatisticsStruct&) = delete;
         CacheStatisticsStruct(CacheStatisticsStruct&&) noexcept = default;

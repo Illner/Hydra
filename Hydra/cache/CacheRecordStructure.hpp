@@ -46,7 +46,7 @@ namespace Hydra::Cache {
               string8(), string16(), string32(),
               numberOfVariables(0), numberOfClauses(0), formulaSize(0), maxClauseSize(0),
               numberOfRemovedVariables(0), numberOfRemovedClauses(0), removedFormulaSize(0),
-              mapping() { };
+              mapping() { }
 
         CacheRecordStruct(const CacheRecordStruct&) = delete;
         CacheRecordStruct(CacheRecordStruct&&) noexcept = default;
