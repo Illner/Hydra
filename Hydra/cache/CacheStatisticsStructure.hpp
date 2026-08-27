@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cassert>
-#include <ostream>
+#include <iostream>
 #include <string>
 
 #include "Hydra/cache/CacheRecordStructure.hpp"

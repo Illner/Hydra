@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cassert>
-#include <ostream>
+#include <iostream>
 
 #include "Hydra/decisionHeuristic/DecisionHeuristicAbstract.hpp"
 #include "Hydra/satSolver/SatSolverAbstract.hpp"

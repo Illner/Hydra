@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cmath>
-#include <ostream>
+#include <iostream>
 
 #include "Hydra/decisionHeuristic/DecisionHeuristicAbstract.hpp"
 #include "Hydra/formula/Literal.hpp"

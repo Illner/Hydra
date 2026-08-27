@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ostream>
+#include <iostream>
 #include <string_view>
 
 namespace Hydra::Other::Version {
