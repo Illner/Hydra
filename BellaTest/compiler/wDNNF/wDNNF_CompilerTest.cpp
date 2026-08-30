@@ -224,7 +224,7 @@ namespace BellaTest::Compiler::wDNNF {
     TEST_CASE("[Compiler::wDNNF] statistics", "[Compiler::wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
 
-        process(configuration, false, ContagiousFormulaRepresentationConfigurationType(), true);
+        process(configuration, false, ContiguousFormulaRepresentationConfigurationType(), true);
     }
 
     /**
@@ -233,7 +233,7 @@ namespace BellaTest::Compiler::wDNNF {
     TEST_CASE("[Compiler::wDNNF] no statistics", "[Compiler::wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
 
-        process(configuration, false, ContagiousFormulaRepresentationConfigurationType(), false);
+        process(configuration, false, ContiguousFormulaRepresentationConfigurationType(), false);
     }
 
     //region SAT solver
@@ -1498,11 +1498,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1517,11 +1517,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1536,11 +1536,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1556,11 +1556,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1574,11 +1574,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1593,11 +1593,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1612,11 +1612,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1632,11 +1632,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
     //endregion
 
@@ -1653,11 +1653,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1673,11 +1673,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1693,11 +1693,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1714,11 +1714,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1733,11 +1733,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1753,11 +1753,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1773,11 +1773,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1794,11 +1794,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1813,11 +1813,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1833,11 +1833,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1853,11 +1853,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1874,11 +1874,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1893,11 +1893,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1913,11 +1913,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1933,11 +1933,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1954,11 +1954,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
     //endregion
 
@@ -1975,11 +1975,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1994,11 +1994,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2013,11 +2013,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2033,11 +2033,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2051,11 +2051,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2070,11 +2070,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2089,11 +2089,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2109,11 +2109,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
     #endif
     //endregion
@@ -2197,11 +2197,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::NONE;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2214,11 +2214,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::STANDARD;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2231,11 +2231,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::CLAUSE_LENGTH;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2249,11 +2249,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::NONE;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2267,11 +2267,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::STANDARD;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2285,11 +2285,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::CLAUSE_LENGTH;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2302,11 +2302,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::NONE;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2319,11 +2319,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::STANDARD;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2336,11 +2336,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::CLAUSE_LENGTH;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2354,11 +2354,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::NONE;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2372,11 +2372,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::STANDARD;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2390,11 +2390,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::CLAUSE_LENGTH;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2405,11 +2405,11 @@ namespace BellaTest::Compiler::wDNNF {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2422,11 +2422,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::RANDOM;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2439,11 +2439,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::VARIABLE_INDEX;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2456,11 +2456,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_ASCENDING;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2473,11 +2473,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_DESCENDING;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2491,11 +2491,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::RANDOM;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2509,11 +2509,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::VARIABLE_INDEX;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2527,11 +2527,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_ASCENDING;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2545,11 +2545,11 @@ namespace BellaTest::Compiler::wDNNF {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_DESCENDING;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
     //endregion
 
@@ -2561,11 +2561,11 @@ namespace BellaTest::Compiler::wDNNF {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        processConfiguration(configuration, false, contagiousFormulaRepresentationConfiguration);
+        processConfiguration(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2575,11 +2575,11 @@ namespace BellaTest::Compiler::wDNNF {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        processConfiguration(configuration, false, contagiousFormulaRepresentationConfiguration);
+        processConfiguration(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
     //endregion
 }   // namespace BellaTest::Compiler::wDNNF

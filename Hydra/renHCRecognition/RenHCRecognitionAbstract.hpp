@@ -22,7 +22,7 @@
 namespace Hydra::RenHCRecognition {
 
     /**
-     * RenH-C recognition (abstract class)
+     * RenH-C recognition representation (abstract class)
      * Copy and move methods are disabled!
      * Exception:
      *      SomethingCannotBeSavedAsStdSizeTException (debug)

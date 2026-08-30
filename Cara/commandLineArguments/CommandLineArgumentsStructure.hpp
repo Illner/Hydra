@@ -7,7 +7,7 @@
 #include "Cara/sharpSolver/enums/ModelCountingTypeEnum.hpp"
 
 #include "Hydra/compiler/Compiler.tpp"
-#include "Hydra/formula/representation/contagious/ContagiousFormulaRepresentation.tpp"
+#include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.tpp"
 
 namespace Cara::CommandLineArguments {
 
@@ -20,7 +20,7 @@ namespace Cara::CommandLineArguments {
     struct CommandLineArgumentsStruct {
     public:
         using SharpSolverConfigurationType = typename Hydra::CompilerConfiguration;
-        using ContagiousFormulaRepresentationConfigurationType = typename Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentationConfiguration;
+        using ContiguousFormulaRepresentationConfigurationType = typename Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentationConfiguration;
 
     public:
         using ModelCountingTypeEnum = typename Cara::ModelCountingTypeEnum;
@@ -36,6 +36,6 @@ namespace Cara::CommandLineArguments {
         ModelCountingTypeEnum modelCountingType = ModelCountingTypeEnum::UNDEFINED;
 
         SharpSolverConfigurationType compilerConfiguration;
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
     };
 }   // namespace Cara::CommandLineArguments

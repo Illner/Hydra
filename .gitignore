@@ -18,6 +18,7 @@ build_cara
 /.idea/codeStyles/codeStyleConfig.xml
 
 ## Claude
+/CLAUDE.md
 /.claude
 /.claude/settings.local.json
 
@@ -25,7 +26,7 @@ build_cara
 .DS_Store
 /temp.txt
 /TODO.md
-/cnfFormulae/tmp.cnf
+/formulae/cnf/tmp.cnf
 
 # Binary files of compiled MiniSat
 Hydra/external/satSolvers/MiniSat/core/Solver.or

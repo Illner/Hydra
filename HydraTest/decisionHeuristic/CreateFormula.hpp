@@ -7,8 +7,7 @@
 #include "HydraTest/decisionHeuristic/DecisionHeuristicFormula.hpp"
 
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
-#include "Hydra/formula/representation/contagious/ContagiousFormulaRepresentation.hpp"
-#include "Hydra/formula/representation/contagious/parser/ContagiousFormulaParser.hpp"
+#include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.hpp"
 #include "Hydra/other/parser/Parser.hpp"
 
 namespace HydraTest::DecisionHeuristic {

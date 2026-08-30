@@ -5,14 +5,13 @@
 #include <iostream>
 #include <iterator>
 #include <limits>
-#include <ostream>
 #include <sstream>
 #include <string>
 #include <string_view>
 #include <vector>
 
 #include "Hydra/other/hashMap/HashMap.hpp"
-#include "Hydra/other/parser/CommandLineArgumentsParser.hpp"
+#include "Hydra/other/parser/commandLineArgument/CommandLineArgumentParser.hpp"
 #include "Hydra/other/std/Std.hpp"
 
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
@@ -138,15 +137,15 @@ namespace Hydra::Other {
      * Note: e_1, e_2, ..., e_N
      * @return a string stream containing the content of the container
      */
-    template <std::input_iterator InputIterator>
-    inline std::stringstream createStringStreamFromContainer(const InputIterator& begin, const InputIterator& end);
+    template <std::input_iterator InputIteratorT>
+    inline std::stringstream createStringStreamFromContainer(const InputIteratorT& begin, const InputIteratorT& end);
 
     /**
      * Note: std::to_string(e_1), std::to_string(e_2), ..., std::to_string(e_N)
      * @return a string stream containing the content of the container
      */
-    template <std::input_iterator InputIterator>
-    inline std::stringstream createStringStreamFromContainerWithToStringConversion(const InputIterator& begin, const InputIterator& end);
+    template <std::input_iterator InputIteratorT>
+    inline std::stringstream createStringStreamFromContainerWithToStringConversion(const InputIteratorT& begin, const InputIteratorT& end);
 
     /**
      * Note: std::to_string(k_1) -> v_1, ..., std::to_string(k_N) -> v_N
@@ -185,7 +184,7 @@ namespace Hydra::Other {
      * Print a warning about ignoring the remaining arguments except for notIgnoredArgumentName
      * @param notIgnoredArgumentName the only argument which is not ignored (for example, help, version)
      */
-    inline void printWarningAboutIgnoringRemainingArgumentsExceptOne(const Parser::CommandLineArguments::ArgumentNameType& notIgnoredArgumentName);
+    inline void printWarningAboutIgnoringRemainingArgumentsExceptOne(const Parser::CommandLineArgument::ArgumentNameType& notIgnoredArgumentName);
 
     /**
      * prefix --------------------

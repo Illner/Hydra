@@ -1473,11 +1473,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1496,11 +1496,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1519,11 +1519,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1543,11 +1543,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1565,11 +1565,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1588,11 +1588,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1611,11 +1611,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1635,11 +1635,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1657,11 +1657,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1680,11 +1680,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1703,11 +1703,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1727,11 +1727,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1749,11 +1749,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1772,11 +1772,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1795,11 +1795,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1819,11 +1819,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1841,11 +1841,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1864,11 +1864,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1887,11 +1887,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1911,11 +1911,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1933,11 +1933,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1956,11 +1956,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -1979,11 +1979,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2003,11 +2003,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2025,11 +2025,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2048,11 +2048,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2071,11 +2071,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2095,11 +2095,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2117,11 +2117,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2140,11 +2140,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2163,11 +2163,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2187,11 +2187,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2209,11 +2209,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2232,11 +2232,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2255,11 +2255,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2279,11 +2279,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2301,11 +2301,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2324,11 +2324,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2347,11 +2347,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2371,11 +2371,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2393,11 +2393,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2416,11 +2416,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2439,11 +2439,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2463,11 +2463,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2485,11 +2485,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2508,11 +2508,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2531,11 +2531,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -2555,11 +2555,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeComponentCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
     //endregion
 
@@ -3393,11 +3393,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3416,11 +3416,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3439,11 +3439,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3463,11 +3463,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3485,11 +3485,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3508,11 +3508,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3531,11 +3531,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3555,11 +3555,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3577,11 +3577,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3600,11 +3600,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3623,11 +3623,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3647,11 +3647,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3669,11 +3669,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3692,11 +3692,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3715,11 +3715,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3739,11 +3739,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3761,11 +3761,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3784,11 +3784,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3807,11 +3807,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3831,11 +3831,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3853,11 +3853,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3876,11 +3876,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3899,11 +3899,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3923,11 +3923,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::BACKWARD_SUBSUMPTION_DETECTION_INTERSECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3945,11 +3945,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3968,11 +3968,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -3991,11 +3991,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4015,11 +4015,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4037,11 +4037,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4060,11 +4060,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4083,11 +4083,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4107,11 +4107,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4129,11 +4129,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4152,11 +4152,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4175,11 +4175,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4199,11 +4199,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::FORWARD_SUBSUMPTION_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4221,11 +4221,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4244,11 +4244,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4267,11 +4267,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4291,11 +4291,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4313,11 +4313,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4336,11 +4336,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4359,11 +4359,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4383,11 +4383,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4405,11 +4405,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4428,11 +4428,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4451,11 +4451,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4475,11 +4475,11 @@ namespace CaraTest::SharpSolver {
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.preprocessingType = PreprocessingTypeEnum::NOT_SUBSUMED_CLAUSES;
         configuration.caraCachingSchemeHypergraphCutCachingConfiguration.discardInvalidCacheRecordsNotSubsumedClausesPreprocessing = true;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.subsumptionType = SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
     //endregion
 
@@ -4496,11 +4496,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4515,11 +4515,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4534,11 +4534,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4554,11 +4554,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4572,11 +4572,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4591,11 +4591,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4610,11 +4610,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4630,11 +4630,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
     //endregion
 
@@ -4651,11 +4651,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4671,11 +4671,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4691,11 +4691,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4712,11 +4712,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4731,11 +4731,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4751,11 +4751,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4771,11 +4771,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4792,11 +4792,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4811,11 +4811,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4831,11 +4831,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4851,11 +4851,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4872,11 +4872,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4891,11 +4891,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4911,11 +4911,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4931,11 +4931,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4952,11 +4952,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
     //endregion
 
@@ -4973,11 +4973,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -4992,11 +4992,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5011,11 +5011,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5031,11 +5031,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5049,11 +5049,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5068,11 +5068,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5087,11 +5087,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5107,11 +5107,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
     #endif
     //endregion
@@ -5195,11 +5195,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::NONE;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5212,11 +5212,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::STANDARD;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5229,11 +5229,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::CLAUSE_LENGTH;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5247,11 +5247,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::NONE;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5265,11 +5265,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::STANDARD;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5283,11 +5283,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::CLAUSE_LENGTH;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::FORWARD_VARIABLE_SUBSUMPTION_WITH_MAPPING_DETECTION;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5300,11 +5300,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::NONE;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5317,11 +5317,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::STANDARD;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5334,11 +5334,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::CLAUSE_LENGTH;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5352,11 +5352,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::NONE;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5370,11 +5370,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::STANDARD;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5388,11 +5388,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::CLAUSE_LENGTH;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5403,11 +5403,11 @@ namespace CaraTest::SharpSolver {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = false;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5420,11 +5420,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::RANDOM;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5437,11 +5437,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::VARIABLE_INDEX;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5454,11 +5454,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_ASCENDING;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5471,11 +5471,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_DESCENDING;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::NONE;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5489,11 +5489,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::RANDOM;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5507,11 +5507,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::VARIABLE_INDEX;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5525,11 +5525,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_ASCENDING;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
 
     /**
@@ -5543,11 +5543,11 @@ namespace CaraTest::SharpSolver {
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_DESCENDING;
 
-        // Contagious formula representation configuration
-        ContagiousFormulaRepresentationConfigurationType contagiousFormulaRepresentationConfiguration;
-        contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        // Contiguous formula representation configuration
+        ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
+        contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
-        process(configuration, false, contagiousFormulaRepresentationConfiguration);
+        process(configuration, false, contiguousFormulaRepresentationConfiguration);
     }
     //endregion
 }   // namespace CaraTest::SharpSolver

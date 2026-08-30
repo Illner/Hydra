@@ -19,7 +19,7 @@
 #include "Hydra/cache/cachingScheme/cara/CaraCachingScheme.hpp"
 #include "Hydra/cache/cachingScheme/cara/CaraCachingScheme.tpp"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
-#include "Hydra/formula/representation/contagious/ContagiousFormulaRepresentation.hpp"
+#include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.hpp"
 #include "Hydra/other/Other.hpp"
 #include "Hydra/other/container/computeConnectedComponents/ConnectedComponentStructure.hpp"
 
@@ -40,10 +40,10 @@ namespace HydraTest::Cache {
     using VariableSetType = typename Hydra::Cache::Cache<VarT, LiteralT, ClauseIdT, CacheValueT>::VariableSetType;
     using LiteralVectorType = typename Hydra::Cache::Cache<VarT, LiteralT, ClauseIdT, CacheValueT>::LiteralVectorType;
     using LiteralType = typename Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
+    using FormulaType = typename Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::FormulaType;
     using MappingFromVariableToLiteralType = typename Hydra::Cache::Cache<VarT, LiteralT, ClauseIdT, CacheValueT>::MappingFromVariableToLiteralType;
     using ClauseIdVectorType = typename Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType;
     using VariableVectorType = typename Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableVectorType;
-    using FormulaType = typename Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentation<VarT, LiteralT, ClauseIdT>::FormulaType;
     using CacheValuePtrAndIdPairOptionalType = typename Hydra::Cache::Cache<VarT, LiteralT, ClauseIdT, CacheValueT>::CacheValuePtrAndIdPairOptionalType;
     using FormulaRepresentationAbstractPtrType = typename Hydra::Cache::Cache<VarT, LiteralT, ClauseIdT, CacheValueT>::FormulaRepresentationAbstractPtrType;
 
@@ -56,7 +56,7 @@ namespace HydraTest::Cache {
     using BasicCachingSchemeType = Hydra::Cache::CachingScheme::Basic::BasicCachingScheme<VarT, LiteralT, ClauseIdT>;
     using FormulaRepresentationAbstractType = Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>;
     using CachingSchemeAbstractUniquePtrType = std::unique_ptr<Hydra::Cache::CachingScheme::CachingSchemeAbstract<VarT, LiteralT, ClauseIdT>>;
-    using ContagiousFormulaRepresentationType = Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentation<VarT, LiteralT, ClauseIdT>;
+    using ContiguousFormulaRepresentationType = Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>;
     using NoneCacheCleaningStrategyType = Hydra::Cache::CacheCleaningStrategy::None::NoneCacheCleaningStrategy<VarT, LiteralT, ClauseIdT, CacheValueT>;
     using FormulaRepresentationAbstractUniquePtrType = std::unique_ptr<Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>>;
     using CacheCleaningStrategyAbstractUniquePtrType = std::unique_ptr<Hydra::Cache::CacheCleaningStrategy::CacheCleaningStrategyAbstract<VarT, LiteralT, ClauseIdT, CacheValueT>>;
@@ -406,10 +406,10 @@ namespace HydraTest::Cache {
         };
 
         VarT numberOfVariables = 12;
-        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contagious::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
-        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contagious::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
+        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contiguous::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
+        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contiguous::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
 
-        return std::make_unique<ContagiousFormulaRepresentationType>(std::move(formula),
+        return std::make_unique<ContiguousFormulaRepresentationType>(std::move(formula),
                                                                      numberOfVariables, numberOfClauses,
                                                                      literalNumberOfOccurrences);
     }
@@ -444,10 +444,10 @@ namespace HydraTest::Cache {
         };
 
         VarT numberOfVariables = 8;
-        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contagious::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
-        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contagious::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
+        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contiguous::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
+        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contiguous::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
 
-        return std::make_unique<ContagiousFormulaRepresentationType>(std::move(formula),
+        return std::make_unique<ContiguousFormulaRepresentationType>(std::move(formula),
                                                                      numberOfVariables, numberOfClauses,
                                                                      literalNumberOfOccurrences);
     }
@@ -500,10 +500,10 @@ namespace HydraTest::Cache {
         };
 
         VarT numberOfVariables = 65536;
-        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contagious::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
-        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contagious::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
+        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contiguous::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
+        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contiguous::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
 
-        return std::make_unique<ContagiousFormulaRepresentationType>(std::move(formula),
+        return std::make_unique<ContiguousFormulaRepresentationType>(std::move(formula),
                                                                      numberOfVariables, numberOfClauses,
                                                                      literalNumberOfOccurrences);
     }
@@ -556,10 +556,10 @@ namespace HydraTest::Cache {
         };
 
         VarT numberOfVariables = 32768;
-        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contagious::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
-        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contagious::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
+        ClauseIdVectorType literalNumberOfOccurrences = Hydra::Formula::Representation::Contiguous::createLiteralNumberOfOccurrences<VarT, LiteralT, ClauseIdT>(numberOfVariables, formula);
+        ClauseIdT numberOfClauses = Hydra::Formula::Representation::Contiguous::getNumberOfClauses<VarT, LiteralT, ClauseIdT>(formula);
 
-        return std::make_unique<ContagiousFormulaRepresentationType>(std::move(formula),
+        return std::make_unique<ContiguousFormulaRepresentationType>(std::move(formula),
                                                                      numberOfVariables, numberOfClauses,
                                                                      literalNumberOfOccurrences);
     }

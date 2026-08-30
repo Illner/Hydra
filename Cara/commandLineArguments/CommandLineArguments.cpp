@@ -5,30 +5,30 @@
 #include <string>
 
 #include "Hydra/other/Other.hpp"
-#include "Hydra/other/parser/CommandLineArgumentsParser.hpp"
+#include "Hydra/other/parser/commandLineArgument/CommandLineArgumentParser.hpp"
 
 #include "Cara/commandLineArguments/exceptions/CommandLineArgumentsException.hpp"
-#include "Hydra/other/parser/exceptions/CommandLineArgumentsParserException.hpp"
+#include "Hydra/other/parser/commandLineArgument/exceptions/CommandLineArgumentParserException.hpp"
 
 #include "Hydra/cache/cachingScheme/enums/PreprocessingTypeEnum.hpp"
 #include "Hydra/cache/enums/CacheTypeEnum.hpp"
 #include "Hydra/satSolver/minisat/enums/VsidsScoreTypeEnum.hpp"
 
 #include "Hydra/compiler/Compiler.tpp"
-#include "Hydra/formula/representation/contagious/ContagiousFormulaRepresentation.tpp"
+#include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.tpp"
 
 namespace Cara::CommandLineArguments {
 
     CommandLineArgumentsStruct parseCommandLineArguments(int argc, char* argv[]) {
         CommandLineArgumentsStruct commandLineArgumentsStruct;
         commandLineArgumentsStruct.compilerConfiguration = Hydra::CompilerConfiguration();
-        commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration = Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentationConfiguration();
+        commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration = Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentationConfiguration();
 
         // Arguments
         ArgumentsType arguments(argv, argv + argc);
 
         // Help
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, HELP_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, HELP_ARGUMENT)) {
             // program -h
             if (argc > 2)
                 Hydra::Other::printWarningAboutIgnoringRemainingArgumentsExceptOne(HELP_ARGUMENT);
@@ -41,7 +41,7 @@ namespace Cara::CommandLineArguments {
         }
 
         // Version
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, VERSION_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, VERSION_ARGUMENT)) {
             // program -v
             if (argc > 2)
                 Hydra::Other::printWarningAboutIgnoringRemainingArgumentsExceptOne(VERSION_ARGUMENT);
@@ -61,13 +61,13 @@ namespace Cara::CommandLineArguments {
 
         // program < -ph | -ka | -cd | -cs > -i input_file -nsm integer [ -mmbf positive_integer ] [ -m | -g ] [ -n | -ndc | -nsc ]
         if (argc < 6 || argc > 10)
-            throw Hydra::Exception::Other::Parser::CommandLineArguments::InvalidNumberOfArgumentsException();
+            throw Hydra::Exception::Other::Parser::CommandLineArgument::InvalidNumberOfArgumentsException();
 
         // Initialize the configurations
         initializeConfigurations(commandLineArgumentsStruct);
 
         // Input
-        commandLineArgumentsStruct.inputFilePath = Hydra::Other::Parser::CommandLineArguments::getArgumentValue(arguments, INPUT_ARGUMENT, true);
+        commandLineArgumentsStruct.inputFilePath = Hydra::Other::Parser::CommandLineArgument::getArgumentValue(arguments, INPUT_ARGUMENT, true);
 
         // Hypergraph partitioning
         commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType = getHypergraphPartitioningType(arguments);
@@ -97,12 +97,12 @@ namespace Cara::CommandLineArguments {
         commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeComponentCachingConfiguration.preprocessingType = getPreprocessingTypeOfCaraCachingScheme(arguments);
 
         // Cara caching scheme - number of sample moments
-        Hydra::Other::Parser::CommandLineArguments::getNumberOfSampleMomentsAndSetInCaraCachingSchemeConfiguration(arguments, NUMBER_OF_SAMPLE_MOMENTS_ARGUMENT,
-                                                                                                                   commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeComponentCachingConfiguration,
-                                                                                                                   Hydra::Cache::CacheTypeEnum::COMPONENT, true);
+        Hydra::Other::Parser::CommandLineArgument::getNumberOfSampleMomentsAndSetInCaraCachingSchemeConfiguration(arguments, NUMBER_OF_SAMPLE_MOMENTS_ARGUMENT,
+                                                                                                                  commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeComponentCachingConfiguration,
+                                                                                                                  Hydra::Cache::CacheTypeEnum::COMPONENT, true);
 
         // Must-multiply-by factor
-        ArgumentValueType mustMultiplyByFactorString = Hydra::Other::Parser::CommandLineArguments::getArgumentValue(arguments, MUST_MULTIPLY_BY_FACTOR_ARGUMENT, false);
+        ArgumentValueType mustMultiplyByFactorString = Hydra::Other::Parser::CommandLineArgument::getArgumentValue(arguments, MUST_MULTIPLY_BY_FACTOR_ARGUMENT, false);
         if (!mustMultiplyByFactorString.empty()) {
             try {
                 commandLineArgumentsStruct.mustMultiplyByFactor = MpzIntType(mustMultiplyByFactorString);
@@ -121,16 +121,16 @@ namespace Cara::CommandLineArguments {
 
     void initializeConfigurations(CommandLineArgumentsStruct& commandLineArgumentsStruct) {
         /**
-         * Contagious formula representation configuration
+         * Contiguous formula representation configuration
          */
         // Subsumption
-        commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration.subsumptionType = Hydra::Formula::Representation::Contagious::SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
-        commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = Hydra::Formula::Representation::Contagious::VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
+        commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration.subsumptionType = Hydra::Formula::Representation::Contiguous::SubsumptionTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM;
+        commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType = Hydra::Formula::Representation::Contiguous::VariableSubsumptionWithMappingTypeEnum::ONE_LITERAL_WATCHING_ALGORITHM_WITH_MAPPING;
 
         // Recognitions
-        commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration.recognitionTypeStruct.kromC = false;       // Krom-C
-        commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration.recognitionTypeStruct.hornC = false;       // Horn-C
-        commandLineArgumentsStruct.contagiousFormulaRepresentationConfiguration.recognitionTypeStruct.antiHornC = false;   // anti-Horn-C
+        commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration.recognitionTypeStruct.kromC = false;       // Krom-C
+        commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration.recognitionTypeStruct.hornC = false;       // Horn-C
+        commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration.recognitionTypeStruct.antiHornC = false;   // anti-Horn-C
 
         /**
          * Compiler configuration
@@ -179,13 +179,13 @@ namespace Cara::CommandLineArguments {
         Hydra::PartitioningHypergraphTypeEnum hypergraphPartitioningType;
 
         // KaHyPar
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, KAHYPAR_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, KAHYPAR_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             exists = true;
             hypergraphPartitioningType = Hydra::PartitioningHypergraphTypeEnum::KAHYPAR;
         }
 
         // Cara
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CARA_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, CARA_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             if (exists)
                 throw Hydra::Exception::CommandLineArguments::MoreHypergraphPartitioningTypesAreMentionedException();
 
@@ -194,7 +194,7 @@ namespace Cara::CommandLineArguments {
         }
 
         // Cara (speed)
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, CARA_SPEED_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, CARA_SPEED_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             if (exists)
                 throw Hydra::Exception::CommandLineArguments::MoreHypergraphPartitioningTypesAreMentionedException();
 
@@ -203,7 +203,7 @@ namespace Cara::CommandLineArguments {
         }
 
         // PaToH or hMETIS
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, PATOH_HMETIS_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, PATOH_HMETIS_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             if (exists)
                 throw Hydra::Exception::CommandLineArguments::MoreHypergraphPartitioningTypesAreMentionedException();
 
@@ -225,13 +225,13 @@ namespace Cara::CommandLineArguments {
         SatSolverTypeEnum satSolverType;
 
         // MiniSat
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, MINISAT_SAT_SOLVER_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, MINISAT_SAT_SOLVER_ARGUMENT)) {
             exists = true;
             satSolverType = SatSolverTypeEnum::MINISAT;
         }
 
         // Glucose
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, GLUCOSE_SAT_SOLVER_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, GLUCOSE_SAT_SOLVER_ARGUMENT)) {
             if (exists)
                 throw Hydra::Exception::CommandLineArguments::MoreSatSolversAreMentionedException();
 
@@ -253,13 +253,13 @@ namespace Cara::CommandLineArguments {
         PreprocessingTypeEnum preprocessingTypeOfCaraCachingScheme;
 
         // None
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, NONE_PREPROCESSING_TYPE_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, NONE_PREPROCESSING_TYPE_ARGUMENT)) {
             exists = true;
             preprocessingTypeOfCaraCachingScheme = PreprocessingTypeEnum::NONE;
         }
 
         // Not duplicate clauses
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, NOT_DUPLICATE_CLAUSES_PREPROCESSING_TYPE_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, NOT_DUPLICATE_CLAUSES_PREPROCESSING_TYPE_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MorePreprocessingTypesOfCaraCachingSchemeAreMentionedException();
 
@@ -268,7 +268,7 @@ namespace Cara::CommandLineArguments {
         }
 
         // Not subsumed clauses
-        if (Hydra::Other::Parser::CommandLineArguments::argumentExists(arguments, NOT_SUBSUMED_CLAUSES_PREPROCESSING_TYPE_ARGUMENT)) {
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, NOT_SUBSUMED_CLAUSES_PREPROCESSING_TYPE_ARGUMENT)) {
             if (exists)
                 throw Exception::CommandLineArguments::MorePreprocessingTypesOfCaraCachingSchemeAreMentionedException();
 

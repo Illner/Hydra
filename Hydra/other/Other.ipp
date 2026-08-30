@@ -26,7 +26,7 @@ namespace Hydra::Other {
 
     template <typename TypeT>
     bool clauseIdCanBeSavedAsTypeT(LargeNumberType numberOfClauseId) noexcept {
-        LargeNumberType tmp = std::numeric_limits<TypeT>::max();   // O, which can be "considered" as the separator (ContagiousOccurrenceList), is not included
+        LargeNumberType tmp = std::numeric_limits<TypeT>::max();   // O, which can be "considered" as the separator (ContiguousOccurrenceList), is not included
 
         if (numberOfClauseId <= tmp)
             return true;
@@ -172,8 +172,8 @@ namespace Hydra::Other {
         return std::binary_search(sortedVector.cbegin(), sortedVector.cend(), element);
     }
 
-    template <std::input_iterator InputIterator>
-    std::stringstream createStringStreamFromContainer(const InputIterator& begin, const InputIterator& end) {
+    template <std::input_iterator InputIteratorT>
+    std::stringstream createStringStreamFromContainer(const InputIteratorT& begin, const InputIteratorT& end) {
         bool firstElement = true;
         std::stringstream stringStream;
 
@@ -189,8 +189,8 @@ namespace Hydra::Other {
         return stringStream;
     }
 
-    template <std::input_iterator InputIterator>
-    std::stringstream createStringStreamFromContainerWithToStringConversion(const InputIterator& begin, const InputIterator& end) {
+    template <std::input_iterator InputIteratorT>
+    std::stringstream createStringStreamFromContainerWithToStringConversion(const InputIteratorT& begin, const InputIteratorT& end) {
         bool firstElement = true;
         std::stringstream stringStream;
 
@@ -270,7 +270,7 @@ namespace Hydra::Other {
         std::cerr << name << " = " << adjustedValue << std::endl;
     }
 
-    void printWarningAboutIgnoringRemainingArgumentsExceptOne(const Parser::CommandLineArguments::ArgumentNameType& notIgnoredArgumentName) {
+    void printWarningAboutIgnoringRemainingArgumentsExceptOne(const Parser::CommandLineArgument::ArgumentNameType& notIgnoredArgumentName) {
         std::cerr << "WARNING: only the argument \"" << notIgnoredArgumentName << "\" is considered; the remaining arguments are ignored." << std::endl;
         std::cerr << std::endl;
     }

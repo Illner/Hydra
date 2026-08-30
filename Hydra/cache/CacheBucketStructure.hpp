@@ -14,6 +14,7 @@
 namespace Hydra::Cache {
 
     using IdType = unsigned long long int;   // at least 64 bits
+
     using IdNodeType = Hydra::Circuit::IdNodeType;
 
     /**
@@ -44,7 +45,7 @@ namespace Hydra::Cache {
 
     public:
         explicit CacheBucketStruct(IdType id) noexcept
-            : id(id), value() { };
+            : id(id), value() { }
 
         CacheBucketStruct(const CacheBucketStruct&) = delete;
         CacheBucketStruct(CacheBucketStruct&&) noexcept = default;

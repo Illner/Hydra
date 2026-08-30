@@ -22,12 +22,12 @@ add_executable(HydraTest "HydraTest.cpp"
         "formula/partialAssignment/PartialAssignmentTest.cpp"
 
         # Formula representation
-        "formula/representation/contagious/ContagiousFormulaRepresentationTest.cpp"
-        "formula/representation/contagious/parser/ContagiousFormulaRepresentationParserTest.cpp"
-        "formula/representation/contagious/recognition/ContagiousFormulaRepresentationRecognitionTest.cpp"
-        "formula/representation/contagious/subsumption/ContagiousFormulaRepresentationSubsumptionTest.cpp"
-        "formula/representation/contagious/subsumption/ContagiousFormulaRepresentationUnsortedSubsumptionTest.cpp"
-        "formula/representation/contagious/variableSubsumptionWithMapping/ContagiousFormulaRepresentationVariableSubsumptionWithMappingTest.cpp"
+        "formula/representation/contiguous/ContiguousFormulaRepresentationTest.cpp"
+        "formula/representation/contiguous/parser/ContiguousFormulaRepresentationParserTest.cpp"
+        "formula/representation/contiguous/recognition/ContiguousFormulaRepresentationRecognitionTest.cpp"
+        "formula/representation/contiguous/subsumption/ContiguousFormulaRepresentationSubsumptionTest.cpp"
+        "formula/representation/contiguous/subsumption/ContiguousFormulaRepresentationUnsortedSubsumptionTest.cpp"
+        "formula/representation/contiguous/variableSubsumptionWithMapping/ContiguousFormulaRepresentationVariableSubsumptionWithMappingTest.cpp"
 
         # Structural restricted formula representation
         "formula/structuralRestrictedRepresentation/StructuralRestrictedFormulaRepresentationTest.cpp"
@@ -45,7 +45,7 @@ add_executable(HydraTest "HydraTest.cpp"
         "other/container/reusableVector/ReusableVectorTest.cpp"
         "other/container/stackWithLevels/StackWithLevelsTest.cpp"
         "other/container/variableStateVector/VariableStateVectorTest.cpp"
-        "other/container/contagiousOccurrenceList/ContagiousOccurrenceListTest.cpp"
+        "other/container/contiguousOccurrenceList/ContiguousOccurrenceListTest.cpp"
         "other/container/computeConnectedComponents/ComputeConnectedComponentsTest.cpp"
 
         # Type

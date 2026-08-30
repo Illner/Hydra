@@ -14,7 +14,7 @@
 
 #include "Hydra/compiler/Compiler.hpp"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
-#include "Hydra/formula/representation/contagious/parser/ContagiousFormulaParser.hpp"
+#include "Hydra/formula/representation/contiguous/parser/cnf/ContiguousFormulaCnfParser.hpp"
 #include "Hydra/other/operatingSystem/OperatingSystem.hpp"
 #include "Hydra/other/parser/Parser.hpp"
 
@@ -24,11 +24,11 @@
 
 #include "Hydra/cache/cachingScheme/enums/OmitClauseTypeEnum.hpp"
 #include "Hydra/cache/cachingScheme/enums/PreprocessingTypeEnum.hpp"
-#include "Hydra/formula/representation/contagious/enums/SubsumptionTypeEnum.hpp"
-#include "Hydra/formula/representation/contagious/enums/VariableSubsumptionWithMappingTypeEnum.hpp"
+#include "Hydra/formula/representation/contiguous/enums/SubsumptionTypeEnum.hpp"
+#include "Hydra/formula/representation/contiguous/enums/VariableSubsumptionWithMappingTypeEnum.hpp"
 
 #include "Hydra/compiler/Compiler.tpp"
-#include "Hydra/formula/representation/contagious/ContagiousFormulaRepresentation.tpp"
+#include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.tpp"
 
 namespace CaraTest::SharpSolver {
 
@@ -48,7 +48,7 @@ namespace CaraTest::SharpSolver {
     using StringPtrType = const std::string*;
     using SharpSolverConfigurationType = Hydra::CompilerConfiguration;
     using SharpSolverType = Hydra::Compiler<VarT, LiteralT, ClauseIdT>;
-    using ContagiousFormulaRepresentationConfigurationType = Hydra::Formula::Representation::Contagious::ContagiousFormulaRepresentationConfiguration;
+    using ContiguousFormulaRepresentationConfigurationType = Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentationConfiguration;
     using FormulaRepresentationAbstractUniquePtrType = std::unique_ptr<Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>>;
 
     using NumberOfModelsType = Hydra::Compiler<VarT, LiteralT, ClauseIdT>::NumberOfModelsType;
@@ -64,11 +64,11 @@ namespace CaraTest::SharpSolver {
     using PreprocessingTypeEnum = Hydra::Cache::CachingScheme::PreprocessingTypeEnum;
     using CachingSchemeTypeEnum = Hydra::CompilerConfiguration::CachingSchemeTypeEnum;
     using DecisionHeuristicTypeEnum = Hydra::CompilerConfiguration::DecisionHeuristicTypeEnum;
-    using SubsumptionTypeEnum = Hydra::Formula::Representation::Contagious::SubsumptionTypeEnum;
+    using SubsumptionTypeEnum = Hydra::Formula::Representation::Contiguous::SubsumptionTypeEnum;
     using CacheCleaningStrategyTypeEnum = Hydra::CompilerConfiguration::CacheCleaningStrategyTypeEnum;
     using HypergraphCutRecomputationStrategyTypeEnum = Hydra::HypergraphCutRecomputationStrategyTypeEnum;
     using ImplicitBcpVariableOrderTypeEnum = Hydra::CompilerConfiguration::ImplicitBcpVariableOrderTypeEnum;
-    using VariableSubsumptionWithMappingTypeEnum = Hydra::Formula::Representation::Contagious::VariableSubsumptionWithMappingTypeEnum;
+    using VariableSubsumptionWithMappingTypeEnum = Hydra::Formula::Representation::Contiguous::VariableSubsumptionWithMappingTypeEnum;
     //endregion
 
     inline SharpSolverConfigurationType createDefaultSharpSolverConfiguration() {
@@ -141,7 +141,7 @@ namespace CaraTest::SharpSolver {
     }
 
     inline FormulaRepresentationAbstractUniquePtrType parseFormula(FormulaInstanceEnum formulaInstance,
-                                                                   const ContagiousFormulaRepresentationConfigurationType& contagiousFormulaRepresentationConfiguration) {
+                                                                   const ContiguousFormulaRepresentationConfigurationType& contiguousFormulaRepresentationConfiguration) {
         StringPtrType formulaStringPtr = nullptr;
 
         switch (formulaInstance) {
@@ -228,13 +228,13 @@ namespace CaraTest::SharpSolver {
         std::istreambuf_iterator<char> end;
 
         auto header = Hydra::Other::Parser::parseDimacsCnfHeader(begin, end, line);
-        return Hydra::Formula::Representation::Contagious::Parser::parseFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, header, line, false, contagiousFormulaRepresentationConfiguration);
+        return Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, header, line, false, contiguousFormulaRepresentationConfiguration);
     }
 
     inline NumberOfModelsType computeNumberOfModels(FormulaInstanceEnum formulaInstance, SharpSolverConfigurationType sharpSolverConfiguration,
-                                                    const ContagiousFormulaRepresentationConfigurationType& contagiousFormulaRepresentationConfiguration) {
+                                                    const ContiguousFormulaRepresentationConfigurationType& contiguousFormulaRepresentationConfiguration) {
         FormulaRepresentationAbstractUniquePtrType formulaRepresentationAbstractUniquePtr = parseFormula(formulaInstance,
-                                                                                                         contagiousFormulaRepresentationConfiguration);
+                                                                                                         contiguousFormulaRepresentationConfiguration);
 
         SharpSolverType sharpSolver(std::move(formulaRepresentationAbstractUniquePtr), sharpSolverConfiguration);
         sharpSolver.computeNumberOfModels();
@@ -250,7 +250,7 @@ namespace CaraTest::SharpSolver {
     }
 
     inline void process(const SharpSolverConfigurationType& sharpSolverConfiguration, bool allInstances,
-                        const ContagiousFormulaRepresentationConfigurationType& contagiousFormulaRepresentationConfiguration = ContagiousFormulaRepresentationConfigurationType()) {
+                        const ContiguousFormulaRepresentationConfigurationType& contiguousFormulaRepresentationConfiguration = ContiguousFormulaRepresentationConfigurationType()) {
         // 4step
         SECTION(formulaInstanceEnumToString(FormulaInstanceEnum::_4step)) {
             FormulaInstanceEnum formulaInstance = FormulaInstanceEnum::_4step;
@@ -261,7 +261,7 @@ namespace CaraTest::SharpSolver {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration);
+                                                                          contiguousFormulaRepresentationConfiguration);
                 actualResult << numberOfModels << std::endl;
             }
             catch (const std::exception& e) {
@@ -282,7 +282,7 @@ namespace CaraTest::SharpSolver {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration);
+                                                                          contiguousFormulaRepresentationConfiguration);
                 actualResult << numberOfModels << std::endl;
             }
             catch (const std::exception& e) {
@@ -303,7 +303,7 @@ namespace CaraTest::SharpSolver {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration);
+                                                                          contiguousFormulaRepresentationConfiguration);
                 actualResult << numberOfModels << std::endl;
             }
             catch (const std::exception& e) {
@@ -324,7 +324,7 @@ namespace CaraTest::SharpSolver {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration);
+                                                                          contiguousFormulaRepresentationConfiguration);
                 actualResult << numberOfModels << std::endl;
             }
             catch (const std::exception& e) {
@@ -345,7 +345,7 @@ namespace CaraTest::SharpSolver {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration);
+                                                                          contiguousFormulaRepresentationConfiguration);
                 actualResult << numberOfModels << std::endl;
             }
             catch (const std::exception& e) {
@@ -366,7 +366,7 @@ namespace CaraTest::SharpSolver {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration);
+                                                                          contiguousFormulaRepresentationConfiguration);
                 actualResult << numberOfModels << std::endl;
             }
             catch (const std::exception& e) {
@@ -387,7 +387,7 @@ namespace CaraTest::SharpSolver {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration);
+                                                                          contiguousFormulaRepresentationConfiguration);
                 actualResult << numberOfModels << std::endl;
             }
             catch (const std::exception& e) {
@@ -408,7 +408,7 @@ namespace CaraTest::SharpSolver {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration);
+                                                                          contiguousFormulaRepresentationConfiguration);
                 actualResult << numberOfModels << std::endl;
             }
             catch (const std::exception& e) {
@@ -429,7 +429,7 @@ namespace CaraTest::SharpSolver {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration);
+                                                                          contiguousFormulaRepresentationConfiguration);
                 actualResult << numberOfModels << std::endl;
             }
             catch (const std::exception& e) {
@@ -450,7 +450,7 @@ namespace CaraTest::SharpSolver {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                          contagiousFormulaRepresentationConfiguration);
+                                                                          contiguousFormulaRepresentationConfiguration);
                 actualResult << numberOfModels << std::endl;
             }
             catch (const std::exception& e) {
@@ -472,7 +472,7 @@ namespace CaraTest::SharpSolver {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration);
+                                                                              contiguousFormulaRepresentationConfiguration);
                     actualResult << numberOfModels << std::endl;
                 }
                 catch (const std::exception& e) {
@@ -493,7 +493,7 @@ namespace CaraTest::SharpSolver {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration);
+                                                                              contiguousFormulaRepresentationConfiguration);
                     actualResult << numberOfModels << std::endl;
                 }
                 catch (const std::exception& e) {
@@ -514,7 +514,7 @@ namespace CaraTest::SharpSolver {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration);
+                                                                              contiguousFormulaRepresentationConfiguration);
                     actualResult << numberOfModels << std::endl;
                 }
                 catch (const std::exception& e) {
@@ -535,7 +535,7 @@ namespace CaraTest::SharpSolver {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration);
+                                                                              contiguousFormulaRepresentationConfiguration);
                     actualResult << numberOfModels << std::endl;
                 }
                 catch (const std::exception& e) {
@@ -556,7 +556,7 @@ namespace CaraTest::SharpSolver {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration);
+                                                                              contiguousFormulaRepresentationConfiguration);
                     actualResult << numberOfModels << std::endl;
                 }
                 catch (const std::exception& e) {
@@ -577,7 +577,7 @@ namespace CaraTest::SharpSolver {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration);
+                                                                              contiguousFormulaRepresentationConfiguration);
                     actualResult << numberOfModels << std::endl;
                 }
                 catch (const std::exception& e) {
@@ -598,7 +598,7 @@ namespace CaraTest::SharpSolver {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration);
+                                                                              contiguousFormulaRepresentationConfiguration);
                     actualResult << numberOfModels << std::endl;
                 }
                 catch (const std::exception& e) {
@@ -619,7 +619,7 @@ namespace CaraTest::SharpSolver {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration);
+                                                                              contiguousFormulaRepresentationConfiguration);
                     actualResult << numberOfModels << std::endl;
                 }
                 catch (const std::exception& e) {
@@ -640,7 +640,7 @@ namespace CaraTest::SharpSolver {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration);
+                                                                              contiguousFormulaRepresentationConfiguration);
                     actualResult << numberOfModels << std::endl;
                 }
                 catch (const std::exception& e) {
@@ -662,7 +662,7 @@ namespace CaraTest::SharpSolver {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration);
+                                                                              contiguousFormulaRepresentationConfiguration);
                     actualResult << numberOfModels << std::endl;
                 }
                 catch (const std::exception& e) {
@@ -684,7 +684,7 @@ namespace CaraTest::SharpSolver {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration);
+                                                                              contiguousFormulaRepresentationConfiguration);
                     actualResult << numberOfModels << std::endl;
                 }
                 catch (const std::exception& e) {
@@ -705,7 +705,7 @@ namespace CaraTest::SharpSolver {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModels(formulaInstance, sharpSolverConfiguration,
-                                                                              contagiousFormulaRepresentationConfiguration);
+                                                                              contiguousFormulaRepresentationConfiguration);
                     actualResult << numberOfModels << std::endl;
                 }
                 catch (const std::exception& e) {

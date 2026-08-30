@@ -2,7 +2,7 @@
 
 #include <cassert>
 #include <chrono>
-#include <ostream>
+#include <iostream>
 #include <string>
 #include <type_traits>
 

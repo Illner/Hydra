@@ -54,17 +54,13 @@ namespace Hydra::Circuit::Node {
         AndInnerNode(IdNodeType id, const ChildrenPtrVectorType& childrenPtrVector, DecomposabilityTypeEnum decomposabilityType)
             : InnerNodeAbstract<VarT, LiteralT>(id, NodeTypeEnum::AND_INNER_NODE, childrenPtrVector),
               decomposabilityType_(decomposabilityType) {
-            #ifndef NDEBUG
-            checkDecomposabilityTypeDebug(true);
-            #endif
+            assert(checkDecomposabilityTypeDebug(true));
         }
 
         AndInnerNode(IdNodeType id, ChildrenPtrVectorType&& childrenPtrVector, DecomposabilityTypeEnum decomposabilityType)
             : InnerNodeAbstract<VarT, LiteralT>(id, NodeTypeEnum::AND_INNER_NODE, std::move(childrenPtrVector)),
               decomposabilityType_(decomposabilityType) {
-            #ifndef NDEBUG
-            checkDecomposabilityTypeDebug(true);
-            #endif
+            assert(checkDecomposabilityTypeDebug(true));
         }
 
     private:

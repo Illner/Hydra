@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cassert>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <type_traits>
 #include <vector>
@@ -15,6 +16,7 @@
 #include "Hydra/other/container/vectorMap/VectorMap.hpp"
 #include "Hydra/other/container/vectorSet/VectorSet.hpp"
 #include "Hydra/other/hashMap/HashMap.hpp"
+#include "Hydra/other/parser/Parser.hpp"
 
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
 #include "Hydra/formula/exceptions/FormulaRepresentationException.hpp"
@@ -29,14 +31,11 @@
 
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hxx"
 
-#ifndef NDEBUG
-    #include <sstream>
-#endif
-
 namespace Hydra::Formula::Representation {
 
-    using FormulaSizeType = unsigned long int;               // at least 32 bits
     using ClauseReductionHeuristicScoreType = long double;   // 128 bits
+
+    using FormulaSizeType = Other::Parser::LargeNumberType;
 
     /**
      * Formula representation (abstract class)
@@ -81,6 +80,7 @@ namespace Hydra::Formula::Representation {
     public:
         using ClauseSizeType = VarT;
         using VertexWeightType = int;
+        using FormulaType = std::vector<LiteralType>;
         using ClauseIdVectorType = std::vector<ClauseIdT>;
         using ClauseStringType = std::basic_string<LiteralT>;
         using VectorSetType = Container::VectorSet::VectorSet;
@@ -141,7 +141,7 @@ namespace Hydra::Formula::Representation {
             if (!Other::unsignedValueCanBeSavedAsStdSizeT<ClauseIdT>(numberOfOriginalClauses))
                 throw Exception::SomethingCannotBeSavedAsStdSizeTException("clauses", numberOfOriginalClauses);
 
-            // The formula size cannot be saved as std::size_t (need for ContagiousOccurrenceList)
+            // The formula size cannot be saved as std::size_t (need for ContiguousOccurrenceList)
             if (!Other::unsignedValueCanBeSavedAsStdSizeT<FormulaSizeType>(originalFormulaSize))
                 throw Exception::SomethingCannotBeSavedAsStdSizeTException("formula size", originalFormulaSize);
 
@@ -160,18 +160,18 @@ namespace Hydra::Formula::Representation {
             if (originalFormulaSize_ == 0)
                 throw Exception::Formula::Representation::FormulaIsEmptyException();
 
-            // The literals cannot be saved as int (need for size_type)
+            // The literals cannot be saved as std::size_t
             LiteralT totalNumberOfLiterals = LiteralT(2) + LiteralT(2) * static_cast<LiteralT>(totalNumberOfVariables);
             if (!Other::unsignedValueCanBeSavedAsStdSizeT<LiteralT>(totalNumberOfLiterals))
-                throw Exception::SomethingCannotBeSavedAsIntException("literals", totalNumberOfLiterals);
+                throw Exception::SomethingCannotBeSavedAsStdSizeTException("literals", totalNumberOfLiterals);
 
-            // The clauses cannot be saved as int
+            // The clauses cannot be saved as std::size_t
             if (!Other::unsignedValueCanBeSavedAsStdSizeT<ClauseIdT>(numberOfOriginalClauses))
-                throw Exception::SomethingCannotBeSavedAsIntException("clauses", numberOfOriginalClauses);
+                throw Exception::SomethingCannotBeSavedAsStdSizeTException("clauses", numberOfOriginalClauses);
 
-            // The formula size cannot be saved as int (need for ContagiousOccurrenceList)
+            // The formula size cannot be saved as std::size_t (need for ContiguousOccurrenceList)
             if (!Other::unsignedValueCanBeSavedAsStdSizeT<FormulaSizeType>(originalFormulaSize))
-                throw Exception::SomethingCannotBeSavedAsIntException("formula size", originalFormulaSize);
+                throw Exception::SomethingCannotBeSavedAsStdSizeTException("formula size", originalFormulaSize);
         }
         #endif
 

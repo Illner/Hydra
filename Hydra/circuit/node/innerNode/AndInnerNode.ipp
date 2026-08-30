@@ -194,7 +194,7 @@ namespace Hydra::Circuit::Node {
         // Invalid argument
         if (!Other::containInSet(bellaDecomposabilityTypeSet, decomposabilityVariant))
             throw Exception::UnexpectedArgumentException(decomposabilityTypeEnumToString(decomposabilityVariant),
-                                                         "isBellaDecomposabilitySatisfiedDebug");
+                                                         "Hydra::Circuit::Node::AndInnerNode::isBellaDecomposabilitySatisfiedDebug");
 
         SizeNodeType numberOfChildren = this->getNumberOfChildren();
 

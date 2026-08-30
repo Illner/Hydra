@@ -18,7 +18,7 @@ namespace Hydra::Container::ComputeConnectedComponents {
 
     public:
         explicit ConnectedComponentStruct(std::size_t numberOfVariables) noexcept
-            : variableSet(numberOfVariables), pureLiteralVector() { };
+            : variableSet(numberOfVariables), pureLiteralVector() { }
 
         ConnectedComponentStruct(const ConnectedComponentStruct&) = delete;
         ConnectedComponentStruct(ConnectedComponentStruct&&) noexcept = default;

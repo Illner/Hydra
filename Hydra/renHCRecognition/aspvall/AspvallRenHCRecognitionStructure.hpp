@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
-#include "Hydra/other/container/contagiousOccurrenceList/ContagiousOccurrenceList.hpp"
+#include "Hydra/other/container/contiguousOccurrenceList/ContiguousOccurrenceList.hpp"
 
 namespace Hydra::RenHCRecognition::Aspvall {
 
@@ -20,8 +20,8 @@ namespace Hydra::RenHCRecognition::Aspvall {
     template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
     struct AspvallRenHCRecognitionStruct {
     public:
-        using ClauseIdVectorType = typename Container::ContagiousOccurrenceList::ContagiousOccurrenceList<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType;
-        using ClauseIdVectorAspType = typename Container::ContagiousOccurrenceList::ContagiousOccurrenceList<VarAspT, LiteralAspT, ClauseIdAspT>::ClauseIdVectorType;
+        using ClauseIdVectorType = typename Container::ContiguousOccurrenceList::ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType;
+        using ClauseIdVectorAspType = typename Container::ContiguousOccurrenceList::ContiguousOccurrenceList<VarAspT, LiteralAspT, ClauseIdAspT>::ClauseIdVectorType;
 
     public:
         VarAspT numberOfVariables;

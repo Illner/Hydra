@@ -29,7 +29,7 @@ namespace Hydra::PartitioningHypergraph {
     using FormulaSizeType = Hydra::Formula::Representation::FormulaSizeType;
 
     /**
-     * Partitioning hypergraph (abstract class)
+     * Partitioning hypergraph representation (abstract class)
      * Copy and move methods are disabled!
      * Exception:
      *      UnexpectedArgumentException (debug)

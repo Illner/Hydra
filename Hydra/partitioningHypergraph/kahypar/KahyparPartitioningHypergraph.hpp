@@ -71,7 +71,7 @@ namespace Hydra::PartitioningHypergraph::Kahypar {
             xpins_.reserve(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormulaUsedForIndexing());
         }
 
-        virtual ~KahyparPartitioningHypergraph() {
+        ~KahyparPartitioningHypergraph() noexcept override {
             kahypar_context_free(kahyparContextPtr_);
         }
 

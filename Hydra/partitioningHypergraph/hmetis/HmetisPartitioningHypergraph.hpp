@@ -6,7 +6,9 @@
 #include <ctime>
 #include <filesystem>
 #include <fstream>
+#include <iostream>
 #include <string>
+#include <system_error>
 #include <thread>
 #include <vector>
 
@@ -96,16 +98,23 @@ namespace Hydra::PartitioningHypergraph::Hmetis {
             xpins_.reserve(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormulaUsedForIndexing());
         }
 
-        virtual ~HmetisPartitioningHypergraph() noexcept {
-            try {
-                std::filesystem::remove(fixFileName_);
-                std::filesystem::remove(partitionFileName_);
-                std::filesystem::remove(hypergraphFileName_);
-            }
-            catch (const std::filesystem::filesystem_error& e) {
-                std::cerr << "~HmetisPartitioningHypergraph" << std::endl;
-                std::cerr << e.what() << std::endl;
-            }
+        ~HmetisPartitioningHypergraph() noexcept override {
+            auto tryRemoveFileLambda = [](const std::string& fileName) noexcept -> void {
+                try {
+                    std::error_code errorCode;
+                    std::filesystem::remove(fileName, errorCode);
+                    if (errorCode) {
+                        std::cerr << "WARNING: one of hMETIS's temporary files, \"" << fileName << "\", could not be deleted (error "
+                                  << errorCode.value() << ": " << errorCode.message() << "), so you may need to remove it manually." << std::endl;
+                    }
+                }
+                catch (...) {
+                }
+            };
+
+            tryRemoveFileLambda(fixFileName_);
+            tryRemoveFileLambda(partitionFileName_);
+            tryRemoveFileLambda(hypergraphFileName_);
         }
 
     private:

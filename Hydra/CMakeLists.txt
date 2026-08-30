@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.14)
 
 add_library(HydraLibrary STATIC
-        "other/parser/CommandLineArgumentsParser.cpp"
+        "other/parser/commandLineArgument/CommandLineArgumentParser.cpp"
         "statistics/StatisticsAbstract.cpp" "statistics/Statistics.cpp" "other/version/Version.cpp"
         "other/operatingSystem/OperatingSystem.cpp" "other/memory/Memory.cpp" "other/container/vectorSet/VectorSet.cpp"
         "other/type/arbitraryPrecisionInteger/custom/CustomArbitraryPrecisionInteger.cpp"

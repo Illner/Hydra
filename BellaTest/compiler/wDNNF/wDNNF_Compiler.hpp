@@ -26,7 +26,7 @@ namespace BellaTest::Compiler::wDNNF {
     using NumberOfModelsType = Compiler::NumberOfModelsType;
     using CompilerConfigurationType = Compiler::CompilerConfigurationType;
     using FormulaRepresentationAbstractUniquePtrType = Compiler::FormulaRepresentationAbstractUniquePtrType;
-    using ContagiousFormulaRepresentationConfigurationType = Compiler::ContagiousFormulaRepresentationConfigurationType;
+    using ContiguousFormulaRepresentationConfigurationType = Compiler::ContiguousFormulaRepresentationConfigurationType;
 
     using CircuitTypeEnum = Compiler::CircuitTypeEnum;
     using SatSolverTypeEnum = Compiler::SatSolverTypeEnum;
@@ -51,10 +51,10 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     inline void compile(FormulaInstanceEnum formulaInstance, CompilerConfigurationType compilerConfiguration,
-                        const ContagiousFormulaRepresentationConfigurationType& contagiousFormulaRepresentationConfiguration,
+                        const ContiguousFormulaRepresentationConfigurationType& contiguousFormulaRepresentationConfiguration,
                         bool useStatistics) {
         FormulaRepresentationAbstractUniquePtrType formulaRepresentationAbstractUniquePtr = parseFormula(formulaInstance,
-                                                                                                         contagiousFormulaRepresentationConfiguration);
+                                                                                                         contiguousFormulaRepresentationConfiguration);
 
         StatisticsType statistics;
         CompilerType compiler(std::move(formulaRepresentationAbstractUniquePtr), compilerConfiguration,
@@ -78,10 +78,10 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     inline NumberOfModelsType computeNumberOfModelsWithPolynomialDelay(FormulaInstanceEnum formulaInstance, CompilerConfigurationType compilerConfiguration,
-                                                                       const ContagiousFormulaRepresentationConfigurationType& contagiousFormulaRepresentationConfiguration,
+                                                                       const ContiguousFormulaRepresentationConfigurationType& contiguousFormulaRepresentationConfiguration,
                                                                        bool useStatistics) {
         FormulaRepresentationAbstractUniquePtrType formulaRepresentationAbstractUniquePtr = parseFormula(formulaInstance,
-                                                                                                         contagiousFormulaRepresentationConfiguration);
+                                                                                                         contiguousFormulaRepresentationConfiguration);
 
         StatisticsType statistics;
         CompilerType compiler(std::move(formulaRepresentationAbstractUniquePtr), compilerConfiguration,
@@ -109,7 +109,7 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     inline void process2(const CompilerConfigurationType& compilerConfiguration, bool timeConsuming,
-                         const ContagiousFormulaRepresentationConfigurationType& contagiousFormulaRepresentationConfiguration,
+                         const ContiguousFormulaRepresentationConfigurationType& contiguousFormulaRepresentationConfiguration,
                          bool useStatistics) {
         // 4step
         SECTION(formulaInstanceEnumToString(FormulaInstanceEnum::_4step)) {
@@ -124,12 +124,12 @@ namespace BellaTest::Compiler::wDNNF {
             try {
                 if (timeConsuming) {
                     NumberOfModelsType numberOfModels = computeNumberOfModelsWithPolynomialDelay(formulaInstance, compilerConfiguration,
-                                                                                                 contagiousFormulaRepresentationConfiguration,
+                                                                                                 contiguousFormulaRepresentationConfiguration,
                                                                                                  useStatistics);
                     actualResult << numberOfModels << std::endl;
                 }
                 else {
-                    compile(formulaInstance, compilerConfiguration, contagiousFormulaRepresentationConfiguration, useStatistics);
+                    compile(formulaInstance, compilerConfiguration, contiguousFormulaRepresentationConfiguration, useStatistics);
                     actualResult << COMPILED_STRING;
                 }
             }
@@ -154,12 +154,12 @@ namespace BellaTest::Compiler::wDNNF {
             try {
                 if (timeConsuming) {
                     NumberOfModelsType numberOfModels = computeNumberOfModelsWithPolynomialDelay(formulaInstance, compilerConfiguration,
-                                                                                                 contagiousFormulaRepresentationConfiguration,
+                                                                                                 contiguousFormulaRepresentationConfiguration,
                                                                                                  useStatistics);
                     actualResult << numberOfModels << std::endl;
                 }
                 else {
-                    compile(formulaInstance, compilerConfiguration, contagiousFormulaRepresentationConfiguration, useStatistics);
+                    compile(formulaInstance, compilerConfiguration, contiguousFormulaRepresentationConfiguration, useStatistics);
                     actualResult << COMPILED_STRING;
                 }
             }
@@ -183,7 +183,7 @@ namespace BellaTest::Compiler::wDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModelsWithPolynomialDelay(formulaInstance, compilerConfiguration,
-                                                                                             contagiousFormulaRepresentationConfiguration,
+                                                                                             contiguousFormulaRepresentationConfiguration,
                                                                                              useStatistics);
                 actualResult << numberOfModels << std::endl;
             }
@@ -207,7 +207,7 @@ namespace BellaTest::Compiler::wDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModelsWithPolynomialDelay(formulaInstance, compilerConfiguration,
-                                                                                             contagiousFormulaRepresentationConfiguration,
+                                                                                             contiguousFormulaRepresentationConfiguration,
                                                                                              useStatistics);
                 actualResult << numberOfModels << std::endl;
             }
@@ -230,7 +230,7 @@ namespace BellaTest::Compiler::wDNNF {
             std::stringstream& actualResult = test.getStringStream();
 
             try {
-                compile(formulaInstance, compilerConfiguration, contagiousFormulaRepresentationConfiguration, useStatistics);
+                compile(formulaInstance, compilerConfiguration, contiguousFormulaRepresentationConfiguration, useStatistics);
                 actualResult << COMPILED_STRING;
             }
             catch (const std::exception& e) {
@@ -253,7 +253,7 @@ namespace BellaTest::Compiler::wDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModelsWithPolynomialDelay(formulaInstance, compilerConfiguration,
-                                                                                             contagiousFormulaRepresentationConfiguration,
+                                                                                             contiguousFormulaRepresentationConfiguration,
                                                                                              useStatistics);
                 actualResult << numberOfModels << std::endl;
             }
@@ -278,12 +278,12 @@ namespace BellaTest::Compiler::wDNNF {
             try {
                 if (timeConsuming) {
                     NumberOfModelsType numberOfModels = computeNumberOfModelsWithPolynomialDelay(formulaInstance, compilerConfiguration,
-                                                                                                 contagiousFormulaRepresentationConfiguration,
+                                                                                                 contiguousFormulaRepresentationConfiguration,
                                                                                                  useStatistics);
                     actualResult << numberOfModels << std::endl;
                 }
                 else {
-                    compile(formulaInstance, compilerConfiguration, contagiousFormulaRepresentationConfiguration, useStatistics);
+                    compile(formulaInstance, compilerConfiguration, contiguousFormulaRepresentationConfiguration, useStatistics);
                     actualResult << COMPILED_STRING;
                 }
             }
@@ -307,7 +307,7 @@ namespace BellaTest::Compiler::wDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModelsWithPolynomialDelay(formulaInstance, compilerConfiguration,
-                                                                                             contagiousFormulaRepresentationConfiguration,
+                                                                                             contiguousFormulaRepresentationConfiguration,
                                                                                              useStatistics);
                 actualResult << numberOfModels << std::endl;
             }
@@ -330,7 +330,7 @@ namespace BellaTest::Compiler::wDNNF {
             std::stringstream& actualResult = test.getStringStream();
 
             try {
-                compile(formulaInstance, compilerConfiguration, contagiousFormulaRepresentationConfiguration, useStatistics);
+                compile(formulaInstance, compilerConfiguration, contiguousFormulaRepresentationConfiguration, useStatistics);
                 actualResult << COMPILED_STRING;
             }
             catch (const std::exception& e) {
@@ -354,12 +354,12 @@ namespace BellaTest::Compiler::wDNNF {
             try {
                 if (timeConsuming) {
                     NumberOfModelsType numberOfModels = computeNumberOfModelsWithPolynomialDelay(formulaInstance, compilerConfiguration,
-                                                                                                 contagiousFormulaRepresentationConfiguration,
+                                                                                                 contiguousFormulaRepresentationConfiguration,
                                                                                                  useStatistics);
                     actualResult << numberOfModels << std::endl;
                 }
                 else {
-                    compile(formulaInstance, compilerConfiguration, contagiousFormulaRepresentationConfiguration, useStatistics);
+                    compile(formulaInstance, compilerConfiguration, contiguousFormulaRepresentationConfiguration, useStatistics);
                     actualResult << COMPILED_STRING;
                 }
             }
@@ -383,7 +383,7 @@ namespace BellaTest::Compiler::wDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModelsWithPolynomialDelay(formulaInstance, compilerConfiguration,
-                                                                                             contagiousFormulaRepresentationConfiguration,
+                                                                                             contiguousFormulaRepresentationConfiguration,
                                                                                              useStatistics);
                 actualResult << numberOfModels << std::endl;
             }
@@ -408,7 +408,7 @@ namespace BellaTest::Compiler::wDNNF {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModelsWithPolynomialDelay(formulaInstance, compilerConfiguration,
-                                                                                                 contagiousFormulaRepresentationConfiguration,
+                                                                                                 contiguousFormulaRepresentationConfiguration,
                                                                                                  useStatistics);
                     actualResult << numberOfModels << std::endl;
                 }
@@ -431,7 +431,7 @@ namespace BellaTest::Compiler::wDNNF {
                 std::stringstream& actualResult = test.getStringStream();
 
                 try {
-                    compile(formulaInstance, compilerConfiguration, contagiousFormulaRepresentationConfiguration, useStatistics);
+                    compile(formulaInstance, compilerConfiguration, contiguousFormulaRepresentationConfiguration, useStatistics);
                     actualResult << COMPILED_STRING;
                 }
                 catch (const std::exception& e) {
@@ -453,7 +453,7 @@ namespace BellaTest::Compiler::wDNNF {
                 std::stringstream& actualResult = test.getStringStream();
 
                 try {
-                    compile(formulaInstance, compilerConfiguration, contagiousFormulaRepresentationConfiguration, useStatistics);
+                    compile(formulaInstance, compilerConfiguration, contiguousFormulaRepresentationConfiguration, useStatistics);
                     actualResult << COMPILED_STRING;
                 }
                 catch (const std::exception& e) {
@@ -475,7 +475,7 @@ namespace BellaTest::Compiler::wDNNF {
                 std::stringstream& actualResult = test.getStringStream();
 
                 try {
-                    compile(formulaInstance, compilerConfiguration, contagiousFormulaRepresentationConfiguration, useStatistics);
+                    compile(formulaInstance, compilerConfiguration, contiguousFormulaRepresentationConfiguration, useStatistics);
                     actualResult << COMPILED_STRING;
                 }
                 catch (const std::exception& e) {
@@ -497,7 +497,7 @@ namespace BellaTest::Compiler::wDNNF {
                 std::stringstream& actualResult = test.getStringStream();
 
                 try {
-                    compile(formulaInstance, compilerConfiguration, contagiousFormulaRepresentationConfiguration, useStatistics);
+                    compile(formulaInstance, compilerConfiguration, contiguousFormulaRepresentationConfiguration, useStatistics);
                     actualResult << COMPILED_STRING;
                 }
                 catch (const std::exception& e) {
@@ -519,7 +519,7 @@ namespace BellaTest::Compiler::wDNNF {
                 std::stringstream& actualResult = test.getStringStream();
 
                 try {
-                    compile(formulaInstance, compilerConfiguration, contagiousFormulaRepresentationConfiguration, useStatistics);
+                    compile(formulaInstance, compilerConfiguration, contiguousFormulaRepresentationConfiguration, useStatistics);
                     actualResult << COMPILED_STRING;
                 }
                 catch (const std::exception& e) {
@@ -541,7 +541,7 @@ namespace BellaTest::Compiler::wDNNF {
                 std::stringstream& actualResult = test.getStringStream();
 
                 try {
-                    compile(formulaInstance, compilerConfiguration, contagiousFormulaRepresentationConfiguration, useStatistics);
+                    compile(formulaInstance, compilerConfiguration, contiguousFormulaRepresentationConfiguration, useStatistics);
                     actualResult << COMPILED_STRING;
                 }
                 catch (const std::exception& e) {
@@ -563,7 +563,7 @@ namespace BellaTest::Compiler::wDNNF {
                 std::stringstream& actualResult = test.getStringStream();
 
                 try {
-                    compile(formulaInstance, compilerConfiguration, contagiousFormulaRepresentationConfiguration, useStatistics);
+                    compile(formulaInstance, compilerConfiguration, contiguousFormulaRepresentationConfiguration, useStatistics);
                     actualResult << COMPILED_STRING;
                 }
                 catch (const std::exception& e) {
@@ -585,7 +585,7 @@ namespace BellaTest::Compiler::wDNNF {
                 std::stringstream& actualResult = test.getStringStream();
 
                 try {
-                    compile(formulaInstance, compilerConfiguration, contagiousFormulaRepresentationConfiguration, useStatistics);
+                    compile(formulaInstance, compilerConfiguration, contiguousFormulaRepresentationConfiguration, useStatistics);
                     actualResult << COMPILED_STRING;
                 }
                 catch (const std::exception& e) {
@@ -608,7 +608,7 @@ namespace BellaTest::Compiler::wDNNF {
                 std::stringstream& actualResult = test.getStringStream();
 
                 try {
-                    compile(formulaInstance, compilerConfiguration, contagiousFormulaRepresentationConfiguration, useStatistics);
+                    compile(formulaInstance, compilerConfiguration, contiguousFormulaRepresentationConfiguration, useStatistics);
                     actualResult << COMPILED_STRING;
                 }
                 catch (const std::exception& e) {
@@ -631,7 +631,7 @@ namespace BellaTest::Compiler::wDNNF {
                 std::stringstream& actualResult = test.getStringStream();
 
                 try {
-                    compile(formulaInstance, compilerConfiguration, contagiousFormulaRepresentationConfiguration, useStatistics);
+                    compile(formulaInstance, compilerConfiguration, contiguousFormulaRepresentationConfiguration, useStatistics);
                     actualResult << COMPILED_STRING;
                 }
                 catch (const std::exception& e) {
@@ -653,7 +653,7 @@ namespace BellaTest::Compiler::wDNNF {
                 std::stringstream& actualResult = test.getStringStream();
 
                 try {
-                    compile(formulaInstance, compilerConfiguration, contagiousFormulaRepresentationConfiguration, useStatistics);
+                    compile(formulaInstance, compilerConfiguration, contiguousFormulaRepresentationConfiguration, useStatistics);
                     actualResult << COMPILED_STRING;
                 }
                 catch (const std::exception& e) {
@@ -667,13 +667,13 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     inline void process(const CompilerConfigurationType& compilerConfiguration, bool timeConsuming,
-                        const ContagiousFormulaRepresentationConfigurationType& contagiousFormulaRepresentationConfiguration = ContagiousFormulaRepresentationConfigurationType(),
+                        const ContiguousFormulaRepresentationConfigurationType& contiguousFormulaRepresentationConfiguration = ContiguousFormulaRepresentationConfigurationType(),
                         bool useStatistics = true) {
         // wDNNF
         SECTION("wDNNF") {
             CompilerConfigurationType WDnnfCompilerConfiguration = compilerConfiguration;
             WDnnfCompilerConfiguration.circuitType = CircuitTypeEnum::wDNNF;
-            process2(WDnnfCompilerConfiguration, timeConsuming, contagiousFormulaRepresentationConfiguration, useStatistics);
+            process2(WDnnfCompilerConfiguration, timeConsuming, contiguousFormulaRepresentationConfiguration, useStatistics);
         }
 
         // Cara caching scheme: a variable to literal mapping is FORBIDDEN for pwDNNF and nwDNNF circuits
@@ -685,19 +685,19 @@ namespace BellaTest::Compiler::wDNNF {
         SECTION("pwDNNF") {
             CompilerConfigurationType PWDnnfCompilerConfiguration = compilerConfiguration;
             PWDnnfCompilerConfiguration.circuitType = CircuitTypeEnum::pwDNNF;
-            process2(PWDnnfCompilerConfiguration, timeConsuming, contagiousFormulaRepresentationConfiguration, useStatistics);
+            process2(PWDnnfCompilerConfiguration, timeConsuming, contiguousFormulaRepresentationConfiguration, useStatistics);
         }
 
         // nwDNNF
         SECTION("nwDNNF") {
             CompilerConfigurationType NWDnnfCompilerConfiguration = compilerConfiguration;
             NWDnnfCompilerConfiguration.circuitType = CircuitTypeEnum::nwDNNF;
-            process2(NWDnnfCompilerConfiguration, timeConsuming, contagiousFormulaRepresentationConfiguration, useStatistics);
+            process2(NWDnnfCompilerConfiguration, timeConsuming, contiguousFormulaRepresentationConfiguration, useStatistics);
         }
     }
 
     inline void processConfiguration2(const CompilerConfigurationType& compilerConfiguration, bool timeConsuming,
-                                      const ContagiousFormulaRepresentationConfigurationType& contagiousFormulaRepresentationConfiguration,
+                                      const ContiguousFormulaRepresentationConfigurationType& contiguousFormulaRepresentationConfiguration,
                                       bool useStatistics) {
         // configuration 1
         SECTION(formulaInstanceEnumToString(FormulaInstanceEnum::configuration_1)) {
@@ -711,7 +711,7 @@ namespace BellaTest::Compiler::wDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModelsWithPolynomialDelay(formulaInstance, compilerConfiguration,
-                                                                                             contagiousFormulaRepresentationConfiguration,
+                                                                                             contiguousFormulaRepresentationConfiguration,
                                                                                              useStatistics);
                 actualResult << numberOfModels << std::endl;
             }
@@ -735,7 +735,7 @@ namespace BellaTest::Compiler::wDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModelsWithPolynomialDelay(formulaInstance, compilerConfiguration,
-                                                                                             contagiousFormulaRepresentationConfiguration,
+                                                                                             contiguousFormulaRepresentationConfiguration,
                                                                                              useStatistics);
                 actualResult << numberOfModels << std::endl;
             }
@@ -759,7 +759,7 @@ namespace BellaTest::Compiler::wDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModelsWithPolynomialDelay(formulaInstance, compilerConfiguration,
-                                                                                             contagiousFormulaRepresentationConfiguration,
+                                                                                             contiguousFormulaRepresentationConfiguration,
                                                                                              useStatistics);
                 actualResult << numberOfModels << std::endl;
             }
@@ -783,7 +783,7 @@ namespace BellaTest::Compiler::wDNNF {
 
             try {
                 NumberOfModelsType numberOfModels = computeNumberOfModelsWithPolynomialDelay(formulaInstance, compilerConfiguration,
-                                                                                             contagiousFormulaRepresentationConfiguration,
+                                                                                             contiguousFormulaRepresentationConfiguration,
                                                                                              useStatistics);
                 actualResult << numberOfModels << std::endl;
             }
@@ -808,7 +808,7 @@ namespace BellaTest::Compiler::wDNNF {
 
                 try {
                     NumberOfModelsType numberOfModels = computeNumberOfModelsWithPolynomialDelay(formulaInstance, compilerConfiguration,
-                                                                                                 contagiousFormulaRepresentationConfiguration,
+                                                                                                 contiguousFormulaRepresentationConfiguration,
                                                                                                  useStatistics);
                     actualResult << numberOfModels << std::endl;
                 }
@@ -823,27 +823,27 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     inline void processConfiguration(const CompilerConfigurationType& compilerConfiguration, bool timeConsuming,
-                                     const ContagiousFormulaRepresentationConfigurationType& contagiousFormulaRepresentationConfiguration = ContagiousFormulaRepresentationConfigurationType(),
+                                     const ContiguousFormulaRepresentationConfigurationType& contiguousFormulaRepresentationConfiguration = ContiguousFormulaRepresentationConfigurationType(),
                                      bool useStatistics = true) {
         // wDNNF
         SECTION("wDNNF") {
             CompilerConfigurationType WDnnfCompilerConfiguration = compilerConfiguration;
             WDnnfCompilerConfiguration.circuitType = CircuitTypeEnum::wDNNF;
-            processConfiguration2(WDnnfCompilerConfiguration, timeConsuming, contagiousFormulaRepresentationConfiguration, useStatistics);
+            processConfiguration2(WDnnfCompilerConfiguration, timeConsuming, contiguousFormulaRepresentationConfiguration, useStatistics);
         }
 
         // pwDNNF
         SECTION("pwDNNF") {
             CompilerConfigurationType PWDnnfCompilerConfiguration = compilerConfiguration;
             PWDnnfCompilerConfiguration.circuitType = CircuitTypeEnum::pwDNNF;
-            processConfiguration2(PWDnnfCompilerConfiguration, timeConsuming, contagiousFormulaRepresentationConfiguration, useStatistics);
+            processConfiguration2(PWDnnfCompilerConfiguration, timeConsuming, contiguousFormulaRepresentationConfiguration, useStatistics);
         }
 
         // nwDNNF
         SECTION("nwDNNF") {
             CompilerConfigurationType NWDnnfCompilerConfiguration = compilerConfiguration;
             NWDnnfCompilerConfiguration.circuitType = CircuitTypeEnum::nwDNNF;
-            processConfiguration2(NWDnnfCompilerConfiguration, timeConsuming, contagiousFormulaRepresentationConfiguration, useStatistics);
+            processConfiguration2(NWDnnfCompilerConfiguration, timeConsuming, contiguousFormulaRepresentationConfiguration, useStatistics);
         }
     }
 }   // namespace BellaTest::Compiler::wDNNF

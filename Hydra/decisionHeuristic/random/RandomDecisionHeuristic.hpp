@@ -1,8 +1,8 @@
 #pragma once
 
 #include <cassert>
+#include <iostream>
 #include <iterator>
-#include <ostream>
 #include <random>
 
 #include "Hydra/decisionHeuristic/DecisionHeuristicAbstract.hpp"

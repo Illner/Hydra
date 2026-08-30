@@ -42,6 +42,10 @@
 
 ![alt text](./statistics.png "statistics")
 
+## Parser
+
+![alt text](./parser.png "parser")
+
 ## Formula
 
 ![alt text](./formula.png "formula")

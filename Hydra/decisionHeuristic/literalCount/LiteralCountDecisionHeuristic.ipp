@@ -67,7 +67,7 @@ namespace Hydra::DecisionHeuristic::LiteralCount {
 
                 default:
                     throw Exception::NotImplementedException(decisionHeuristicTypeEnumToString(configuration_.decisionHeuristicType),
-                                                             "Hydra::DecisionHeuristic::LiteralCount::LiteralCountDecisionHeuristic::getDecisionVariable");
+                                                             "Hydra::DecisionHeuristic::LiteralCount::LiteralCountDecisionHeuristic::processGetDecisionVariable");
             }
         }
 

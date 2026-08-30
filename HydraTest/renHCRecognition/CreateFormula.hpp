@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
-#include "Hydra/formula/representation/contagious/ContagiousFormulaRepresentation.hpp"
+#include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.hpp"
 #include "Hydra/other/hashMap/HashMap.hpp"
 
 namespace HydraTest::RenHCRecognition {
@@ -13,21 +13,21 @@ namespace HydraTest::RenHCRecognition {
      */
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     inline std::unique_ptr<Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> createFormula(Hydra::Other::HashMap::SetType<VarT>& variableSet,
-                                                                                                                                           bool assignLitNeg4);
+                                                                                                                                   bool assignLitNeg4);
 
     /**
      * Monotone formula
      */
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     inline std::unique_ptr<Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> createMonotoneFormula(Hydra::Other::HashMap::SetType<VarT>& variableSet,
-                                                                                                                                                   bool assignLitPos1);
+                                                                                                                                           bool assignLitPos1);
 
     /**
      * Current component formula
      */
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     inline std::unique_ptr<Hydra::Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>> createCurrentComponentFormula(Hydra::Other::HashMap::SetType<VarT>& variableSet,
-                                                                                                                                                           bool assignLitPos1AndLitPos6);
+                                                                                                                                                   bool assignLitPos1AndLitPos6);
 
     /**
      * RenH-C (ignored pure literals: positive)

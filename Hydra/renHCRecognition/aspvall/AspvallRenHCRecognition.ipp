@@ -10,7 +10,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
         FormulaSizeType formulaPosition = 0;
 
         for (const LiteralAspType& lit : formula_) {
-            contagiousOccurrenceList_.addOccurrence(lit.getLiteralT(), aspvallClauseId);
+            contiguousOccurrenceList_.addOccurrence(lit.getLiteralT(), aspvallClauseId);
 
             // The end of the clause
             if ((++formulaPosition % 2) == 0)
@@ -38,7 +38,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
         LiteralAspT literalAspT = static_cast<LiteralAspT>(lit.getLiteralT());
 
         // lit
-        for (auto it = contagiousOccurrenceList_.begin(literalAspT); it != contagiousOccurrenceList_.end(literalAspT); ++it) {
+        for (auto it = contiguousOccurrenceList_.begin(literalAspT); it != contiguousOccurrenceList_.end(literalAspT); ++it) {
             ClauseIdAspT aspvallClauseId = *it;
 
             assert(formula_[getIndexOfClauseInFormula(aspvallClauseId, true)].getLiteralT() == literalAspT);
@@ -76,7 +76,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
                 if (!Other::containInSet(currentComponentVariableSet, static_cast<VarT>(varAsp)))
                     continue;
 
-                contagiousOccurrenceList_.removeOccurrence(litAsp.getLiteralT(), aspvallClauseIdTmp);
+                contiguousOccurrenceList_.removeOccurrence(litAsp.getLiteralT(), aspvallClauseIdTmp);
                 l_removedOccurrenceStackWithLevels_.addElement(std::make_pair(litAsp.getLiteralT(), aspvallClauseIdTmp));
             }
         }
@@ -84,7 +84,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
         LiteralAspT complementaryLiteralAspT = static_cast<LiteralAspT>(lit.getComplementaryLiteralT());
 
         // ~lit
-        for (auto it = contagiousOccurrenceList_.begin(complementaryLiteralAspT); it != contagiousOccurrenceList_.end(complementaryLiteralAspT); ++it) {
+        for (auto it = contiguousOccurrenceList_.begin(complementaryLiteralAspT); it != contiguousOccurrenceList_.end(complementaryLiteralAspT); ++it) {
             ClauseIdAspT aspvallClauseId = *it;
 
             assert(formula_[getIndexOfClauseInFormula(aspvallClauseId, true)].getLiteralT() == complementaryLiteralAspT);
@@ -93,7 +93,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
 
             assert(auxLitAsp.getVariable() > numberOfOriginalVariables_);   // auxiliary variable
 
-            contagiousOccurrenceList_.removeOccurrence(auxLitAsp.getLiteralT(), aspvallClauseId);
+            contiguousOccurrenceList_.removeOccurrence(auxLitAsp.getLiteralT(), aspvallClauseId);
         }
 
         // Clear the local auxiliary data structures
@@ -113,12 +113,12 @@ namespace Hydra::RenHCRecognition::Aspvall {
         // lit (using l_removedOccurrenceStackWithLevels_)
         assert(l_removedOccurrenceStackWithLevels_.levelExists());
 
-        l_removedOccurrenceStackWithLevels_.removeCurrentLevel([this](const OccurrencePairAspType& occurrencePairAsp) -> void { this->contagiousOccurrenceList_.addOccurrence(occurrencePairAsp.first, occurrencePairAsp.second); });
+        l_removedOccurrenceStackWithLevels_.removeCurrentLevel([this](const OccurrencePairAspType& occurrencePairAsp) -> void { this->contiguousOccurrenceList_.addOccurrence(occurrencePairAsp.first, occurrencePairAsp.second); });
 
         LiteralAspT complementaryLiteralAspT = static_cast<LiteralAspT>(lit.getComplementaryLiteralT());
 
         // ~lit
-        for (auto it = contagiousOccurrenceList_.begin(complementaryLiteralAspT); it != contagiousOccurrenceList_.end(complementaryLiteralAspT); ++it) {
+        for (auto it = contiguousOccurrenceList_.begin(complementaryLiteralAspT); it != contiguousOccurrenceList_.end(complementaryLiteralAspT); ++it) {
             ClauseIdAspT aspvallClauseId = *it;
 
             assert(formula_[getIndexOfClauseInFormula(aspvallClauseId, true)].getLiteralT() == complementaryLiteralAspT);
@@ -127,7 +127,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
 
             assert(auxLitAsp.getVariable() > numberOfOriginalVariables_);   // auxiliary variable
 
-            contagiousOccurrenceList_.addOccurrence(auxLitAsp.getLiteralT(), aspvallClauseId);
+            contiguousOccurrenceList_.addOccurrence(auxLitAsp.getLiteralT(), aspvallClauseId);
         }
     }
 
@@ -140,7 +140,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
 
         for (auto clauseIt = this->formulaRepresentationAbstractPtr_->beginClause(clauseId);
              clauseIt != this->formulaRepresentationAbstractPtr_->endClause(); ++clauseIt) {
-            [[maybe_unused]] bool removedAtLeastOneOccurrence = contagiousOccurrenceList_.removeOccurrence(static_cast<LiteralAspT>(clauseIt->getLiteralT()),
+            [[maybe_unused]] bool removedAtLeastOneOccurrence = contiguousOccurrenceList_.removeOccurrence(static_cast<LiteralAspT>(clauseIt->getLiteralT()),
                                                                                                            beginAspvallClauseId, endAspvallClauseId, true);
             assert(removedAtLeastOneOccurrence);
         }
@@ -170,7 +170,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
             if (!Other::containInSet(currentComponentVariableSet, static_cast<VarT>(var)))
                 continue;
 
-            contagiousOccurrenceList_.addOccurrence(lit.getLiteralT(), aspvallClauseId);
+            contiguousOccurrenceList_.addOccurrence(lit.getLiteralT(), aspvallClauseId);
         }
     }
 
@@ -201,7 +201,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
                 l_variableStateVector_.assignVariable(lit.getVariable(), lit.isPositive());
 
                 // Satisfy the clauses containing the pure literal
-                for (auto it = contagiousOccurrenceList_.begin(lit.getLiteralT()); it != contagiousOccurrenceList_.end(lit.getLiteralT()); ++it) {
+                for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != contiguousOccurrenceList_.end(lit.getLiteralT()); ++it) {
                     ClauseIdAspT aspvallClauseId = *it;
 
                     assert(aspvallClauseId < l_satisfiedClauseVector_.size());
@@ -211,7 +211,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
                     l_satisfiedClauseStackWithLevels_.addElement(aspvallClauseId);
                 }
 
-                assert(contagiousOccurrenceList_.begin(lit.getComplementaryLiteralT()) == contagiousOccurrenceList_.end(lit.getComplementaryLiteralT()));   // pure literal
+                assert(contiguousOccurrenceList_.begin(lit.getComplementaryLiteralT()) == contiguousOccurrenceList_.end(lit.getComplementaryLiteralT()));   // pure literal
             }
         }
 
@@ -290,7 +290,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
         #endif
 
         // lit
-        for (auto it = contagiousOccurrenceList_.begin(lit.getLiteralT()); it != contagiousOccurrenceList_.end(lit.getLiteralT()); ++it) {
+        for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != contiguousOccurrenceList_.end(lit.getLiteralT()); ++it) {
             ClauseIdAspT aspvallClauseId = *it;
 
             assert(aspvallClauseId < l_satisfiedClauseVector_.size());
@@ -304,7 +304,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
         }
 
         // ~lit
-        for (auto it = contagiousOccurrenceList_.begin(lit.getComplementaryLiteralT()); it != contagiousOccurrenceList_.end(lit.getComplementaryLiteralT()); ++it) {
+        for (auto it = contiguousOccurrenceList_.begin(lit.getComplementaryLiteralT()); it != contiguousOccurrenceList_.end(lit.getComplementaryLiteralT()); ++it) {
             ClauseIdAspT aspvallClauseId = *it;
 
             assert(aspvallClauseId < l_satisfiedClauseVector_.size());
@@ -427,7 +427,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
             l_removedOccurrenceStackWithLevels_.printStackWithLevelsDebug(out, [](const OccurrencePairAspType& removedOccurrence) -> std::string { return "(" + Formula::createLiteralFromLiteralT<VarAspT>(removedOccurrence.first).toString() + ", " + std::to_string(removedOccurrence.second) + ")"; });
 
             // Occurrence list
-            contagiousOccurrenceList_.printContagiousOccurrenceListDebug(out);
+            contiguousOccurrenceList_.printContiguousOccurrenceListDebug(out);
         }
     }
 

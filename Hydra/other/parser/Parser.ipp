@@ -4,8 +4,8 @@
 
 namespace Hydra::Other::Parser {
 
-    template <std::input_iterator InputIterator>
-    bool skipLine(InputIterator& begin, const InputIterator& end) {
+    template <std::input_iterator InputIteratorT>
+    bool skipLine(InputIteratorT& begin, const InputIteratorT& end) {
         while (begin != end) {
             // The end of the line
             if (*begin == '\n')
@@ -17,8 +17,8 @@ namespace Hydra::Other::Parser {
         return true;
     }
 
-    template <std::input_iterator InputIterator>
-    bool skipWhitespacesExcludingNewLineSymbol(InputIterator& begin, const InputIterator& end) {
+    template <std::input_iterator InputIteratorT>
+    bool skipWhitespacesExcludingNewLineSymbol(InputIteratorT& begin, const InputIteratorT& end) {
         while (begin != end) {
             // Non-whitespace symbol has been reached
             if (!isWhitespaceExcludingNewLineSymbol(*begin))
@@ -30,8 +30,8 @@ namespace Hydra::Other::Parser {
         return true;
     }
 
-    template <std::input_iterator InputIterator>
-    bool parseWhitespacesExcludingNewLineSymbol(InputIterator& begin, const InputIterator& end) {
+    template <std::input_iterator InputIteratorT>
+    bool parseWhitespacesExcludingNewLineSymbol(InputIteratorT& begin, const InputIteratorT& end) {
         // The end of the stream
         if (begin == end)
             return false;
@@ -45,8 +45,8 @@ namespace Hydra::Other::Parser {
         return true;
     }
 
-    template <std::input_iterator InputIterator>
-    std::string parseString(InputIterator& begin, const InputIterator& end, unsigned int line,
+    template <std::input_iterator InputIteratorT>
+    std::string parseString(InputIteratorT& begin, const InputIteratorT& end, unsigned int line,
                             bool clearWhitespacesBeforeString, std::size_t expectedSizeOfParsedString, bool toLowercase) {
         // The end of the stream
         if ((begin == end) || (clearWhitespacesBeforeString && skipWhitespacesExcludingNewLineSymbol(begin, end)))
@@ -78,8 +78,8 @@ namespace Hydra::Other::Parser {
         return parsedString;
     }
 
-    template <typename NumberT, std::input_iterator InputIterator>
-    NumberT parsePositiveNumber(InputIterator& begin, const InputIterator& end,
+    template <typename NumberT, std::input_iterator InputIteratorT>
+    NumberT parsePositiveNumber(InputIteratorT& begin, const InputIteratorT& end,
                                 unsigned int line, bool clearWhitespacesBeforeNumber) {
         // The end of the stream
         if ((begin == end) || (clearWhitespacesBeforeNumber && skipWhitespacesExcludingNewLineSymbol(begin, end)))
@@ -118,8 +118,8 @@ namespace Hydra::Other::Parser {
         return number;
     }
 
-    template <typename NumberT, std::input_iterator InputIterator>
-    std::vector<NumberT> parseAllPositiveNumbersOnLine(InputIterator& begin, const InputIterator& end,
+    template <typename NumberT, std::input_iterator InputIteratorT>
+    std::vector<NumberT> parseAllPositiveNumbersOnLine(InputIteratorT& begin, const InputIteratorT& end,
                                                        unsigned int line, std::size_t expectedCountOfParsedPositiveNumbers) {
         std::vector<NumberT> parsedVector;
         parsedVector.reserve(expectedCountOfParsedPositiveNumbers);
@@ -138,8 +138,8 @@ namespace Hydra::Other::Parser {
         return parsedVector;
     }
 
-    template <typename VarT, typename LiteralT, std::input_iterator InputIterator>
-    Formula::Literal<VarT, LiteralT> parseLiteral(InputIterator& begin, const InputIterator& end, unsigned int line,
+    template <typename VarT, typename LiteralT, std::input_iterator InputIteratorT>
+    Formula::Literal<VarT, LiteralT> parseLiteral(InputIteratorT& begin, const InputIteratorT& end, unsigned int line,
                                                   const HashMap::MapType<VarT, VarT>& mappingFromIndexToVar) {
         // The end of the stream
         if (skipWhitespacesExcludingNewLineSymbol(begin, end))
@@ -151,7 +151,7 @@ namespace Hydra::Other::Parser {
             ++begin;
         }
 
-        VarT variable = parsePositiveNumber<VarT, InputIterator>(begin, end, line, false);
+        VarT variable = parsePositiveNumber<VarT, InputIteratorT>(begin, end, line, false);
 
         // Mapping function is used
         if (auto itTmp = mappingFromIndexToVar.find(variable); itTmp != mappingFromIndexToVar.end())
@@ -161,8 +161,8 @@ namespace Hydra::Other::Parser {
         return literal;
     }
 
-    template <typename VarT, typename LiteralT, std::input_iterator InputIterator>
-    std::vector<Formula::Literal<VarT, LiteralT>> parseAllLiteralsOnLine(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, std::input_iterator InputIteratorT>
+    std::vector<Formula::Literal<VarT, LiteralT>> parseAllLiteralsOnLine(InputIteratorT& begin, const InputIteratorT& end,
                                                                          unsigned int line, LiteralT expectedCountOfParsedLiterals,
                                                                          const HashMap::MapType<VarT, VarT>& mappingFromIndexToVar) {
         using LiteralType = Formula::Literal<VarT, LiteralT>;
@@ -185,8 +185,8 @@ namespace Hydra::Other::Parser {
         return parsedVector;
     }
 
-    template <std::input_iterator InputIterator>
-    DimacsCnfHeaderStruct parseDimacsCnfHeader(InputIterator& begin, const InputIterator& end, unsigned int& line) {
+    template <std::input_iterator InputIteratorT>
+    DimacsCnfHeaderStruct parseDimacsCnfHeader(InputIteratorT& begin, const InputIteratorT& end, unsigned int& line) {
         bool isDimacsCnfHeaderParsed = false;
         DimacsCnfHeaderStruct dimacsCnfHeaderStruct { 0, 0, 0 };
 
@@ -269,8 +269,8 @@ namespace Hydra::Other::Parser {
         return dimacsCnfHeaderStruct;
     }
 
-    template <std::input_iterator InputIterator>
-    bool parseCommentLines(InputIterator& begin, const InputIterator& end, unsigned int& line, [[maybe_unused]] Cara::ModelCountingTypeEnum& modelCountingType) {
+    template <std::input_iterator InputIteratorT>
+    bool parseCommentLines(InputIteratorT& begin, const InputIteratorT& end, unsigned int& line, [[maybe_unused]] Cara::ModelCountingTypeEnum& modelCountingType) {
         using ModelCountingTypeEnum = Cara::ModelCountingTypeEnum;
 
         [[maybe_unused]] auto setModelCountingTypeLambda = [](ModelCountingTypeEnum& modelCountingType, ModelCountingTypeEnum newModelCountingType) -> void {
@@ -377,8 +377,8 @@ namespace Hydra::Other::Parser {
         return true;
     }
 
-    template <std::input_iterator InputIterator>
-    bool parseNewLineSymbol(InputIterator& begin, const InputIterator& end, unsigned int& line) {
+    template <std::input_iterator InputIteratorT>
+    bool parseNewLineSymbol(InputIteratorT& begin, const InputIteratorT& end, unsigned int& line) {
         if (skipWhitespacesExcludingNewLineSymbol(begin, end))
             throw Exception::Parser::SomethingIsExpectedButEndOfStreamIsDetectedException("A new line (\\n)");
 
@@ -394,8 +394,8 @@ namespace Hydra::Other::Parser {
         return false;
     }
 
-    template <typename VarT, typename LiteralT, std::input_iterator InputIterator>
-    std::vector<Formula::Literal<VarT, LiteralT>> parseDimacsClause(InputIterator& begin, const InputIterator& end,
+    template <typename VarT, typename LiteralT, std::input_iterator InputIteratorT>
+    std::vector<Formula::Literal<VarT, LiteralT>> parseDimacsClause(InputIteratorT& begin, const InputIteratorT& end,
                                                                     unsigned int& line,
                                                                     LiteralT expectedParsedClauseSize,
                                                                     const HashMap::MapType<VarT, VarT>& mappingFromIndexToVar) {

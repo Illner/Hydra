@@ -1,7 +1,7 @@
 #pragma once
 
 #include <chrono>
-#include <ostream>
+#include <iostream>
 #include <string>
 
 #include "Hydra/other/Other.hpp"
