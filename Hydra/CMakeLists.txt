@@ -16,7 +16,7 @@ add_library(HydraLibrary STATIC
         "renHCRecognition/RenHCRecognitionAbstract.cxx"
         "decisionHeuristic/DecisionHeuristicAbstract.cxx"
         "formula/representation/FormulaRepresentationAbstract.cxx"
-        "partitioningHypergraph/PartitioningHypergraphAbstract.cxx")
+        "hypergraphPartitioning/HypergraphPartitioningAbstract.cxx")
 
 # Hydra version
 target_compile_definitions(HydraLibrary PRIVATE
