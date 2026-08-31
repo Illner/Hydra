@@ -22,9 +22,9 @@
 
 ![alt text](./satSolver.png "SAT solver")
 
-## Partitioning hypergraph
+## Hypergraph partitioning
 
-![alt text](./partitioningHypergraph.png "partitioning hypergraph")
+![alt text](./hypergraphPartitioning.png "hypergraph partitioning")
 
 ## Decision heuristic
 

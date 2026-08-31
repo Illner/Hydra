@@ -23,14 +23,14 @@ namespace Hydra::Formula::Representation {
     typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VertexWeightType
     FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::combineVertexWeights(VertexWeightType vertexWeight1, VertexWeightType vertexWeight2,
                                                                                    VertexWeightTypeEnum vertexWeightType) const {
-        assert(PartitioningHypergraph::isVertexWeightUsed(vertexWeightType));
+        assert(HypergraphPartitioning::isVertexWeightUsed(vertexWeightType));
 
         switch (vertexWeightType) {
             case VertexWeightTypeEnum::STANDARD:
             case VertexWeightTypeEnum::CLAUSE_LENGTH:
                 return vertexWeight1 + vertexWeight2;
             default:
-                throw Exception::NotImplementedException(PartitioningHypergraph::vertexWeightTypeEnumToString(vertexWeightType),
+                throw Exception::NotImplementedException(HypergraphPartitioning::vertexWeightTypeEnumToString(vertexWeightType),
                                                          "Hydra::Formula::Representation::FormulaRepresentationAbstract::combineVertexWeights");
         }
     }

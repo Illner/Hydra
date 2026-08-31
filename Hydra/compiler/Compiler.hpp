@@ -32,14 +32,14 @@
 #include "Hydra/decisionHeuristic/vsids/VsidsDecisionHeuristic.hpp"
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
+#include "Hydra/hypergraphPartitioning/HypergraphPartitioningAbstract.hpp"
+#include "Hydra/hypergraphPartitioning/cara/CaraHypergraphPartitioning.hpp"
+#include "Hydra/hypergraphPartitioning/hmetis/HmetisHypergraphPartitioning.hpp"
+#include "Hydra/hypergraphPartitioning/kahypar/KahyparHypergraphPartitioning.hpp"
+#include "Hydra/hypergraphPartitioning/patoh/PatohHypergraphPartitioning.hpp"
 #include "Hydra/other/Other.hpp"
 #include "Hydra/other/container/computeConnectedComponents/ConnectedComponentStructure.hpp"
 #include "Hydra/other/operatingSystem/OperatingSystem.hpp"
-#include "Hydra/partitioningHypergraph/PartitioningHypergraphAbstract.hpp"
-#include "Hydra/partitioningHypergraph/cara/CaraPartitioningHypergraph.hpp"
-#include "Hydra/partitioningHypergraph/hmetis/HmetisPartitioningHypergraph.hpp"
-#include "Hydra/partitioningHypergraph/kahypar/KahyparPartitioningHypergraph.hpp"
-#include "Hydra/partitioningHypergraph/patoh/PatohPartitioningHypergraph.hpp"
 #include "Hydra/satSolver/EquivalencePreprocessingStructure.hpp"
 #include "Hydra/satSolver/SatSolverAbstract.hpp"
 #include "Hydra/satSolver/cadical/CadicalSolver.hpp"
@@ -54,8 +54,8 @@
 #include "Hydra/cache/enums/CacheTypeEnum.hpp"
 #include "Hydra/circuit/enums/CircuitTypeEnum.hpp"
 #include "Hydra/circuit/node/enums/DecomposabilityTypeEnum.hpp"
+#include "Hydra/compiler/enums/HypergraphPartitioningTypeEnum.hpp"
 #include "Hydra/compiler/enums/IgnorePureLiteralTypeEnum.hpp"
-#include "Hydra/compiler/enums/PartitioningHypergraphTypeEnum.hpp"
 #include "Hydra/decisionHeuristic/enums/DecisionHeuristicTypeEnum.hpp"
 #include "Hydra/satSolver/enums/SatSolverTypeEnum.hpp"
 
@@ -188,13 +188,13 @@ namespace Hydra {
         using LiteralCountDecisionHeuristicType = DecisionHeuristic::LiteralCount::LiteralCountDecisionHeuristic<VarT, LiteralT, ClauseIdT>;
         using DecisionHeuristicAbstractUniquePtrType = std::unique_ptr<DecisionHeuristic::DecisionHeuristicAbstract<VarT, LiteralT, ClauseIdT>>;
 
-        // Partitioning hypergraph
+        // Hypergraph partitioning
     private:
-        using PatohPartitioningHypergraphType = PartitioningHypergraph::Patoh::PatohPartitioningHypergraph<VarT, LiteralT, ClauseIdT>;
-        using HmetisPartitioningHypergraphType = PartitioningHypergraph::Hmetis::HmetisPartitioningHypergraph<VarT, LiteralT, ClauseIdT>;
-        using KahyparPartitioningHypergraphType = PartitioningHypergraph::Kahypar::KahyparPartitioningHypergraph<VarT, LiteralT, ClauseIdT>;
-        using CaraPartitioningHypergraphType = PartitioningHypergraph::Cara::CaraPartitioningHypergraph<VarT, LiteralT, ClauseIdT, ComponentCacheValueType>;
-        using PartitioningHypergraphAbstractUniquePtrType = std::unique_ptr<PartitioningHypergraph::PartitioningHypergraphAbstract<VarT, LiteralT, ClauseIdT>>;
+        using PatohHypergraphPartitioningType = HypergraphPartitioning::Patoh::PatohHypergraphPartitioning<VarT, LiteralT, ClauseIdT>;
+        using HmetisHypergraphPartitioningType = HypergraphPartitioning::Hmetis::HmetisHypergraphPartitioning<VarT, LiteralT, ClauseIdT>;
+        using KahyparHypergraphPartitioningType = HypergraphPartitioning::Kahypar::KahyparHypergraphPartitioning<VarT, LiteralT, ClauseIdT>;
+        using CaraHypergraphPartitioningType = HypergraphPartitioning::Cara::CaraHypergraphPartitioning<VarT, LiteralT, ClauseIdT, ComponentCacheValueType>;
+        using HypergraphPartitioningAbstractUniquePtrType = std::unique_ptr<HypergraphPartitioning::HypergraphPartitioningAbstract<VarT, LiteralT, ClauseIdT>>;
 
     private:
         using CacheTypeEnum = Cache::CacheTypeEnum;
@@ -211,7 +211,7 @@ namespace Hydra {
             : configuration_(configuration), ignorePureLiteralType_(IgnorePureLiteralTypeEnum::NONE),
               componentCacheUniquePtr_(nullptr), satSolverAbstractUniquePtr_(nullptr), hypergraphCutCacheUniquePtr_(nullptr),
               decisionHeuristicAbstractUniquePtr_(nullptr), formulaRepresentationAbstractUniquePtr_(std::move(formulaRepresentationAbstractUniquePtr)),
-              partitioningHypergraphAbstractUniquePtr_(nullptr),
+              hypergraphPartitioningAbstractUniquePtr_(nullptr),
               statisticsPtr_(statisticsPtr), compilerStatisticsPtr_(statisticsPtr ? statisticsPtr->getCompilerStatisticsPtr() : nullptr),
               killedByMainThread_(killedByMainThread) {
             #if defined(CARA_SOLVER)
@@ -298,9 +298,9 @@ namespace Hydra {
             initializeDecisionHeuristic();
             assert(decisionHeuristicAbstractUniquePtr_);   // decision heuristic pointer is set
 
-            // Partitioning hypergraph
-            initializePartitioningHypergraph();
-            assert(partitioningHypergraphAbstractUniquePtr_);   // partitioning hypergraph pointer is set
+            // Hypergraph partitioning
+            initializeHypergraphPartitioning();
+            assert(hypergraphPartitioningAbstractUniquePtr_);   // hypergraph partitioning pointer is set
 
             // Statistics - initialization
             if (compilerStatisticsPtr_) {
@@ -364,7 +364,7 @@ namespace Hydra {
         HypergraphCutCacheUniquePtrType hypergraphCutCacheUniquePtr_;
         DecisionHeuristicAbstractUniquePtrType decisionHeuristicAbstractUniquePtr_;
         FormulaRepresentationAbstractUniquePtrType formulaRepresentationAbstractUniquePtr_;
-        PartitioningHypergraphAbstractUniquePtrType partitioningHypergraphAbstractUniquePtr_;
+        HypergraphPartitioningAbstractUniquePtrType hypergraphPartitioningAbstractUniquePtr_;
 
         StatisticsPtrType statisticsPtr_;
         CompilerStatisticsPtrType compilerStatisticsPtr_;
@@ -423,11 +423,11 @@ namespace Hydra {
         void initializeDecisionHeuristic();
 
         /**
-         * Initialize the partitioning hypergraph
+         * Initialize the hypergraph partitioning
          * Supported operating systems: Linux, macOS, and Windows
          * @throw OperatingSystemIsNotSupportedException if this operating system is not supported
          */
-        void initializePartitioningHypergraph();
+        void initializeHypergraphPartitioning();
 
         /**
          * Check if a new hypergraph cut should be computed

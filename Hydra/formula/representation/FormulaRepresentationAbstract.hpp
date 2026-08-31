@@ -27,7 +27,7 @@
 #include "Hydra/formula/enums/ClauseStatusEnum.hpp"
 #include "Hydra/formula/enums/FormulaRepresentationTypeEnum.hpp"
 #include "Hydra/formula/enums/RecognitionTypeEnum.hpp"
-#include "Hydra/partitioningHypergraph/enums/VertexWeightTypeEnum.hpp"
+#include "Hydra/hypergraphPartitioning/enums/VertexWeightTypeEnum.hpp"
 
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hxx"
 
@@ -104,7 +104,7 @@ namespace Hydra::Formula::Representation {
         using ModelCountingTypeEnum = Cara::ModelCountingTypeEnum;
         using IgnorePureLiteralTypeEnum = Hydra::IgnorePureLiteralTypeEnum;
         using OmitClauseTypeEnum = Cache::CachingScheme::OmitClauseTypeEnum;
-        using VertexWeightTypeEnum = PartitioningHypergraph::VertexWeightTypeEnum;
+        using VertexWeightTypeEnum = HypergraphPartitioning::VertexWeightTypeEnum;
 
     public:
         using isValidClauseT = std::bool_constant<(std::is_same<ClauseIdT, char8_t>::value ||
@@ -228,7 +228,7 @@ namespace Hydra::Formula::Representation {
         /**
          * Combine two vertex weights
          * Clause_1 with vertexWeight_1 variable subsumes clause_2 with vertexWeight_2
-         * Note: mainly used by PartitioningHypergraph
+         * Note: mainly used by HypergraphPartitioning
          * @param vertexWeight1 first vertex weight
          * @param vertexWeight2 second vertex weight
          * @param vertexWeightType a type of vertex weight
@@ -645,7 +645,7 @@ namespace Hydra::Formula::Representation {
 
         /**
          * Variable subsumption is subsumption that considers only variables, not literals
-         * Note: mainly used by PartitioningHypergraph
+         * Note: mainly used by HypergraphPartitioning
          * Note: the mapping is applied before checking variable subsumption
          * Note: clauseThatVariableSubsumesSomeClauseVectorSet will be cleared at the beginning
          * Note: the corresponding vertex weights MUST be initially set if vertex weights are used

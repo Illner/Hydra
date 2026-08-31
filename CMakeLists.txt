@@ -68,10 +68,13 @@ include_directories(${CMAKE_SOURCE_DIR})
 # Boost (KaHyPar)
 set(BOOST_KAHYPAR_HOME "${CMAKE_SOURCE_DIR}/Hydra/external/boost/")
 
-# Partitioning hypergraph (PaToH, hMETIS, KaHyPar)
-set(PATOH_HOME "${CMAKE_SOURCE_DIR}/Hydra/external/partitioningHypergraphs/PaToH/")
-set(HMETIS_HOME "${CMAKE_SOURCE_DIR}/Hydra/external/partitioningHypergraphs/hMETIS/")
-set(KAHYPAR_HOME "${CMAKE_SOURCE_DIR}/Hydra/external/partitioningHypergraphs/KaHyPar/")
+# Hypergraph partitioning (PaToH, hMETIS, KaHyPar)
+set(PATOH_HOME "${CMAKE_SOURCE_DIR}/Hydra/external/hypergraphPartitioning/PaToH/")
+set(HMETIS_HOME "${CMAKE_SOURCE_DIR}/Hydra/external/hypergraphPartitioning/hMETIS/")
+set(KAHYPAR_HOME "${CMAKE_SOURCE_DIR}/Hydra/external/hypergraphPartitioning/KaHyPar/")
+
+# CNF preprocessors
+set(BIPE_HOME "${CMAKE_SOURCE_DIR}/Hydra/external/preprocessors/cnf/bipe/")
 
 # Global options
 option(BUILD_BELLA "Build Bella" OFF)

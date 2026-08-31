@@ -51,8 +51,8 @@ add_executable(HydraTest "HydraTest.cpp"
         # Type
         "other/type/arbitraryPrecisionInteger/custom/CustomArbitraryPrecisionIntegerTest.cpp"
 
-        # Partitioning hypergraph
-        "partitioningHypergraph/PartitioningHypergraphTest.cpp"
+        # Hypergraph partitioning
+        "hypergraphPartitioning/HypergraphPartitioningTest.cpp"
 
         # SAT solver
         "satSolver/glucose/GlucoseSolverTest.cpp"

@@ -15,10 +15,10 @@
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
 
 #include "Cara/sharpSolver/enums/ModelCountingTypeEnum.hpp"
-#include "Hydra/compiler/enums/PartitioningHypergraphTypeEnum.hpp"
+#include "Hydra/compiler/enums/HypergraphPartitioningTypeEnum.hpp"
 #include "Hydra/formula/representation/contiguous/enums/VariableSubsumptionWithMappingTypeEnum.hpp"
+#include "Hydra/hypergraphPartitioning/enums/VertexWeightTypeEnum.hpp"
 #include "Hydra/other/enums/TemplateTypeEnum.hpp"
-#include "Hydra/partitioningHypergraph/enums/VertexWeightTypeEnum.hpp"
 
 #include "Hydra/compiler/Compiler.tpp"
 #include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.tpp"

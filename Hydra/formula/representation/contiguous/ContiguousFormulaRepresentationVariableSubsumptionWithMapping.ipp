@@ -66,8 +66,8 @@ namespace Hydra::Formula::Representation::Contiguous {
         for (ClauseIdT clauseId1 : currentComponentClausesFixedVector_) {
             assert(this->isClauseUnresolved(clauseId1));   // clause is unresolved
 
-            assert(!PartitioningHypergraph::isVertexWeightUsed(vertexWeightType) || (clauseId1 < vertexWeightVector.size()));
-            assert(!PartitioningHypergraph::isVertexWeightUsed(vertexWeightType) || vertexWeightVector[clauseId1] > 0);
+            assert(!HypergraphPartitioning::isVertexWeightUsed(vertexWeightType) || (clauseId1 < vertexWeightVector.size()));
+            assert(!HypergraphPartitioning::isVertexWeightUsed(vertexWeightType) || vertexWeightVector[clauseId1] > 0);
 
             // Transitivity
             if (clauseThatVariableSubsumesSomeClauseVectorSet.contains(clauseId1))
@@ -82,8 +82,8 @@ namespace Hydra::Formula::Representation::Contiguous {
             for (ClauseIdT clauseId2 : currentComponentClausesFixedVector_) {
                 assert(this->isClauseUnresolved(clauseId2));   // clause is unresolved
 
-                assert(!PartitioningHypergraph::isVertexWeightUsed(vertexWeightType) || (clauseId2 < vertexWeightVector.size()));
-                assert(!PartitioningHypergraph::isVertexWeightUsed(vertexWeightType) || vertexWeightVector[clauseId2] > 0);
+                assert(!HypergraphPartitioning::isVertexWeightUsed(vertexWeightType) || (clauseId2 < vertexWeightVector.size()));
+                assert(!HypergraphPartitioning::isVertexWeightUsed(vertexWeightType) || vertexWeightVector[clauseId2] > 0);
 
                 if (clauseId1 == clauseId2)
                     continue;
@@ -102,7 +102,7 @@ namespace Hydra::Formula::Representation::Contiguous {
                     clauseThatVariableSubsumesSomeClauseVectorSet.emplace(clauseId2);
 
                     // Vertex weights
-                    if (PartitioningHypergraph::isVertexWeightUsed(vertexWeightType))
+                    if (HypergraphPartitioning::isVertexWeightUsed(vertexWeightType))
                         vertexWeightVector[clauseId1] = this->combineVertexWeights(vertexWeightVector[clauseId2], vertexWeightVector[clauseId1],
                                                                                    vertexWeightType);
                 }
@@ -174,8 +174,8 @@ namespace Hydra::Formula::Representation::Contiguous {
         }
 
         for (ClauseIdT clauseId : currentComponentClausesFixedVector_) {
-            assert(!PartitioningHypergraph::isVertexWeightUsed(vertexWeightType) || (clauseId < vertexWeightVector.size()));
-            assert(!PartitioningHypergraph::isVertexWeightUsed(vertexWeightType) || vertexWeightVector[clauseId] > 0);
+            assert(!HypergraphPartitioning::isVertexWeightUsed(vertexWeightType) || (clauseId < vertexWeightVector.size()));
+            assert(!HypergraphPartitioning::isVertexWeightUsed(vertexWeightType) || vertexWeightVector[clauseId] > 0);
 
             // Transitivity
             if (clauseThatVariableSubsumesSomeClauseVectorSet.contains(clauseId))
@@ -219,8 +219,8 @@ namespace Hydra::Formula::Representation::Contiguous {
             l_removeClauseIdVectorSet_oneLiteralWatchingAlgorithmSubsumption_.clear();
 
             for (ClauseIdT clauseIdTmp : l_variableSubsumptionWatcherVector_oneLiteralWatchingAlgorithmVariableSubsumption_[variable]) {
-                assert(!PartitioningHypergraph::isVertexWeightUsed(vertexWeightType) || (clauseIdTmp < vertexWeightVector.size()));
-                assert(!PartitioningHypergraph::isVertexWeightUsed(vertexWeightType) || vertexWeightVector[clauseIdTmp] > 0);
+                assert(!HypergraphPartitioning::isVertexWeightUsed(vertexWeightType) || (clauseIdTmp < vertexWeightVector.size()));
+                assert(!HypergraphPartitioning::isVertexWeightUsed(vertexWeightType) || vertexWeightVector[clauseIdTmp] > 0);
 
                 if (clauseId == clauseIdTmp)
                     continue;
@@ -238,7 +238,7 @@ namespace Hydra::Formula::Representation::Contiguous {
                     clauseThatVariableSubsumesSomeClauseVectorSet.emplace(clauseIdTmp);
 
                     // Vertex weights
-                    if (PartitioningHypergraph::isVertexWeightUsed(vertexWeightType))
+                    if (HypergraphPartitioning::isVertexWeightUsed(vertexWeightType))
                         vertexWeightVector[clauseId] = this->combineVertexWeights(vertexWeightVector[clauseIdTmp], vertexWeightVector[clauseId],
                                                                                   vertexWeightType);
                 }

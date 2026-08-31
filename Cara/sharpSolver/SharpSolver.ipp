@@ -100,10 +100,10 @@ namespace Hydra {
                 hypergraphCut.clear();
             // The equivalence simplification method is NOT applied
             else if (equivalencePreprocessingStructPtr == nullptr)
-                hypergraphCut = partitioningHypergraphAbstractUniquePtr_->computeCut(currentComponentVariableSet, validHypergraphCut);
+                hypergraphCut = hypergraphPartitioningAbstractUniquePtr_->computeCut(currentComponentVariableSet, validHypergraphCut);
             // The equivalence simplification method is applied
             else
-                hypergraphCut = partitioningHypergraphAbstractUniquePtr_->computeCut(currentComponentVariableSet, validHypergraphCut,
+                hypergraphCut = hypergraphPartitioningAbstractUniquePtr_->computeCut(currentComponentVariableSet, validHypergraphCut,
                                                                                      *equivalencePreprocessingStructPtr);
         }
 

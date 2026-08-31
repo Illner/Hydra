@@ -70,21 +70,21 @@ namespace Cara::CommandLineArguments {
         commandLineArgumentsStruct.inputFilePath = Hydra::Other::Parser::CommandLineArgument::getArgumentValue(arguments, INPUT_ARGUMENT, true);
 
         // Hypergraph partitioning
-        commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType = getHypergraphPartitioningType(arguments);
+        commandLineArgumentsStruct.compilerConfiguration.hypergraphPartitioningType = getHypergraphPartitioningType(arguments);
 
         // Cara vs Cara (speed)
-        switch (commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType) {
+        switch (commandLineArgumentsStruct.compilerConfiguration.hypergraphPartitioningType) {
             // Cara - KaHyPar + PaToH (DEFAULT) + PaToH (SPEED)
-            case Hydra::PartitioningHypergraphTypeEnum::CARA:
-                commandLineArgumentsStruct.compilerConfiguration.caraPartitioningHypergraphConfiguration.imbalanceFactorKahyparLibrary = 0.1;
-                commandLineArgumentsStruct.compilerConfiguration.caraPartitioningHypergraphConfiguration.lowNumberOfVariablesSuggestByProblemTypePatohLibrary = PATOH_SUGPARAM_SPEED;
-                commandLineArgumentsStruct.compilerConfiguration.caraPartitioningHypergraphConfiguration.highNumberOfVariablesSuggestByProblemTypePatohLibrary = PATOH_SUGPARAM_DEFAULT;
+            case Hydra::HypergraphPartitioningTypeEnum::CARA:
+                commandLineArgumentsStruct.compilerConfiguration.caraHypergraphPartitioningConfiguration.imbalanceFactorKahyparLibrary = 0.1;
+                commandLineArgumentsStruct.compilerConfiguration.caraHypergraphPartitioningConfiguration.lowNumberOfVariablesSuggestByProblemTypePatohLibrary = PATOH_SUGPARAM_SPEED;
+                commandLineArgumentsStruct.compilerConfiguration.caraHypergraphPartitioningConfiguration.highNumberOfVariablesSuggestByProblemTypePatohLibrary = PATOH_SUGPARAM_DEFAULT;
                 break;
             // Cara - KaHyPar + PaToH (SPEED)
-            case Hydra::PartitioningHypergraphTypeEnum::CARA_SPEED:
-                commandLineArgumentsStruct.compilerConfiguration.caraPartitioningHypergraphConfiguration.imbalanceFactorKahyparLibrary = 0.05;
-                commandLineArgumentsStruct.compilerConfiguration.caraPartitioningHypergraphConfiguration.lowNumberOfVariablesSuggestByProblemTypePatohLibrary = PATOH_SUGPARAM_SPEED;
-                commandLineArgumentsStruct.compilerConfiguration.caraPartitioningHypergraphConfiguration.highNumberOfVariablesSuggestByProblemTypePatohLibrary = PATOH_SUGPARAM_SPEED;
+            case Hydra::HypergraphPartitioningTypeEnum::CARA_SPEED:
+                commandLineArgumentsStruct.compilerConfiguration.caraHypergraphPartitioningConfiguration.imbalanceFactorKahyparLibrary = 0.05;
+                commandLineArgumentsStruct.compilerConfiguration.caraHypergraphPartitioningConfiguration.lowNumberOfVariablesSuggestByProblemTypePatohLibrary = PATOH_SUGPARAM_SPEED;
+                commandLineArgumentsStruct.compilerConfiguration.caraHypergraphPartitioningConfiguration.highNumberOfVariablesSuggestByProblemTypePatohLibrary = PATOH_SUGPARAM_SPEED;
                 break;
             default:
                 break;
@@ -158,9 +158,9 @@ namespace Cara::CommandLineArguments {
         // Hypergraph partitioning
         commandLineArgumentsStruct.compilerConfiguration.useEquivalenceSimplificationMethod = true;
         commandLineArgumentsStruct.compilerConfiguration.ignoreMultiOccurrentIgnoredVariables = true;
-        commandLineArgumentsStruct.compilerConfiguration.caraPartitioningHypergraphConfiguration.seed = -1;
-        commandLineArgumentsStruct.compilerConfiguration.patohPartitioningHypergraphConfiguration.seedPatohLibrary = -1;
-        commandLineArgumentsStruct.compilerConfiguration.kahyparPartitioningHypergraphConfiguration.seedKahyparLibrary = -1;
+        commandLineArgumentsStruct.compilerConfiguration.caraHypergraphPartitioningConfiguration.seed = -1;
+        commandLineArgumentsStruct.compilerConfiguration.patohHypergraphPartitioningConfiguration.seedPatohLibrary = -1;
+        commandLineArgumentsStruct.compilerConfiguration.kahyparHypergraphPartitioningConfiguration.seedKahyparLibrary = -1;
         commandLineArgumentsStruct.compilerConfiguration.implicitBcpVariableOrderType = Hydra::SatSolver::ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_DESCENDING;
 
         // SAT solver
@@ -170,18 +170,18 @@ namespace Cara::CommandLineArguments {
         commandLineArgumentsStruct.compilerConfiguration.miniSatSolverConfiguration.vsidsScoreType = Hydra::SatSolver::MiniSat::VsidsScoreTypeEnum::D4_V2;
 
         // Others
-        commandLineArgumentsStruct.compilerConfiguration.vertexWeightType = Hydra::PartitioningHypergraph::VertexWeightTypeEnum::STANDARD;
+        commandLineArgumentsStruct.compilerConfiguration.vertexWeightType = Hydra::HypergraphPartitioning::VertexWeightTypeEnum::STANDARD;
         commandLineArgumentsStruct.compilerConfiguration.hypergraphCutRecomputationStrategyType = Hydra::HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY;
     }
 
-    Hydra::PartitioningHypergraphTypeEnum getHypergraphPartitioningType(const ArgumentsType& arguments) {
+    Hydra::HypergraphPartitioningTypeEnum getHypergraphPartitioningType(const ArgumentsType& arguments) {
         bool exists = false;
-        Hydra::PartitioningHypergraphTypeEnum hypergraphPartitioningType;
+        Hydra::HypergraphPartitioningTypeEnum hypergraphPartitioningType;
 
         // KaHyPar
         if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, KAHYPAR_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             exists = true;
-            hypergraphPartitioningType = Hydra::PartitioningHypergraphTypeEnum::KAHYPAR;
+            hypergraphPartitioningType = Hydra::HypergraphPartitioningTypeEnum::KAHYPAR;
         }
 
         // Cara
@@ -190,7 +190,7 @@ namespace Cara::CommandLineArguments {
                 throw Hydra::Exception::CommandLineArguments::MoreHypergraphPartitioningTypesAreMentionedException();
 
             exists = true;
-            hypergraphPartitioningType = Hydra::PartitioningHypergraphTypeEnum::CARA;
+            hypergraphPartitioningType = Hydra::HypergraphPartitioningTypeEnum::CARA;
         }
 
         // Cara (speed)
@@ -199,7 +199,7 @@ namespace Cara::CommandLineArguments {
                 throw Hydra::Exception::CommandLineArguments::MoreHypergraphPartitioningTypesAreMentionedException();
 
             exists = true;
-            hypergraphPartitioningType = Hydra::PartitioningHypergraphTypeEnum::CARA_SPEED;
+            hypergraphPartitioningType = Hydra::HypergraphPartitioningTypeEnum::CARA_SPEED;
         }
 
         // PaToH or hMETIS
@@ -208,7 +208,7 @@ namespace Cara::CommandLineArguments {
                 throw Hydra::Exception::CommandLineArguments::MoreHypergraphPartitioningTypesAreMentionedException();
 
             exists = true;
-            hypergraphPartitioningType = Hydra::PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+            hypergraphPartitioningType = Hydra::HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
         }
 
         // No hypergraph partitioning is mentioned

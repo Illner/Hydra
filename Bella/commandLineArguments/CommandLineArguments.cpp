@@ -76,7 +76,7 @@ namespace Bella::CommandLineArguments {
         commandLineArgumentsStruct.compilerConfiguration.circuitType = getCircuitType(arguments);
 
         // Hypergraph partitioning
-        commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType = getHypergraphPartitioningType(arguments);
+        commandLineArgumentsStruct.compilerConfiguration.hypergraphPartitioningType = getHypergraphPartitioningType(arguments);
 
         // SAT solver
         commandLineArgumentsStruct.compilerConfiguration.satSolverType = getSatSolverType(arguments);
@@ -210,9 +210,9 @@ namespace Bella::CommandLineArguments {
          */
         // Hypergraph partitioning
         commandLineArgumentsStruct.compilerConfiguration.ignoreMultiOccurrentIgnoredVariables = true;
-        commandLineArgumentsStruct.compilerConfiguration.caraPartitioningHypergraphConfiguration.seed = -1;
-        commandLineArgumentsStruct.compilerConfiguration.patohPartitioningHypergraphConfiguration.seedPatohLibrary = -1;
-        commandLineArgumentsStruct.compilerConfiguration.kahyparPartitioningHypergraphConfiguration.seedKahyparLibrary = -1;
+        commandLineArgumentsStruct.compilerConfiguration.caraHypergraphPartitioningConfiguration.seed = -1;
+        commandLineArgumentsStruct.compilerConfiguration.patohHypergraphPartitioningConfiguration.seedPatohLibrary = -1;
+        commandLineArgumentsStruct.compilerConfiguration.kahyparHypergraphPartitioningConfiguration.seedKahyparLibrary = -1;
         commandLineArgumentsStruct.compilerConfiguration.implicitBcpVariableOrderType = Hydra::SatSolver::ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_DESCENDING;
 
         // SAT solver
@@ -341,14 +341,14 @@ namespace Bella::CommandLineArguments {
         return circuitType;
     }
 
-    Hydra::PartitioningHypergraphTypeEnum getHypergraphPartitioningType(const ArgumentsType& arguments) {
+    Hydra::HypergraphPartitioningTypeEnum getHypergraphPartitioningType(const ArgumentsType& arguments) {
         bool exists = false;
-        Hydra::PartitioningHypergraphTypeEnum hypergraphPartitioningType;
+        Hydra::HypergraphPartitioningTypeEnum hypergraphPartitioningType;
 
         // KaHyPar
         if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, KAHYPAR_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             exists = true;
-            hypergraphPartitioningType = Hydra::PartitioningHypergraphTypeEnum::KAHYPAR;
+            hypergraphPartitioningType = Hydra::HypergraphPartitioningTypeEnum::KAHYPAR;
         }
 
         // Cara
@@ -357,7 +357,7 @@ namespace Bella::CommandLineArguments {
                 throw Hydra::Exception::CommandLineArguments::MoreHypergraphPartitioningTypesAreMentionedException();
 
             exists = true;
-            hypergraphPartitioningType = Hydra::PartitioningHypergraphTypeEnum::CARA;
+            hypergraphPartitioningType = Hydra::HypergraphPartitioningTypeEnum::CARA;
         }
 
         // PaToH or hMETIS
@@ -366,7 +366,7 @@ namespace Bella::CommandLineArguments {
                 throw Hydra::Exception::CommandLineArguments::MoreHypergraphPartitioningTypesAreMentionedException();
 
             exists = true;
-            hypergraphPartitioningType = Hydra::PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+            hypergraphPartitioningType = Hydra::HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
         }
 
         // No hypergraph partitioning type is mentioned
@@ -687,14 +687,14 @@ namespace Bella::CommandLineArguments {
         return cacheCleaningStrategyType;
     }
 
-    Hydra::PartitioningHypergraph::VertexWeightTypeEnum getHypergraphNodeWeightType(const ArgumentsType& arguments) {
+    Hydra::HypergraphPartitioning::VertexWeightTypeEnum getHypergraphNodeWeightType(const ArgumentsType& arguments) {
         bool exists = false;
-        Hydra::PartitioningHypergraph::VertexWeightTypeEnum vertexWeightType;
+        Hydra::HypergraphPartitioning::VertexWeightTypeEnum vertexWeightType;
 
         // None
         if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, NONE_HYPERGRAPH_NODE_WEIGHT_ARGUMENT)) {
             exists = true;
-            vertexWeightType = Hydra::PartitioningHypergraph::VertexWeightTypeEnum::NONE;
+            vertexWeightType = Hydra::HypergraphPartitioning::VertexWeightTypeEnum::NONE;
         }
 
         // Standard
@@ -703,7 +703,7 @@ namespace Bella::CommandLineArguments {
                 throw Exception::CommandLineArguments::MoreHypergraphNodeWeightTypesAreMentionedException();
 
             exists = true;
-            vertexWeightType = Hydra::PartitioningHypergraph::VertexWeightTypeEnum::STANDARD;
+            vertexWeightType = Hydra::HypergraphPartitioning::VertexWeightTypeEnum::STANDARD;
         }
 
         // Clause length
@@ -712,12 +712,12 @@ namespace Bella::CommandLineArguments {
                 throw Exception::CommandLineArguments::MoreHypergraphNodeWeightTypesAreMentionedException();
 
             exists = true;
-            vertexWeightType = Hydra::PartitioningHypergraph::VertexWeightTypeEnum::CLAUSE_LENGTH;
+            vertexWeightType = Hydra::HypergraphPartitioning::VertexWeightTypeEnum::CLAUSE_LENGTH;
         }
 
         // Default
         if (!exists)
-            vertexWeightType = Hydra::PartitioningHypergraph::VertexWeightTypeEnum::CLAUSE_LENGTH;
+            vertexWeightType = Hydra::HypergraphPartitioning::VertexWeightTypeEnum::CLAUSE_LENGTH;
 
         return vertexWeightType;
     }
@@ -937,9 +937,9 @@ namespace Bella::CommandLineArguments {
         std::cout << std::endl;
 
         std::cout << "Hypergraph node weight types:" << std::endl;
-        std::cout << "\t" << NONE_HYPERGRAPH_NODE_WEIGHT_ARGUMENT << " — " << Hydra::PartitioningHypergraph::vertexWeightTypeEnumToString(Hydra::PartitioningHypergraph::VertexWeightTypeEnum::NONE) << std::endl;
-        std::cout << "\t" << STANDARD_HYPERGRAPH_NODE_WEIGHT_ARGUMENT << " — " << Hydra::PartitioningHypergraph::vertexWeightTypeEnumToString(Hydra::PartitioningHypergraph::VertexWeightTypeEnum::STANDARD) << std::endl;
-        std::cout << "\t" << CLAUSE_LENGTH_HYPERGRAPH_NODE_WEIGHT_ARGUMENT << " — " << Hydra::PartitioningHypergraph::vertexWeightTypeEnumToString(Hydra::PartitioningHypergraph::VertexWeightTypeEnum::CLAUSE_LENGTH) << " (default)" << std::endl;
+        std::cout << "\t" << NONE_HYPERGRAPH_NODE_WEIGHT_ARGUMENT << " — " << Hydra::HypergraphPartitioning::vertexWeightTypeEnumToString(Hydra::HypergraphPartitioning::VertexWeightTypeEnum::NONE) << std::endl;
+        std::cout << "\t" << STANDARD_HYPERGRAPH_NODE_WEIGHT_ARGUMENT << " — " << Hydra::HypergraphPartitioning::vertexWeightTypeEnumToString(Hydra::HypergraphPartitioning::VertexWeightTypeEnum::STANDARD) << std::endl;
+        std::cout << "\t" << CLAUSE_LENGTH_HYPERGRAPH_NODE_WEIGHT_ARGUMENT << " — " << Hydra::HypergraphPartitioning::vertexWeightTypeEnumToString(Hydra::HypergraphPartitioning::VertexWeightTypeEnum::CLAUSE_LENGTH) << " (default)" << std::endl;
         std::cout << std::endl;
 
         std::cout << "Hypergraph cut recomputation strategies:" << std::endl;

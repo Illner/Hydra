@@ -21,7 +21,7 @@
 #include "Hydra/compiler/enums/IgnorePureLiteralTypeEnum.hpp"
 #include "Hydra/formula/enums/ClauseStatusEnum.hpp"
 #include "Hydra/formula/enums/FormulaRepresentationTypeEnum.hpp"
-#include "Hydra/partitioningHypergraph/enums/VertexWeightTypeEnum.hpp"
+#include "Hydra/hypergraphPartitioning/enums/VertexWeightTypeEnum.hpp"
 
 #include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.tpp"
 

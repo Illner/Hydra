@@ -1053,7 +1053,7 @@ namespace Hydra::Formula::Representation::Contiguous {
                                                                                                                              VertexWeightTypeEnum vertexWeightType,
                                                                                                                              VertexWeightVectorType& vertexWeightVector) const {
         // Set the vertex weights
-        if (PartitioningHypergraph::isVertexWeightUsed(vertexWeightType)) {
+        if (HypergraphPartitioning::isVertexWeightUsed(vertexWeightType)) {
             assert(vertexWeightType != VertexWeightTypeEnum::NONE);
 
             for (ClauseIdT clauseId : currentComponentClausesFixedVector_) {
@@ -1067,7 +1067,7 @@ namespace Hydra::Formula::Representation::Contiguous {
                         vertexWeightVector[clauseId] = 1 + static_cast<VertexWeightType>(maxOriginalClauseSize_ - getCurrentClauseSize(clauseId));
                         break;
                     default:
-                        throw Exception::NotImplementedException(PartitioningHypergraph::vertexWeightTypeEnumToString(vertexWeightType),
+                        throw Exception::NotImplementedException(HypergraphPartitioning::vertexWeightTypeEnumToString(vertexWeightType),
                                                                  "Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation::getCurrentComponentClausesThatVariableSubsumeSomeClause");
                 }
             }

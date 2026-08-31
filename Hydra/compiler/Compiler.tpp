@@ -5,9 +5,9 @@
 #include "Hydra/cache/cachingScheme/enums/CachingSchemeVariantTypeEnum.hpp"
 #include "Hydra/circuit/enums/CircuitTypeEnum.hpp"
 #include "Hydra/compiler/enums/HypergraphCutRecomputationStrategyTypeEnum.hpp"
-#include "Hydra/compiler/enums/PartitioningHypergraphTypeEnum.hpp"
+#include "Hydra/compiler/enums/HypergraphPartitioningTypeEnum.hpp"
 #include "Hydra/decisionHeuristic/enums/DecisionHeuristicTypeEnum.hpp"
-#include "Hydra/partitioningHypergraph/enums/VertexWeightTypeEnum.hpp"
+#include "Hydra/hypergraphPartitioning/enums/VertexWeightTypeEnum.hpp"
 #include "Hydra/satSolver/enums/ImplicitBcpVariableOrderTypeEnum.hpp"
 #include "Hydra/satSolver/enums/SatSolverTypeEnum.hpp"
 
@@ -23,10 +23,10 @@
 #include "Hydra/decisionHeuristic/upc/UpcDecisionHeuristic.tpp"
 #include "Hydra/decisionHeuristic/vsads/VsadsDecisionHeuristic.tpp"
 #include "Hydra/decisionHeuristic/vsids/VsidsDecisionHeuristic.tpp"
-#include "Hydra/partitioningHypergraph/cara/CaraPartitioningHypergraph.tpp"
-#include "Hydra/partitioningHypergraph/hmetis/HmetisPartitioningHypergraph.tpp"
-#include "Hydra/partitioningHypergraph/kahypar/KahyparPartitioningHypergraph.tpp"
-#include "Hydra/partitioningHypergraph/patoh/PatohPartitioningHypergraph.tpp"
+#include "Hydra/hypergraphPartitioning/cara/CaraHypergraphPartitioning.tpp"
+#include "Hydra/hypergraphPartitioning/hmetis/HmetisHypergraphPartitioning.tpp"
+#include "Hydra/hypergraphPartitioning/kahypar/KahyparHypergraphPartitioning.tpp"
+#include "Hydra/hypergraphPartitioning/patoh/PatohHypergraphPartitioning.tpp"
 #include "Hydra/satSolver/glucose/GlucoseSolver.tpp"
 #include "Hydra/satSolver/minisat/MiniSatSolver.tpp"
 
@@ -47,11 +47,11 @@ namespace Hydra {
         using VsidsDecisionHeuristicConfigurationType = DecisionHeuristic::Vsids::VsidsDecisionHeuristicConfiguration;
         using RandomDecisionHeuristicConfigurationType = DecisionHeuristic::Random::RandomDecisionHeuristicConfiguration;
         using StandardCachingSchemeConfigurationType = Cache::CachingScheme::Standard::StandardCachingSchemeConfiguration;
-        using CaraPartitioningHypergraphConfigurationType = PartitioningHypergraph::Cara::CaraPartitioningHypergraphConfiguration;
-        using PatohPartitioningHypergraphConfigurationType = PartitioningHypergraph::Patoh::PatohPartitioningHypergraphConfiguration;
+        using CaraHypergraphPartitioningConfigurationType = HypergraphPartitioning::Cara::CaraHypergraphPartitioningConfiguration;
+        using PatohHypergraphPartitioningConfigurationType = HypergraphPartitioning::Patoh::PatohHypergraphPartitioningConfiguration;
         using CaraCacheCleaningStrategyConfigurationType = Cache::CacheCleaningStrategy::Cara::CaraCacheCleaningStrategyConfiguration;
-        using HmetisPartitioningHypergraphConfigurationType = PartitioningHypergraph::Hmetis::HmetisPartitioningHypergraphConfiguration;
-        using KahyparPartitioningHypergraphConfigurationType = PartitioningHypergraph::Kahypar::KahyparPartitioningHypergraphConfiguration;
+        using HmetisHypergraphPartitioningConfigurationType = HypergraphPartitioning::Hmetis::HmetisHypergraphPartitioningConfiguration;
+        using KahyparHypergraphPartitioningConfigurationType = HypergraphPartitioning::Kahypar::KahyparHypergraphPartitioningConfiguration;
         using JeroslowWangDecisionHeuristicConfigurationType = DecisionHeuristic::JeroslowWang::JeroslowWangDecisionHeuristicConfiguration;
         using LiteralCountDecisionHeuristicConfigurationType = DecisionHeuristic::LiteralCount::LiteralCountDecisionHeuristicConfiguration;
         using SharpSatCacheCleaningStrategyConfigurationType = Cache::CacheCleaningStrategy::SharpSat::SharpSatCacheCleaningStrategyConfiguration;
@@ -59,7 +59,7 @@ namespace Hydra {
     public:
         using CircuitTypeEnum = Circuit::CircuitTypeEnum;
         using SatSolverTypeEnum = SatSolver::SatSolverTypeEnum;
-        using VertexWeightTypeEnum = PartitioningHypergraph::VertexWeightTypeEnum;
+        using VertexWeightTypeEnum = HypergraphPartitioning::VertexWeightTypeEnum;
         using CachingSchemeTypeEnum = Cache::CachingScheme::CachingSchemeTypeEnum;
         using DecisionHeuristicTypeEnum = DecisionHeuristic::DecisionHeuristicTypeEnum;
         using ImplicitBcpVariableOrderTypeEnum = SatSolver::ImplicitBcpVariableOrderTypeEnum;
@@ -124,7 +124,7 @@ namespace Hydra {
         LiteralCountDecisionHeuristicConfigurationType literalCountDecisionHeuristicConfiguration;
 
         /**
-         * Partitioning hypergraph
+         * Hypergraph partitioning
          */
         bool allowEmptyHypergraphCut = true;
         bool allowSingletonHyperedge = false;
@@ -134,13 +134,13 @@ namespace Hydra {
         std::size_t tooManyVariablesForComputingHypergraphCut = 5'000;   // 0 = ignore
         VertexWeightTypeEnum vertexWeightType = VertexWeightTypeEnum::STANDARD;
         double percentageThresholdOfImmenseUnitPropagationHypergraphCutRecomputationStrategy = 0.7;   // percentage
-        PartitioningHypergraphTypeEnum partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        HypergraphPartitioningTypeEnum hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
         ImplicitBcpVariableOrderTypeEnum implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::VARIABLE_INDEX;
         HypergraphCutRecomputationStrategyTypeEnum hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::ALWAYS;
-        CaraPartitioningHypergraphConfigurationType caraPartitioningHypergraphConfiguration;
-        PatohPartitioningHypergraphConfigurationType patohPartitioningHypergraphConfiguration;
-        HmetisPartitioningHypergraphConfigurationType hmetisPartitioningHypergraphConfiguration;
-        KahyparPartitioningHypergraphConfigurationType kahyparPartitioningHypergraphConfiguration;
+        CaraHypergraphPartitioningConfigurationType caraHypergraphPartitioningConfiguration;
+        PatohHypergraphPartitioningConfigurationType patohHypergraphPartitioningConfiguration;
+        HmetisHypergraphPartitioningConfigurationType hmetisHypergraphPartitioningConfiguration;
+        KahyparHypergraphPartitioningConfigurationType kahyparHypergraphPartitioningConfiguration;
 
         #if defined(CARA_SOLVER)
         /**

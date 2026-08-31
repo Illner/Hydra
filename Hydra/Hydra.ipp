@@ -7,20 +7,20 @@
 template <typename CommandLineArgumentsStructT>
 void initialAdjustmentToConfiguration(CommandLineArgumentsStructT& commandLineArgumentsStruct) {
     // No variable subsumption => no vertex weights
-    if (commandLineArgumentsStruct.compilerConfiguration.vertexWeightType != Hydra::PartitioningHypergraph::VertexWeightTypeEnum::NONE) {
+    if (commandLineArgumentsStruct.compilerConfiguration.vertexWeightType != Hydra::HypergraphPartitioning::VertexWeightTypeEnum::NONE) {
         if (commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration.variableSubsumptionWithMappingType == Hydra::Formula::Representation::Contiguous::VariableSubsumptionWithMappingTypeEnum::NONE) {
-            commandLineArgumentsStruct.compilerConfiguration.vertexWeightType = Hydra::PartitioningHypergraph::VertexWeightTypeEnum::NONE;
+            commandLineArgumentsStruct.compilerConfiguration.vertexWeightType = Hydra::HypergraphPartitioning::VertexWeightTypeEnum::NONE;
 
             Hydra::Other::printWarningAboutAdjustedConfiguration("vertex weight type",
-                                                                 Hydra::PartitioningHypergraph::vertexWeightTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.vertexWeightType));
+                                                                 Hydra::HypergraphPartitioning::vertexWeightTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.vertexWeightType));
         }
     }
 
     // KaHyPar/Cara => deny singleton hyperedges
     if (commandLineArgumentsStruct.compilerConfiguration.allowSingletonHyperedge) {
-        if (commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType == Hydra::PartitioningHypergraphTypeEnum::KAHYPAR ||
-            commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType == Hydra::PartitioningHypergraphTypeEnum::CARA ||
-            commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType == Hydra::PartitioningHypergraphTypeEnum::CARA_SPEED) {
+        if (commandLineArgumentsStruct.compilerConfiguration.hypergraphPartitioningType == Hydra::HypergraphPartitioningTypeEnum::KAHYPAR ||
+            commandLineArgumentsStruct.compilerConfiguration.hypergraphPartitioningType == Hydra::HypergraphPartitioningTypeEnum::CARA ||
+            commandLineArgumentsStruct.compilerConfiguration.hypergraphPartitioningType == Hydra::HypergraphPartitioningTypeEnum::CARA_SPEED) {
             commandLineArgumentsStruct.compilerConfiguration.allowSingletonHyperedge = false;
 
             Hydra::Other::printWarningAboutAdjustedConfiguration("allow singleton hyperedges",

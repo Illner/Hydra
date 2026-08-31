@@ -109,15 +109,15 @@ The corresponding binaries are in the locations mentioned above.
 
 * [PaToH v3.3](https://faculty.cc.gatech.edu/~umit/software.html)  
   _used on Linux and macOS_  
-  `Hydra/external/partitioningHypergraphs/PaToH`
+  `Hydra/external/hypergraphPartitioning/PaToH`
 
 * [hMETIS 1.5.3](https://papers.karypis.org/glaros/software/metis/overview.html#hmetis---hypergraph--circuit-partitioning)  
   _used only on Windows_  
-  `Hydra/external/partitioningHypergraphs/hMETIS`
+  `Hydra/external/hypergraphPartitioning/hMETIS`
 
 * [KaHyPar v.1.3.3](https://kahypar.org/)  
   _used on Linux, macOS, and Windows_  
-  `Hydra/external/partitioningHypergraphs/KaHyPar`  
+  `Hydra/external/hypergraphPartitioning/KaHyPar`  
   `Hydra/external/boost` (_precompiled libraries required by KaHyPar_)
 
 ### CNF Preprocessors

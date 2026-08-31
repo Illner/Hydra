@@ -133,7 +133,7 @@ namespace Bella::CommandLineArguments {
      * @throw MoreHypergraphPartitioningTypesAreMentionedException if more hypergraph partitioning types are mentioned
      * @throw NoHypergraphPartitioningTypeIsMentionedException if no hypergraph partitioning type is mentioned
      */
-    Hydra::PartitioningHypergraphTypeEnum getHypergraphPartitioningType(const ArgumentsType& arguments);
+    Hydra::HypergraphPartitioningTypeEnum getHypergraphPartitioningType(const ArgumentsType& arguments);
 
     /**
      * @param arguments the arguments
@@ -182,7 +182,7 @@ namespace Bella::CommandLineArguments {
      * @return the hypergraph node weight type
      * @throw MoreHypergraphNodeWeightTypesAreMentionedException if more hypergraph node weight types are mentioned
      */
-    Hydra::PartitioningHypergraph::VertexWeightTypeEnum getHypergraphNodeWeightType(const ArgumentsType& arguments);
+    Hydra::HypergraphPartitioning::VertexWeightTypeEnum getHypergraphNodeWeightType(const ArgumentsType& arguments);
 
     /**
      * @param arguments the arguments

@@ -11,7 +11,7 @@
 #include "Hydra/compiler/Compiler.hxx"
 #include "Hydra/decisionHeuristic/DecisionHeuristicAbstract.hxx"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hxx"
-#include "Hydra/partitioningHypergraph/PartitioningHypergraphAbstract.hxx"
+#include "Hydra/hypergraphPartitioning/HypergraphPartitioningAbstract.hxx"
 #include "Hydra/renHCRecognition/RenHCRecognitionAbstract.hxx"
 #include "Hydra/satSolver/SatSolverAbstract.hxx"
 
@@ -29,7 +29,7 @@ namespace Hydra::Statistics {
         using RenHCRecognitionStatisticsType = RenHCRecognition::RenHCRecognitionStatistics;
         using DecisionHeuristicStatisticsType = DecisionHeuristic::DecisionHeuristicStatistics;
         using FormulaRepresentationStatisticsType = Formula::Representation::FormulaRepresentationStatistics;
-        using PartitioningHypergraphStatisticsType = PartitioningHypergraph::PartitioningHypergraphStatistics;
+        using HypergraphPartitioningStatisticsType = HypergraphPartitioning::HypergraphPartitioningStatistics;
 
     public:
         using CacheStatisticsPtrType = typename Cache::CacheStatistics::CacheStatisticsPtrType;
@@ -39,7 +39,7 @@ namespace Hydra::Statistics {
         using RenHCRecognitionStatisticsPtrType = typename RenHCRecognition::RenHCRecognitionStatistics::RenHCRecognitionStatisticsPtrType;
         using DecisionHeuristicStatisticsPtrType = typename DecisionHeuristic::DecisionHeuristicStatistics::DecisionHeuristicStatisticsPtrType;
         using FormulaRepresentationStatisticsPtrType = typename Formula::Representation::FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType;
-        using PartitioningHypergraphStatisticsPtrType = typename PartitioningHypergraph::PartitioningHypergraphStatistics::PartitioningHypergraphStatisticsPtrType;
+        using HypergraphPartitioningStatisticsPtrType = typename HypergraphPartitioning::HypergraphPartitioningStatistics::HypergraphPartitioningStatisticsPtrType;
 
     public:
         using StatisticsPtrType = Statistics*;
@@ -51,7 +51,7 @@ namespace Hydra::Statistics {
         RenHCRecognitionStatisticsType renHCRecognitionStatistics_;
         DecisionHeuristicStatisticsType decisionHeuristicStatistics_;
         FormulaRepresentationStatisticsType formulaRepresentationStatistics_;
-        PartitioningHypergraphStatisticsType partitioningHypergraphStatistics_;
+        HypergraphPartitioningStatisticsType hypergraphPartitioningStatistics_;
         CacheStatisticsType componentCacheStatistics_ = CacheStatisticsType(Cache::CacheTypeEnum::COMPONENT);
         CacheStatisticsType hypergraphCutCacheStatistics_ = CacheStatisticsType(Cache::CacheTypeEnum::HYPERGRAPH_CUT);
 
@@ -67,9 +67,9 @@ namespace Hydra::Statistics {
         SatSolverStatisticsPtrType getSatSolverStatisticsPtr() noexcept;
 
         /**
-         * @return a pointer to the partitioning hypergraph statistics
+         * @return a pointer to the hypergraph partitioning statistics
          */
-        PartitioningHypergraphStatisticsPtrType getPartitioningHypergraphStatisticsPtr() noexcept;
+        HypergraphPartitioningStatisticsPtrType getHypergraphPartitioningStatisticsPtr() noexcept;
 
         /**
          * @return a pointer to the component cache statistics

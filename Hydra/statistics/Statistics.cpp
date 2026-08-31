@@ -12,9 +12,9 @@ namespace Hydra::Statistics {
         return &satSolverStatistics_;
     }
 
-    typename Statistics::PartitioningHypergraphStatisticsPtrType
-    Statistics::getPartitioningHypergraphStatisticsPtr() noexcept {
-        return &partitioningHypergraphStatistics_;
+    typename Statistics::HypergraphPartitioningStatisticsPtrType
+    Statistics::getHypergraphPartitioningStatisticsPtr() noexcept {
+        return &hypergraphPartitioningStatistics_;
     }
 
     typename Statistics::CacheStatisticsPtrType
@@ -66,8 +66,8 @@ namespace Hydra::Statistics {
         // SAT solver
         satSolverStatistics_.printStatistics(out, addLabels);
 
-        // Partitioning hypergraph
-        partitioningHypergraphStatistics_.printStatistics(out, addLabels);
+        // Hypergraph partitioning
+        hypergraphPartitioningStatistics_.printStatistics(out, addLabels);
 
         // RenH-C recognition
         renHCRecognitionStatistics_.printStatistics(out, addLabels);

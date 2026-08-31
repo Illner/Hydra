@@ -16,7 +16,7 @@
 
 #include "Hydra/compiler/enums/IgnorePureLiteralTypeEnum.hpp"
 #include "Hydra/formula/representation/contiguous/enums/VariableSubsumptionWithMappingTypeEnum.hpp"
-#include "Hydra/partitioningHypergraph/enums/VertexWeightTypeEnum.hpp"
+#include "Hydra/hypergraphPartitioning/enums/VertexWeightTypeEnum.hpp"
 
 namespace HydraTest::Formula::Representation::Contiguous::VariableSubsumptionWithMapping {
 
@@ -44,7 +44,7 @@ namespace HydraTest::Formula::Representation::Contiguous::VariableSubsumptionWit
     using ConnectedComponentStructure = Hydra::Container::ComputeConnectedComponents::ConnectedComponentStruct<VarT, LiteralT>;
 
     using IgnorePureLiteralTypeEnum = Hydra::IgnorePureLiteralTypeEnum;
-    using VertexWeightTypeEnum = Hydra::PartitioningHypergraph::VertexWeightTypeEnum;
+    using VertexWeightTypeEnum = Hydra::HypergraphPartitioning::VertexWeightTypeEnum;
     using VariableSubsumptionWithMappingTypeEnum = Hydra::Formula::Representation::Contiguous::VariableSubsumptionWithMappingTypeEnum;
     //endregion
 
