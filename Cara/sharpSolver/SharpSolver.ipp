@@ -6,7 +6,7 @@ namespace Hydra {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     Compiler<VarT, LiteralT, ClauseIdT>::NumberOfModelsType Compiler<VarT, LiteralT, ClauseIdT>::computePowerOfTwo(std::size_t exponent) const {
-        return (NumberOfModelsType("1") << exponent);   // 2^exponent
+        return (ONE_MODEL_ << exponent);   // 2^exponent
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
