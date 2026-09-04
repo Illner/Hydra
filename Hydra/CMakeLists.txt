@@ -77,8 +77,12 @@ IF (${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
 
         # Boost (KaHyPar)
         find_and_check_library(BoostKaHyParLibrary "libmini_boost.a" "${BOOST_KAHYPAR_HOME}/macOS/Apple Silicon/")
+
+        # Bipe
+        find_and_check_library(BipeLibrary "libbipe.a" "${BIPE_HOME}/macOS/Apple Silicon/")
     # Intel
     ELSE ()
+        #[[
         # PaToH
         find_and_check_library(PaToHLibrary "libpatoh.a" "${PATOH_HOME}/macOS/Intel/")
 
@@ -87,6 +91,9 @@ IF (${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
 
         # Boost (KaHyPar)
         find_and_check_library(BoostKaHyParLibrary "libmini_boost.a" "${BOOST_KAHYPAR_HOME}/macOS/Intel/")
+        #]]
+
+        message(FATAL_ERROR "Your processor architecture \"${CMAKE_SYSTEM_PROCESSOR}\" is not supported on macOS (Apple Silicon only)!")
     ENDIF ()
 # Windows
 ELSEIF ((${CMAKE_SYSTEM_NAME} STREQUAL "Windows") OR (CMAKE_SYSTEM_NAME STREQUAL "CYGWIN"))
@@ -95,6 +102,9 @@ ELSEIF ((${CMAKE_SYSTEM_NAME} STREQUAL "Windows") OR (CMAKE_SYSTEM_NAME STREQUAL
 
     # Boost (KaHyPar)
     find_and_check_library(BoostKaHyParLibrary "libmini_boost.a" "${BOOST_KAHYPAR_HOME}/Windows/")
+
+    # Bipe
+    find_and_check_library(BipeLibrary "libbipe.a" "${BIPE_HOME}/Windows/")
 # Linux
 ELSEIF (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     # PaToH
@@ -105,6 +115,9 @@ ELSEIF (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
 
     # Boost (KaHyPar)
     find_and_check_library(BoostKaHyParLibrary "libmini_boost.a" "${BOOST_KAHYPAR_HOME}/Linux/")
+
+    # Bipe
+    find_and_check_library(BipeLibrary "libbipe.a" "${BIPE_HOME}/Linux/")
 # Not supported
 ELSE ()
     message(FATAL_ERROR "Your operating system \"${CMAKE_SYSTEM_NAME}\" is not supported!")
