@@ -95,7 +95,7 @@ The corresponding binaries are in the locations mentioned above.
 
 ### Hash Maps
 
-* [unordered_dense v4.9.2](https://github.com/martinus/unordered_dense)  
+* [unordered_dense v4.11.0](https://github.com/martinus/unordered_dense)  
   `Hydra/external/hashMaps/unordered_dense`
 
 * [robin-hood-hashing 3.11.5](https://github.com/martinus/robin-hood-hashing)  
