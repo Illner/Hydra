@@ -13,6 +13,7 @@ add_library(HydraLibrary STATIC
         "circuit/Circuit.cxx"
         "compiler/Compiler.cxx"
         "satSolver/SatSolverAbstract.cxx"
+        "preprocessor/cnf/CnfPreprocessorAbstract.cxx"
         "renHCRecognition/RenHCRecognitionAbstract.cxx"
         "decisionHeuristic/DecisionHeuristicAbstract.cxx"
         "formula/representation/FormulaRepresentationAbstract.cxx"
