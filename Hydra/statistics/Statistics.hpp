@@ -12,6 +12,7 @@
 #include "Hydra/decisionHeuristic/DecisionHeuristicAbstract.hxx"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hxx"
 #include "Hydra/hypergraphPartitioning/HypergraphPartitioningAbstract.hxx"
+#include "Hydra/preprocessor/cnf/CnfPreprocessorAbstract.hxx"
 #include "Hydra/renHCRecognition/RenHCRecognitionAbstract.hxx"
 #include "Hydra/satSolver/SatSolverAbstract.hxx"
 
@@ -26,6 +27,7 @@ namespace Hydra::Statistics {
         using CacheStatisticsType = Cache::CacheStatistics;
         using CircuitStatisticsType = Circuit::CircuitStatistics;
         using SatSolverStatisticsType = SatSolver::SatSolverStatistics;
+        using CnfPreprocessorStatisticsType = Preprocessor::Cnf::CnfPreprocessorStatistics;
         using RenHCRecognitionStatisticsType = RenHCRecognition::RenHCRecognitionStatistics;
         using DecisionHeuristicStatisticsType = DecisionHeuristic::DecisionHeuristicStatistics;
         using FormulaRepresentationStatisticsType = Formula::Representation::FormulaRepresentationStatistics;
@@ -36,6 +38,7 @@ namespace Hydra::Statistics {
         using CompilerStatisticsPtrType = typename CompilerStatistics::CompilerStatisticsPtrType;
         using CircuitStatisticsPtrType = typename Circuit::CircuitStatistics::CircuitStatisticsPtrType;
         using SatSolverStatisticsPtrType = typename SatSolver::SatSolverStatistics::SatSolverStatisticsPtrType;
+        using CnfPreprocessorStatisticsPtrType = typename Preprocessor::Cnf::CnfPreprocessorStatistics::CnfPreprocessorStatisticsPtrType;
         using RenHCRecognitionStatisticsPtrType = typename RenHCRecognition::RenHCRecognitionStatistics::RenHCRecognitionStatisticsPtrType;
         using DecisionHeuristicStatisticsPtrType = typename DecisionHeuristic::DecisionHeuristicStatistics::DecisionHeuristicStatisticsPtrType;
         using FormulaRepresentationStatisticsPtrType = typename Formula::Representation::FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType;
@@ -48,6 +51,7 @@ namespace Hydra::Statistics {
         CircuitStatisticsType circuitStatistics_;
         CompilerStatisticsType compilerStatistics_;
         SatSolverStatisticsType satSolverStatistics_;
+        CnfPreprocessorStatisticsType cnfPreprocessorStatistics_;
         RenHCRecognitionStatisticsType renHCRecognitionStatistics_;
         DecisionHeuristicStatisticsType decisionHeuristicStatistics_;
         FormulaRepresentationStatisticsType formulaRepresentationStatistics_;
@@ -100,6 +104,11 @@ namespace Hydra::Statistics {
          * @return a pointer to the renH-C recognition statistics
          */
         RenHCRecognitionStatisticsPtrType getRenHCRecognitionStatisticsPtr() noexcept;
+
+        /**
+         * @return a pointer to the CNF preprocessor statistics
+         */
+        CnfPreprocessorStatisticsPtrType getCnfPreprocessorStatisticsPtr() noexcept;
 
         void printStatistics(std::ostream& out, bool addLabels) const;
     };

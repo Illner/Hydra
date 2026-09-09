@@ -47,6 +47,11 @@ namespace Hydra::Statistics {
         return &renHCRecognitionStatistics_;
     }
 
+    typename Statistics::CnfPreprocessorStatisticsPtrType
+    Statistics::getCnfPreprocessorStatisticsPtr() noexcept {
+        return &cnfPreprocessorStatistics_;
+    }
+
     void Statistics::printStatistics(std::ostream& out, bool addLabels) const {
         if (addLabels)
             Other::printTitle(out, "Statistics", 100, '-');
@@ -56,6 +61,9 @@ namespace Hydra::Statistics {
 
         // Circuit
         circuitStatistics_.printStatistics(out, addLabels);
+
+        // CNF preprocessor
+        cnfPreprocessorStatistics_.printStatistics(out, addLabels);
 
         // Compiler
         compilerStatistics_.printStatistics(out, addLabels);
