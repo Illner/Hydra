@@ -2,13 +2,24 @@
 cmake_minimum_required(VERSION 3.14)
 
 add_library(HydraLibrary STATIC
-        "other/parser/commandLineArgument/CommandLineArgumentParser.cpp"
-        "statistics/StatisticsAbstract.cpp" "statistics/Statistics.cpp" "other/version/Version.cpp"
-        "other/operatingSystem/OperatingSystem.cpp" "other/memory/Memory.cpp" "other/container/vectorSet/VectorSet.cpp"
-        "other/type/arbitraryPrecisionInteger/custom/CustomArbitraryPrecisionInteger.cpp"
-        "external/satSolvers/MiniSat_d4/Solver.cpp" "external/satSolvers/Glucose_d4/core/Solver.cc"
 
         # Statistics
+        "statistics/Statistics.cpp"
+        "statistics/StatisticsAbstract.cpp"
+
+        # SAT solver (external)
+        "external/satSolvers/MiniSat_d4/Solver.cpp"
+        "external/satSolvers/Glucose_d4/core/Solver.cc"
+
+        # Other
+        "other/memory/Memory.cpp"
+        "other/version/Version.cpp"
+        "other/container/vectorSet/VectorSet.cpp"
+        "other/operatingSystem/OperatingSystem.cpp"
+        "other/parser/commandLineArgument/CommandLineArgumentParser.cpp"
+        "other/type/arbitraryPrecisionInteger/custom/CustomArbitraryPrecisionInteger.cpp"
+
+        # Statistics (.cxx)
         "cache/Cache.cxx"
         "circuit/Circuit.cxx"
         "compiler/Compiler.cxx"
