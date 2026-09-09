@@ -32,15 +32,30 @@ namespace Hydra::DecisionHeuristic::Random {
         RandomDecisionHeuristic(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr, SatSolverAbstractPtrType satSolverAbstractPtr,
                                 IgnorePureLiteralTypeEnum ignorePureLiteralType,
                                 const RandomDecisionHeuristicConfiguration& configuration = RandomDecisionHeuristicConfiguration(),
-                                DecisionHeuristicStatisticsPtrType decisionHeuristicStatisticsPtr = nullptr) noexcept
+                                DecisionHeuristicStatisticsPtrType decisionHeuristicStatisticsPtr = nullptr)
             : DecisionHeuristicAbstract<VarT, LiteralT, ClauseIdT>(formulaRepresentationAbstractPtr, satSolverAbstractPtr, ignorePureLiteralType,
                                                                    DecisionHeuristicTypeEnum::RANDOM, decisionHeuristicStatisticsPtr),
-              configuration_(configuration) { }
+              configuration_(configuration) {
+            #ifdef __CYGWIN__
+            std::random_device rd { "/dev/urandom" };
+            #else
+            std::random_device rd;
+            #endif
+
+            r_generator_processGetDecisionVariable_.seed(rd());
+        }
 
     private:
         RandomDecisionHeuristicConfiguration configuration_;
 
+        // Random auxiliary data structures for processGetDecisionVariable
+        mutable std::mt19937 r_generator_processGetDecisionVariable_;
+
     private:
+        /**
+         * Random auxiliary data structures:
+         *      r_generator_processGetDecisionVariable_
+         */
         VarT processGetDecisionVariable(const VariableSetType& selectedVariableSet) const override;
 
     #ifndef NDEBUG

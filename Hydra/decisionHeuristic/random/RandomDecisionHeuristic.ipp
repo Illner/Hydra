@@ -9,14 +9,8 @@ namespace Hydra::DecisionHeuristic::Random {
         assert(!selectedVariableSet.empty());
 
         // Generate a random number
-        #ifdef __CYGWIN__
-        std::random_device rd { "/dev/urandom" };
-        #else
-        std::random_device rd;
-        #endif
-        std::mt19937 generator(rd());
         std::uniform_int_distribution<std::size_t> distribution(0, selectedVariableSet.size() - 1);
-        std::size_t randomNumber = distribution(generator);
+        std::size_t randomNumber = distribution(r_generator_processGetDecisionVariable_);
 
         auto it = selectedVariableSet.cbegin();
         std::advance(it, randomNumber);
