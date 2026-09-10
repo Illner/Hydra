@@ -32,8 +32,8 @@ namespace Hydra::Parser::Cnf {
         ParsedFormulaStruct(VarT numberOfVariables, ClauseIdT numberOfClauses, FormulaType&& formula, ClauseIdVectorType&& literalNumberOfOccurrences)
             : formula(std::move(formula)), numberOfVariables(numberOfVariables), numberOfClauses(numberOfClauses),
               literalNumberOfOccurrences(std::move(literalNumberOfOccurrences)) {
-            assert(checkConsistencyOfDataStructuresDebug(true));
-        };
+            assert(checkConsistencyOfDataStructuresDebug(true, "Hydra::Parser::Cnf::ParsedFormulaStruct::constructor"));
+        }
 
         ParsedFormulaStruct(const ParsedFormulaStruct&) = delete;
         ParsedFormulaStruct(ParsedFormulaStruct&&) noexcept = default;
@@ -52,13 +52,15 @@ namespace Hydra::Parser::Cnf {
         void printParsedFormulaStruct(std::ostream& out) const;
 
     #ifndef NDEBUG
-    private:
+    public:
         /**
          * Check if the data structures are consistent
+         * @param functionName [throwException] the name of the calling function that is used in the exception message
          * @return true if the data structures are consistent. Otherwise, false is returned.
          * @throw InconsistentDataStructureException [throwException] if the data structures are inconsistent
          */
-        bool checkConsistencyOfDataStructuresDebug(bool throwException = false) const;
+        bool checkConsistencyOfDataStructuresDebug(bool throwException = false,
+                                                   const std::string& functionName = "Hydra::Parser::Cnf::ParsedFormulaStruct::checkConsistencyOfDataStructuresDebug") const;
     #endif
     };
 }   // namespace Hydra::Parser::Cnf

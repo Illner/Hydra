@@ -32,7 +32,7 @@ namespace Hydra::Parser::Cnf {
 
     #ifndef NDEBUG
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool ParsedFormulaStruct<VarT, LiteralT, ClauseIdT>::checkConsistencyOfDataStructuresDebug(bool throwException) const {
+    bool ParsedFormulaStruct<VarT, LiteralT, ClauseIdT>::checkConsistencyOfDataStructuresDebug(bool throwException, const std::string& functionName) const {
         assert((LiteralT(2) + LiteralT(2) * static_cast<LiteralT>(numberOfVariables)) == static_cast<LiteralT>(literalNumberOfOccurrences.size()));
         assert(literalNumberOfOccurrences[0] == 0);
         assert(literalNumberOfOccurrences[1] == 0);
@@ -59,7 +59,7 @@ namespace Hydra::Parser::Cnf {
         // The number of variables is inconsistent
         if (numberOfVariables < maxVariableIndexTmp) {
             if (throwException)
-                throw Exception::InconsistentDataStructureException("numberOfVariables", "Hydra::Parser::Cnf::ParsedFormulaStruct::checkConsistencyOfDataStructuresDebug");
+                throw Exception::InconsistentDataStructureException("numberOfVariables", functionName);
 
             return false;
         }
@@ -67,7 +67,7 @@ namespace Hydra::Parser::Cnf {
         // The number of clauses is inconsistent
         if (numberOfClauses != numberOfClausesTmp) {
             if (throwException)
-                throw Exception::InconsistentDataStructureException("numberOfClauses", "Hydra::Parser::Cnf::ParsedFormulaStruct::checkConsistencyOfDataStructuresDebug");
+                throw Exception::InconsistentDataStructureException("numberOfClauses", functionName);
 
             return false;
         }
@@ -77,7 +77,7 @@ namespace Hydra::Parser::Cnf {
                 continue;
 
             if (throwException)
-                throw Exception::InconsistentDataStructureException("literalNumberOfOccurrences", "Hydra::Parser::Cnf::ParsedFormulaStruct::checkConsistencyOfDataStructuresDebug");
+                throw Exception::InconsistentDataStructureException("literalNumberOfOccurrences", functionName);
 
             return false;
         }
