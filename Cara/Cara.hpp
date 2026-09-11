@@ -1,7 +1,7 @@
 #pragma once
 
+#include <exception>
 #include <iostream>
-#include <stdexcept>
 #include <string_view>
 
 #include "Cara/commandLineArguments/CommandLineArguments.hpp"

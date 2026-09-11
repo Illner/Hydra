@@ -1,7 +1,7 @@
 #pragma once
 
+#include <exception>
 #include <sstream>
-#include <stdexcept>
 #include <string>
 
 #include "Hydra/circuit/enums/CircuitTypeEnum.hpp"

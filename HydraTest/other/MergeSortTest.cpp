@@ -1,5 +1,5 @@
+#include <exception>
 #include <sstream>
-#include <stdexcept>
 #include <vector>
 
 #include "HydraTest/TemplateTest.hpp"

@@ -2,10 +2,10 @@
 
 #include <atomic>
 #include <chrono>
+#include <exception>
 #include <functional>
 #include <future>
 #include <iostream>
-#include <stdexcept>
 #include <thread>
 
 #include "Bella/commandLineArguments/CommandLineArguments.hpp"

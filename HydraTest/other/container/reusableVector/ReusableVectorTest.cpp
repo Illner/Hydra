@@ -1,8 +1,8 @@
 #include <algorithm>
+#include <exception>
 #include <iterator>
 #include <random>
 #include <sstream>
-#include <stdexcept>
 #include <string>
 #include <vector>
 

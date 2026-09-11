@@ -1,10 +1,10 @@
 #pragma once
 
 #include <cassert>
+#include <exception>
 #include <iterator>
 #include <memory>
 #include <sstream>
-#include <stdexcept>
 #include <string>
 
 #include "HydraTest/TemplateTest.hpp"
