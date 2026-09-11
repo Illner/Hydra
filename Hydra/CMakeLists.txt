@@ -11,6 +11,9 @@ add_library(HydraLibrary STATIC
         "external/satSolvers/MiniSat_d4/Solver.cpp"
         "external/satSolvers/Glucose_d4/core/Solver.cc"
 
+        # CNF preprocessor
+        "preprocessor/cnf/CnfPreprocessorAbstract.cpp"
+
         # Other
         "other/memory/Memory.cpp"
         "other/version/Version.cpp"
