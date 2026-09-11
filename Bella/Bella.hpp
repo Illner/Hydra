@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
             return 0;
 
         // Title
-        Hydra::Other::printTitle(std::cout, "Bella", 50, ' ');
+        Hydra::Other::printTitle(std::cout, "Bella", 49, ' ');
         std::cout << std::endl;
 
         Hydra::Statistics::Statistics statistics;

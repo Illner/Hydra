@@ -159,7 +159,7 @@ namespace Bella::CommandLineArguments {
 
         // Metacentrum
         if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, METACENTRUM_ARGUMENT)) {
-            // program -m < -w | -pw | -nw | -b | -pb | -nb | -kb | -d | -sd > < -ph | -ka | -cd > [-e] [-ccef] -i input_file -s statistics_file -t positive_integer
+            // program -m < -w | -pw | -nw | -b | -pb | -nb | -kb | -d | -sd > < -ph | -ka | -cd > -i input_file -s statistics_file -t positive_integer
             if (argc < 10)
                 throw Hydra::Exception::Other::Parser::CommandLineArgument::InvalidNumberOfArgumentsException();
 
@@ -776,7 +776,7 @@ namespace Bella::CommandLineArguments {
     }
 
     void printHelp() {
-        const std::string description = "A knowledge compiler for " +
+        const std::string description = "  A knowledge compiler for " +
                                         // Weak and variants
                                         Hydra::Circuit::circuitTypeEnumToString(Hydra::Circuit::CircuitTypeEnum::wDNNF) + ", " +
                                         Hydra::Circuit::circuitTypeEnumToString(Hydra::Circuit::CircuitTypeEnum::pwDNNF) + ", " +
@@ -788,7 +788,7 @@ namespace Bella::CommandLineArguments {
                                         // Hydra::Circuit::circuitTypeEnumToString(Hydra::Circuit::CircuitTypeEnum::Krom_Bella) + ", " +
                                         // Standard
                                         Hydra::Circuit::circuitTypeEnumToString(Hydra::Circuit::CircuitTypeEnum::d_DNNF) + " and " +
-                                        Hydra::Circuit::circuitTypeEnumToString(Hydra::Circuit::CircuitTypeEnum::sd_DNNF) + " circuits.";
+                                        Hydra::Circuit::circuitTypeEnumToString(Hydra::Circuit::CircuitTypeEnum::sd_DNNF) + " circuits  ";
 
         // Title
         Hydra::Other::printTitle(std::cout, "Bella", (int)description.size(), ' ');
