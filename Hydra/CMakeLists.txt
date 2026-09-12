@@ -13,6 +13,7 @@ add_library(HydraLibrary STATIC
 
         # CNF preprocessor
         "preprocessor/cnf/CnfPreprocessorAbstract.cpp"
+        "preprocessor/cnf/none/NoneCnfPreprocessor.cpp"
 
         # Other
         "other/memory/Memory.cpp"
