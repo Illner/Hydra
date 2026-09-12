@@ -86,7 +86,7 @@ namespace Hydra::Other::Parser::CommandLineArgument {
 
                 // The number of sample moments cannot be saved as NumberOfSampleMomentsType or is invalid
                 if (!Hydra::Other::unsignedValueCanBeSavedAsTypeT<NumberOfSampleMomentsType>(numberOfSampleMoments) ||
-                    (!Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::isValidNumberOfSampleMomentsStatic(static_cast<NumberOfSampleMomentsType>(numberOfSampleMoments))))
+                    (!Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::isNumberOfSampleMomentsValidStatic(static_cast<NumberOfSampleMomentsType>(numberOfSampleMoments))))
                     throw Hydra::Exception::Cache::CachingScheme::InvalidNumberOfSampleMomentsCaraCachingSchemeException(numberOfSampleMoments, cacheType);
 
                 // Set the number of sample moments
