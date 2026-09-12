@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
             return 0;
 
         // Title
-        Hydra::Other::printTitle(std::cout, " Cara ", 24, '-', COMMENT_FOR_MODEL_COUNTING_COMPETITION);
+        Hydra::Other::printTitle(std::cout, " Cara ", 50, '-', COMMENT_FOR_MODEL_COUNTING_COMPETITION);
         std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << std::endl;
 
         try {
