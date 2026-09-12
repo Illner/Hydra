@@ -73,7 +73,7 @@ namespace Hydra::Other::Parser::CommandLineArgument {
     void getNumberOfSampleMomentsAndSetInCaraCachingSchemeConfiguration(const ArgumentsType& arguments, const ArgumentNameType& argumentName,
                                                                         Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration& caraCachingSchemeConfiguration,
                                                                         Cache::CacheTypeEnum cacheType, bool mandatoryArgumentValue) {
-        using NumberOfSampleMomentsType = Hydra::Cache::CachingScheme::Cara::NumberOfSampleMomentsType;
+        using NumberOfSampleMomentsType = Cache::CachingScheme::Cara::NumberOfSampleMomentsType;
 
         assert(argumentExists(arguments, argumentName));   // the argument exists
 
@@ -86,7 +86,7 @@ namespace Hydra::Other::Parser::CommandLineArgument {
 
                 // The number of sample moments cannot be saved as NumberOfSampleMomentsType or is invalid
                 if (!Hydra::Other::unsignedValueCanBeSavedAsTypeT<NumberOfSampleMomentsType>(numberOfSampleMoments) ||
-                    (!Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::isNumberOfSampleMomentsValidStatic(static_cast<NumberOfSampleMomentsType>(numberOfSampleMoments))))
+                    (!Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::isNumberOfSampleMomentsValidStatic(static_cast<NumberOfSampleMomentsType>(numberOfSampleMoments))))
                     throw Hydra::Exception::Cache::CachingScheme::InvalidNumberOfSampleMomentsCaraCachingSchemeException(numberOfSampleMoments, cacheType);
 
                 // Set the number of sample moments
