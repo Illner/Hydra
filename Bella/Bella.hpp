@@ -2,6 +2,7 @@
 
 #include <atomic>
 #include <chrono>
+#include <cstdlib>
 #include <exception>
 #include <functional>
 #include <future>
@@ -25,7 +26,7 @@ int main(int argc, char* argv[]) {
 
         // Exit - help, version
         if (commandLineArgumentsStruct.exit)
-            return 0;
+            return EXIT_SUCCESS;
 
         // Title
         Hydra::Other::printTitle(std::cout, "Bella", 49, ' ');
@@ -52,7 +53,9 @@ int main(int argc, char* argv[]) {
     }
     catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
+
+        return EXIT_FAILURE;
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }

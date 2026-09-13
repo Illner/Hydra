@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdlib>
 #include <exception>
 #include <iostream>
 #include <string_view>
@@ -36,7 +37,7 @@ int main(int argc, char* argv[]) {
 
         // Exit - help, version
         if (commandLineArgumentsStruct.exit)
-            return 0;
+            return EXIT_SUCCESS;
 
         // Title
         Hydra::Other::printTitle(std::cout, " Cara ", 50, '-', COMMENT_FOR_MODEL_COUNTING_COMPETITION);
@@ -67,7 +68,9 @@ int main(int argc, char* argv[]) {
     }
     catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
+
+        return EXIT_FAILURE;
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }
