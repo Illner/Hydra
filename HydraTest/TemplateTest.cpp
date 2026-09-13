@@ -7,6 +7,7 @@
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
 
 namespace HydraTest {
+
     TemplateTest::TemplateTest(const std::string& testName, const std::string& correctResult) noexcept
         : testName_(testName), correctResult_(correctResult), actualResultStringStream_() {
         std::cout << testName_ << ": ";

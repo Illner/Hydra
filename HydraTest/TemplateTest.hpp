@@ -4,6 +4,7 @@
 #include <string>
 
 namespace HydraTest {
+
     const inline std::string logFilePath = "./log.txt";   // Log location
 
     class TemplateTest {
