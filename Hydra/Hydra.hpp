@@ -26,7 +26,7 @@
 using AtomicBoolType = std::atomic<bool>;
 using AtomicBoolPtrType = const AtomicBoolType*;
 using TemplateTypeEnum = Hydra::Other::TemplateTypeEnum;
-using StatisticsPtrType = typename Hydra::Statistics::Statistics::StatisticsPtrType;
+using StatisticsPtrType = Hydra::Statistics::Statistics::StatisticsPtrType;
 
 template <typename CommandLineArgumentsStructT>
 void initialAdjustmentToConfiguration(CommandLineArgumentsStructT& commandLineArgumentsStruct);
