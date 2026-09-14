@@ -16,6 +16,7 @@ add_library(HydraLibrary STATIC
         "preprocessor/cnf/none/NoneCnfPreprocessor.cpp"
 
         # Other
+        "other/seed/Seed.cpp"
         "other/memory/Memory.cpp"
         "other/version/Version.cpp"
         "other/container/vectorSet/VectorSet.cpp"
