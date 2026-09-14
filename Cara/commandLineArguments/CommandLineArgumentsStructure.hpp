@@ -25,7 +25,7 @@ namespace Cara::CommandLineArguments {
         using ContiguousFormulaRepresentationConfigurationType = Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentationConfiguration;
 
     public:
-        using ModelCountingTypeEnum = typename Cara::ModelCountingTypeEnum;
+        using ModelCountingTypeEnum = Cara::ModelCountingTypeEnum;
 
     public:
         bool exit = false;   // help, version
