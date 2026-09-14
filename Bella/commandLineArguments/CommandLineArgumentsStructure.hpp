@@ -3,6 +3,7 @@
 #include <string>
 
 #include "Hydra/other/Other.hpp"
+#include "Hydra/other/seed/Seed.hpp"
 
 #include "Hydra/compiler/Compiler.tpp"
 #include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.tpp"
@@ -17,15 +18,12 @@ namespace Bella::CommandLineArguments {
      */
     struct CommandLineArgumentsStruct {
     public:
-        using CompilerConfigurationType = typename Hydra::CompilerConfiguration;
-        using ContiguousFormulaRepresentationConfigurationType = typename Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentationConfiguration;
+        using SeedType = Hydra::Other::Seed::SeedType;
+        using CompilerConfigurationType = Hydra::CompilerConfiguration;
+        using ContiguousFormulaRepresentationConfigurationType = Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentationConfiguration;
 
     public:
         bool exit = false;   // help, version
-
-        bool numberOfModels;
-        LargeNumberType timeout;
-        bool checkWhetherCircuitEntailsCnfFormula;
 
         // Input
         std::string inputFilePath;
@@ -33,10 +31,17 @@ namespace Bella::CommandLineArguments {
         // Output
         std::string outputFilePath;
 
+        // Others
+        SeedType seed = Hydra::Other::Seed::NOT_DEFINED_SEED;
+        bool numberOfModels;
+        LargeNumberType timeout;
+        bool checkWhetherCircuitEntailsCnfFormula;
+
         // Statistics
         bool statisticsAddLabels;
         std::string statisticsFilePath;
 
+        // Configuration
         CompilerConfigurationType compilerConfiguration;
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
     };

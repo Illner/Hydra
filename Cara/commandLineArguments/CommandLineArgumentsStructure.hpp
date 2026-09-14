@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "Hydra/other/seed/Seed.hpp"
 #include "Hydra/other/type/arbitraryPrecisionInteger/ArbitraryPrecisionInteger.hpp"
 
 #include "Cara/sharpSolver/enums/ModelCountingTypeEnum.hpp"
@@ -19,8 +20,9 @@ namespace Cara::CommandLineArguments {
      */
     struct CommandLineArgumentsStruct {
     public:
-        using SharpSolverConfigurationType = typename Hydra::CompilerConfiguration;
-        using ContiguousFormulaRepresentationConfigurationType = typename Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentationConfiguration;
+        using SeedType = Hydra::Other::Seed::SeedType;
+        using SharpSolverConfigurationType = Hydra::CompilerConfiguration;
+        using ContiguousFormulaRepresentationConfigurationType = Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentationConfiguration;
 
     public:
         using ModelCountingTypeEnum = typename Cara::ModelCountingTypeEnum;
@@ -31,10 +33,13 @@ namespace Cara::CommandLineArguments {
         // Input
         std::string inputFilePath;
 
+        // Others
+        SeedType seed = Hydra::Other::Seed::NOT_DEFINED_SEED;
         std::size_t numberOfVariables;   // used to compute the number of models when the formula is empty
         MpzIntType mustMultiplyByFactor = MpzIntType(1);
         ModelCountingTypeEnum modelCountingType = ModelCountingTypeEnum::UNDEFINED;
 
+        // Configuration
         SharpSolverConfigurationType compilerConfiguration;
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
     };
