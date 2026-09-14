@@ -33,8 +33,10 @@ namespace Cara::CommandLineArguments {
         // Input
         std::string inputFilePath;
 
-        // Others
+        // Seed
         SeedType seed = Hydra::Other::Seed::NOT_DEFINED_SEED;
+
+        // Others
         std::size_t numberOfVariables;   // used to compute the number of models when the formula is empty
         MpzIntType mustMultiplyByFactor = MpzIntType(1);
         ModelCountingTypeEnum modelCountingType = ModelCountingTypeEnum::UNDEFINED;

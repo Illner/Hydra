@@ -31,8 +31,10 @@ namespace Bella::CommandLineArguments {
         // Output
         std::string outputFilePath;
 
-        // Others
+        // Seed
         SeedType seed = Hydra::Other::Seed::NOT_DEFINED_SEED;
+
+        // Others
         bool numberOfModels;
         LargeNumberType timeout;
         bool checkWhetherCircuitEntailsCnfFormula;
