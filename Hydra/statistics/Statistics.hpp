@@ -34,15 +34,15 @@ namespace Hydra::Statistics {
         using HypergraphPartitioningStatisticsType = HypergraphPartitioning::HypergraphPartitioningStatistics;
 
     public:
-        using CacheStatisticsPtrType = typename Cache::CacheStatistics::CacheStatisticsPtrType;
-        using CompilerStatisticsPtrType = typename CompilerStatistics::CompilerStatisticsPtrType;
-        using CircuitStatisticsPtrType = typename Circuit::CircuitStatistics::CircuitStatisticsPtrType;
-        using SatSolverStatisticsPtrType = typename SatSolver::SatSolverStatistics::SatSolverStatisticsPtrType;
-        using CnfPreprocessorStatisticsPtrType = typename Preprocessor::Cnf::CnfPreprocessorStatistics::CnfPreprocessorStatisticsPtrType;
-        using RenHCRecognitionStatisticsPtrType = typename RenHCRecognition::RenHCRecognitionStatistics::RenHCRecognitionStatisticsPtrType;
-        using DecisionHeuristicStatisticsPtrType = typename DecisionHeuristic::DecisionHeuristicStatistics::DecisionHeuristicStatisticsPtrType;
-        using FormulaRepresentationStatisticsPtrType = typename Formula::Representation::FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType;
-        using HypergraphPartitioningStatisticsPtrType = typename HypergraphPartitioning::HypergraphPartitioningStatistics::HypergraphPartitioningStatisticsPtrType;
+        using CacheStatisticsPtrType = Cache::CacheStatistics::CacheStatisticsPtrType;
+        using CompilerStatisticsPtrType = CompilerStatistics::CompilerStatisticsPtrType;
+        using CircuitStatisticsPtrType = Circuit::CircuitStatistics::CircuitStatisticsPtrType;
+        using SatSolverStatisticsPtrType = SatSolver::SatSolverStatistics::SatSolverStatisticsPtrType;
+        using CnfPreprocessorStatisticsPtrType = Preprocessor::Cnf::CnfPreprocessorStatistics::CnfPreprocessorStatisticsPtrType;
+        using RenHCRecognitionStatisticsPtrType = RenHCRecognition::RenHCRecognitionStatistics::RenHCRecognitionStatisticsPtrType;
+        using DecisionHeuristicStatisticsPtrType = DecisionHeuristic::DecisionHeuristicStatistics::DecisionHeuristicStatisticsPtrType;
+        using FormulaRepresentationStatisticsPtrType = Formula::Representation::FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType;
+        using HypergraphPartitioningStatisticsPtrType = HypergraphPartitioning::HypergraphPartitioningStatistics::HypergraphPartitioningStatisticsPtrType;
 
     public:
         using StatisticsPtrType = Statistics*;
