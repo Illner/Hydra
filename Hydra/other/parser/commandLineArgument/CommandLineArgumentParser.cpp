@@ -97,4 +97,30 @@ namespace Hydra::Other::Parser::CommandLineArgument {
             }
         }
     }
+
+    Seed::SeedType getSeed(const ArgumentsType& arguments, const ArgumentNameType& seedArgumentName, bool generateSeedIfNotProvided) {
+        ArgumentValueType seedString = getArgumentValue(arguments, seedArgumentName, false, true);
+
+        // Seed is not provided
+        if (seedString.empty()) {
+            // Generate a random seed
+            if (generateSeedIfNotProvided)
+                return Seed::generateSeed();
+
+            return Seed::NOT_DEFINED_SEED;
+        }
+
+        try {
+            LargeNumberType seed = convertStringToPositiveNumber(seedString);
+
+            // The seed is invalid
+            if ((seed > Seed::MAX_SEED) || (seed < Seed::MIN_SEED))
+                throw Hydra::Exception::Other::Parser::CommandLineArgument::InvalidSeedException(seed);
+
+            return static_cast<Seed::SeedType>(seed);
+        }
+        catch (const Hydra::Exception::Parser::SomethingIsExpectedButAnotherSymbolIsDetectedException& e) {
+            throw Hydra::Exception::Other::Parser::CommandLineArgument::SeedIsNotNumberException(seedString);
+        }
+    }
 }   // namespace Hydra::Other::Parser::CommandLineArgument
