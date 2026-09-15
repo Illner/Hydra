@@ -184,21 +184,14 @@ namespace Hydra::Formula::Representation::Contiguous {
                                                                        static_cast<FormulaSizeType>(formula.size() - numberOfClauses),
                                                                        numberOfVariables, numberOfClauses,
                                                                        formulaRepresentationStatisticsPtr),
-              originalFormula_(std::move(formula)), originalClauseSize_(), originalClauseOffset_(),
+              originalFormula_(std::move(formula)),
               l_clauseNeedsToBeDeactivatedVectorSet_processAddLiteralToPartialAssignment_(numberOfClauses),
-              l_watchedVariableVector_processComputeConnectedComponents_(numberOfClauses, 0), l_computeConnectedComponents_processComputeConnectedComponents_(numberOfVariables),
-              l_firstCall_getCurrentClauses_(true), l_addedClauseVectorSet_getCurrentClauses_(),
-              l_firstCall_getCurrentComponentNotSubsumedClauses_(true), l_subsumedClauseVectorSet_getCurrentComponentNotSubsumedClauses_(),
-              l_firstCall_oneLiteralWatchingAlgorithmSubsumption_(true), l_removeClauseIdVectorSet_oneLiteralWatchingAlgorithmSubsumption_(),
-              l_indexSubsumptionWatcherVector_oneLiteralWatchingAlgorithmSubsumption_(), l_firstCall_oneLiteralWatchingAlgorithmLiteralSubsumption_(true),
-              l_forbiddenLiteralTSet_oneLiteralWatchingAlgorithmLiteralSubsumption_(), l_removeLiteralTSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmLiteralSubsumption_(),
-              l_literalTSubsumptionWatcherVector_oneLiteralWatchingAlgorithmLiteralSubsumption_(), l_firstCall_oneLiteralWatchingAlgorithmVariableSubsumption_(true),
-              l_forbiddenVariableSet_oneLiteralWatchingAlgorithmVariableSubsumption_(), l_removeVariableSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmVariableSubsumption_(),
-              l_variableSubsumptionWatcherVector_oneLiteralWatchingAlgorithmVariableSubsumption_(), configuration_(configuration), clauseIdWatcher_(),
-              currentComponentClausesStack_(), currentComponentClausesFixedVector_(0, numberOfClauses), clauseNumberOfSatisfiedLiterals_(),
-              clauseNumberOfUnsatisfiedLiterals_(), contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences),
-              numberOfPositiveLiteralsInClauseVector_(), numberOfNegativeLiteralsInClauseVector_(),
-              d_currentComponentVariableSetStack_() {
+              l_watchedVariableVector_processComputeConnectedComponents_(numberOfClauses, 0),
+              l_computeConnectedComponents_processComputeConnectedComponents_(numberOfVariables), l_firstCall_getCurrentClauses_(true),
+              l_firstCall_getCurrentComponentNotSubsumedClauses_(true), l_firstCall_oneLiteralWatchingAlgorithmSubsumption_(true),
+              l_firstCall_oneLiteralWatchingAlgorithmLiteralSubsumption_(true), l_firstCall_oneLiteralWatchingAlgorithmVariableSubsumption_(true),
+              configuration_(configuration), currentComponentClausesFixedVector_(0, numberOfClauses),
+              contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences) {
             assert(originalFormula_.size() > 1);
             assert((LiteralT(2) + LiteralT(2) * static_cast<LiteralT>(numberOfVariables)) == static_cast<LiteralT>(literalNumberOfOccurrences.size()));
 
@@ -219,21 +212,14 @@ namespace Hydra::Formula::Representation::Contiguous {
                                                                        static_cast<FormulaSizeType>(formula.size() - numberOfClauses),
                                                                        numberOfVariables, numberOfClauses,
                                                                        formulaRepresentationStatisticsPtr),
-              originalFormula_(formula), originalClauseSize_(), originalClauseOffset_(),
+              originalFormula_(formula),
               l_clauseNeedsToBeDeactivatedVectorSet_processAddLiteralToPartialAssignment_(numberOfClauses),
-              l_watchedVariableVector_processComputeConnectedComponents_(numberOfClauses, 0), l_computeConnectedComponents_processComputeConnectedComponents_(numberOfVariables),
-              l_firstCall_getCurrentClauses_(true), l_addedClauseVectorSet_getCurrentClauses_(),
-              l_firstCall_getCurrentComponentNotSubsumedClauses_(true), l_subsumedClauseVectorSet_getCurrentComponentNotSubsumedClauses_(),
-              l_firstCall_oneLiteralWatchingAlgorithmSubsumption_(true), l_removeClauseIdVectorSet_oneLiteralWatchingAlgorithmSubsumption_(),
-              l_indexSubsumptionWatcherVector_oneLiteralWatchingAlgorithmSubsumption_(), l_firstCall_oneLiteralWatchingAlgorithmLiteralSubsumption_(true),
-              l_forbiddenLiteralTSet_oneLiteralWatchingAlgorithmLiteralSubsumption_(), l_removeLiteralTSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmLiteralSubsumption_(),
-              l_literalTSubsumptionWatcherVector_oneLiteralWatchingAlgorithmLiteralSubsumption_(), l_firstCall_oneLiteralWatchingAlgorithmVariableSubsumption_(true),
-              l_forbiddenVariableSet_oneLiteralWatchingAlgorithmVariableSubsumption_(), l_removeVariableSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmVariableSubsumption_(),
-              l_variableSubsumptionWatcherVector_oneLiteralWatchingAlgorithmVariableSubsumption_(), configuration_(configuration), clauseIdWatcher_(),
-              currentComponentClausesStack_(), currentComponentClausesFixedVector_(0, numberOfClauses), clauseNumberOfSatisfiedLiterals_(),
-              clauseNumberOfUnsatisfiedLiterals_(), contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences),
-              numberOfPositiveLiteralsInClauseVector_(), numberOfNegativeLiteralsInClauseVector_(),
-              d_currentComponentVariableSetStack_() {
+              l_watchedVariableVector_processComputeConnectedComponents_(numberOfClauses, 0),
+              l_computeConnectedComponents_processComputeConnectedComponents_(numberOfVariables), l_firstCall_getCurrentClauses_(true),
+              l_firstCall_getCurrentComponentNotSubsumedClauses_(true), l_firstCall_oneLiteralWatchingAlgorithmSubsumption_(true),
+              l_firstCall_oneLiteralWatchingAlgorithmLiteralSubsumption_(true), l_firstCall_oneLiteralWatchingAlgorithmVariableSubsumption_(true),
+              configuration_(configuration), currentComponentClausesFixedVector_(0, numberOfClauses),
+              contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences) {
             assert(originalFormula_.size() > 1);
             assert((LiteralT(2) + LiteralT(2) * static_cast<LiteralT>(numberOfVariables)) == static_cast<LiteralT>(literalNumberOfOccurrences.size()));
 
@@ -254,20 +240,14 @@ namespace Hydra::Formula::Representation::Contiguous {
                                                                        static_cast<FormulaSizeType>(formula.size() - numberOfClauses),
                                                                        numberOfVariables, numberOfClauses,
                                                                        formulaRepresentationStatisticsPtr),
-              originalFormula_(std::move(formula)), originalClauseSize_(), originalClauseOffset_(),
+              originalFormula_(std::move(formula)),
               l_clauseNeedsToBeDeactivatedVectorSet_processAddLiteralToPartialAssignment_(numberOfClauses),
-              l_watchedVariableVector_processComputeConnectedComponents_(numberOfClauses, 0), l_computeConnectedComponents_processComputeConnectedComponents_(numberOfVariables),
-              l_firstCall_getCurrentClauses_(true), l_addedClauseVectorSet_getCurrentClauses_(),
-              l_firstCall_getCurrentComponentNotSubsumedClauses_(true), l_subsumedClauseVectorSet_getCurrentComponentNotSubsumedClauses_(),
-              l_firstCall_oneLiteralWatchingAlgorithmSubsumption_(true), l_removeClauseIdVectorSet_oneLiteralWatchingAlgorithmSubsumption_(),
-              l_indexSubsumptionWatcherVector_oneLiteralWatchingAlgorithmSubsumption_(), l_firstCall_oneLiteralWatchingAlgorithmLiteralSubsumption_(true),
-              l_forbiddenLiteralTSet_oneLiteralWatchingAlgorithmLiteralSubsumption_(), l_removeLiteralTSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmLiteralSubsumption_(),
-              l_literalTSubsumptionWatcherVector_oneLiteralWatchingAlgorithmLiteralSubsumption_(), l_firstCall_oneLiteralWatchingAlgorithmVariableSubsumption_(true),
-              l_forbiddenVariableSet_oneLiteralWatchingAlgorithmVariableSubsumption_(), l_removeVariableSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmVariableSubsumption_(),
-              l_variableSubsumptionWatcherVector_oneLiteralWatchingAlgorithmVariableSubsumption_(), configuration_(configuration), clauseIdWatcher_(),
-              currentComponentClausesStack_(), currentComponentClausesFixedVector_(0, numberOfClauses), clauseNumberOfSatisfiedLiterals_(),
-              clauseNumberOfUnsatisfiedLiterals_(), contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences),
-              numberOfPositiveLiteralsInClauseVector_(), numberOfNegativeLiteralsInClauseVector_() {
+              l_watchedVariableVector_processComputeConnectedComponents_(numberOfClauses, 0),
+              l_computeConnectedComponents_processComputeConnectedComponents_(numberOfVariables), l_firstCall_getCurrentClauses_(true),
+              l_firstCall_getCurrentComponentNotSubsumedClauses_(true), l_firstCall_oneLiteralWatchingAlgorithmSubsumption_(true),
+              l_firstCall_oneLiteralWatchingAlgorithmLiteralSubsumption_(true), l_firstCall_oneLiteralWatchingAlgorithmVariableSubsumption_(true),
+              configuration_(configuration), currentComponentClausesFixedVector_(0, numberOfClauses),
+              contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences) {
             initializeDataStructures();
         }
 
@@ -279,20 +259,14 @@ namespace Hydra::Formula::Representation::Contiguous {
                                                                        static_cast<FormulaSizeType>(formula.size() - numberOfClauses),
                                                                        numberOfVariables, numberOfClauses,
                                                                        formulaRepresentationStatisticsPtr),
-              originalFormula_(formula), originalClauseSize_(), originalClauseOffset_(),
+              originalFormula_(formula),
               l_clauseNeedsToBeDeactivatedVectorSet_processAddLiteralToPartialAssignment_(numberOfClauses),
-              l_watchedVariableVector_processComputeConnectedComponents_(numberOfClauses, 0), l_computeConnectedComponents_processComputeConnectedComponents_(numberOfVariables),
-              l_firstCall_getCurrentClauses_(true), l_addedClauseVectorSet_getCurrentClauses_(),
-              l_firstCall_getCurrentComponentNotSubsumedClauses_(true), l_subsumedClauseVectorSet_getCurrentComponentNotSubsumedClauses_(),
-              l_firstCall_oneLiteralWatchingAlgorithmSubsumption_(true), l_removeClauseIdVectorSet_oneLiteralWatchingAlgorithmSubsumption_(),
-              l_indexSubsumptionWatcherVector_oneLiteralWatchingAlgorithmSubsumption_(), l_firstCall_oneLiteralWatchingAlgorithmLiteralSubsumption_(true),
-              l_forbiddenLiteralTSet_oneLiteralWatchingAlgorithmLiteralSubsumption_(), l_removeLiteralTSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmLiteralSubsumption_(),
-              l_literalTSubsumptionWatcherVector_oneLiteralWatchingAlgorithmLiteralSubsumption_(), l_firstCall_oneLiteralWatchingAlgorithmVariableSubsumption_(true),
-              l_forbiddenVariableSet_oneLiteralWatchingAlgorithmVariableSubsumption_(), l_removeVariableSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmVariableSubsumption_(),
-              l_variableSubsumptionWatcherVector_oneLiteralWatchingAlgorithmVariableSubsumption_(), configuration_(configuration), clauseIdWatcher_(),
-              currentComponentClausesStack_(), currentComponentClausesFixedVector_(0, numberOfClauses), clauseNumberOfSatisfiedLiterals_(),
-              clauseNumberOfUnsatisfiedLiterals_(), contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences),
-              numberOfPositiveLiteralsInClauseVector_(), numberOfNegativeLiteralsInClauseVector_() {
+              l_watchedVariableVector_processComputeConnectedComponents_(numberOfClauses, 0),
+              l_computeConnectedComponents_processComputeConnectedComponents_(numberOfVariables), l_firstCall_getCurrentClauses_(true),
+              l_firstCall_getCurrentComponentNotSubsumedClauses_(true), l_firstCall_oneLiteralWatchingAlgorithmSubsumption_(true),
+              l_firstCall_oneLiteralWatchingAlgorithmLiteralSubsumption_(true), l_firstCall_oneLiteralWatchingAlgorithmVariableSubsumption_(true),
+              configuration_(configuration), currentComponentClausesFixedVector_(0, numberOfClauses),
+              contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences) {
             initializeDataStructures();
         }
         #endif
