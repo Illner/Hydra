@@ -1,3 +1,3 @@
 # Type
 
-![alt text](../../../doc/type.png "type")
+![alt text](../../../docs/type.png "type")

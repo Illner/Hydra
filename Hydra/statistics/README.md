@@ -1,3 +1,3 @@
 # Statistics
 
-![alt text](../../doc/statistics.png "statistics")
+![alt text](../../docs/statistics.png "statistics")

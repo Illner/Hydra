@@ -1,3 +1,3 @@
 # Hypergraph partitioning
 
-![alt text](../../doc/hypergraphPartitioning.png "hypergraph partitioning")
+![alt text](../../docs/hypergraphPartitioning.png "hypergraph partitioning")

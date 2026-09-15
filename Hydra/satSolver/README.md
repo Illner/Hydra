@@ -1,3 +1,3 @@
 # SAT solver
 
-![alt text](../../doc/satSolver.png "SAT solver")
+![alt text](../../docs/satSolver.png "SAT solver")
