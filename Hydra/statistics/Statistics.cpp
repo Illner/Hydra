@@ -2,52 +2,52 @@
 
 namespace Hydra::Statistics {
 
-    typename Statistics::DecisionHeuristicStatisticsPtrType
+    Statistics::DecisionHeuristicStatisticsPtrType
     Statistics::getDecisionHeuristicStatisticsPtr() noexcept {
         return &decisionHeuristicStatistics_;
     }
 
-    typename Statistics::SatSolverStatisticsPtrType
+    Statistics::SatSolverStatisticsPtrType
     Statistics::getSatSolverStatisticsPtr() noexcept {
         return &satSolverStatistics_;
     }
 
-    typename Statistics::HypergraphPartitioningStatisticsPtrType
+    Statistics::HypergraphPartitioningStatisticsPtrType
     Statistics::getHypergraphPartitioningStatisticsPtr() noexcept {
         return &hypergraphPartitioningStatistics_;
     }
 
-    typename Statistics::CacheStatisticsPtrType
+    Statistics::CacheStatisticsPtrType
     Statistics::getComponentCacheStatisticsPtr() noexcept {
         return &componentCacheStatistics_;
     }
 
-    typename Statistics::CacheStatisticsPtrType
+    Statistics::CacheStatisticsPtrType
     Statistics::getHypergraphCutCacheStatisticsPtr() noexcept {
         return &hypergraphCutCacheStatistics_;
     }
 
-    typename Statistics::CircuitStatisticsPtrType
+    Statistics::CircuitStatisticsPtrType
     Statistics::getCircuitStatisticsPtr() noexcept {
         return &circuitStatistics_;
     }
 
-    typename Statistics::CompilerStatisticsPtrType
+    Statistics::CompilerStatisticsPtrType
     Statistics::getCompilerStatisticsPtr() noexcept {
         return &compilerStatistics_;
     }
 
-    typename Statistics::FormulaRepresentationStatisticsPtrType
+    Statistics::FormulaRepresentationStatisticsPtrType
     Statistics::getFormulaRepresentationStatisticsPtr() noexcept {
         return &formulaRepresentationStatistics_;
     }
 
-    typename Statistics::RenHCRecognitionStatisticsPtrType
+    Statistics::RenHCRecognitionStatisticsPtrType
     Statistics::getRenHCRecognitionStatisticsPtr() noexcept {
         return &renHCRecognitionStatistics_;
     }
 
-    typename Statistics::CnfPreprocessorStatisticsPtrType
+    Statistics::CnfPreprocessorStatisticsPtrType
     Statistics::getCnfPreprocessorStatisticsPtr() noexcept {
         return &cnfPreprocessorStatistics_;
     }
