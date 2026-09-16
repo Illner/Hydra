@@ -2,6 +2,8 @@
 
 #include "./RandomDecisionHeuristic.hpp"
 
+#include <string>
+
 namespace Hydra::DecisionHeuristic::Random {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
@@ -20,8 +22,11 @@ namespace Hydra::DecisionHeuristic::Random {
 
     #ifndef NDEBUG
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    void RandomDecisionHeuristic<VarT, LiteralT, ClauseIdT>::processPrintDecisionHeuristicDebug(std::ostream& out) const {
-        out << "";
+    void RandomDecisionHeuristic<VarT, LiteralT, ClauseIdT>::processPrintDecisionHeuristicDebug([[maybe_unused]] std::ostream& out) const {
+        // Configuration
+        #if !defined(TEST)
+        out << "seed: " << std::to_string(configuration_.seed) << std::endl;
+        #endif
     }
     #endif
 }   // namespace Hydra::DecisionHeuristic::Random

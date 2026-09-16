@@ -6,6 +6,7 @@
 #include <random>
 
 #include "Hydra/decisionHeuristic/DecisionHeuristicAbstract.hpp"
+#include "Hydra/other/seed/Seed.hpp"
 
 #include "Hydra/decisionHeuristic/enums/DecisionHeuristicTypeEnum.hpp"
 
@@ -36,13 +37,9 @@ namespace Hydra::DecisionHeuristic::Random {
             : DecisionHeuristicAbstract<VarT, LiteralT, ClauseIdT>(formulaRepresentationAbstractPtr, satSolverAbstractPtr, ignorePureLiteralType,
                                                                    DecisionHeuristicTypeEnum::RANDOM, decisionHeuristicStatisticsPtr),
               configuration_(configuration) {
-            #ifdef __CYGWIN__
-            std::random_device rd { "/dev/urandom" };
-            #else
-            std::random_device rd;
-            #endif
+            assert(Other::Seed::isSeedValid(configuration_.seed));   // seed is valid
 
-            r_generator_processGetDecisionVariable_.seed(rd());
+            r_generator_processGetDecisionVariable_.seed(configuration_.seed);
         }
 
     private:

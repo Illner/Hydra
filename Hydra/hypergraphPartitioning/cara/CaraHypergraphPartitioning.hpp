@@ -6,6 +6,7 @@
 #include "Hydra/hypergraphPartitioning/HypergraphPartitioningAbstract.hpp"
 #include "Hydra/hypergraphPartitioning/kahypar/KahyparHypergraphPartitioning.hpp"
 #include "Hydra/hypergraphPartitioning/patoh/PatohHypergraphPartitioning.hpp"
+#include "Hydra/other/seed/Seed.hpp"
 
 #include "Hydra/compiler/enums/IgnorePureLiteralTypeEnum.hpp"
 #include "Hydra/hypergraphPartitioning/enums/HypergraphPartitioningSoftwareEnum.hpp"
@@ -65,6 +66,7 @@ namespace Hydra::HypergraphPartitioning::Cara {
                                              { &(this->vertexWeightVector_), &(this->clauseVertexWeightVector_), &(this->partitionNumberVectorMap_) }),
               configuration_(configuration) {
             assert(!allowSingletonHyperedge);
+            assert(Other::Seed::isSeedValid(configuration_.seed));   // seed is valid
 
             PatohHypergraphPartitioningConfigurationType& patohConfiguration = patohHypergraphPartitioning_.configuration_;
             KahyparHypergraphPartitioningConfigurationType& kahyparConfiguration = kahyparHypergraphPartitioning_.configuration_;

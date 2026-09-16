@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Hydra/hypergraphPartitioning/patoh/Patoh.h"
+#include "Hydra/other/seed/Seed.hpp"
 
 namespace Hydra::HypergraphPartitioning::Cara {
 
@@ -17,7 +18,7 @@ namespace Hydra::HypergraphPartitioning::Cara {
         /**
          * Seed of the random generator
          */
-        int seed = 777;
+        Other::Seed::SeedType seed = Other::Seed::MIN_SEED;
 
         /**
          * Imbalance factor

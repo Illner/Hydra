@@ -7,6 +7,7 @@
 #include "Hydra/hypergraphPartitioning/HypergraphPartitioningAbstract.hpp"
 #include "Hydra/hypergraphPartitioning/patoh/Patoh.h"
 #include "Hydra/other/operatingSystem/OperatingSystem.hpp"
+#include "Hydra/other/seed/Seed.hpp"
 
 #include "Hydra/hypergraphPartitioning/exceptions/HypergraphPartitioningException.hpp"
 
@@ -65,6 +66,8 @@ namespace Hydra::HypergraphPartitioning::Patoh {
                                                                         ignorePureLiteralType, vertexWeightType,
                                                                         hypergraphPartitioningStatisticsPtr, modulePointersStruct),
               pins_(), xpins_(), partweights_(static_cast<PartweightVectorType::size_type>(configuration.kPatohLibrary), 0), configuration_(configuration) {
+            assert(Other::Seed::isSeedValid(configuration_.seedPatohLibrary));   // seed is valid
+
             // This operating system is not supported
             if (!Other::OperatingSystem::isLinux() && !Other::OperatingSystem::isMacOs())
                 throw Exception::HypergraphPartitioning::HypergraphPartitioningSoftwareDoesNotSupportThisOperatingSystemException(HypergraphPartitioningSoftwareEnum::PATOH);

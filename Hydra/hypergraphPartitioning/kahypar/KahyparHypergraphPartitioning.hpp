@@ -7,6 +7,7 @@
 #include "Hydra/hypergraphPartitioning/HypergraphPartitioningAbstract.hpp"
 #include "Hydra/hypergraphPartitioning/kahypar/Kahypar.h"
 #include "Hydra/hypergraphPartitioning/kahypar/KahyparContext.hpp"
+#include "Hydra/other/seed/Seed.hpp"
 
 #include "Hydra/compiler/enums/IgnorePureLiteralTypeEnum.hpp"
 #include "Hydra/hypergraphPartitioning/enums/HypergraphPartitioningSoftwareEnum.hpp"
@@ -61,6 +62,7 @@ namespace Hydra::HypergraphPartitioning::Kahypar {
                                                                         hypergraphPartitioningStatisticsPtr, modulePointersStruct),
               pins_(), xpins_(), kahyparContextPtr_(nullptr), configuration_(configuration) {
             assert(!allowSingletonHyperedge);
+            assert(Other::Seed::isSeedValid(configuration_.seedKahyparLibrary));   // seed is valid
 
             // Initialize KaHyPar context
             kahyparContextPtr_ = kahypar_context_new();

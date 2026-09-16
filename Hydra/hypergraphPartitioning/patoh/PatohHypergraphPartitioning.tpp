@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Hydra/hypergraphPartitioning/patoh/Patoh.h"
+#include "Hydra/other/seed/Seed.hpp"
 
 namespace Hydra::HypergraphPartitioning::Patoh {
 
@@ -39,11 +40,10 @@ namespace Hydra::HypergraphPartitioning::Patoh {
 
         /**
          * Seed of the random generator. Set to
-         * (-1) for using current time as the seed for random generator,
          * (0) for using partitioning count (number of times PaToH partitions called) as the seed,
-         * (any other non-zero value) to for fixing random generator seed.
+         * (>0) for fixing random generator seed.
          */
-        int seedPatohLibrary = 777;
+        Other::Seed::SeedType seedPatohLibrary = Other::Seed::MIN_SEED;
 
         /**
          * Imbalance ratio of the final partition

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Hydra/hypergraphPartitioning/kahypar/Kahypar.h"
+#include "Hydra/other/seed/Seed.hpp"
 
 namespace Hydra::HypergraphPartitioning::Kahypar {
 
@@ -17,7 +18,7 @@ namespace Hydra::HypergraphPartitioning::Kahypar {
         /**
          * Seed of the random generator
          */
-        int seedKahyparLibrary = 777;
+        Other::Seed::SeedType seedKahyparLibrary = Other::Seed::MIN_SEED;
 
         /**
          * Imbalance factor
