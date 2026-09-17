@@ -35,6 +35,7 @@ void printConfigurationBeforeCompilation(const CommandLineArgumentsStructT& comm
     std::cout << std::endl;
 
     // Configuration
+    std::cout << "Seed: " << std::to_string(commandLineArgumentsStruct.seed) << std::endl;
     std::cout << "Timeout: " << std::to_string(commandLineArgumentsStruct.timeout) << " s" << std::endl;
     std::cout << "SAT solver: " << Hydra::SatSolver::satSolverTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.satSolverType) << std::endl;
     std::cout << "Decision heuristic: " << Hydra::DecisionHeuristic::decisionHeuristicTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.decisionHeuristicType) << std::endl;

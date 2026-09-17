@@ -1,5 +1,9 @@
 #pragma once
 
+#include <cassert>
+
+#include "Hydra/other/seed/Seed.hpp"
+
 #include "Hydra/cache/cacheCleaningStrategy/enums/CacheCleaningStrategyTypeEnum.hpp"
 #include "Hydra/cache/cachingScheme/enums/CachingSchemeTypeEnum.hpp"
 #include "Hydra/cache/cachingScheme/enums/CachingSchemeVariantTypeEnum.hpp"
@@ -149,5 +153,23 @@ namespace Hydra {
         std::size_t numberOfClausesThresholdForBruteForceApproach = 8;     // 0 = ignore
         std::size_t numberOfVariablesThresholdForBruteForceApproach = 6;   // 0 = ignore
         #endif
+
+    public:
+        /**
+         * Set the seed in all the relevant configurations
+         * Assert: the seed MUST be valid
+         * @param seed a seed
+         */
+        void setSeed(Other::Seed::SeedType seed) {
+            assert(Other::Seed::isSeedValid(seed));   // seed is valid
+
+            // Decision heuristic
+            randomDecisionHeuristicConfiguration.seed = seed;
+
+            // Hypergraph partitioning
+            caraHypergraphPartitioningConfiguration.seed = seed;
+            patohHypergraphPartitioningConfiguration.seedPatohLibrary = seed;
+            kahyparHypergraphPartitioningConfiguration.seedKahyparLibrary = seed;
+        }
     };
 }   // namespace Hydra
