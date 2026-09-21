@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.14)
 project("HydraTest"
         DESCRIPTION "Tests for Hydra")
 
-add_library(HydraTestLibrary STATIC "TemplateTest.cpp")
+add_library(HydraTestLibrary STATIC "TemplateTest.cpp" "RunSession.cpp")
 
 add_executable(HydraTest "HydraTest.cpp"
 
