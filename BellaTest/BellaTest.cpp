@@ -1,28 +1,15 @@
-#define CATCH_CONFIG_RUNNER
-
-#include <fstream>
 #include <iostream>
+#include <string>
 
-#include "HydraTest/TemplateTest.hpp"
-#include "HydraTest/external/unitTesting/Catch2/catch.hpp"
+#include "HydraTest/RunSession.hpp"
+
+#include "BellaTest/compiler/Compiler.hpp"
 
 #include "Hydra/other/Other.hpp"
 
-#include "Hydra/compiler/exceptions/CompilerException.hpp"
-
 int main(int argc, char* argv[]) {
-    // Hydra::Other::printBuildType(std::cout);
-    // Hydra::Other::printMacros(std::cout);
+    // Title
+    Hydra::Other::printTitle(std::cout, "BellaTest", 49, ' ');
 
-    // Create the log file
-    {
-        std::ofstream logFile(HydraTest::logFilePath, std::ios::out);
-
-        if (!logFile.is_open())
-            throw Hydra::Exception::CannotCreateFileException(HydraTest::logFilePath);
-    }
-
-    int result = Catch::Session().run(argc, argv);
-
-    return result;
+    return HydraTest::runSession(argc, argv, BellaTest::Compiler::generatedSeed);
 }
