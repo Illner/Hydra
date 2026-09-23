@@ -15,6 +15,7 @@
 #include "Hydra/formula/representation/contiguous/parser/cnf/ContiguousFormulaCnfParser.hpp"
 #include "Hydra/other/operatingSystem/OperatingSystem.hpp"
 #include "Hydra/other/parser/Parser.hpp"
+#include "Hydra/other/seed/Seed.hpp"
 #include "Hydra/statistics/Statistics.hpp"
 
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
@@ -36,6 +37,9 @@ namespace BellaTest::Compiler {
     #else
     inline std::string PATOH_HMETIS_TEST_NAME = "PaToH";
     #endif
+
+    // Seed
+    inline Hydra::Other::Seed::SeedType generatedSeed = Hydra::Other::Seed::NOT_DEFINED_SEED;
 
     using TemplateTest = HydraTest::TemplateTest;
 
@@ -75,10 +79,8 @@ namespace BellaTest::Compiler {
     inline CompilerConfigurationType createDefaultCompilerConfiguration() {
         CompilerConfigurationType configuration;
 
-        // Randomness
-        configuration.caraHypergraphPartitioningConfiguration.seed = -1;
-        configuration.patohHypergraphPartitioningConfiguration.seedPatohLibrary = -1;
-        configuration.kahyparHypergraphPartitioningConfiguration.seedKahyparLibrary = -1;
+        // Seed
+        configuration.setSeed(generatedSeed);
 
         // Cache cleaning strategy
         configuration.cacheCleaningStrategyComponentCachingType = CacheCleaningStrategyTypeEnum::NONE;

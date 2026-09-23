@@ -40,6 +40,26 @@ namespace BellaTest::Compiler::dDNNF {
         process(configuration, true, ContiguousFormulaRepresentationConfigurationType(), CacheSizeTypeEnum::IGNORE, false);
     }
 
+    /**
+     * Seed MIN_SEED
+     */
+    TEST_CASE(" [Compiler::dDNNF] seed MIN_SEED", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.setSeed(Hydra::Other::Seed::MIN_SEED);
+
+        process(configuration, true);
+    }
+
+    /**
+     * Seed MAX_SEED
+     */
+    TEST_CASE(" [Compiler::dDNNF] seed MAX_SEED", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.setSeed(Hydra::Other::Seed::MAX_SEED);
+
+        process(configuration, true);
+    }
+
     //region SAT solver
     //region MiniSat
     /**
