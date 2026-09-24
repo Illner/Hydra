@@ -210,6 +210,26 @@ namespace CaraTest::SharpSolver {
         process(configuration, false);
     }
 
+    /**
+     * Seed MIN_SEED
+     */
+    TEST_CASE("[SharpSolver] seed MIN_SEED", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.setSeed(Hydra::Other::Seed::MIN_SEED);
+
+        process(configuration, false);
+    }
+
+    /**
+     * Seed MAX_SEED
+     */
+    TEST_CASE("[SharpSolver] seed MAX_SEED", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.setSeed(Hydra::Other::Seed::MAX_SEED);
+
+        process(configuration, false);
+    }
+
     //region SAT solver
     //region MiniSat
     /**
