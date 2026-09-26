@@ -1,5 +1,7 @@
 #include "./Statistics.hpp"
 
+#include "Hydra/other/Other.hpp"
+
 namespace Hydra::Statistics {
 
     Statistics::DecisionHeuristicStatisticsPtrType
@@ -52,6 +54,11 @@ namespace Hydra::Statistics {
         return &cnfPreprocessorStatistics_;
     }
 
+    Statistics::CnfParserStatisticsPtrType
+    Statistics::getCnfParserStatisticsPtr() noexcept {
+        return &cnfParserStatistics_;
+    }
+
     void Statistics::printStatistics(std::ostream& out, bool addLabels) const {
         if (addLabels)
             Other::printTitle(out, "Statistics", 100, '-');
@@ -61,6 +68,9 @@ namespace Hydra::Statistics {
 
         // Circuit
         circuitStatistics_.printStatistics(out, addLabels);
+
+        // CNF parser
+        cnfParserStatistics_.printStatistics(out, addLabels);
 
         // CNF preprocessor
         cnfPreprocessorStatistics_.printStatistics(out, addLabels);
