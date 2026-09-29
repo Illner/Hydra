@@ -18,26 +18,30 @@ namespace Hydra::Parser::Cnf {
     template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIteratorT>
     ParsedFormulaStruct<VarT, LiteralT, ClauseIdT> parseCnfFormula(InputIteratorT& begin, const InputIteratorT& end,
                                                                    const Other::Parser::DimacsCnfHeaderStruct& dimacsCnfHeaderStruct,
-                                                                   unsigned int& line, bool forbidClausesContainingComplementaryLiterals) {
+                                                                   unsigned int& line, bool forbidClausesContainingComplementaryLiterals,
+                                                                   CnfParserStatistics::CnfParserStatisticsPtrType cnfParserStatisticsPtr) {
         Cara::ModelCountingTypeEnum dummyModelCountingType = Cara::ModelCountingTypeEnum::UNDEFINED;
 
         return parseCnfFormula<VarT, LiteralT, ClauseIdT, InputIteratorT>(begin, end,
                                                                           static_cast<VarT>(dimacsCnfHeaderStruct.numberOfVariables),
                                                                           static_cast<ClauseIdT>(dimacsCnfHeaderStruct.numberOfClauses),
                                                                           dimacsCnfHeaderStruct.size,
-                                                                          line, dummyModelCountingType, forbidClausesContainingComplementaryLiterals);
+                                                                          line, dummyModelCountingType, forbidClausesContainingComplementaryLiterals,
+                                                                          cnfParserStatisticsPtr);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIteratorT>
     ParsedFormulaStruct<VarT, LiteralT, ClauseIdT> parseCnfFormula(InputIteratorT& begin, const InputIteratorT& end,
                                                                    const Other::Parser::DimacsCnfHeaderStruct& dimacsCnfHeaderStruct,
                                                                    unsigned int& line, Cara::ModelCountingTypeEnum& modelCountingType,
-                                                                   bool forbidClausesContainingComplementaryLiterals) {
+                                                                   bool forbidClausesContainingComplementaryLiterals,
+                                                                   CnfParserStatistics::CnfParserStatisticsPtrType cnfParserStatisticsPtr) {
         return parseCnfFormula<VarT, LiteralT, ClauseIdT, InputIteratorT>(begin, end,
                                                                           static_cast<VarT>(dimacsCnfHeaderStruct.numberOfVariables),
                                                                           static_cast<ClauseIdT>(dimacsCnfHeaderStruct.numberOfClauses),
                                                                           dimacsCnfHeaderStruct.size,
-                                                                          line, modelCountingType, forbidClausesContainingComplementaryLiterals);
+                                                                          line, modelCountingType, forbidClausesContainingComplementaryLiterals,
+                                                                          cnfParserStatisticsPtr);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIteratorT>
@@ -45,7 +49,8 @@ namespace Hydra::Parser::Cnf {
                                                                    VarT numberOfVariables, ClauseIdT numberOfClauses,
                                                                    LargeNumberType size, unsigned int& line,
                                                                    Cara::ModelCountingTypeEnum& modelCountingType,
-                                                                   bool forbidClausesContainingComplementaryLiterals) {
+                                                                   bool forbidClausesContainingComplementaryLiterals,
+                                                                   CnfParserStatistics::CnfParserStatisticsPtrType cnfParserStatisticsPtr) {
         using ParsedFormulaStruct = ParsedFormulaStruct<VarT, LiteralT, ClauseIdT>;
 
         using LiteralType = ParsedFormulaStruct::LiteralType;
@@ -53,6 +58,10 @@ namespace Hydra::Parser::Cnf {
         using VectorSetType = Container::VectorSet::VectorSet;
         using ClauseSizeType = ParsedFormulaStruct::ClauseSizeType;
         using ClauseIdVectorType = ParsedFormulaStruct::ClauseIdVectorType;
+
+        // Statistics
+        if (cnfParserStatisticsPtr)
+            cnfParserStatisticsPtr->parseTimer.startStopwatch();
 
         // The formula size + the number of clauses cannot be saved as std::size_t
         LargeNumberType tmp = size + static_cast<LargeNumberType>(numberOfClauses);
@@ -240,6 +249,10 @@ namespace Hydra::Parser::Cnf {
                       << std::endl;
         }
         #endif
+
+        // Statistics
+        if (cnfParserStatisticsPtr)
+            cnfParserStatisticsPtr->parseTimer.stopStopwatch();
 
         return ParsedFormulaStruct(numberOfVariables, realNumberOfClauses,
                                    std::move(formula), std::move(literalNumberOfOccurrences));
