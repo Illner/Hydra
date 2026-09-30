@@ -14,6 +14,7 @@
 #include "Hydra/other/container/fixedVector/FixedVector.hpp"
 #include "Hydra/other/hashMap/HashMap.hpp"
 #include "Hydra/other/parser/Parser.hpp"
+#include "Hydra/parser/cnf/ParsedFormulaStructure.hpp"
 
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
 
@@ -81,6 +82,9 @@ namespace Hydra::Formula::Representation::Contiguous {
 
     private:
         using ConnectedComponentStruct = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ConnectedComponentStruct;
+
+    public:
+        using ParsedFormulaStruct = Hydra::Parser::Cnf::ParsedFormulaStruct<VarT, LiteralT, ClauseIdT>;
 
     private:
         using ClauseSizeVectorType = std::vector<ClauseSizeType>;
@@ -270,6 +274,17 @@ namespace Hydra::Formula::Representation::Contiguous {
             initializeDataStructures();
         }
         #endif
+        explicit ContiguousFormulaRepresentation(ParsedFormulaStruct&& parsedFormulaStruct,
+                                                 const ContiguousFormulaRepresentationConfiguration& configuration = ContiguousFormulaRepresentationConfiguration(),
+                                                 FormulaRepresentationStatisticsPtrType formulaRepresentationStatisticsPtr = nullptr)
+            : ContiguousFormulaRepresentation(std::move(parsedFormulaStruct.formula), parsedFormulaStruct.numberOfVariables, parsedFormulaStruct.numberOfClauses,
+                                              parsedFormulaStruct.literalNumberOfOccurrences, configuration, formulaRepresentationStatisticsPtr) { }
+
+        explicit ContiguousFormulaRepresentation(const ParsedFormulaStruct& parsedFormulaStruct,
+                                                 const ContiguousFormulaRepresentationConfiguration& configuration = ContiguousFormulaRepresentationConfiguration(),
+                                                 FormulaRepresentationStatisticsPtrType formulaRepresentationStatisticsPtr = nullptr)
+            : ContiguousFormulaRepresentation(parsedFormulaStruct.formula, parsedFormulaStruct.numberOfVariables, parsedFormulaStruct.numberOfClauses,
+                                              parsedFormulaStruct.literalNumberOfOccurrences, configuration, formulaRepresentationStatisticsPtr) { }
 
     private:
         FormulaType originalFormula_;

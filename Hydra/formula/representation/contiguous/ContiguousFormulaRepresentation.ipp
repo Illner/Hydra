@@ -36,6 +36,10 @@ namespace Hydra::Formula::Representation::Contiguous {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     void ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>::initializeDataStructures() {
+        // Statistics
+        if (this->formulaRepresentationStatisticsPtr_)
+            this->formulaRepresentationStatisticsPtr_->initializeTimer.startStopwatch();
+
         currentComponentFormulaSize_ = this->originalFormulaSize_;
 
         // Clause offset
@@ -143,6 +147,10 @@ namespace Hydra::Formula::Representation::Contiguous {
         assert(configuration_.recognitionTypeStruct.antiHornC != numberOfNegativeLiteralsInClauseVector_.empty());
         assert(numberOfPositiveLiteralsInClauseVector_.empty() || (numberOfPositiveLiteralsInClauseVector_.size() == clauseId));
         assert(numberOfNegativeLiteralsInClauseVector_.empty() || (numberOfNegativeLiteralsInClauseVector_.size() == clauseId));
+
+        // Statistics
+        if (this->formulaRepresentationStatisticsPtr_)
+            this->formulaRepresentationStatisticsPtr_->initializeTimer.stopStopwatch();
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
