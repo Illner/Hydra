@@ -22,8 +22,8 @@ namespace Hydra::Statistics {
     template <typename TypeT>
     class NumberStatistics {
     private:
-        using isValidTypeT = std::bool_constant<(std::is_same<TypeT, LargeNumberType>::value ||
-                                                 std::is_same<TypeT, LargeFloatingNumberType>::value)>;
+        using isValidTypeT = std::bool_constant<(std::is_same_v<TypeT, LargeNumberType> ||
+                                                 std::is_same_v<TypeT, LargeFloatingNumberType>)>;
 
         static_assert(isValidTypeT::value, "Invalid TypeT type!");
 

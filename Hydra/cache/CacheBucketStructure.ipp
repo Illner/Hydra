@@ -10,16 +10,16 @@ namespace Hydra::Cache {
 
         out << "Value:";
         // ID node
-        if constexpr (std::is_same<CacheValueT, IdNodeType>::value)
+        if constexpr (std::is_same_v<CacheValueT, IdNodeType>)
             out << " " << std::to_string(value);
         // mpz_int
-        else if constexpr (std::is_same<CacheValueT, MpzIntType>::value)
+        else if constexpr (std::is_same_v<CacheValueT, MpzIntType>)
             out << " " << value;
         // Custom
-        else if constexpr (std::is_same<CacheValueT, CustomType>::value)
+        else if constexpr (std::is_same_v<CacheValueT, CustomType>)
             out << " " << value;
         // Variable vector
-        else if constexpr (std::is_same<CacheValueT, VariableVectorType>::value) {
+        else if constexpr (std::is_same_v<CacheValueT, VariableVectorType>) {
             for (VarT var : static_cast<VariableVectorType>(value))
                 out << " " << std::to_string(var);
         }

@@ -26,10 +26,10 @@ namespace Hydra::Statistics {
         using TimePointType = std::chrono::steady_clock::time_point;
 
     private:
-        using isValidTimeDurationT = std::bool_constant<(std::is_same<TimeDurationT, std::chrono::nanoseconds>::value ||
-                                                         std::is_same<TimeDurationT, std::chrono::microseconds>::value ||
-                                                         std::is_same<TimeDurationT, std::chrono::milliseconds>::value ||
-                                                         std::is_same<TimeDurationT, std::chrono::seconds>::value)>;
+        using isValidTimeDurationT = std::bool_constant<(std::is_same_v<TimeDurationT, std::chrono::nanoseconds> ||
+                                                         std::is_same_v<TimeDurationT, std::chrono::microseconds> ||
+                                                         std::is_same_v<TimeDurationT, std::chrono::milliseconds> ||
+                                                         std::is_same_v<TimeDurationT, std::chrono::seconds>)>;
 
         static_assert(isValidTimeDurationT::value, "Invalid TimeDurationT type!");
 

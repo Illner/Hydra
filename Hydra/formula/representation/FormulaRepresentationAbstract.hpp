@@ -107,9 +107,9 @@ namespace Hydra::Formula::Representation {
         using VertexWeightTypeEnum = HypergraphPartitioning::VertexWeightTypeEnum;
 
     public:
-        using isValidClauseT = std::bool_constant<(std::is_same<ClauseIdT, char8_t>::value ||
-                                                   std::is_same<ClauseIdT, char16_t>::value ||
-                                                   std::is_same<ClauseIdT, char32_t>::value)>;
+        using isValidClauseT = std::bool_constant<(std::is_same_v<ClauseIdT, char8_t> ||
+                                                   std::is_same_v<ClauseIdT, char16_t> ||
+                                                   std::is_same_v<ClauseIdT, char32_t>)>;
 
         static_assert(isValidClauseT::value, "Invalid ClauseIdT type!");
         static_assert(Formula::Literal<VarT, LiteralT>::isValidVarT::value, "Invalid VarT type!");

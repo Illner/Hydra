@@ -70,12 +70,12 @@ namespace Hydra::Formula {
         using MappingFromOriginalVariableToVariableType = Other::HashMap::MapType<OriginalVarType, VarT>;
 
     public:
-        using isValidVarT = std::bool_constant<(std::is_same<VarT, char8_t>::value ||
-                                                std::is_same<VarT, char16_t>::value ||
-                                                std::is_same<VarT, char32_t>::value)>;
-        using isValidLiteralT = std::bool_constant<(std::is_same<LiteralT, char8_t>::value ||
-                                                    std::is_same<LiteralT, char16_t>::value ||
-                                                    std::is_same<LiteralT, char32_t>::value)>;
+        using isValidVarT = std::bool_constant<(std::is_same_v<VarT, char8_t> ||
+                                                std::is_same_v<VarT, char16_t> ||
+                                                std::is_same_v<VarT, char32_t>)>;
+        using isValidLiteralT = std::bool_constant<(std::is_same_v<LiteralT, char8_t> ||
+                                                    std::is_same_v<LiteralT, char16_t> ||
+                                                    std::is_same_v<LiteralT, char32_t>)>;
 
         static_assert(isValidVarT::value, "Invalid VarT type!");
         static_assert(isValidLiteralT::value, "Invalid LiteralT type!");

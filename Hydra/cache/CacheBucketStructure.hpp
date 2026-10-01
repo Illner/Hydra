@@ -36,10 +36,10 @@ namespace Hydra::Cache {
         using CustomType = Hydra::Type::ArbitraryPrecisionInteger::CustomType;
 
     public:
-        using isValidCacheValueT = std::bool_constant<(std::is_same<CacheValueT, IdNodeType>::value ||           // component caching
-                                                       std::is_same<CacheValueT, CustomType>::value ||           // #SAT solver (custom)
-                                                       std::is_same<CacheValueT, MpzIntType>::value ||           // #SAT solver (mpz_int)
-                                                       std::is_same<CacheValueT, VariableVectorType>::value)>;   // hypergraph cut caching
+        using isValidCacheValueT = std::bool_constant<(std::is_same_v<CacheValueT, IdNodeType> ||           // component caching
+                                                       std::is_same_v<CacheValueT, CustomType> ||           // #SAT solver (custom)
+                                                       std::is_same_v<CacheValueT, MpzIntType> ||           // #SAT solver (mpz_int)
+                                                       std::is_same_v<CacheValueT, VariableVectorType>)>;   // hypergraph cut caching
 
         static_assert(isValidCacheValueT::value, "Invalid CacheValueT type!");
 
