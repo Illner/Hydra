@@ -83,7 +83,7 @@ namespace Hydra::Cache {
     class Cache {
         static_assert(Formula::Literal<VarT, LiteralT>::isValidVarT::value, "Invalid VarT type!");
         static_assert(Formula::Literal<VarT, LiteralT>::isValidLiteralT::value, "Invalid LiteralT type!");
-        static_assert(CacheBucketStruct<VarT, LiteralT, CacheValueT>::isValidCacheValueT::value, "Invalid CacheValueT type!");
+        static_assert(CacheBucketStruct<VarT, LiteralT, CacheValueT>::isValidCacheValueT, "Invalid CacheValueT type!");
         static_assert(Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::isValidClauseT::value, "Invalid ClauseIdT type!");
 
     private:
