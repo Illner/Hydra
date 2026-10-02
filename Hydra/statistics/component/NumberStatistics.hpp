@@ -22,10 +22,10 @@ namespace Hydra::Statistics {
     template <typename TypeT>
     class NumberStatistics {
     private:
-        using isValidTypeT = std::bool_constant<(std::is_same_v<TypeT, LargeNumberType> ||
-                                                 std::is_same_v<TypeT, LargeFloatingNumberType>)>;
+        inline static constexpr bool isValidTypeT = std::is_same_v<TypeT, LargeNumberType> ||
+                                                    std::is_same_v<TypeT, LargeFloatingNumberType>;
 
-        static_assert(isValidTypeT::value, "Invalid TypeT type!");
+        static_assert(isValidTypeT, "Invalid TypeT type!");
 
     public:
         explicit NumberStatistics(std::string&& name, bool canBeReset = false)
