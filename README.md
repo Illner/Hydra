@@ -89,7 +89,7 @@ The corresponding binaries are in the locations mentioned above.
   _work in progress_  
   `Hydra/external/satSolvers/Glucose`
 
-* [CaDiCaL 3.0.0](https://github.com/arminbiere/cadical)  
+* [CaDiCaL 3.0.1](https://github.com/arminbiere/cadical)  
   _work in progress_  
   `Hydra/external/satSolvers/CaDiCaL`
 
