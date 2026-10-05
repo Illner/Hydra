@@ -28,6 +28,7 @@ add_library(HydraLibrary STATIC
         "cache/Cache.cxx"
         "circuit/Circuit.cxx"
         "compiler/Compiler.cxx"
+        "parser/cnf/CnfParser.cxx"
         "satSolver/SatSolverAbstract.cxx"
         "preprocessor/cnf/CnfPreprocessorAbstract.cxx"
         "renHCRecognition/RenHCRecognitionAbstract.cxx"
