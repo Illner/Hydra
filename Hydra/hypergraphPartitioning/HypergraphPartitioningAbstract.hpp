@@ -9,6 +9,7 @@
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
 #include "Hydra/other/Other.hpp"
+#include "Hydra/other/TemplateType.hpp"
 #include "Hydra/other/container/computeConnectedComponents/ComputeConnectedComponents.hpp"
 #include "Hydra/other/container/reusableVector/ReusableVector.hpp"
 #include "Hydra/other/container/vectorMap/VectorMap.hpp"
@@ -40,9 +41,9 @@ namespace Hydra::HypergraphPartitioning {
      */
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     class HypergraphPartitioningAbstract {
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidVarT::value, "Invalid VarT type!");
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidLiteralT::value, "Invalid LiteralT type!");
-        static_assert(Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::isValidClauseT::value, "Invalid ClauseIdT type!");
+        static_assert(Other::isValidVarT<VarT>, "Invalid VarT type!");
+        static_assert(Other::isValidLiteralT<LiteralT>, "Invalid LiteralT type!");
+        static_assert(Other::isValidClauseIdT<ClauseIdT>, "Invalid ClauseIdT type!");
 
     private:
         using VectorSetType = typename Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VectorSetType;

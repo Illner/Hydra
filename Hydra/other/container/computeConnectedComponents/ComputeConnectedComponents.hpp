@@ -7,6 +7,7 @@
 
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/other/Other.hpp"
+#include "Hydra/other/TemplateType.hpp"
 #include "Hydra/other/container/computeConnectedComponents/ConnectedComponentStructure.hpp"
 #include "Hydra/other/container/vectorMap/VectorMap.hpp"
 
@@ -25,8 +26,8 @@ namespace Hydra::Container::ComputeConnectedComponents {
      */
     template <typename VarT, typename LiteralT>
     class ComputeConnectedComponents {
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidVarT::value, "Invalid VarT type!");
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidLiteralT::value, "Invalid LiteralT type!");
+        static_assert(Other::isValidVarT<VarT>, "Invalid VarT type!");
+        static_assert(Other::isValidLiteralT<LiteralT>, "Invalid LiteralT type!");
 
     private:
         using VariableSetType = typename Formula::Literal<VarT, LiteralT>::VariableSetType;

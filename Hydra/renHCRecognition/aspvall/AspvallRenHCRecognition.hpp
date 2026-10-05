@@ -7,8 +7,8 @@
 #include <vector>
 
 #include "Hydra/formula/Literal.hpp"
-#include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
 #include "Hydra/other/Other.hpp"
+#include "Hydra/other/TemplateType.hpp"
 #include "Hydra/other/container/contiguousOccurrenceList/ContiguousOccurrenceList.hpp"
 #include "Hydra/other/container/stackWithLevels/StackWithLevels.hpp"
 #include "Hydra/other/container/variableStateVector/VariableStateVector.hpp"
@@ -32,9 +32,9 @@ namespace Hydra::RenHCRecognition::Aspvall {
      */
     template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
     class AspvallRenHCRecognition final : public RenHCRecognitionAbstract<VarT, LiteralT, ClauseIdT> {
-        static_assert(Formula::Literal<VarAspT, LiteralAspT>::isValidVarT::value, "Invalid VarAspT type!");
-        static_assert(Formula::Literal<VarAspT, LiteralAspT>::isValidLiteralT::value, "Invalid LiteralAspT type!");
-        static_assert(Formula::Representation::FormulaRepresentationAbstract<VarAspT, LiteralAspT, ClauseIdAspT>::isValidClauseT::value, "Invalid ClauseIdAspT type!");
+        static_assert(Other::isValidVarT<VarAspT>, "Invalid VarAspT type!");
+        static_assert(Other::isValidLiteralT<LiteralAspT>, "Invalid LiteralAspT type!");
+        static_assert(Other::isValidClauseIdT<ClauseIdAspT>, "Invalid ClauseIdAspT type!");
 
     public:
         using LiteralAspType = typename Formula::Literal<VarAspT, LiteralAspT>::LiteralType;

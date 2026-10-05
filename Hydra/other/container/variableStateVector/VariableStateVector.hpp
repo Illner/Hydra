@@ -7,6 +7,7 @@
 
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/other/Other.hpp"
+#include "Hydra/other/TemplateType.hpp"
 
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
 #include "Hydra/other/container/exceptions/VariableStateVectorException.hpp"
@@ -26,8 +27,8 @@ namespace Hydra::Container::VariableStateVector {
      */
     template <typename VarT, typename LiteralT>
     class VariableStateVector {
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidVarT::value, "Invalid VarT type!");
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidLiteralT::value, "Invalid LiteralT type!");
+        static_assert(Other::isValidVarT<VarT>, "Invalid VarT type!");
+        static_assert(Other::isValidLiteralT<LiteralT>, "Invalid LiteralT type!");
 
     public:
         using LiteralType = typename Formula::Literal<VarT, LiteralT>::LiteralType;

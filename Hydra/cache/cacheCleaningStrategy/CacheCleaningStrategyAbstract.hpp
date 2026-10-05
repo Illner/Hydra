@@ -7,8 +7,7 @@
 #include "Hydra/cache/Cache.hpp"
 #include "Hydra/cache/CacheBucketStructure.hpp"
 #include "Hydra/cache/CacheRecordStructure.hpp"
-#include "Hydra/formula/Literal.hpp"
-#include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
+#include "Hydra/other/TemplateType.hpp"
 
 #include "Hydra/cache/cacheCleaningStrategy/enums/CacheCleaningStrategyTypeEnum.hpp"
 
@@ -28,10 +27,10 @@ namespace Hydra::Cache::CacheCleaningStrategy {
      */
     template <typename VarT, typename LiteralT, typename ClauseIdT, typename CacheValueT>
     class CacheCleaningStrategyAbstract {
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidVarT::value, "Invalid VarT type!");
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidLiteralT::value, "Invalid LiteralT type!");
+        static_assert(Other::isValidVarT<VarT>, "Invalid VarT type!");
+        static_assert(Other::isValidLiteralT<LiteralT>, "Invalid LiteralT type!");
+        static_assert(Other::isValidClauseIdT<ClauseIdT>, "Invalid ClauseIdT type!");
         static_assert(CacheBucketStruct<VarT, LiteralT, CacheValueT>::isValidCacheValueT, "Invalid CacheValueT type!");
-        static_assert(Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::isValidClauseT::value, "Invalid ClauseIdT type!");
 
     protected:
         using String8Type = typename Cache<VarT, LiteralT, ClauseIdT, CacheValueT>::String8Type;

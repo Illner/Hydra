@@ -11,6 +11,7 @@
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/formula/partialAssignment/PartialAssignment.hpp"
 #include "Hydra/other/Other.hpp"
+#include "Hydra/other/TemplateType.hpp"
 #include "Hydra/other/container/computeConnectedComponents/ComputeConnectedComponents.hpp"
 #include "Hydra/other/container/reusableVector/ReusableVector.hpp"
 #include "Hydra/other/container/vectorMap/VectorMap.hpp"
@@ -61,6 +62,10 @@ namespace Hydra::Formula::Representation {
      */
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     class FormulaRepresentationAbstract {
+        static_assert(Other::isValidVarT<VarT>, "Invalid VarT type!");
+        static_assert(Other::isValidLiteralT<LiteralT>, "Invalid LiteralT type!");
+        static_assert(Other::isValidClauseIdT<ClauseIdT>, "Invalid ClauseIdT type!");
+
     public:
         using LiteralType = typename Literal<VarT, LiteralT>::LiteralType;
         using LiteralSetType = typename Literal<VarT, LiteralT>::LiteralSetType;
@@ -105,15 +110,6 @@ namespace Hydra::Formula::Representation {
         using IgnorePureLiteralTypeEnum = Hydra::IgnorePureLiteralTypeEnum;
         using OmitClauseTypeEnum = Cache::CachingScheme::OmitClauseTypeEnum;
         using VertexWeightTypeEnum = HypergraphPartitioning::VertexWeightTypeEnum;
-
-    public:
-        using isValidClauseT = std::bool_constant<(std::is_same_v<ClauseIdT, char8_t> ||
-                                                   std::is_same_v<ClauseIdT, char16_t> ||
-                                                   std::is_same_v<ClauseIdT, char32_t>)>;
-
-        static_assert(isValidClauseT::value, "Invalid ClauseIdT type!");
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidVarT::value, "Invalid VarT type!");
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidLiteralT::value, "Invalid LiteralT type!");
 
     public:
         #ifndef NDEBUG

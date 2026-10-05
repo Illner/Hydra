@@ -4,8 +4,8 @@
 #include <iostream>
 #include <string>
 
-#include "Hydra/formula/Literal.hpp"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
+#include "Hydra/other/TemplateType.hpp"
 
 namespace Hydra::Parser::Cnf {
 
@@ -18,9 +18,9 @@ namespace Hydra::Parser::Cnf {
      */
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     struct ParsedFormulaStruct {
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidVarT::value, "Invalid VarT type!");
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidLiteralT::value, "Invalid LiteralT type!");
-        static_assert(Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::isValidClauseT::value, "Invalid ClauseIdT type!");
+        static_assert(Other::isValidVarT<VarT>, "Invalid VarT type!");
+        static_assert(Other::isValidLiteralT<LiteralT>, "Invalid LiteralT type!");
+        static_assert(Other::isValidClauseIdT<ClauseIdT>, "Invalid ClauseIdT type!");
 
     public:
         using LiteralType = Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;

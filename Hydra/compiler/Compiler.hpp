@@ -38,6 +38,7 @@
 #include "Hydra/hypergraphPartitioning/kahypar/KahyparHypergraphPartitioning.hpp"
 #include "Hydra/hypergraphPartitioning/patoh/PatohHypergraphPartitioning.hpp"
 #include "Hydra/other/Other.hpp"
+#include "Hydra/other/TemplateType.hpp"
 #include "Hydra/other/container/computeConnectedComponents/ConnectedComponentStructure.hpp"
 #include "Hydra/other/operatingSystem/OperatingSystem.hpp"
 #include "Hydra/satSolver/EquivalencePreprocessingStructure.hpp"
@@ -81,9 +82,9 @@ namespace Hydra {
      */
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     class Compiler {
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidVarT::value, "Invalid VarT type!");
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidLiteralT::value, "Invalid LiteralT type!");
-        static_assert(Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::isValidClauseT::value, "Invalid ClauseIdT type!");
+        static_assert(Other::isValidVarT<VarT>, "Invalid VarT type!");
+        static_assert(Other::isValidLiteralT<LiteralT>, "Invalid LiteralT type!");
+        static_assert(Other::isValidClauseIdT<ClauseIdT>, "Invalid ClauseIdT type!");
 
     public:
         using NumberOfModelsType = typename Circuit::Circuit<VarT, LiteralT>::NumberOfModelsType;
