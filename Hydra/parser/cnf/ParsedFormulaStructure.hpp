@@ -49,6 +49,22 @@ namespace Hydra::Parser::Cnf {
         ClauseIdVectorType literalNumberOfOccurrences;
 
     public:
+        /**
+         * Convert parsedFormulaStruct to different types
+         * Assert: the number of variables MUST be savable as NewVarT
+         * Assert: the number of literals MUST be savable as NewLiteralT
+         * Assert: the number of clauses MUST be savable as NewClauseIdT
+         * Assert: parsedFormulaStruct MUST have consistent data structures
+         * @tparam NewVarT type used for a new variable
+         * @tparam NewLiteralT type used for a new literal
+         * @tparam NewClauseIdT type used for a new clause identifier
+         * @param parsedFormulaStruct the parsed formula structure to convert
+         * @return the converted parsed formula structure
+         * @throw InconsistentDataStructureException (debug) if parsedFormulaStruct has inconsistent data structures
+         */
+        template <typename NewVarT, typename NewLiteralT, typename NewClauseIdT>
+        static ParsedFormulaStruct<NewVarT, NewLiteralT, NewClauseIdT> convertTypes(ParsedFormulaStruct parsedFormulaStruct);
+
         void printParsedFormulaStruct(std::ostream& out) const;
 
     #ifndef NDEBUG
