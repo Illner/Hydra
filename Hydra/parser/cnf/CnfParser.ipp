@@ -158,7 +158,7 @@ namespace Hydra::Parser::Cnf {
                         clauseContainsComplementaryLiterals = true;
                     }
 
-                    positiveLiteralVectorSet.emplace(parsedVariable);
+                    positiveLiteralVectorSet.emplace(parsedVariable, false);
                 }
 
                 // Negative literal
@@ -178,7 +178,7 @@ namespace Hydra::Parser::Cnf {
                         clauseContainsComplementaryLiterals = true;
                     }
 
-                    negativeLiteralVectorSet.emplace(parsedVariable);
+                    negativeLiteralVectorSet.emplace(parsedVariable, false);
                 }
 
                 ++clauseSize;
