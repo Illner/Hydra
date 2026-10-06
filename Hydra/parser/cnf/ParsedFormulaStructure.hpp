@@ -12,6 +12,11 @@ namespace Hydra::Parser::Cnf {
     /**
      * Parsed formula structure
      * Copy methods are disabled! Move methods (default) are allowed!
+     * Invariant: every clause MUST end with a zero literal
+     * Invariant: every clause MUST contain at least one literal
+     * Invariant: every variable can appear in a clause AT MOST ONCE
+     * Exception:
+     *      InconsistentDataStructureException (debug)
      * @tparam VarT type used for a variable
      * @tparam LiteralT type used for a literal
      * @tparam ClauseIdT type used for a clause identifier

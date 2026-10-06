@@ -6,6 +6,7 @@
 
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/other/Other.hpp"
+#include "Hydra/other/container/vectorSet/VectorSet.hpp"
 #include "Hydra/other/stdExt/InsertionOperator.hpp"
 
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
@@ -86,33 +87,106 @@ namespace Hydra::Parser::Cnf {
     #ifndef NDEBUG
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     bool ParsedFormulaStruct<VarT, LiteralT, ClauseIdT>::checkConsistencyOfDataStructuresDebug(bool throwException, const std::string& functionName) const {
+        using VectorSetType = Container::VectorSet::VectorSet;
+
         assert((LiteralT(2) + LiteralT(2) * static_cast<LiteralT>(numberOfVariables)) == static_cast<LiteralT>(literalNumberOfOccurrences.size()));
         assert(literalNumberOfOccurrences[0] == 0);
         assert(literalNumberOfOccurrences[1] == 0);
 
-        VarT maxVariableIndexTmp = 0;
+        bool clauseIsEmpty = true;
         ClauseIdT numberOfClausesTmp = 0;
         ClauseIdVectorType literalNumberOfOccurrencesTmp = literalNumberOfOccurrences;
+
+        // Data structures to detect complementary and duplicate literals in a clause
+        VectorSetType positiveLiteralVectorSet(numberOfVariables + 1);
+        VectorSetType negativeLiteralVectorSet(numberOfVariables + 1);
 
         for (const LiteralType& lit : formula) {
             // The end of the clause
             if (lit.isZeroLiteral()) {
                 ++numberOfClausesTmp;
+
+                // Empty clause
+                if (clauseIsEmpty) {
+                    if (throwException)
+                        throw Exception::InconsistentDataStructureException("formula - empty clause", functionName);
+
+                    return false;
+                }
+
+                // Clear data structures
+                clauseIsEmpty = true;
+                positiveLiteralVectorSet.clear();
+                negativeLiteralVectorSet.clear();
+
                 continue;
             }
 
-            if (maxVariableIndexTmp < lit.getVariable())
-                maxVariableIndexTmp = lit.getVariable();
+            VarT var = lit.getVariable();
+
+            clauseIsEmpty = false;
+            bool duplicateLiterals = false;
+            bool complementaryLiterals = false;
+
+            // The number of variables is inconsistent
+            if (numberOfVariables < var) {
+                if (throwException)
+                    throw Exception::InconsistentDataStructureException("numberOfVariables", functionName);
+
+                return false;
+            }
+
+            // Positive literal
+            if (lit.isPositive()) {
+                // Duplicate literal
+                if (positiveLiteralVectorSet.contains(var))
+                    duplicateLiterals = true;
+
+                // Complementary literal
+                if (negativeLiteralVectorSet.contains(var))
+                    complementaryLiterals = true;
+
+                positiveLiteralVectorSet.emplace(var, false);
+            }
+
+            // Negative literal
+            else {
+                // Duplicate literal
+                if (negativeLiteralVectorSet.contains(var))
+                    duplicateLiterals = true;
+
+                // Complementary literal
+                if (positiveLiteralVectorSet.contains(var))
+                    complementaryLiterals = true;
+
+                negativeLiteralVectorSet.emplace(var, false);
+            }
+
+            // Duplicate literals
+            if (duplicateLiterals) {
+                if (throwException)
+                    throw Exception::InconsistentDataStructureException("formula - duplicate literals in a clause", functionName);
+
+                return false;
+            }
+
+            // Complementary literals
+            if (complementaryLiterals) {
+                if (throwException)
+                    throw Exception::InconsistentDataStructureException("formula - complementary literals in a clause", functionName);
+
+                return false;
+            }
 
             assert(literalNumberOfOccurrencesTmp[lit.getLiteralT()] > 0);
 
             --literalNumberOfOccurrencesTmp[lit.getLiteralT()];
         }
 
-        // The number of variables is inconsistent
-        if (numberOfVariables < maxVariableIndexTmp) {
+        // The last clause does not end with a zero literal
+        if (!clauseIsEmpty) {
             if (throwException)
-                throw Exception::InconsistentDataStructureException("numberOfVariables", functionName);
+                throw Exception::InconsistentDataStructureException("formula - missing a zero literal at the end of the last clause", functionName);
 
             return false;
         }
