@@ -2,10 +2,9 @@
 
 #include <string>
 
+#include "Bella/commandLineArguments/CnfPreprocessorStructure.hpp"
 #include "Hydra/other/Other.hpp"
 #include "Hydra/other/seed/Seed.hpp"
-
-#include "Hydra/preprocessor/cnf/enums/CnfPreprocessorVariantTypeEnum.hpp"
 
 #include "Hydra/compiler/Compiler.tpp"
 #include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.tpp"
@@ -25,9 +24,6 @@ namespace Bella::CommandLineArguments {
         using ContiguousFormulaRepresentationConfigurationType = Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentationConfiguration;
 
     public:
-        using CnfPreprocessorVariantTypeEnum = Hydra::Preprocessor::Cnf::CnfPreprocessorVariantTypeEnum;
-
-    public:
         bool exit = false;   // help, version
 
         // Input
@@ -40,7 +36,7 @@ namespace Bella::CommandLineArguments {
         SeedType seed = Hydra::Other::Seed::NOT_DEFINED_SEED;
 
         // CNF preprocessor
-        CnfPreprocessorVariantTypeEnum cnfPreprocessorVariantType = CnfPreprocessorVariantTypeEnum::NONE;
+        CnfPreprocessorStruct cnfPreprocessorStruct;
 
         // Others
         bool numberOfModels;
