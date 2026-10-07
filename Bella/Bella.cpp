@@ -3,12 +3,14 @@
 #include <cassert>
 #include <fstream>
 #include <ios>
+#include <memory>
 #include <string>
 
 #include "Hydra/circuit/Circuit.hpp"
 #include "Hydra/compiler/Compiler.hpp"
 #include "Hydra/other/Other.hpp"
 #include "Hydra/other/memory/Memory.hpp"
+#include "Hydra/preprocessor/cnf/none/NoneCnfPreprocessor.hpp"
 
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
 
@@ -60,6 +62,18 @@ void printConfigurationBeforeCompilation(const CommandLineArgumentsStructT& comm
 
 template <typename CommandLineArgumentsStructT>
 void modifyConfigurationAfterParsingFormula([[maybe_unused]] CommandLineArgumentsStructT& commandLineArgumentsStruct) { }
+
+template <typename CnfPreprocessorStructT>
+CnfPreprocessorAbstractUniquePtrType initializeCnfPreprocessor(CnfPreprocessorStructT& cnfPreprocessorStruct,
+                                                               CnfPreprocessorStatisticsPtrType cnfPreprocessorStatisticsPtr) {
+    switch (cnfPreprocessorStruct.cnfPreprocessorVariantType) {
+        case CnfPreprocessorVariantTypeEnum::NONE:
+            return std::make_unique<Hydra::Preprocessor::Cnf::None::NoneCnfPreprocessor>(cnfPreprocessorStatisticsPtr);
+        default:
+            throw Hydra::Exception::NotImplementedException(Hydra::Preprocessor::Cnf::cnfPreprocessorVariantTypeEnumToString(cnfPreprocessorStruct.cnfPreprocessorVariantType),
+                                                            "Hydra::initializeCnfPreprocessor");
+    }
+}
 
 template <typename VarT, typename LiteralT, typename ClauseIdT, typename CommandLineArgumentsStructT>
 void core(Hydra::Compiler<VarT, LiteralT, ClauseIdT>& compiler, const CommandLineArgumentsStructT& commandLineArgumentsStruct) {

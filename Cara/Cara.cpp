@@ -4,9 +4,11 @@
 #include <cassert>
 #include <chrono>
 #include <limits>
+#include <memory>
 #include <string>
 
 #include "Hydra/compiler/Compiler.hpp"
+#include "Hydra/preprocessor/cnf/none/NoneCnfPreprocessor.hpp"
 
 #include "Cara/sharpSolver/exceptions/SharpSolverException.hpp"
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
@@ -55,6 +57,18 @@ void modifyConfigurationAfterParsingFormula(CommandLineArgumentsStructT& command
 
         std::cerr << "WARNING: the model counting type has been automatically set to \""
                   << Cara::modelCountingTypeEnumToString(commandLineArgumentsStruct.modelCountingType) << "\"." << std::endl;
+    }
+}
+
+template <typename CnfPreprocessorStructT>
+CnfPreprocessorAbstractUniquePtrType initializeCnfPreprocessor(CnfPreprocessorStructT& cnfPreprocessorStruct,
+                                                               CnfPreprocessorStatisticsPtrType cnfPreprocessorStatisticsPtr) {
+    switch (cnfPreprocessorStruct.cnfPreprocessorVariantType) {
+        case CnfPreprocessorVariantTypeEnum::NONE:
+            return std::make_unique<Hydra::Preprocessor::Cnf::None::NoneCnfPreprocessor>(cnfPreprocessorStatisticsPtr);
+        default:
+            throw Hydra::Exception::NotImplementedException(Hydra::Preprocessor::Cnf::cnfPreprocessorVariantTypeEnumToString(cnfPreprocessorStruct.cnfPreprocessorVariantType),
+                                                            "Hydra::initializeCnfPreprocessor");
     }
 }
 
