@@ -26,23 +26,23 @@ namespace Hydra::RenHCRecognition::Aspvall {
      * @tparam VarT type used for a variable
      * @tparam LiteralT type used for a literal
      * @tparam ClauseIdT type used for a clause identifier
-     * @tparam VarAspT type used for an Aspvall variable
-     * @tparam LiteralAspT type used for an Aspvall literal
-     * @tparam ClauseIdAspT type used for an Aspvall clause identifier
+     * @tparam AspVarT type used for an Aspvall variable
+     * @tparam AspLiteralT type used for an Aspvall literal
+     * @tparam AspClauseIdT type used for an Aspvall clause identifier
      */
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
     class AspvallRenHCRecognition final : public RenHCRecognitionAbstract<VarT, LiteralT, ClauseIdT> {
-        static_assert(Other::isValidVarT<VarAspT>, "Invalid VarAspT type!");
-        static_assert(Other::isValidLiteralT<LiteralAspT>, "Invalid LiteralAspT type!");
-        static_assert(Other::isValidClauseIdT<ClauseIdAspT>, "Invalid ClauseIdAspT type!");
+        static_assert(Other::isValidVarT<AspVarT>, "Invalid AspVarT type!");
+        static_assert(Other::isValidLiteralT<AspLiteralT>, "Invalid AspLiteralT type!");
+        static_assert(Other::isValidClauseIdT<AspClauseIdT>, "Invalid AspClauseIdT type!");
 
     public:
-        using LiteralAspType = typename Formula::Literal<VarAspT, LiteralAspT>::LiteralType;
-        using ClauseIdVectorType = typename AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::ClauseIdVectorType;
-        using ClauseIdVectorAspType = typename AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::ClauseIdVectorAspType;
+        using LiteralAspType = typename Formula::Literal<AspVarT, AspLiteralT>::LiteralType;
+        using ClauseIdVectorType = typename AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::ClauseIdVectorType;
+        using ClauseIdVectorAspType = typename AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::ClauseIdVectorAspType;
 
     private:
-        using LiteralVectorAspType = typename Formula::Literal<VarAspT, LiteralAspT>::LiteralVectorType;
+        using LiteralVectorAspType = typename Formula::Literal<AspVarT, AspLiteralT>::LiteralVectorType;
         using LiteralType = typename RenHCRecognition::RenHCRecognitionAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
         using VariableSetType = typename RenHCRecognition::RenHCRecognitionAbstract<VarT, LiteralT, ClauseIdT>::VariableSetType;
         using VariableSetOptionalType = typename RenHCRecognition::RenHCRecognitionAbstract<VarT, LiteralT, ClauseIdT>::VariableSetOptionalType;
@@ -54,15 +54,15 @@ namespace Hydra::RenHCRecognition::Aspvall {
 
     private:
         using BoolVectorType = std::vector<bool>;
-        using OccurrencePairAspType = std::pair<LiteralAspT, ClauseIdAspT>;
-        using VariableStackWithLevelsAspType = Container::StackWithLevels::StackWithLevels<VarAspT, VarAspT>;
-        using VariableStateVectorAspType = Container::VariableStateVector::VariableStateVector<VarAspT, LiteralAspT>;
-        using ClauseIdStackWithLevelsAspType = Container::StackWithLevels::StackWithLevels<ClauseIdAspT, ClauseIdAspT>;
+        using OccurrencePairAspType = std::pair<AspLiteralT, AspClauseIdT>;
+        using VariableStackWithLevelsAspType = Container::StackWithLevels::StackWithLevels<AspVarT, AspVarT>;
+        using VariableStateVectorAspType = Container::VariableStateVector::VariableStateVector<AspVarT, AspLiteralT>;
+        using ClauseIdStackWithLevelsAspType = Container::StackWithLevels::StackWithLevels<AspClauseIdT, AspClauseIdT>;
         using OccurrencePairStackWithLevelsAspType = Container::StackWithLevels::StackWithLevels<OccurrencePairAspType, FormulaSizeType>;
-        using ContiguousOccurrenceListAspType = Container::ContiguousOccurrenceList::ContiguousOccurrenceList<VarAspT, LiteralAspT, ClauseIdAspT>;
+        using ContiguousOccurrenceListAspType = Container::ContiguousOccurrenceList::ContiguousOccurrenceList<AspVarT, AspLiteralT, AspClauseIdT>;
 
     public:
-        using AspvallRenHCRecognitionAspStruct = AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>;
+        using AspvallRenHCRecognitionAspStruct = AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>;
 
     private:
         using ConnectedComponentStruct = typename RenHCRecognition::RenHCRecognitionAbstract<VarT, LiteralT, ClauseIdT>::ConnectedComponentStruct;
@@ -79,7 +79,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
             : RenHCRecognitionAbstract<VarT, LiteralT, ClauseIdT>(RenHCRecognitionTypeEnum::ASPVALL, formulaRepresentationAbstractPtr,
                                                                   ignorePureLiteralType, initialFormula, renHCRecognitionStatisticsPtr),
               formula_(std::move(formula)),
-              numberOfOriginalVariables_(static_cast<VarAspT>(formulaRepresentationAbstractPtr->getNumberOfVariablesInOriginalFormula())),
+              numberOfOriginalVariables_(static_cast<AspVarT>(formulaRepresentationAbstractPtr->getNumberOfVariablesInOriginalFormula())),
               contiguousOccurrenceList_(aspvallRenHCRecognitionStruct.numberOfClauses, literalNumberOfOccurrences),
               aspvallRenHCRecognitionStruct_(std::move(aspvallRenHCRecognitionStruct)),
               l_processedOriginalClauseVector_(initialFormula ? formulaRepresentationAbstractPtr->getNumberOfOriginalClauses() : 0, false),
@@ -90,7 +90,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
               l_satisfiedClauseStackWithLevels_(initialFormula ? aspvallRenHCRecognitionStruct_.numberOfClauses : 0, initialFormula ? aspvallRenHCRecognitionStruct_.numberOfVariables : 0),
               l_assignedVariableStackWithLevels_(initialFormula ? aspvallRenHCRecognitionStruct_.numberOfVariables : 0, initialFormula ? aspvallRenHCRecognitionStruct_.numberOfVariables : 0),
               d_variableStateVector_(aspvallRenHCRecognitionStruct_.numberOfVariables) {
-            assert(static_cast<ClauseIdAspT>(aspvallRenHCRecognitionStruct_.mappingFromAspvallClauseIdToOriginalClauseIdVector.size()) == aspvallRenHCRecognitionStruct_.numberOfClauses);
+            assert(static_cast<AspClauseIdT>(aspvallRenHCRecognitionStruct_.mappingFromAspvallClauseIdToOriginalClauseIdVector.size()) == aspvallRenHCRecognitionStruct_.numberOfClauses);
             assert(static_cast<ClauseIdT>(aspvallRenHCRecognitionStruct_.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector.size()) == (ClauseIdT)1 + formulaRepresentationAbstractPtr->getNumberOfOriginalClauses());
 
             // Only for the initial formula
@@ -112,7 +112,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
             : RenHCRecognitionAbstract<VarT, LiteralT, ClauseIdT>(RenHCRecognitionTypeEnum::ASPVALL, formulaRepresentationAbstractPtr,
                                                                   renHCRecognitionStatisticsPtr),
               formula_(std::move(formula)),
-              numberOfOriginalVariables_(static_cast<VarAspT>(formulaRepresentationAbstractPtr->getNumberOfVariablesInOriginalFormula())),
+              numberOfOriginalVariables_(static_cast<AspVarT>(formulaRepresentationAbstractPtr->getNumberOfVariablesInOriginalFormula())),
               contiguousOccurrenceList_(aspvallRenHCRecognitionStruct.numberOfClauses, literalNumberOfOccurrences),
               aspvallRenHCRecognitionStruct_(std::move(aspvallRenHCRecognitionStruct)),
               l_processedOriginalClauseVector_(formulaRepresentationAbstractPtr->getNumberOfOriginalClauses(), false),
@@ -134,7 +134,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
 
     private:
         FormulaAspType formula_;
-        VarAspT numberOfOriginalVariables_;
+        AspVarT numberOfOriginalVariables_;
         ContiguousOccurrenceListAspType contiguousOccurrenceList_;
         AspvallRenHCRecognitionAspStruct aspvallRenHCRecognitionStruct_;
 
@@ -192,7 +192,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
          * @param assert check if the returned index is valid
          * @return the first/second index of the clause in the formula
          */
-        FormulaSizeType getIndexOfClauseInFormula(ClauseIdAspT aspvallClauseId, bool firstIndex, bool assert = true) const;
+        FormulaSizeType getIndexOfClauseInFormula(AspClauseIdT aspvallClauseId, bool firstIndex, bool assert = true) const;
 
     #ifndef NDEBUG
     private:

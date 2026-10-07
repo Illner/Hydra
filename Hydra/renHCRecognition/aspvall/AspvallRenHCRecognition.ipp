@@ -4,9 +4,9 @@
 
 namespace Hydra::RenHCRecognition::Aspvall {
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
-    void AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::processInitialize() {
-        ClauseIdAspT aspvallClauseId = 0;
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
+    void AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::processInitialize() {
+        AspClauseIdT aspvallClauseId = 0;
         FormulaSizeType formulaPosition = 0;
 
         for (const LiteralAspType& lit : formula_) {
@@ -18,8 +18,8 @@ namespace Hydra::RenHCRecognition::Aspvall {
         }
     }
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
-    void AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::processSetAssignedLiteral(const LiteralType& lit,
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
+    void AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::processSetAssignedLiteral(const LiteralType& lit,
                                                                                                                            const VariableSetType& currentComponentVariableSet,
                                                                                                                            [[maybe_unused]] bool firstAssignment,
                                                                                                                            bool lastAssignment) {
@@ -35,13 +35,13 @@ namespace Hydra::RenHCRecognition::Aspvall {
         // Set the new current level
         l_removedOccurrenceStackWithLevels_.addNewLevel();
 
-        LiteralAspT literalAspT = static_cast<LiteralAspT>(lit.getLiteralT());
+        AspLiteralT aspLiteralT = static_cast<AspLiteralT>(lit.getLiteralT());
 
         // lit
-        for (auto it = contiguousOccurrenceList_.begin(literalAspT); it != contiguousOccurrenceList_.end(literalAspT); ++it) {
-            ClauseIdAspT aspvallClauseId = *it;
+        for (auto it = contiguousOccurrenceList_.begin(aspLiteralT); it != contiguousOccurrenceList_.end(aspLiteralT); ++it) {
+            AspClauseIdT aspvallClauseId = *it;
 
-            assert(formula_[getIndexOfClauseInFormula(aspvallClauseId, true)].getLiteralT() == literalAspT);
+            assert(formula_[getIndexOfClauseInFormula(aspvallClauseId, true)].getLiteralT() == aspLiteralT);
             assert(aspvallClauseId < aspvallRenHCRecognitionStruct_.mappingFromAspvallClauseIdToOriginalClauseIdVector.size());
 
             ClauseIdT originalClauseId = aspvallRenHCRecognitionStruct_.mappingFromAspvallClauseIdToOriginalClauseIdVector[aspvallClauseId];
@@ -57,13 +57,13 @@ namespace Hydra::RenHCRecognition::Aspvall {
             l_processedOriginalClauseVector_[originalClauseId] = true;
             l_processedOriginalClauseStack_.emplace_back(originalClauseId);
 
-            ClauseIdAspT aspvallClauseIdTmp = aspvallRenHCRecognitionStruct_.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector[originalClauseId];
+            AspClauseIdT aspvallClauseIdTmp = aspvallRenHCRecognitionStruct_.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector[originalClauseId];
             FormulaSizeType beginIndex = getIndexOfClauseInFormula(aspvallClauseIdTmp, true, true);
             FormulaSizeType endIndex = getIndexOfClauseInFormula(aspvallRenHCRecognitionStruct_.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector[originalClauseId + 1], true, false);
 
             for (FormulaSizeType i = beginIndex; i < endIndex; i += 2, ++aspvallClauseIdTmp) {
                 const LiteralAspType& litAsp = formula_[i];
-                VarAspT varAsp = litAsp.getVariable();
+                AspVarT varAsp = litAsp.getVariable();
 
                 // Auxiliary clause (-y_p v y_n)
                 if (varAsp > numberOfOriginalVariables_) {
@@ -81,13 +81,13 @@ namespace Hydra::RenHCRecognition::Aspvall {
             }
         }
 
-        LiteralAspT complementaryLiteralAspT = static_cast<LiteralAspT>(lit.getComplementaryLiteralT());
+        AspLiteralT complementaryAspLiteralT = static_cast<AspLiteralT>(lit.getComplementaryLiteralT());
 
         // ~lit
-        for (auto it = contiguousOccurrenceList_.begin(complementaryLiteralAspT); it != contiguousOccurrenceList_.end(complementaryLiteralAspT); ++it) {
-            ClauseIdAspT aspvallClauseId = *it;
+        for (auto it = contiguousOccurrenceList_.begin(complementaryAspLiteralT); it != contiguousOccurrenceList_.end(complementaryAspLiteralT); ++it) {
+            AspClauseIdT aspvallClauseId = *it;
 
-            assert(formula_[getIndexOfClauseInFormula(aspvallClauseId, true)].getLiteralT() == complementaryLiteralAspT);
+            assert(formula_[getIndexOfClauseInFormula(aspvallClauseId, true)].getLiteralT() == complementaryAspLiteralT);
 
             const LiteralAspType& auxLitAsp = formula_[getIndexOfClauseInFormula(aspvallClauseId, false)];
 
@@ -108,20 +108,20 @@ namespace Hydra::RenHCRecognition::Aspvall {
         }
     }
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
-    void AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::processSetUnassignedLiteral(const LiteralType& lit) {
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
+    void AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::processSetUnassignedLiteral(const LiteralType& lit) {
         // lit (using l_removedOccurrenceStackWithLevels_)
         assert(l_removedOccurrenceStackWithLevels_.levelExists());
 
         l_removedOccurrenceStackWithLevels_.removeCurrentLevel([this](const OccurrencePairAspType& occurrencePairAsp) -> void { this->contiguousOccurrenceList_.addOccurrence(occurrencePairAsp.first, occurrencePairAsp.second); });
 
-        LiteralAspT complementaryLiteralAspT = static_cast<LiteralAspT>(lit.getComplementaryLiteralT());
+        AspLiteralT complementaryAspLiteralT = static_cast<AspLiteralT>(lit.getComplementaryLiteralT());
 
         // ~lit
-        for (auto it = contiguousOccurrenceList_.begin(complementaryLiteralAspT); it != contiguousOccurrenceList_.end(complementaryLiteralAspT); ++it) {
-            ClauseIdAspT aspvallClauseId = *it;
+        for (auto it = contiguousOccurrenceList_.begin(complementaryAspLiteralT); it != contiguousOccurrenceList_.end(complementaryAspLiteralT); ++it) {
+            AspClauseIdT aspvallClauseId = *it;
 
-            assert(formula_[getIndexOfClauseInFormula(aspvallClauseId, true)].getLiteralT() == complementaryLiteralAspT);
+            assert(formula_[getIndexOfClauseInFormula(aspvallClauseId, true)].getLiteralT() == complementaryAspLiteralT);
 
             const LiteralAspType& auxLitAsp = formula_[getIndexOfClauseInFormula(aspvallClauseId, false)];
 
@@ -131,33 +131,33 @@ namespace Hydra::RenHCRecognition::Aspvall {
         }
     }
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
-    void AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::processSetInactiveClause(ClauseIdT clauseId) {
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
+    void AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::processSetInactiveClause(ClauseIdT clauseId) {
         assert(clauseId < (aspvallRenHCRecognitionStruct_.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector.size() - 1));
 
-        ClauseIdAspT beginAspvallClauseId = aspvallRenHCRecognitionStruct_.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector[clauseId];
-        ClauseIdAspT endAspvallClauseId = aspvallRenHCRecognitionStruct_.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector[clauseId + 1];
+        AspClauseIdT beginAspvallClauseId = aspvallRenHCRecognitionStruct_.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector[clauseId];
+        AspClauseIdT endAspvallClauseId = aspvallRenHCRecognitionStruct_.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector[clauseId + 1];
 
         for (auto clauseIt = this->formulaRepresentationAbstractPtr_->beginClause(clauseId);
              clauseIt != this->formulaRepresentationAbstractPtr_->endClause(); ++clauseIt) {
-            [[maybe_unused]] bool removedAtLeastOneOccurrence = contiguousOccurrenceList_.removeOccurrence(static_cast<LiteralAspT>(clauseIt->getLiteralT()),
+            [[maybe_unused]] bool removedAtLeastOneOccurrence = contiguousOccurrenceList_.removeOccurrence(static_cast<AspLiteralT>(clauseIt->getLiteralT()),
                                                                                                            beginAspvallClauseId, endAspvallClauseId, true);
             assert(removedAtLeastOneOccurrence);
         }
     }
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
-    void AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::processSetActiveClause(ClauseIdT clauseId,
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
+    void AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::processSetActiveClause(ClauseIdT clauseId,
                                                                                                                         const VariableSetType& currentComponentVariableSet) {
         assert(clauseId < (aspvallRenHCRecognitionStruct_.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector.size() - 1));
 
-        ClauseIdAspT aspvallClauseId = aspvallRenHCRecognitionStruct_.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector[clauseId];
+        AspClauseIdT aspvallClauseId = aspvallRenHCRecognitionStruct_.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector[clauseId];
         FormulaSizeType beginIndex = getIndexOfClauseInFormula(aspvallClauseId, true, true);
         FormulaSizeType endIndex = getIndexOfClauseInFormula(aspvallRenHCRecognitionStruct_.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector[clauseId + 1], true, false);
 
         for (FormulaSizeType i = beginIndex; i < endIndex; i += 2, ++aspvallClauseId) {
             const LiteralAspType& lit = formula_[i];
-            VarAspT var = lit.getVariable();
+            AspVarT var = lit.getVariable();
 
             // Auxiliary clause (-y_p v y_n)
             if (var > numberOfOriginalVariables_) {
@@ -174,9 +174,9 @@ namespace Hydra::RenHCRecognition::Aspvall {
         }
     }
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
-    typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::VariableSetOptionalType
-    AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::processIsRenHC(const ConnectedComponentStruct& connectedComponentStruct) {
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
+    typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::VariableSetOptionalType
+    AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::processIsRenHC(const ConnectedComponentStruct& connectedComponentStruct) {
         #ifndef NDEBUG
         // The local auxiliary data structures are empty
         for (bool b : l_satisfiedClauseVector_)
@@ -202,7 +202,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
 
                 // Satisfy the clauses containing the pure literal
                 for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != contiguousOccurrenceList_.end(lit.getLiteralT()); ++it) {
-                    ClauseIdAspT aspvallClauseId = *it;
+                    AspClauseIdT aspvallClauseId = *it;
 
                     assert(aspvallClauseId < l_satisfiedClauseVector_.size());
                     assert(!l_satisfiedClauseVector_[aspvallClauseId]);   // not satisfied
@@ -265,8 +265,8 @@ namespace Hydra::RenHCRecognition::Aspvall {
         return switchedVariableSet;
     }
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
-    bool AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::assignLiteralAndDoUnitPropagation(const LiteralAspType& lit,
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
+    bool AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::assignLiteralAndDoUnitPropagation(const LiteralAspType& lit,
                                                                                                                                    bool firstCall) {
         // First call
         if (firstCall) {
@@ -291,7 +291,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
 
         // lit
         for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != contiguousOccurrenceList_.end(lit.getLiteralT()); ++it) {
-            ClauseIdAspT aspvallClauseId = *it;
+            AspClauseIdT aspvallClauseId = *it;
 
             assert(aspvallClauseId < l_satisfiedClauseVector_.size());
 
@@ -305,7 +305,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
 
         // ~lit
         for (auto it = contiguousOccurrenceList_.begin(lit.getComplementaryLiteralT()); it != contiguousOccurrenceList_.end(lit.getComplementaryLiteralT()); ++it) {
-            ClauseIdAspT aspvallClauseId = *it;
+            AspClauseIdT aspvallClauseId = *it;
 
             assert(aspvallClauseId < l_satisfiedClauseVector_.size());
 
@@ -358,9 +358,9 @@ namespace Hydra::RenHCRecognition::Aspvall {
         return true;
     }
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
-    void AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::removeCurrentLevelSatisfiedClauseStackWithLevels() {
-        l_satisfiedClauseStackWithLevels_.removeCurrentLevel([this](ClauseIdAspT aspvallClauseId) -> void {
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
+    void AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::removeCurrentLevelSatisfiedClauseStackWithLevels() {
+        l_satisfiedClauseStackWithLevels_.removeCurrentLevel([this](AspClauseIdT aspvallClauseId) -> void {
             assert(aspvallClauseId < this->l_satisfiedClauseVector_.size());
             assert(this->l_satisfiedClauseVector_[aspvallClauseId]);   // is satisfied
 
@@ -368,13 +368,13 @@ namespace Hydra::RenHCRecognition::Aspvall {
         });
     }
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
-    void AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::removeCurrentLevelAssignedVariableStackWithLevels() {
-        l_assignedVariableStackWithLevels_.removeCurrentLevel([this](VarAspT var) -> void { this->l_variableStateVector_.unassignVariable(var); });
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
+    void AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::removeCurrentLevelAssignedVariableStackWithLevels() {
+        l_assignedVariableStackWithLevels_.removeCurrentLevel([this](AspVarT var) -> void { this->l_variableStateVector_.unassignVariable(var); });
     }
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
-    FormulaSizeType AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::getIndexOfClauseInFormula(ClauseIdAspT aspvallClauseId,
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
+    FormulaSizeType AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::getIndexOfClauseInFormula(AspClauseIdT aspvallClauseId,
                                                                                                                                       bool firstIndex,
                                                                                                                                       [[maybe_unused]] bool assert) const {
         assert(!assert || aspvallClauseId < aspvallRenHCRecognitionStruct_.numberOfClauses);
@@ -393,8 +393,8 @@ namespace Hydra::RenHCRecognition::Aspvall {
     }
 
     #ifndef NDEBUG
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
-    void AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::processPrintRenHCRecognitionDebug(std::ostream& out) const {
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
+    void AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::processPrintRenHCRecognitionDebug(std::ostream& out) const {
         out << "Formula:";
         FormulaSizeType formulaPosition = 0;
         for (const LiteralAspType& lit : formula_) {
@@ -412,7 +412,7 @@ namespace Hydra::RenHCRecognition::Aspvall {
         out << "Number of Aspvall clauses: " << std::to_string(aspvallRenHCRecognitionStruct_.numberOfClauses) << std::endl;
         out << "Aspvall formula size: " << std::to_string(aspvallRenHCRecognitionStruct_.formulaSize) << std::endl;
         out << "Mapping from original clause to first Aspvall clause:";
-        for (ClauseIdAspT aspvallClauseId : aspvallRenHCRecognitionStruct_.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector)
+        for (AspClauseIdT aspvallClauseId : aspvallRenHCRecognitionStruct_.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector)
             out << " " << std::to_string(aspvallClauseId);
         out << std::endl;
         out << "Mapping from Aspvall clause to original clause:";
@@ -424,15 +424,15 @@ namespace Hydra::RenHCRecognition::Aspvall {
         if (this->d_initialFormula_) {
             // Removed occurrences
             out << "Removed occurrences: ";
-            l_removedOccurrenceStackWithLevels_.printStackWithLevelsDebug(out, [](const OccurrencePairAspType& removedOccurrence) -> std::string { return "(" + Formula::createLiteralFromLiteralT<VarAspT>(removedOccurrence.first).toString() + ", " + std::to_string(removedOccurrence.second) + ")"; });
+            l_removedOccurrenceStackWithLevels_.printStackWithLevelsDebug(out, [](const OccurrencePairAspType& removedOccurrence) -> std::string { return "(" + Formula::createLiteralFromLiteralT<AspVarT>(removedOccurrence.first).toString() + ", " + std::to_string(removedOccurrence.second) + ")"; });
 
             // Occurrence list
             contiguousOccurrenceList_.printContiguousOccurrenceListDebug(out);
         }
     }
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
-    bool AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::processVerifyRenHCDebug(const VariableSetType& switchedVariableSet) const {
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
+    bool AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::processVerifyRenHCDebug(const VariableSetType& switchedVariableSet) const {
         d_variableStateVector_.clear();   // clear the structure
 
         // Assign the original variables
