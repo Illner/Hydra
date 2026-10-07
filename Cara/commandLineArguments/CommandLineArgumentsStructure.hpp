@@ -2,11 +2,11 @@
 
 #include <string>
 
+#include "Cara/commandLineArguments/CnfPreprocessorStructure.hpp"
 #include "Hydra/other/seed/Seed.hpp"
 #include "Hydra/other/type/arbitraryPrecisionInteger/ArbitraryPrecisionInteger.hpp"
 
 #include "Cara/sharpSolver/enums/ModelCountingTypeEnum.hpp"
-#include "Hydra/preprocessor/cnf/enums/CnfPreprocessorVariantTypeEnum.hpp"
 
 #include "Hydra/compiler/Compiler.tpp"
 #include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.tpp"
@@ -27,7 +27,6 @@ namespace Cara::CommandLineArguments {
 
     public:
         using ModelCountingTypeEnum = Cara::ModelCountingTypeEnum;
-        using CnfPreprocessorVariantTypeEnum = Hydra::Preprocessor::Cnf::CnfPreprocessorVariantTypeEnum;
 
     public:
         bool exit = false;   // help, version
@@ -39,7 +38,7 @@ namespace Cara::CommandLineArguments {
         SeedType seed = Hydra::Other::Seed::NOT_DEFINED_SEED;
 
         // CNF preprocessor
-        CnfPreprocessorVariantTypeEnum cnfPreprocessorVariantType = CnfPreprocessorVariantTypeEnum::NONE;
+        CnfPreprocessorStruct cnfPreprocessorStruct;
 
         // Others
         std::size_t numberOfVariables;   // used to compute the number of models when the formula is empty
