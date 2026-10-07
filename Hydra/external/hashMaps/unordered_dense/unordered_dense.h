@@ -1,7 +1,7 @@
 ///////////////////////// ankerl::unordered_dense::{map, set} /////////////////////////
 
 // A fast & densely stored hashmap and hashset.
-// Version 5.2.0
+// Version 5.3.1
 // https://github.com/martinus/unordered_dense
 //
 // Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -31,8 +31,8 @@
 
 // see https://semver.org/spec/v2.0.0.html
 #define ANKERL_UNORDERED_DENSE_VERSION_MAJOR 5 // NOLINT(cppcoreguidelines-macro-usage) incompatible API changes
-#define ANKERL_UNORDERED_DENSE_VERSION_MINOR 2 // NOLINT(cppcoreguidelines-macro-usage) backwards compatible functionality
-#define ANKERL_UNORDERED_DENSE_VERSION_PATCH 0 // NOLINT(cppcoreguidelines-macro-usage) backwards compatible bug fixes
+#define ANKERL_UNORDERED_DENSE_VERSION_MINOR 3 // NOLINT(cppcoreguidelines-macro-usage) backwards compatible functionality
+#define ANKERL_UNORDERED_DENSE_VERSION_PATCH 1 // NOLINT(cppcoreguidelines-macro-usage) backwards compatible bug fixes
 
 // API versioning with inline namespace, see https://www.foonathan.net/2018/11/inline-namespaces/
 
@@ -72,16 +72,6 @@
 #    define ANKERL_UNORDERED_DENSE_NOINLINE __attribute__((noinline))
 #    define ANKERL_UNORDERED_DENSE_FORCEINLINE inline __attribute__((always_inline))
 #    define ANKERL_UNORDERED_DENSE_FLATTEN __attribute__((flatten))
-#endif
-
-// The insert's walk past the home group (#321), which only a key whose fingerprint class has
-// overflowed home takes. Each compiler gets the shape the other one loses with: inlined, clang
-// retires 8% more instructions building a map of large values; called, gcc takes 11% more cycles
-// per insert of a fresh key, whether or not the insert walks.
-#if defined(__clang__)
-#    define ANKERL_UNORDERED_DENSE_FIND_OR_PLACE_FAR ANKERL_UNORDERED_DENSE_NOINLINE
-#else
-#    define ANKERL_UNORDERED_DENSE_FIND_OR_PLACE_FAR ANKERL_UNORDERED_DENSE_FORCEINLINE
 #endif
 
 // Data prefetch hint, a no-op where there is nothing to spell it with. MSVC has no
@@ -203,7 +193,12 @@ namespace detail {
     throw std::out_of_range("ankerl::unordered_dense::map::replace(): too many elements");
 }
 [[noreturn]] inline ANKERL_UNORDERED_DENSE_NOINLINE void on_error_key_changed() {
-    throw std::logic_error("ankerl::unordered_dense: an element's key changed after it was inserted; use replace_key()");
+    throw std::logic_error("ankerl::unordered_dense: an element's key changed after it was inserted (use replace_key()), or "
+                           "the index was loaded from bytes that do not match the values (check with verify())");
+}
+[[noreturn]] inline ANKERL_UNORDERED_DENSE_NOINLINE void on_error_bad_index() {
+    throw std::invalid_argument("ankerl::unordered_dense: the index does not fit the values: a block count that is not 0 or a "
+                                "power of two in range, a misaligned array, or a slot pointing past the values");
 }
 
 #    else
@@ -218,6 +213,9 @@ namespace detail {
     abort();
 }
 [[noreturn]] inline void on_error_key_changed() {
+    abort();
+}
+[[noreturn]] inline void on_error_bad_index() {
     abort();
 }
 
@@ -311,6 +309,21 @@ inline void mum(std::uint64_t* a, std::uint64_t* b) {
     return v;
 }
 
+// A 4 byte read the compiler may not fuse with its neighbour into one 8 byte read: the empty asm
+// makes the value opaque, and clang otherwise turns `r4(p) | r4(p + 4) << 32` back into r8(p).
+// For a key the caller has just written field by field (#311): a load that spans two of the
+// caller's stores cannot be forwarded from them and waits until both are written to the cache,
+// and since stores are written in order, that serializes the lookups' cache misses. A 4 byte read
+// falls inside one store whether the caller's compiler wrote the fields as 4 + 4 + 4 (gcc) or as
+// 8 + 4 (clang), and is forwarded either way.
+[[nodiscard]] inline auto r4_unfused(const std::uint8_t* p) -> std::uint64_t {
+    auto v = r4(p);
+#    if defined(__GNUC__) || defined(__clang__)
+    __asm__("" : "+r"(v)); // NOLINT(hicpp-no-assembler): emits nothing; it only hides v from the load combiner
+#    endif
+    return v;
+}
+
 // reads 1, 2, or 3 bytes
 [[nodiscard]] inline auto r3(const std::uint8_t* p, std::size_t k) -> std::uint64_t {
     return (static_cast<std::uint64_t>(p[0]) << 16U) | (static_cast<std::uint64_t>(p[k >> 1U]) << 8U) | p[k - 1];
@@ -357,9 +370,24 @@ inline void mum(std::uint64_t* a, std::uint64_t* b) {
         ANKERL_UNORDERED_DENSE_LIKELY_ATTR {
             if (ANKERL_UNORDERED_DENSE_LIKELY(len >= 8))
                 ANKERL_UNORDERED_DENSE_LIKELY_ATTR {
-                    // two (potentially overlapping) 8 byte reads cover the whole input
-                    a = r8(p);
-                    b = r8(p + len - 8);
+#    if (defined(__GNUC__) || defined(__clang__)) && defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+                    // A length known at compile time is a struct's, which may have just been written
+                    // field by field; read it as 4 byte words and put together the same two words
+                    // (#311). A lookup right after writing a 12 byte key: 146 -> 40 cycles under clang
+                    // and gcc. A key already in memory pays 1.4 cycles for the extra reads. A length
+                    // only known at run time is a string's and keeps the two 8 byte reads. Both paths
+                    // give the same value -- which one runs depends on inlining, so they must -- and on
+                    // little-endian only is `r4 | r4 << 32` the same as r8.
+                    if (__builtin_constant_p(len) != 0 && len % 4 == 0) {
+                        a = r4_unfused(p) | (r4_unfused(p + 4) << 32U);
+                        b = r4_unfused(p + len - 8) | (r4_unfused(p + len - 4) << 32U);
+                    } else
+#    endif
+                    {
+                        // two (potentially overlapping) 8 byte reads cover the whole input
+                        a = r8(p);
+                        b = r8(p + len - 8);
+                    }
                 }
             else if (len >= 4) {
                 a = r4(p);
@@ -538,6 +566,46 @@ template <typename Hash>
 
 } // namespace detail
 
+namespace detail {
+
+// What an index written to bytes depends on, for `index_format_id` (#299). A loaded index is only
+// valid for the hash that placed its keys, so the id covers the hash as far as the header can see it.
+//
+// hash_version: bump whenever hash_int(), hash_bytes(), tuple_hash_helper's mix64() or
+// hash_impl::mix() changes what it returns. test/unit/hash_golden.cpp pins their output next to the
+// version it was pinned at, so a changed hash fails there until this is bumped too.
+inline constexpr std::uint64_t hash_version = 1;
+
+// One step of folding a value into an id. Compile time only; nothing on a lookup path calls it.
+[[nodiscard]] ANKERL_UNORDERED_DENSE_DISABLE_UBSAN_UNSIGNED_INTEGER_CHECK constexpr auto fold_format_id(std::uint64_t h,
+                                                                                                        std::uint64_t v)
+    -> std::uint64_t {
+    h = (h ^ v) * UINT64_C(0x100000001b3);
+    return h ^ (h >> 29U);
+}
+
+// The ids of this header's hash families: a hash's `format_id` says which function computed it.
+// Integers and enums go through hash_int(); strings and string views through hash_bytes() over their
+// bytes, which depend on the character width; a tuple or a pair mixes its elements.
+inline constexpr std::uint64_t integer_hash_format_id = fold_format_id(fold_format_id(hash_version, 'i'), 0);
+template <typename CharT>
+inline constexpr std::uint64_t bytes_hash_format_id = fold_format_id(fold_format_id(hash_version, 's'), sizeof(CharT));
+
+template <typename T>
+using detect_format_id = decltype(T::format_id);
+
+// Hash::format_id when it declares one, else 0: unknown, and only verify() can tell.
+template <typename Hash>
+[[nodiscard]] constexpr auto hash_format_id() -> std::uint64_t {
+    if constexpr (is_detected_v<detect_format_id, Hash>) {
+        return static_cast<std::uint64_t>(Hash::format_id);
+    } else {
+        return 0;
+    }
+}
+
+} // namespace detail
+
 // Whether a hash is high quality -- every bit of its result independently well distributed -- so
 // that a table can index with those bits as they come instead of mixing them first. The default
 // answer is the member typedef a hash can carry, `using is_avalanching = void;` or the equivalent
@@ -578,6 +646,7 @@ struct hash<T, std::enable_if_t<hash_is_avalanching_v<std::hash<T>>>> {
 template <typename CharT>
 struct hash<std::basic_string<CharT>> {
     using is_avalanching = void;
+    static constexpr std::uint64_t format_id = detail::bytes_hash_format_id<CharT>;
     auto operator()(std::basic_string<CharT> const& str) const noexcept -> std::uint64_t {
         return detail::hash_bytes(str.data(), sizeof(CharT) * str.size());
     }
@@ -586,6 +655,7 @@ struct hash<std::basic_string<CharT>> {
 template <typename CharT>
 struct hash<std::basic_string_view<CharT>> {
     using is_avalanching = void;
+    static constexpr std::uint64_t format_id = detail::bytes_hash_format_id<CharT>;
     auto operator()(std::basic_string_view<CharT> const& sv) const noexcept -> std::uint64_t {
         return detail::hash_bytes(sv.data(), sizeof(CharT) * sv.size());
     }
@@ -621,14 +691,38 @@ struct hash<std::shared_ptr<T>> {
 template <typename Enum>
 struct hash<Enum, typename std::enable_if_t<std::is_enum_v<Enum>>> {
     using is_avalanching = void;
+    static constexpr std::uint64_t format_id = detail::integer_hash_format_id;
     auto operator()(Enum e) const noexcept -> std::uint64_t {
         using underlying = std::underlying_type_t<Enum>;
         return detail::hash_int(static_cast<std::uint64_t>(static_cast<underlying>(e)));
     }
 };
 
+// A tuple's or a pair's format_id, when every element has one: an integer or an enum is mixed in
+// as it is, anything else through hash<Arg>, whose own id then has to be known.
+template <typename Arg>
+[[nodiscard]] constexpr auto tuple_element_format_id() -> std::uint64_t {
+    if constexpr (std::is_integral_v<Arg> || std::is_enum_v<Arg>) {
+        return 1;
+    } else {
+        return detail::hash_format_id<hash<Arg>>();
+    }
+}
+
+template <bool Known, typename... Args>
+struct tuple_format_id {};
+
 template <typename... Args>
-struct tuple_hash_helper {
+struct tuple_format_id<true, Args...> {
+    static constexpr std::uint64_t format_id = []() -> std::uint64_t {
+        auto h = detail::fold_format_id(detail::hash_version, 't');
+        ((h = detail::fold_format_id(h, tuple_element_format_id<Args>())), ...);
+        return h;
+    }();
+};
+
+template <typename... Args>
+struct tuple_hash_helper : tuple_format_id<((tuple_element_format_id<Args>() != 0) && ...), Args...> {
     // Converts the value into 64bit. If it is an integral type, just cast it. Mixing is doing the rest.
     // If it isn't an integral we need to hash it.
     template <typename Arg>
@@ -674,13 +768,14 @@ struct hash<std::pair<A, B>> : tuple_hash_helper<A, B> {
 };
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
-#    define ANKERL_UNORDERED_DENSE_HASH_STATICCAST(T)                       \
-        template <>                                                         \
-        struct hash<T> {                                                    \
-            using is_avalanching = void;                                    \
-            auto operator()(T const& obj) const noexcept -> std::uint64_t { \
-                return detail::hash_int(static_cast<std::uint64_t>(obj));   \
-            }                                                               \
+#    define ANKERL_UNORDERED_DENSE_HASH_STATICCAST(T)                                  \
+        template <>                                                                    \
+        struct hash<T> {                                                               \
+            using is_avalanching = void;                                               \
+            static constexpr std::uint64_t format_id = detail::integer_hash_format_id; \
+            auto operator()(T const& obj) const noexcept -> std::uint64_t {            \
+                return detail::hash_int(static_cast<std::uint64_t>(obj));              \
+            }                                                                          \
         }
 
 #    if defined(__GNUC__) && !defined(__clang__)
@@ -712,6 +807,15 @@ ANKERL_UNORDERED_DENSE_HASH_STATICCAST(unsigned long long);
 #    endif
 
 // bucket_type //////////////////////////////////////////////////////////
+
+// Whether a constructor that takes an index from outside checks it before trusting it (#299). No
+// default, because both answers cost something: a view's check reads every byte of the index, which
+// on a lazily paged mapping means paging all of it in, and the owning constructor's check costs it
+// 4.3-6.1x at 1M entries against the copy alone. Without the check the caller vouches for the bytes.
+enum class trust : std::uint8_t { checked, unchecked };
+
+// How much of a table verify() checks: `spot` 16 values spread over the table, `full` every value.
+enum class verify_level : std::uint8_t { spot, full };
 
 namespace bucket_type {
 
@@ -916,7 +1020,10 @@ struct require_avalanching : Hash {
 // exactly, and 32 of an 80 byte value rather than 51 -- 2560 bytes. `segmented_map` takes this as a
 // trailing parameter, which is worth setting when the rounding is what decides whether a segment
 // reaches an allocator's threshold: a "2 MB" segment is one whole huge page for a 16 byte pair and
-// 1.28 MB for a 40 byte one.
+// 1.28 MB for a 40 byte one -- and when the values own heap memory: small segments land between the
+// values' own allocations, and iterating a map of strings at 4M entries is 3.3x `map` with 4096
+// byte segments and 1.24x with 256 KB. Kept small because a non-empty map holds a whole segment
+// (#350; notes/index-design.md, "segment size").
 inline constexpr std::size_t default_segment_size_bytes = 4096;
 
 // Very much like std::deque, but faster for indexing (in most cases). As of now this doesn't implement the full std::vector
@@ -1389,6 +1496,37 @@ public:
 
 namespace detail {
 
+// A group's metadata followed by its sixteen value indices. It inherits so that every use of a
+// group's fingerprints and counters reads unchanged, and so a block converts to the Group const& that
+// match_fingerprint takes.
+template <typename Group>
+struct group_block : Group {
+    std::array<typename Group::value_idx_type, std::tuple_size_v<decltype(Group::m_fingerprints)>> m_index;
+};
+
+// The bytes table::index() hands out (#299): no padding, so the bytes are the whole state, and the
+// sizes every number about the index in notes/index-design.md is in. group_big's index is four bytes
+// on a 32 bit target, which makes its block 88 there; index_format_id keeps the two apart.
+static_assert(sizeof(group_block<bucket_type::group>) == 88 &&
+                  std::has_unique_object_representations_v<group_block<bucket_type::group>>,
+              "group_block<group> must stay 88 bytes without padding");
+static_assert((sizeof(std::size_t) != 8 || sizeof(group_block<bucket_type::group_big>) == 152) &&
+                  std::has_unique_object_representations_v<group_block<bucket_type::group_big>>,
+              "group_block<group_big> must stay 152 bytes without padding on a 64 bit target");
+
+// An empty table's index (#329): as many groups as the smallest array has, every slot empty and every
+// counter zero, shared by every table of this group type without an array of its own, and never
+// written. With it, data() is never null, so a lookup needs no test for the empty table: it finds
+// nothing here, and an insert allocates before it writes anything. The table static_asserts that
+// this covers its smallest array.
+inline constexpr std::size_t sentinel_groups = 4;
+
+template <typename Group>
+[[nodiscard]] auto sentinel_blocks() -> group_block<Group>* {
+    static std::array<group_block<Group>, sentinel_groups> static_blocks{};
+    return static_blocks.data();
+}
+
 // What holds the index: one array of blocks, each a group's metadata followed by that group's own
 // sixteen value indices. 88 bytes per sixteen slots, and no padding -- the same bytes the two arrays
 // took, in one allocation instead of two.
@@ -1404,83 +1542,467 @@ namespace detail {
 // misses at 4M, because a lookup touches two regions rather than three. The gain is largest where
 // the table is largest, which is the half of the size axis the scored benchmark cannot see.
 //
-// Alloc is the table's value allocator; the block array rebinds it.
-template <typename Group, typename Alloc>
-class group_storage {
-    // `slots_per_group`, the name the table below already gives the same constant, and not
-    // `slots`: Qt defines `slots` as an empty macro unless the build sets QT_NO_KEYWORDS, so a
-    // member of that name does not survive a translation unit that has seen a Qt header (#289).
-    // test/unit/qt_keywords.cpp compiles the header with those macros defined.
-    static constexpr std::size_t slots_per_group = std::tuple_size_v<decltype(Group::m_fingerprints)>;
+// An allocator stored as a base when it is empty, so that it takes no bytes, and as a member when it
+// is not or cannot be derived from.
+template <typename A, bool = std::is_empty_v<A> && !std::is_final_v<A>>
+class allocator_holder : private A {
+public:
+    explicit allocator_holder(A const& a)
+        : A(a) {}
+    [[nodiscard]] auto alloc() -> A& {
+        return *this;
+    }
+    [[nodiscard]] auto alloc() const -> A const& {
+        return *this;
+    }
+};
 
+template <typename A>
+class allocator_holder<A, false> {
+    A m_alloc;
+
+public:
+    explicit allocator_holder(A const& a)
+        : m_alloc(a) {}
+    [[nodiscard]] auto alloc() -> A& {
+        return m_alloc;
+    }
+    [[nodiscard]] auto alloc() const -> A const& {
+        return m_alloc;
+    }
+};
+
+// The index check (#299), for an index that comes from outside: every full slot must point at a
+// value, and the full slots must be exactly as many as there are values. The first makes every
+// lookup memory safe; the second restores the free-slot invariant the placement walks rely on, so a
+// corrupt index cannot make an insert spin. No hashing: what this cannot see (a value in the wrong
+// slot, a wrong counter) gives wrong answers, which verify() finds.
+//
+// An owning table also passes `seen`, one bit per value, and then no two slots may point at one
+// value. A view does not need it: it only reads, and the range check is what keeps a read in
+// bounds. A table that erases does: the erase moves the last value into the hole and repoints the
+// one slot it finds for it, so a second slot pointing at that value is left pointing one past the
+// end, and the next lookup through it reads out of bounds (found by fuzz_index_view under
+// _GLIBCXX_ASSERTIONS). With every value pointed at exactly once, every operation keeps it so.
+//
+// Counts this block's full slots into `used`; false if one points past the values. Branchless,
+// because the fingerprints are random: 0.85 ns per entry at 1M against 1.16 with a branch.
+template <typename Group>
+[[nodiscard]] auto check_index_block(group_block<Group> const& block, std::size_t num_values, std::size_t& used) -> bool {
+    auto bad = 0U;
+    for (std::size_t slot = 0; slot < block.m_fingerprints.size(); ++slot) {
+        auto const full = static_cast<unsigned>(block.m_fingerprints[slot] != 0);
+        used += full;
+        bad |= full & static_cast<unsigned>(static_cast<std::size_t>(block.m_index[slot]) >= num_values);
+    }
+    return bad == 0;
+}
+
+// The same for an owning table, which also needs every value pointed at by one slot only: `seen`
+// has a bit per value. The branch stays here: a branchless bitmap has to write a word for every
+// empty slot too, and read the block through a copy, and both measured slower (3.1-4.2 ns per
+// entry at 1M against 2.3).
+template <typename Group>
+[[nodiscard]] auto
+check_index_block_unique(group_block<Group> const& block, std::size_t num_values, std::size_t& used, std::uint64_t* seen)
+    -> bool {
+    auto ok = true;
+    for (std::size_t slot = 0; slot < block.m_fingerprints.size(); ++slot) {
+        if (block.m_fingerprints[slot] != 0) {
+            ++used;
+            auto const idx = static_cast<std::size_t>(block.m_index[slot]);
+            if (idx >= num_values) {
+                ok = false;
+            } else {
+                auto const bit = std::uint64_t{1} << (idx & 63U);
+                if ((seen[idx >> 6U] & bit) != 0) {
+                    ok = false;
+                }
+                seen[idx >> 6U] |= bit;
+            }
+        }
+    }
+    return ok;
+}
+
+template <typename Group>
+[[nodiscard]] auto check_index(group_block<Group> const* blocks, std::size_t num_blocks, std::size_t num_values) -> bool {
+    auto used = std::size_t{0};
+    auto ok = true;
+    for (std::size_t i = 0; i < num_blocks; ++i) {
+        ok = check_index_block(blocks[i], num_values, used) && ok;
+    }
+    return ok && used == num_values;
+}
+
+// check_index() for an owning table: no value pointed at twice either. The bitmap comes from `alloc`,
+// rebound. For an index container without group_storage's fused copy (#303); group_storage itself
+// runs check_index_block_unique() inside its copy loop.
+template <typename Group, typename Alloc>
+[[nodiscard]] auto
+check_index_unique(group_block<Group> const* blocks, std::size_t num_blocks, std::size_t num_values, Alloc const& alloc)
+    -> bool {
+    using word_alloc = typename std::allocator_traits<Alloc>::template rebind_alloc<std::uint64_t>;
+    auto seen = std::vector<std::uint64_t, word_alloc>((num_values / 64U) + 1U, 0, word_alloc(alloc));
+    auto used = std::size_t{0};
+    auto ok = true;
+    for (std::size_t i = 0; i < num_blocks; ++i) {
+        ok = check_index_block_unique(blocks[i], num_values, used, seen.data()) && ok;
+    }
+    return ok && used == num_values;
+}
+
+// Alloc is the table's value allocator; the block array rebinds it.
+//
+// A pointer and a count rather than a std::vector: the table never grows the array in place, so a
+// vector's capacity is a word nobody reads, and with the sentinel (#329) data() would need a second
+// pointer beside the vector's own to avoid a test. The allocator's propagation traits are honoured the
+// way std::vector honours them, because the table's assignments rely on that.
+template <typename Group, typename Alloc>
+class group_storage
+    : private allocator_holder<typename std::allocator_traits<Alloc>::template rebind_alloc<group_block<Group>>> {
 public:
     using value_idx_type = typename Group::value_idx_type;
-
-    // Inherits so that every use of a group's fingerprints and counters reads unchanged, and so a
-    // block converts to the Group const& that match_fingerprint takes.
-    struct block : Group {
-        std::array<value_idx_type, slots_per_group> m_index;
-    };
-
+    using block = group_block<Group>;
     using allocator_type = typename std::allocator_traits<Alloc>::template rebind_alloc<block>;
 
-    // How many arrays this allocates, for a test that counts what an empty table costs.
+    // How many arrays a populated index allocates, and how many std::vectors it holds (MSVC's debug
+    // iterator support allocates a proxy for each, even empty); for tests that count allocations.
     static constexpr std::size_t array_count = 1;
+    static constexpr std::size_t vector_count = 0;
 
 private:
-    std::vector<block, allocator_type> m_blocks{};
+    using traits = std::allocator_traits<allocator_type>;
+    using pointer = typename traits::pointer;
+    // A plain pointer holds the sentinel while there is no array, so data() returns it without a
+    // test. A fancy pointer (an offset_ptr in shared memory) holds null instead, and data() tests:
+    // the sentinel's address means nothing to another process.
+    static constexpr bool plain_pointer = std::is_pointer_v<pointer>;
+
+    pointer m_ptr = empty_pointer();
+    std::size_t m_size = 0; // in groups
+
+    [[nodiscard]] static auto empty_pointer() -> pointer {
+        if constexpr (plain_pointer) {
+            return sentinel_blocks<Group>();
+        } else {
+            return nullptr;
+        }
+    }
+    [[nodiscard]] auto alloc() -> allocator_type& {
+        return this->allocator_holder<allocator_type>::alloc();
+    }
+    [[nodiscard]] auto alloc() const -> allocator_type const& {
+        return this->allocator_holder<allocator_type>::alloc();
+    }
+    void steal(group_storage& other) noexcept {
+        m_ptr = std::exchange(other.m_ptr, empty_pointer());
+        m_size = std::exchange(other.m_size, 0);
+    }
+    // n groups, value initialized (an empty index), or a copy of `from` if it is given.
+    [[nodiscard]] auto make(std::size_t n, block const* from) -> pointer {
+        auto p = traits::allocate(alloc(), n);
+        auto* raw = std::addressof(*p);
+        if (from != nullptr) {
+            std::uninitialized_copy_n(from, n, raw);
+        } else {
+            std::uninitialized_value_construct_n(raw, n);
+        }
+        return p;
+    }
+    void adopt(pointer p, std::size_t n) noexcept {
+        clear();
+        m_ptr = p;
+        m_size = n;
+    }
 
 public:
-    group_storage() = default;
     explicit group_storage(allocator_type const& alloc)
-        : m_blocks(alloc) {}
+        : allocator_holder<allocator_type>(alloc) {}
+    // std::vector's allocator-extended move: takes the array if the allocators are equal, copies it
+    // otherwise and leaves other as it was.
     // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved) -- moved from member by member
     group_storage(group_storage&& other, allocator_type const& alloc)
-        : m_blocks(std::move(other.m_blocks), alloc) {}
-    group_storage(group_storage const&) = default;
-    group_storage(group_storage&&) noexcept = default;
-    auto operator=(group_storage const&) -> group_storage& = default;
-    auto operator=(group_storage&&) -> group_storage& = default;
-    ~group_storage() = default;
+        : allocator_holder<allocator_type>(alloc) {
+        if (this->alloc() == other.alloc()) {
+            steal(other);
+        } else {
+            assign(other);
+        }
+    }
+    group_storage(group_storage const& other) = delete;
+    group_storage(group_storage&& other) = delete;
+    auto operator=(group_storage const& other) -> group_storage& = delete;
+    auto operator=(group_storage&& other) -> group_storage& = delete;
+    // What std::vector's move assignment promises, which the table's own noexcept repeats.
+    static constexpr bool nothrow_move_assignable =
+        traits::propagate_on_container_move_assignment::value || traits::is_always_equal::value;
+
+    // Takes other's array. Only for two storages with equal allocators, which is the only way the
+    // table moves one into another: a fresh array built from this one's allocator, or a move
+    // assignment it has already checked.
+    void take(group_storage& other) noexcept {
+        if (this != &other) {
+            clear();
+            steal(other);
+        }
+    }
+    // Gives the array back and takes a, for copy assignment under pocca.
+    void set_allocator(allocator_type const& a) noexcept {
+        clear();
+        alloc() = a;
+    }
+    ~group_storage() {
+        clear();
+    }
 
     [[nodiscard]] auto get_allocator() const -> allocator_type {
-        return m_blocks.get_allocator();
+        return alloc();
     }
     [[nodiscard]] auto empty() const -> bool {
-        return m_blocks.empty();
+        return m_size == 0;
     }
     [[nodiscard]] auto size() const -> std::size_t { // in groups
-        return m_blocks.size();
+        return m_size;
     }
-    void clear() {
-        m_blocks.clear();
-    }
-    void shrink_to_fit() {
-        m_blocks.shrink_to_fit();
+    // Gives the array back; unlike std::vector's, this frees it.
+    void clear() noexcept {
+        if (m_size != 0) {
+            traits::deallocate(alloc(), m_ptr, m_size);
+            m_ptr = empty_pointer();
+            m_size = 0;
+        }
     }
     void swap(group_storage& other) noexcept {
-        m_blocks.swap(other.m_blocks);
+        if constexpr (traits::propagate_on_container_swap::value) {
+            using std::swap;
+            swap(alloc(), other.alloc());
+        }
+        std::swap(m_ptr, other.m_ptr);
+        std::swap(m_size, other.m_size);
     }
+    // Replaces the array with num_groups empty groups.
     void resize(std::size_t num_groups) {
-        m_blocks.resize(num_groups);
+        adopt(make(num_groups, nullptr), num_groups);
     }
     void assign(group_storage const& other) {
-        m_blocks.assign(other.m_blocks.begin(), other.m_blocks.end());
+        if (other.m_size == 0) {
+            clear();
+        } else {
+            adopt(make(other.m_size, other.data()), other.m_size);
+        }
+    }
+    // Replaces the array with a copy of n blocks from outside, for trust::unchecked.
+    void assign_unchecked(block const* from, std::size_t n) {
+        adopt(make(n, from), n);
+    }
+    // Replaces the array with a copy of n blocks from outside, running check_index_block() in the
+    // same loop as the copy, with a bit per value so that no value is pointed at twice (#299).
+    // False, and the array as it was, if the copy fails the check.
+    [[nodiscard]] auto assign_checked(block const* from, std::size_t n, std::size_t num_values) -> bool {
+        // One bit per value, allocated before the blocks and given back however this returns.
+        using word_alloc = typename traits::template rebind_alloc<std::uint64_t>;
+        auto seen = std::vector<std::uint64_t, word_alloc>((num_values / 64U) + 1U, 0, word_alloc(alloc()));
+        auto p = traits::allocate(alloc(), n);
+        auto* raw = std::addressof(*p);
+        auto used = std::size_t{0};
+        auto ok = true;
+        for (std::size_t i = 0; i < n; ++i) {
+            ::new (static_cast<void*>(raw + i)) block(from[i]);
+            ok = check_index_block_unique(raw[i], num_values, used, seen.data()) && ok;
+        }
+        if (!ok || used != num_values) {
+            traits::deallocate(alloc(), p, n);
+            return false;
+        }
+        adopt(p, n);
+        return true;
     }
     [[nodiscard]] auto data() -> block* {
-        return m_blocks.data();
+        if constexpr (plain_pointer) {
+            return m_ptr;
+        } else {
+            return m_size == 0 ? sentinel_blocks<Group>() : std::addressof(*m_ptr);
+        }
     }
     [[nodiscard]] auto data() const -> block const* {
-        return m_blocks.data();
+        return const_cast<group_storage*>(this)->data(); // NOLINT(cppcoreguidelines-pro-type-const-cast)
     }
     // Zeroes the metadata of every block and leaves the indices alone, which is what the split
     // version's single memset did: an empty slot's index is never read.
     void clear_metadata() {
-        for (auto& b : m_blocks) {
-            static_cast<Group&>(b) = Group{};
+        auto* blocks = data();
+        for (std::size_t i = 0; i < m_size; ++i) {
+            static_cast<Group&>(blocks[i]) = Group{};
         }
     }
 };
+
+// Bumped by any change to how an element is placed or found, not only by a change of sizeof: the
+// block layout, the fingerprint (the low byte of the mixed hash, 0 mapped to 8), the home group
+// (hash >> m_shifts), the probe sequence (triangular over groups), the counters (fingerprint & 7,
+// saturating at 255), and mixed_hash(). A change that still finds every key in an old index needs
+// no bump; test/unit/index_view.cpp's golden index fails until one that does not is bumped.
+inline constexpr std::uint64_t index_layout_version = 1;
+
+#    if defined(__BYTE_ORDER__) && defined(__ORDER_BIG_ENDIAN__) && (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__)
+inline constexpr std::uint64_t native_endian_id = 2;
+#    else
+inline constexpr std::uint64_t native_endian_id = 1;
+#    endif
+
+// table::index_format_id. Not sizeof(value_type) or anything else about the values: the index does
+// not depend on them, and folding them in would reject a valid index for map<std::string, X> between
+// libstdc++ (sizeof(std::string) == 32) and libc++ (24).
+template <typename Hash, typename Key, typename Group>
+[[nodiscard]] constexpr auto make_index_format_id() -> std::uint64_t {
+    using hash_result = decltype(std::declval<Hash const&>()(std::declval<Key const&>()));
+    auto h = fold_format_id(index_layout_version, hash_version);
+    h = fold_format_id(h, sizeof(group_block<Group>));
+    h = fold_format_id(h, alignof(group_block<Group>));
+    h = fold_format_id(h, std::tuple_size_v<decltype(Group::m_fingerprints)>);
+    h = fold_format_id(h, sizeof(typename Group::value_idx_type));
+    h = fold_format_id(h, native_endian_id);
+    h = fold_format_id(h, hash_is_avalanching_v<Hash> ? 1 : 2); // the two things mixed_hash() branches on
+    h = fold_format_id(h, sizeof(hash_result));
+    return fold_format_id(h, hash_format_id<Hash>());
+}
+
+// The index as a view: a pointer and a block count. What table::index() returns, what the
+// constructors that load an index take, and the index container of a map_view. It does not own the
+// blocks. The members below the first three are what the table's constructors, its destructor and
+// its read paths call on an index container; a write never reaches them on a view (see is_view_v).
+template <typename Group>
+class group_view {
+public:
+    using block = group_block<Group>;
+    using allocator_type = std::allocator<block>;
+    static constexpr bool nothrow_move_assignable = true;
+
+private:
+    // Never null: an empty view points at the shared sentinel, as an empty group_storage does
+    // (#329), so that data() needs no test on a lookup.
+    block const* m_data = sentinel_blocks<Group>();
+    std::size_t m_size = 0; // in blocks: 0, or a power of two of at least four
+
+public:
+    group_view() noexcept = default;
+    group_view(block const* data, std::size_t size) noexcept
+        : m_data(size == 0 ? sentinel_blocks<Group>() : data)
+        , m_size(size) {}
+
+    // What the table's constructors pass an index container; a view has no allocator to take.
+    template <typename A, typename = std::enable_if_t<!std::is_same_v<A, group_view>>>
+    explicit group_view(A const& /*alloc*/) noexcept {}
+    template <typename A>
+    group_view(group_view const& other, A const& /*alloc*/) noexcept
+        : group_view(other) {}
+
+    [[nodiscard]] auto data() const noexcept -> block const* {
+        return m_data;
+    }
+    [[nodiscard]] auto size() const noexcept -> std::size_t {
+        return m_size;
+    }
+    [[nodiscard]] auto empty() const noexcept -> bool {
+        return m_size == 0;
+    }
+    // The table copies a view's index container this way, and a moved-from view is left empty this
+    // way. Neither touches the blocks.
+    void assign(group_view const& other) noexcept {
+        *this = other;
+    }
+    // What the view constructor hands it: the caller's blocks.
+    void assign(block const* data, std::size_t size) noexcept {
+        *this = group_view(data, size);
+    }
+    void clear() noexcept {
+        *this = group_view();
+    }
+};
+
+// The values as a view: a pointer and a count, read only. The value container of a map_view. Has an
+// `iterator`, so the table's container dispatch takes it as a container; `is_view` is what makes the
+// table pick group_view for the index.
+template <typename T>
+class view_container {
+public:
+    using is_view = void;
+    using value_type = T;
+    using iterator = T const*;
+    using const_iterator = T const*;
+    using reference = T const&;
+    using const_reference = T const&;
+    using pointer = T const*;
+    using const_pointer = T const*;
+    using size_type = std::size_t;
+    using difference_type = std::ptrdiff_t;
+    using allocator_type = std::allocator<T>; // the table's typedefs need one; it never allocates
+
+private:
+    T const* m_data = nullptr;
+    std::size_t m_size = 0;
+
+public:
+    view_container() noexcept = default;
+    view_container(T const* data, std::size_t size) noexcept
+        : m_data(data)
+        , m_size(size) {}
+    explicit view_container(allocator_type const& /*alloc*/) noexcept {}
+    view_container(view_container const& other, allocator_type const& /*alloc*/) noexcept
+        : view_container(other) {}
+
+    [[nodiscard]] auto get_allocator() const noexcept -> allocator_type {
+        return {};
+    }
+    [[nodiscard]] auto data() const noexcept -> T const* {
+        return m_data;
+    }
+    [[nodiscard]] auto size() const noexcept -> std::size_t {
+        return m_size;
+    }
+    [[nodiscard]] auto empty() const noexcept -> bool {
+        return m_size == 0;
+    }
+    [[nodiscard]] auto begin() const noexcept -> const_iterator {
+        return m_data;
+    }
+    [[nodiscard]] auto end() const noexcept -> const_iterator {
+        return m_data + m_size;
+    }
+    [[nodiscard]] auto operator[](std::size_t i) const noexcept -> T const& {
+        return m_data[i];
+    }
+    // What the table's move constructor does to the table it moved from; the values stay where they are.
+    void clear() noexcept {
+        *this = view_container();
+    }
+};
+
+template <typename T>
+using detect_is_view = typename T::is_view;
+
+template <typename Container, typename It>
+using detect_range_assign = decltype(std::declval<Container&>().assign(std::declval<It>(), std::declval<It>()));
+
+// A container or allocator that brings its own index container (#303): a member alias template
+// `index_container<Bucket>`. See "A custom index container" in doc/usage.md for the contract.
+template <typename AllocatorOrContainer, typename Bucket>
+using detect_index_container = typename AllocatorOrContainer::template index_container<Bucket>;
+
+// The index container, in order: the one AllocatorOrContainer names, else a view over a view's
+// values, else an owning array on the values' allocator.
+template <typename Bucket, typename AllocatorOrContainer, typename Values>
+using index_container_for = typename detector<std::conditional_t<is_detected_v<detect_is_view, Values>,
+                                                                 group_view<Bucket>,
+                                                                 group_storage<Bucket, typename Values::allocator_type>>,
+                                              void,
+                                              detect_index_container,
+                                              AllocatorOrContainer,
+                                              Bucket>::type;
+
+template <typename Container>
+using detect_assign_checked = decltype(std::declval<Container&>().assign_checked(nullptr, 0, 0));
 
 // This is it, the table. Doubles as map and set, and uses `void` for T when its used as a set.
 template <class Key,
@@ -1504,7 +2026,12 @@ private:
     // IsSegmented is about the values -- stable references, no reallocation of the payload. The
     // index is two plain arrays either way: it is 5.5 bytes per slot, and a probe reads it by
     // pointer.
-    using bucket_container_type = detail::group_storage<Bucket, typename value_container_type::allocator_type>;
+    using bucket_container_type = detail::index_container_for<Bucket, AllocatorOrContainer, value_container_type>;
+    static_assert(std::is_same_v<typename bucket_container_type::block, detail::group_block<Bucket>>,
+                  "an index container holds detail::group_block<Bucket>, see \"A custom index container\" in doc/usage.md");
+    static_assert(std::is_convertible_v<decltype(std::declval<bucket_container_type const&>().data()),
+                                        detail::group_block<Bucket> const*>,
+                  "an index container's data() returns a pointer to its blocks");
 
     // Slots per group, from the group. bucket_count() counts slots, m_group_mask counts groups.
     static constexpr std::size_t slots_per_group = std::tuple_size_v<decltype(Bucket::m_fingerprints)>;
@@ -1571,6 +2098,11 @@ private:
     static constexpr std::size_t merge_min_index_bytes = std::size_t{1} << 20U;
 
     static constexpr std::uint8_t initial_shifts = 64 - 2; // 2^(64-m_shifts) groups
+    // A table without an array of its own reads the sentinel with hash >> m_shifts, and every path
+    // that leaves a table without one sets m_shifts back to initial_shifts; so the sentinel has to
+    // hold that many groups (#329).
+    static_assert((std::size_t{1} << (64U - initial_shifts)) <= sentinel_groups,
+                  "the sentinel index must cover the smallest array");
     static constexpr float default_max_load_factor = 0.8F;
 
     // Named, and covering both containers, so that the promise and the recovery that exists for
@@ -1579,7 +2111,7 @@ private:
     // twice over: it would leave m_buckets free to throw out of a noexcept function, and it would
     // compile a rethrow into one, which gcc rejects outright.
     static constexpr bool move_assign_is_nothrow =
-        std::is_nothrow_move_assignable_v<value_container_type> && std::is_nothrow_move_assignable_v<bucket_container_type> &&
+        std::is_nothrow_move_assignable_v<value_container_type> && bucket_container_type::nothrow_move_assignable &&
         std::is_nothrow_move_assignable_v<Hash> && std::is_nothrow_move_assignable_v<KeyEqual>;
 
 public:
@@ -1597,6 +2129,31 @@ public:
     using const_iterator = typename value_container_type::const_iterator;
     using iterator = std::conditional_t<is_map_v<T>, typename value_container_type::iterator, const_iterator>;
     using bucket_type = Bucket;
+
+    // The index as bytes (#299). index() hands it out as an index_view, and the constructors below
+    // take one back. A table whose values are a view (map_view, set_view) holds its index as a view
+    // too, and is read only: `static_assert(!is_view_v, ...)` sits in the functions every write
+    // passes through -- place_group, place_element_at, do_find_or_place, do_insert_or_assign,
+    // fill_buckets_from_values, do_erase, finish_erase, allocate_buckets_from_shift,
+    // deallocate_buckets, clear_buckets -- and in the writers gcc reports an error in before it gets
+    // that far or that reach none of them: operator[], rehash(), max_load_factor(float), swap().
+    // scripts/test_view_readonly.py compiles every writer and expects the message.
+    using index_block = detail::group_block<Bucket>;
+    using index_view = detail::group_view<Bucket>;
+    static constexpr bool is_view_v = detail::is_detected_v<detail::detect_is_view, value_container_type>;
+    using view_type = table<Key, T, Hash, KeyEqual, detail::view_container<value_type>, Bucket, false>;
+    // What at() returns on a non-const table: the mapped value, const on a view, whose values are.
+    template <typename Q>
+    using mapped_ref = std::conditional_t<is_view_v, Q const&, Q&>;
+
+    // Compile-time identity of what the index bytes mean. Write it next to the bytes and compare it
+    // before constructing from them. It folds index_layout_version, the block's size and alignment,
+    // slots per group, the width of a value index, the byte order, the two properties of the hash
+    // mixed_hash() branches on, hash_version, and Hash::format_id when the hash declares one. This
+    // library's hashes for integers, enums, strings, string views, and pairs and tuples of those
+    // declare one; a hash built on std::hash does not, and neither does a seed or any other state of
+    // a hasher. verify() is what covers those.
+    static constexpr std::uint64_t index_format_id = detail::make_index_format_id<Hash, Key, Bucket>();
 
     // What hash_for() returns; see the lookup section below. Shared by every table with this
     // hasher, whatever else it is made of, because that is exactly the set of tables the hash is
@@ -1626,7 +2183,7 @@ private:
     static_assert(std::is_trivially_copyable_v<Bucket>, "assert we can just memset / memcpy");
 
     value_container_type m_values{}; // Contains all the key-value pairs in one densely stored container. No holes.
-    bucket_container_type m_buckets{};
+    bucket_container_type m_buckets;
     std::size_t m_max_bucket_capacity = 0;
     value_idx_type m_group_mask = 0; // groups - 1; works because the number of groups is a power of two
     float m_max_load_factor = default_max_load_factor;
@@ -1852,12 +2409,12 @@ private:
     // rehash is about to write a group it has never read, so it wants that line too.
     //
     // Asking for `p` and `p + 87` instead -- the first line and the *last*, which is what this did
-    // until 2026-09-11 -- left out the middle, which holds all eight counters and half the
-    // fingerprints, the two things a probe reads first. Stepping by 64 was worth 3.3%, 12.28
-    // ns/block against 12.67, on a 176 MiB array walked at random with a sixteen-deep lookahead and
-    // a probe-shaped read (#250). The `off < 128` is the clamp, and it is the half of the rule this
-    // function was missing: without it a 152 byte block gets a third prefetch, which is the one
-    // #252 measured as a loss.
+    // until 2026-09-11 -- left out the middle, which for a block straddling three lines holds all
+    // eight counters and up to half the fingerprints, the two things a probe reads first. Stepping
+    // by 64 was worth 3.2%, 12.28 ns/block against 12.67, on a 176 MiB array walked at random with a
+    // sixteen-deep lookahead and a probe-shaped read (#250). The `off < 128` is the clamp, and it is
+    // the half of the rule this function was missing: without it a 152 byte block gets a third
+    // prefetch, which is the one #252 measured as a loss.
     template <typename Block>
     static void prefetch_block(Block const* block) {
         // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast) -- byte arithmetic on the block
@@ -2019,6 +2576,7 @@ private:
     // derivation of where to start it.
     ANKERL_UNORDERED_DENSE_FORCEINLINE void
     place_group(std::uint32_t word, unsigned counter, value_idx_type group_idx, value_idx_type value_idx) {
+        static_assert(!is_view_v, "map_view and set_view are read only");
         auto* groups = m_buckets.data();
         value_idx_type delta = 0;
         while (true) {
@@ -2141,7 +2699,7 @@ private:
     // group hands back is an address to load from -- `m_values[value_idx]`, a second miss behind the
     // first -- so the prefetch takes one level off a two-level chain. Here the index ends the chain:
     // it feeds a compare, and in the twin a store that ends the function, so what the prefetch can
-    // overlap is worth about what its two instructions cost. Dropping both takes 0.3-0.6% of the
+    // overlap is worth about what its two instructions cost. Dropping both takes 0.1-0.6% of the
     // instructions off every erase-heavy workload of the score under both compilers and nothing off
     // any other one; the time moves less than the noise floor, baseline/candidate 1.0039 under gcc
     // and 0.9991 under clang, one header per binary with scripts/ab/solo.sh. It ships on the
@@ -2277,15 +2835,13 @@ private:
         //
         // Done before the copy rather than after: it is the same allocator either way, both
         // containers are empty here so it cannot throw, and doing it first means a copy that fails
-        // part way through cannot leave the two halves disagreeing. Copy assignment and not move:
-        // move would consult pocma, a different question, and not the one answered true here.
+        // part way through cannot leave the two halves disagreeing.
         if constexpr (std::allocator_traits<allocator_type>::propagate_on_container_copy_assignment::value) {
             // Rebound explicitly: m_values' allocator and m_buckets' are different types, and
             // comparing them directly is ambiguous rather than merely unusual.
             auto const wanted = typename bucket_container_type::allocator_type(other.m_values.get_allocator());
             if (m_buckets.get_allocator() != wanted) {
-                auto const empty_with_other_allocator = bucket_container_type(wanted);
-                m_buckets = empty_with_other_allocator;
+                m_buckets.set_allocator(wanted);
             }
         }
 
@@ -2305,7 +2861,7 @@ private:
 
         // we can only reuse m_buckets when both maps have the same allocator!
         if (get_allocator() == other.get_allocator()) {
-            m_buckets = std::move(other.m_buckets);
+            m_buckets.take(other.m_buckets);
             other.m_buckets.clear();
             m_max_bucket_capacity = std::exchange(other.m_max_bucket_capacity, 0);
             m_group_mask = std::exchange(other.m_group_mask, 0);
@@ -2337,14 +2893,9 @@ private:
     // an exception leaves that window this is where it lands: assignment owes the basic guarantee,
     // which means valid and not merely non-leaking, and with no buckets the only valid state is
     // empty. Every step is noexcept, so the recovery cannot fail on its way out.
-    // Deliberately not deallocate_buckets(), which is otherwise the same three stores: that one
-    // also calls shrink_to_fit(), which is allowed to allocate and is not noexcept, and this runs
-    // while an exception is already in flight.
     void reset_to_empty() noexcept {
         m_values.clear();
-        m_buckets.clear();
-        m_max_bucket_capacity = 0;
-        m_group_mask = 0;
+        deallocate_buckets();
         m_shifts = initial_shifts;
     }
 
@@ -2355,9 +2906,9 @@ private:
         return size() > m_max_bucket_capacity;
     }
 
-    void deallocate_buckets() {
+    void deallocate_buckets() noexcept {
+        static_assert(!is_view_v, "map_view and set_view are read only");
         m_buckets.clear();
-        m_buckets.shrink_to_fit();
         m_max_bucket_capacity = 0;
         m_group_mask = 0;
     }
@@ -2366,6 +2917,7 @@ private:
     // written until an array of that size exists. Callers used to assign m_shifts and then
     // allocate, which left a gap for a failed allocation to stop in.
     void allocate_buckets_from_shift(std::uint8_t shifts) {
+        static_assert(!is_view_v, "map_view and set_view are read only");
         auto const num_groups = calc_num_groups(shifts);
         {
             // Built beside the old array rather than over it, so that a failure here leaves the
@@ -2375,7 +2927,7 @@ private:
             // allocating again.
             auto fresh = bucket_container_type(m_buckets.get_allocator());
             fresh.resize(num_groups);
-            m_buckets = std::move(fresh);
+            m_buckets.take(fresh);
         }
         // The groups come back zeroed, which is an empty index: every slot free, every counter at
         // zero. Nothing that allocates clears afterwards.
@@ -2403,13 +2955,68 @@ private:
         }
     }
 
+    // What an index from outside has to be before anything reads it (#299): no blocks for no
+    // values, else a power of two of blocks between the smallest array and the largest, at an
+    // address aligned for a block. O(1); the slots are check_index()'s.
+    static void check_index_shape(index_view index, std::size_t num_values) {
+        auto const n = index.size();
+        if (n == 0) {
+            if (num_values != 0) {
+                on_error_bad_index();
+            }
+            return;
+        }
+        auto const smallest = std::size_t{1} << (64U - initial_shifts);
+        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+        auto const address = reinterpret_cast<std::uintptr_t>(index.data());
+        if ((n & (n - 1)) != 0 || n < smallest || n > max_bucket_count() / slots_per_group ||
+            address % alignof(index_block) != 0) {
+            on_error_bad_index();
+        }
+    }
+
+    // The scalars of an index of n groups that check_index_shape() let through, n a power of two:
+    // the shift it is indexed with (hash >> shifts < n), the mask and the capacity.
+    void describe_loaded_index(std::size_t n) {
+        auto shifts = std::uint8_t{64};
+        while ((std::size_t{1} << (64U - shifts)) < n) {
+            --shifts;
+        }
+        m_shifts = shifts;
+        describe_buckets(n);
+    }
+
+    // Copies an index from outside into this owning table, checked (#299). The values are not
+    // moved in yet, so a rejection leaves the caller's values alone.
+    void load_index(index_view index, std::size_t num_values, trust t) {
+        check_index_shape(index, num_values);
+        if (index.empty()) {
+            return;
+        }
+        if constexpr (detail::is_detected_v<detail::detect_assign_checked, bucket_container_type>) {
+            if (t == trust::unchecked) {
+                m_buckets.assign_unchecked(index.data(), index.size());
+            } else if (!m_buckets.assign_checked(index.data(), index.size(), num_values)) {
+                on_error_bad_index();
+            }
+        } else {
+            // A custom index container (#303) has no fused copy: resize, copy, then the same check
+            // over the copy, and give the array back if it fails.
+            auto fresh = bucket_container_type(m_buckets.get_allocator());
+            fresh.resize(index.size());
+            std::memcpy(static_cast<void*>(fresh.data()), index.data(), index.size() * sizeof(index_block));
+            if (t == trust::checked &&
+                !detail::check_index_unique(fresh.data(), index.size(), num_values, m_buckets.get_allocator())) {
+                on_error_bad_index();
+            }
+            m_buckets.take(fresh);
+        }
+        describe_loaded_index(index.size());
+    }
+
     // The bucket array is not allocated until the first element goes in, so that a default
-    // constructed table does not allocate. Every path that probes the buckets either returns early
-    // while the table is empty (do_find and do_find_hashed's callers, do_erase_key), or needs an
-    // iterator into m_values and so
-    // cannot be reached in this state (erase, extract, replace_key), or calls this before it
-    // reaches them -- which is the insert entry points; do_try_emplace looks at the home group
-    // first, behind its own emptiness check.
+    // constructed table does not allocate. Until then every lookup reads the shared sentinel index
+    // (#329), which must never be written: every path that writes the index calls this first.
     void allocate_buckets_if_none() {
         if (ANKERL_UNORDERED_DENSE_UNLIKELY(m_buckets.empty()))
             ANKERL_UNORDERED_DENSE_UNLIKELY_ATTR {
@@ -2418,13 +3025,7 @@ private:
     }
 
     void clear_buckets() {
-        // Reachable now that a table can have no buckets at all -- extract() clears them on the way
-        // out whether or not there are any. data() is null in that state, and memset's pointer has
-        // to be valid even for a zero length. Neither sanitizer in CI objects, so this is on the
-        // language rule rather than on a diagnostic.
-        if (m_buckets.empty()) {
-            return;
-        }
+        static_assert(!is_view_v, "map_view and set_view are read only");
         // Clearing the groups empties every slot and zeroes every counter; the value indices
         // beside them are never read for an empty slot.
         m_buckets.clear_metadata();
@@ -2432,6 +3033,7 @@ private:
 
     // Into an index just allocated, so already empty.
     ANKERL_UNORDERED_DENSE_NOINLINE void fill_buckets_from_values() {
+        static_assert(!is_view_v, "map_view and set_view are read only");
         // Walked with an iterator rather than indexed with m_values[i], which is not a style
         // choice: placing an entry stores a fingerprint, a std::uint8_t store may alias any object
         // at all, and the container's own data pointer is such an object -- so after every
@@ -2467,7 +3069,7 @@ private:
         // in isolation (10.3 to 5.4 at 44 MB), but inside a build it is worth 0-7% of an integer
         // build above 32 MB and nothing below, because the rehash is a minority of a large build
         // and the scratch it needs is faulted in fresh every time at about a microsecond a page. Not
-        // kept; the measurement is in CLAUDE.md.
+        // kept; the measurement is in notes/index-design.md, "The rehash loop pipelined".
         //
         // The index is counted in value_idx_type and never in the container's size, for the reason
         // spelled out in replace(): max_size() is exactly what value_idx_type can hold, so a
@@ -2546,6 +3148,7 @@ private:
     // by that point the bucket is already gone, so leaving the value in place would mean size() counts an element that
     // nothing can find.
     void finish_erase(value_idx_type value_idx_to_remove) {
+        static_assert(!is_view_v, "map_view and set_view are read only");
         if (value_idx_to_remove != m_values.size() - 1) {
             // no luck, we'll have to replace the value with the last one and update the index accordingly
             auto& val = m_values[value_idx_to_remove];
@@ -2563,6 +3166,7 @@ private:
     // on the way to it are undone with.
     template <typename Op>
     void do_erase(group_slot at, value_idx_type value_idx_to_remove, std::uint64_t mh, Op handle_erased_value) {
+        static_assert(!is_view_v, "map_view and set_view are read only");
         // both values are needed once the slot is freed; start fetching them now to overlap the latencies
         ANKERL_UNORDERED_DENSE_PREFETCH(&m_values[value_idx_to_remove]);
         ANKERL_UNORDERED_DENSE_PREFETCH(&m_values.back());
@@ -2588,10 +3192,6 @@ private:
 
     template <typename K, typename Op>
     auto do_erase_key(K&& key, Op handle_erased_value) -> std::size_t { // NOLINT(cppcoreguidelines-missing-std-forward)
-        if (empty()) {
-            return 0;
-        }
-
         auto const mh = mixed_hash(key);
         auto r = probe(key, mh);
         if (!r.found) {
@@ -2603,6 +3203,7 @@ private:
 
     template <class K, class M>
     auto do_insert_or_assign(K&& key, M&& mapped) -> std::pair<iterator, bool> {
+        static_assert(!is_view_v, "map_view and set_view are read only");
         auto it_isinserted = try_emplace(std::forward<K>(key), std::forward<M>(mapped));
         if (!it_isinserted.second) {
             it_isinserted.first->second = std::forward<M>(mapped);
@@ -2651,11 +3252,15 @@ private:
     // present paid for the placement code's register pressure on a path that never places (clang
     // 73.2 instructions against 48.4) -- and was smaller than 17% of a build. The insert now returns
     // a hit in the home group before any of it (#321). Until then this was said of do_place_element,
-    // a wrapper taking the whole hash, which the key-first insert left without a caller.
+    // a wrapper taking the whole hash, which the key-first insert left without a caller. Re-measured
+    // on this function on 2026-10-02 (scripts/ab/place_inline.sh, one map per translation unit): a
+    // clang integer build 1.19-1.22x faster with the attribute, a string build 1.02-1.04x, and gcc,
+    // which inlines it anyway, unchanged for integers.
     template <typename... Args>
     ANKERL_UNORDERED_DENSE_FORCEINLINE auto
     place_element_at(std::uint32_t word, unsigned counter, value_idx_type home_idx, Args&&... args)
         -> std::pair<iterator, bool> {
+        static_assert(!is_view_v, "map_view and set_view are read only");
         // emplace the new value. If that throws an exception, no harm done; index is still in a valid state
         append_value(std::forward<Args>(args)...);
 
@@ -3043,31 +3648,53 @@ private:
     // register prologue (#305, #321).
     template <bool Piecewise, typename K, typename... Args>
     ANKERL_UNORDERED_DENSE_FORCEINLINE auto do_find_or_place(K&& key, Args&&... args) -> std::pair<iterator, bool> {
+        static_assert(!is_view_v, "map_view and set_view are read only");
         auto const mh = mixed_hash(key);
         // Taken apart once for both halves: a probe that misses is followed by a placement starting
         // from the same group with the same fingerprint.
         auto const word = fingerprint_word(mh);
         auto const home_idx = group_idx_from_hash(mh);
-        if (ANKERL_UNORDERED_DENSE_LIKELY(!empty())) {
-            // probe()'s home group, without the probe_result: returning one cost gcc a quarter of an
-            // integer hit (see probe_from).
-            auto const* groups = m_buckets.data();
-            prefetch_index(groups, home_idx);
-            auto const& home = groups[home_idx];
-            auto lanes = match_fingerprint(home, word);
-            while (lanes != 0) {
-                auto const value_idx = home.m_index[first_lane(lanes)];
-                if (m_equal(key, get_key(m_values[value_idx]))) {
-                    return {begin() + static_cast<difference_type>(value_idx), false};
-                }
-                lanes &= lanes - 1;
+        // probe()'s home group, without the probe_result: returning one cost gcc a quarter of an
+        // integer hit (see probe_from). No test for an empty table: it reads the sentinel (#329).
+        auto const* groups = m_buckets.data();
+        prefetch_index(groups, home_idx);
+        auto const& home = groups[home_idx];
+        auto lanes = match_fingerprint(home, word);
+        while (lanes != 0) {
+            auto const value_idx = home.m_index[first_lane(lanes)];
+            if (m_equal(key, get_key(m_values[value_idx]))) {
+                return {begin() + static_cast<difference_type>(value_idx), false};
             }
-        } else {
-            // A table with values has buckets; one without may not (never grown) or may (cleared). The
-            // home group of an empty table holds nothing, and m_shifts does not change when the first
-            // bucket array is allocated, so home_idx stays right across this.
-            allocate_buckets_if_none();
+            lanes &= lanes - 1;
         }
+        return find_or_place_miss<Piecewise>(mh, word, home_idx, std::forward<K>(key), std::forward<Args>(args)...);
+    }
+
+    // Everything an insert does after a miss in the home group -- the empty table's allocation, the
+    // placement and the walk past home -- behind a call, for every compiler, so that all an insert
+    // inlines into the caller's loop is the lookup in the home group (#310). Inlined, the placement's
+    // registers pushed a caller's loop variables onto the stack, and on Zen 4 a variable stored and
+    // reloaded every iteration, with a store of the found element in between and a division on the
+    // way to the next key, stops the loop overlapping its misses: 3.3x (clang) and 3.5x (gcc) in one
+    // loop of the caller corpus for 5.2.0, which inlined all of it.
+    //
+    // The shape was picked by scripts/ab/shape_search: sixteen combinations of what is inlined, each
+    // judged by its worst ratio to the best combination over the caller corpus, udb3 and ClickHouse,
+    // with the rule fixed before the results. This one is worst at 1.11 under clang and 1.58 under
+    // gcc; everything inlined is 3.3 and 3.5. What gcc gives up for it is real: its udb3
+    // insert+delete 1.39x, ClickHouse's WatchID 1.24x, the score 0.940. The empty table's allocation
+    // is in here and not in the caller: left there as a cold branch, it alone was enough to push the
+    // caller's variables to the stack again. notes/index-design.md, "stored and reloaded", "caller
+    // corpus" and "shape search".
+    template <bool Piecewise, typename K, typename... Args>
+    ANKERL_UNORDERED_DENSE_NOINLINE auto
+    find_or_place_miss(std::uint64_t mh, std::uint32_t word, value_idx_type home_idx, K&& key, Args&&... args)
+        -> std::pair<iterator, bool> {
+        // Allocates before anything is written, which keeps the sentinel (#329) unwritten, and places
+        // the first element directly rather than growing into it, which would hash it a second time.
+        // The home group of an empty table holds nothing, and m_shifts does not change when the
+        // first bucket array is allocated, so home_idx stays right across this.
+        allocate_buckets_if_none();
         auto const counter = word & 7U;
         if (ANKERL_UNORDERED_DENSE_LIKELY(m_buckets.data()[home_idx].m_overflows[counter] == 0)) {
             return place_new<Piecewise>(word, counter, home_idx, std::forward<K>(key), std::forward<Args>(args)...);
@@ -3076,8 +3703,11 @@ private:
     }
 
     // The key may have been placed past its home group: walk on, and place it if it is not there.
+    // The walk past home, which only a key whose fingerprint class overflowed its home group takes.
+    // Its own call inside the miss path: inlined there it made no measurable difference under either
+    // compiler (shape search), and called it keeps the miss path's common case small.
     template <bool Piecewise, typename K, typename... Args>
-    ANKERL_UNORDERED_DENSE_FIND_OR_PLACE_FAR auto
+    ANKERL_UNORDERED_DENSE_NOINLINE auto
     find_or_place_far(std::uint64_t mh, std::uint32_t word, value_idx_type home_idx, K&& key, Args&&... args)
         -> std::pair<iterator, bool> {
         auto const counter = word & 7U;
@@ -3112,6 +3742,7 @@ private:
     // hit. The public overloads move into this parameter.
     template <typename FwdIt, typename F>
     auto do_visit(FwdIt first, FwdIt last, F f) -> std::size_t {
+        // Not needed for the sentinel (#329), but one test per batch saves hashing the whole range.
         if (ANKERL_UNORDERED_DENSE_UNLIKELY(empty())) {
             return 0;
         }
@@ -3142,7 +3773,7 @@ private:
                 auto const& group = *block[i];
                 // The element, once it is known: converging on a pointer rather than a found-flag
                 // keeps the call to f in one place instead of one per way of arriving at it.
-                value_type* element = nullptr;
+                std::conditional_t<is_view_v, value_type const, value_type>* element = nullptr;
                 auto remaining = lanes[i];
                 while (remaining != 0) {
                     auto const lane = first_lane(remaining);
@@ -3170,19 +3801,14 @@ private:
         return found;
     }
 
+    // No test for an empty table: it reads the sentinel (#329). An empty table therefore hashes the
+    // key it finds nothing for, and every other lookup saves the test.
     template <typename K>
     auto do_find(K const& key) -> iterator {
-        if (ANKERL_UNORDERED_DENSE_UNLIKELY(empty()))
-            ANKERL_UNORDERED_DENSE_UNLIKELY_ATTR {
-                return end();
-            }
-
         return do_find_hashed(key, mixed_hash(key));
     }
 
-    // Same lookup with the hashing already done. Requires the bucket array to be allocated, which
-    // !empty() implies; the callers test empty() rather than this function so that a lookup in an
-    // empty table returns without hashing anything.
+    // Same lookup with the hashing already done.
     template <typename K>
     auto do_find_hashed(K const& key, std::uint64_t mh) -> iterator {
         auto r = probe(key, mh);
@@ -3196,11 +3822,6 @@ private:
 
     template <typename K>
     auto do_find(K const& key, precomputed_hash ph) -> iterator {
-        if (ANKERL_UNORDERED_DENSE_UNLIKELY(empty()))
-            ANKERL_UNORDERED_DENSE_UNLIKELY_ATTR {
-                return end();
-            }
-
         return do_find_hashed(key, ph.m_mixed_hash);
     }
 
@@ -3210,7 +3831,7 @@ private:
     }
 
     template <typename K, typename Q = T, std::enable_if_t<is_map_v<Q>, bool> = true>
-    auto do_at(K const& key) -> Q& {
+    auto do_at(K const& key) -> mapped_ref<Q> {
         if (auto it = find(key); ANKERL_UNORDERED_DENSE_LIKELY(end() != it))
             ANKERL_UNORDERED_DENSE_LIKELY_ATTR {
                 return it->second;
@@ -3224,7 +3845,7 @@ private:
     }
 
     template <typename K, typename Q = T, std::enable_if_t<is_map_v<Q>, bool> = true>
-    auto do_at(K const& key, precomputed_hash ph) -> Q& {
+    auto do_at(K const& key, precomputed_hash ph) -> mapped_ref<Q> {
         if (auto it = find(key, ph); ANKERL_UNORDERED_DENSE_LIKELY(end() != it))
             ANKERL_UNORDERED_DENSE_LIKELY_ATTR {
                 return it->second;
@@ -3254,8 +3875,10 @@ public:
         }
     }
 
+    // Not table(0): that instantiates reserve(), which a map_view must not reach.
     table()
-        : table(0) {}
+        : m_values(allocator_type())
+        , m_buckets(allocator_type()) {}
 
     table(std::size_t bucket_count, allocator_type const& alloc)
         : table(bucket_count, Hash(), KeyEqual(), alloc) {}
@@ -3356,6 +3979,75 @@ public:
     table(std::initializer_list<value_type> init, size_type bucket_count, Hash const& hash, allocator_type const& alloc)
         : table(init, bucket_count, hash, KeyEqual(), alloc) {}
 
+    // An owning table from its values and an index (#299), with no hashing: moves the values in and
+    // copies the index. With trust::checked it checks every slot in the same loop as the copy
+    // (check_index_block), which costs the load 4.3-6.1x at 1M entries and 1.4-1.7x at 16M-64M
+    // against the copy alone (notes/index-design.md, "Loading a map from its values and its index"), so the
+    // caller decides: with trust::unchecked the caller vouches for the bytes, and bytes that would
+    // fail the check can make a lookup read out of bounds, an insert never end, or an erase corrupt
+    // the table. Either way it rejects an index that does not fit (on_error_bad_index()), and then
+    // leaves `values` as it was. The check makes the bytes safe to read, insert into and erase
+    // from; only verify(verify_level::full) makes them correct, and an index that passes one and
+    // not the other can make an erase reach on_error_key_changed(). Takes the values' allocator.
+    template <bool V = is_view_v, std::enable_if_t<!V, bool> = true>
+    table(value_container_type&& values,
+          index_view index,
+          trust t,
+          Hash const& hash = Hash(),
+          KeyEqual const& equal = KeyEqual())
+        : m_values(values.get_allocator())
+        , m_buckets(values.get_allocator())
+        , m_hash(hash)
+        , m_equal(equal) {
+        load_index(index, values.size(), t);
+        // Assigned rather than initialized, so that a rejected index leaves the caller's values alone.
+        m_values = std::move(values); // NOLINT(cppcoreguidelines-prefer-member-initializer)
+    }
+
+    // A read only table over a caller's values and index (#299): holds both as views, copies
+    // nothing. With trust::unchecked it is O(1) and the caller vouches for the bytes: bytes that
+    // fail check_index() can make a lookup read out of bounds. With trust::checked it scans the
+    // index once. Either way it rejects an index of the wrong shape or alignment, or values that
+    // are not aligned for value_type.
+    template <bool V = is_view_v, std::enable_if_t<V, bool> = true>
+    table(
+        value_container_type values, index_view index, trust t, Hash const& hash = Hash(), KeyEqual const& equal = KeyEqual())
+        : m_values(values)
+        , m_hash(hash)
+        , m_equal(equal) {
+        check_index_shape(index, values.size());
+        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+        if (values.size() != 0 && reinterpret_cast<std::uintptr_t>(values.data()) % alignof(value_type) != 0) {
+            on_error_bad_index();
+        }
+        if (t == trust::checked && !detail::check_index(index.data(), index.size(), values.size())) {
+            on_error_bad_index();
+        }
+        if (!index.empty()) {
+            m_buckets.assign(index.data(), index.size());
+            describe_loaded_index(index.size());
+        }
+    }
+
+    // The other direction: an owning table from a view, copying both arrays, no hashing. Checks the
+    // index like the owning constructor above, whatever trust the view was built with, so that an
+    // unchecked view cannot turn into an owning table whose placement walks were never made safe.
+    template <bool V = is_view_v, std::enable_if_t<!V, bool> = true>
+    explicit table(view_type const& view)
+        : table(0, view.hash_function(), view.key_eq()) {
+        load_index(view.index(), view.size(), trust::checked);
+        if constexpr (detail::is_detected_v<detail::detect_range_assign, value_container_type, value_type const*>) {
+            m_values.assign(view.begin(), view.end()); // one copy of the range, a memcpy where it can be
+        } else {
+            if constexpr (has_reserve<value_container_type>) {
+                m_values.reserve(view.size());
+            }
+            for (auto const& v : view) { // segmented_vector has no assign
+                m_values.emplace_back(v);
+            }
+        }
+    }
+
     ~table() = default;
 
     auto operator=(table const& other) -> table& {
@@ -3427,7 +4119,7 @@ public:
     }
 
     auto cbegin() const noexcept -> const_iterator {
-        return m_values.cbegin();
+        return begin(); // the const one: a value container need not have cbegin()
     }
 
     auto end() noexcept -> iterator {
@@ -3435,7 +4127,7 @@ public:
     }
 
     auto cend() const noexcept -> const_iterator {
-        return m_values.cend();
+        return end();
     }
 
     auto end() const noexcept -> const_iterator {
@@ -3906,9 +4598,9 @@ public:
         return tmp;
     }
 
-    void swap(table& other) noexcept(std::is_nothrow_swappable_v<value_container_type> &&
-                                     std::is_nothrow_swappable_v<bucket_container_type> && std::is_nothrow_swappable_v<Hash> &&
+    void swap(table& other) noexcept(std::is_nothrow_swappable_v<value_container_type> && std::is_nothrow_swappable_v<Hash> &&
                                      std::is_nothrow_swappable_v<KeyEqual>) {
+        static_assert(!is_view_v, "map_view and set_view are read only");
         // There is no free swap() for table, so "swap(other, *this)" used to resolve to the generic std::swap: three
         // move assignments, each of which hands the moved-from table a freshly allocated set of buckets. That is three
         // allocations for an operation that needs none, and three ways to throw out of a noexcept function.
@@ -3954,7 +4646,7 @@ public:
     // lookup /////////////////////////////////////////////////////////////////
 
     template <typename Q = T, std::enable_if_t<is_map_v<Q>, bool> = true>
-    auto at(key_type const& key) -> Q& {
+    auto at(key_type const& key) -> mapped_ref<Q> {
         return do_at(key);
     }
 
@@ -3963,7 +4655,7 @@ public:
               typename H = Hash,
               typename KE = KeyEqual,
               std::enable_if_t<is_map_v<Q> && is_transparent_v<H, KE>, bool> = true>
-    auto at(K const& key) -> Q& {
+    auto at(K const& key) -> mapped_ref<Q> {
         return do_at(key);
     }
 
@@ -3983,11 +4675,13 @@ public:
 
     template <typename Q = T, std::enable_if_t<is_map_v<Q>, bool> = true>
     ANKERL_UNORDERED_DENSE_FORCEINLINE auto operator[](Key const& key) -> Q& {
+        static_assert(!is_view_v, "map_view and set_view are read only");
         return try_emplace(key).first->second;
     }
 
     template <typename Q = T, std::enable_if_t<is_map_v<Q>, bool> = true>
     ANKERL_UNORDERED_DENSE_FORCEINLINE auto operator[](Key&& key) -> Q& {
+        static_assert(!is_view_v, "map_view and set_view are read only");
         return try_emplace(std::move(key)).first->second;
     }
 
@@ -3997,6 +4691,7 @@ public:
               typename KE = KeyEqual,
               std::enable_if_t<is_map_v<Q> && is_transparent_v<H, KE>, bool> = true>
     ANKERL_UNORDERED_DENSE_FORCEINLINE auto operator[](K&& key) -> Q& {
+        static_assert(!is_view_v, "map_view and set_view are read only");
         return try_emplace(std::forward<K>(key)).first->second;
     }
 
@@ -4129,8 +4824,8 @@ public:
     // getting that backwards is a wrong answer rather than a crash.
     //
     // f is taken by value, as the standard algorithms take a callable, and is called with
-    // value_type& -- or value_type const& on a const map. Keys that are absent are not reported; the
-    // return value counts the ones that were found.
+    // value_type& -- or value_type const& on a const map and on any map_view or set_view. Keys that
+    // are absent are not reported; the return value counts the ones that were found.
     template <typename FwdIt, typename F>
     auto visit(FwdIt first, FwdIt last, F f) -> std::size_t {
         return do_visit(first, last, std::move(f));
@@ -4205,7 +4900,7 @@ public:
     }
 
     template <typename Q = T, std::enable_if_t<is_map_v<Q>, bool> = true>
-    auto at(key_type const& key, precomputed_hash ph) -> Q& {
+    auto at(key_type const& key, precomputed_hash ph) -> mapped_ref<Q> {
         return do_at(key, ph);
     }
 
@@ -4219,7 +4914,7 @@ public:
               typename H = Hash,
               typename KE = KeyEqual,
               std::enable_if_t<is_map_v<Q> && is_transparent_v<H, KE>, bool> = true>
-    auto at(K const& key, precomputed_hash ph) -> Q& {
+    auto at(K const& key, precomputed_hash ph) -> mapped_ref<Q> {
         return do_at(key, ph);
     }
 
@@ -4265,6 +4960,54 @@ public:
         return m_buckets.size() * sizeof(typename bucket_container_type::block);
     }
 
+    // nonstandard API (#299): the index as it is, index_bytes() bytes from index().data(), and an
+    // index of size() 0 for a table that has not allocated one. Write it next to values() and
+    // index_format_id, and construct from the three. Invalidated by anything that rehashes, as
+    // values() is by anything that grows. Call rehash(size()) first if the table has seen churn:
+    // a loaded index never runs move_home, so whatever drift it has stays in it.
+    [[nodiscard]] auto index() const noexcept -> index_view {
+        return m_buckets.empty() ? index_view() : index_view(m_buckets.data(), m_buckets.size());
+    }
+
+    // nonstandard API (#299): a read only view of this table, sharing its bytes; invalidated like
+    // index() and values(). For values in one array; a segmented table has none.
+    template <bool V = is_view_v, std::enable_if_t<!V && !IsSegmented, bool> = true>
+    [[nodiscard]] auto view() const noexcept -> view_type {
+        return view_type(
+            detail::view_container<value_type>(m_values.data(), m_values.size()), index(), trust::unchecked, m_hash, m_equal);
+    }
+
+    // nonstandard API (#299): whether the index agrees with the hasher, through the map's own
+    // lookup so that it cannot disagree with it. Value i is consistent when find() of its key
+    // returns begin() + i: that covers the fingerprint, the probe path from the home group, every
+    // counter the path depends on, and duplicate keys. `full` checks every value, which also makes
+    // the index a bijection onto the values; `spot` checks 16 values spread evenly over the table,
+    // enough to catch a wrong hasher or seed, touching 16 groups of a lazily paged index. Neither
+    // finds a counter that is too high: that lengthens a miss and changes no answer.
+    [[nodiscard]] auto verify(verify_level level = verify_level::spot) const -> bool {
+        auto const n = m_values.size();
+        auto consistent = [&](std::size_t i) -> bool {
+            auto it = find(get_key(m_values[i]));
+            return it != end() && static_cast<std::size_t>(it - begin()) == i;
+        };
+        if (level == verify_level::full) {
+            for (std::size_t i = 0; i < n; ++i) {
+                if (!consistent(i)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        constexpr std::size_t spots = 16;
+        for (std::size_t j = 0; j < spots && n != 0; ++j) {
+            // floor(j * n / spots) without the product, which can overflow
+            if (!consistent((j * (n / spots)) + ((j * (n % spots)) / spots))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // hash policy ////////////////////////////////////////////////////////////
 
     [[nodiscard]] auto load_factor() const -> float {
@@ -4276,6 +5019,7 @@ public:
     }
 
     void max_load_factor(float ml) {
+        static_assert(!is_view_v, "map_view and set_view are read only");
         // A load factor above 1 is meaningful for a container that chains, and std::unordered_map takes one. Open
         // addressing cannot use it: m_max_bucket_capacity would exceed bucket_count(), is_full() would never fire, the
         // table would fill completely, and place_group() would then probe forever for an empty slot that does not
@@ -4287,6 +5031,7 @@ public:
     }
 
     void rehash(std::size_t count) {
+        static_assert(!is_view_v, "map_view and set_view are read only");
         count = (std::min)(count, max_size());
         auto const shifts = calc_shifts_for_size((std::max)(count, size()));
         if (shifts != m_shifts) {
@@ -4439,6 +5184,15 @@ using segmented_set = detail::table<Key,
                                     detail::segmented_container_for<Key, AllocatorOrContainer, MaxSegmentSizeBytes>,
                                     Bucket,
                                     true>;
+
+// A read only map or set over memory the caller owns (#299): the values as one array and the index
+// as table::index() gave it out, constructed from both with no hashing and nothing copied. See
+// "Loading a map from its values and its index" in doc/usage.md for what the caller must provide.
+template <class Key, class T, class Hash = hash<Key>, class KeyEqual = std::equal_to<Key>, class Bucket = bucket_type::group>
+using map_view = detail::table<Key, T, Hash, KeyEqual, detail::view_container<std::pair<Key, T>>, Bucket, false>;
+
+template <class Key, class Hash = hash<Key>, class KeyEqual = std::equal_to<Key>, class Bucket = bucket_type::group>
+using set_view = detail::table<Key, void, Hash, KeyEqual, detail::view_container<Key>, Bucket, false>;
 
 #    if defined(ANKERL_UNORDERED_DENSE_PMR)
 
