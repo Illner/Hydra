@@ -52,24 +52,24 @@ namespace Hydra::HypergraphPartitioning {
             }
         }
 
-        MappingFromVariableToVariableType mappingFromRepresentantToPriority(currentComponentVariableSet.size());
+        MappingFromVariableToVariableType mappingFromRepresentativeToPriority(currentComponentVariableSet.size());
 
         VarT position = 0;
 
         for (const VariableVectorType& variableVector : equivalencePreprocessingStruct.equivalencePreprocessingStructure) {
             assert(variableVector.size() > 1);   // at least two variables
 
-            VarT representant = variableVector[0];
+            VarT representative = variableVector[0];
 
-            // The representant is out of the component
-            if (!Other::containInSet(currentComponentVariableSet, representant))
+            // The representative is out of the component
+            if (!Other::containInSet(currentComponentVariableSet, representative))
                 continue;
 
-            // The representant is ignored pure
-            if (Other::containInSet(ignoredPureVariableSet, representant))
+            // The representative is ignored pure
+            if (Other::containInSet(ignoredPureVariableSet, representative))
                 continue;
 
-            assert(!formulaRepresentationAbstractPtr_->isVariableAssigned(representant));   // representant is not assigned
+            assert(!formulaRepresentationAbstractPtr_->isVariableAssigned(representative));   // representative is not assigned
 
             ++position;
             VarT priority = 0;
@@ -86,19 +86,19 @@ namespace Hydra::HypergraphPartitioning {
                 assert(!formulaRepresentationAbstractPtr_->isVariableAssigned(var));   // variable is not assigned
 
                 ++priority;
-                computeConnectedComponents_.addConnection(representant, var);
+                computeConnectedComponents_.addConnection(representative, var);
             }
 
-            assert(!Other::containInMap(mappingFromRepresentantToPriority, representant));
+            assert(!Other::containInMap(mappingFromRepresentativeToPriority, representative));
 
             // Singleton
             if (priority == 1)
                 continue;
 
             if (equivalencePreprocessingStruct.ignoreMultiOccurrentIgnoredVariables)
-                mappingFromRepresentantToPriority[representant] = position;
+                mappingFromRepresentativeToPriority[representative] = position;
             else
-                mappingFromRepresentantToPriority[representant] = priority;
+                mappingFromRepresentativeToPriority[representative] = priority;
         }
 
         // Equivalence structure
@@ -110,20 +110,20 @@ namespace Hydra::HypergraphPartitioning {
         std::size_t currentIndex = 0;
 
         for (const ConnectedComponentStruct& connectedComponentStruct : connectedComponent) {
-            VarT representant = 0;
+            VarT representative = 0;
 
             // Singleton
             if (connectedComponentStruct.variableSet.size() == 1) {
-                representant = *(connectedComponentStruct.variableSet.cbegin());
+                representative = *(connectedComponentStruct.variableSet.cbegin());
             }
             else {
                 VarT maxPriority = 0;
 
                 for (VarT var : connectedComponentStruct.variableSet) {
-                    if (auto itTmp = mappingFromRepresentantToPriority.find(var); itTmp != mappingFromRepresentantToPriority.end()) {
+                    if (auto itTmp = mappingFromRepresentativeToPriority.find(var); itTmp != mappingFromRepresentativeToPriority.end()) {
                         if (maxPriority < itTmp->second) {
                             maxPriority = itTmp->second;
-                            representant = itTmp->first;
+                            representative = itTmp->first;
                         }
                     }
                 }
@@ -131,18 +131,18 @@ namespace Hydra::HypergraphPartitioning {
                 assert(maxPriority > 0);   // max priority is set
             }
 
-            assert(representant > 0);   // representant is set
+            assert(representative > 0);   // representative is set
 
             l_equivalenceStructureVector_equivalenceStruct_[currentIndex].clear();
-            l_variableOrderReusableVector_equivalenceStruct_.emplace_back(representant);
+            l_variableOrderReusableVector_equivalenceStruct_.emplace_back(representative);
 
             for (VarT var : connectedComponentStruct.variableSet) {
                 assert(!l_equivalenceVectorMap_equivalenceStruct_.contains(var));
 
                 l_equivalenceStructureVector_equivalenceStruct_[currentIndex].emplace_back(var);
 
-                if (var != representant)
-                    l_equivalenceVectorMap_equivalenceStruct_.emplace(var, representant);
+                if (var != representative)
+                    l_equivalenceVectorMap_equivalenceStruct_.emplace(var, representative);
             }
 
             #ifndef NDEBUG

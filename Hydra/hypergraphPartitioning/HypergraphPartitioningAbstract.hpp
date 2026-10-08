@@ -190,7 +190,7 @@ namespace Hydra::HypergraphPartitioning {
         mutable OccurrenceListStruct l_occurrenceListStruct_;
 
         // Local auxiliary data structures - equivalence structure
-        mutable VariableVectorMapType l_equivalenceVectorMap_equivalenceStruct_;   // key: dominated variable, value: representant
+        mutable VariableVectorMapType l_equivalenceVectorMap_equivalenceStruct_;   // key: dominated variable, value: representative
         mutable VariableReusableVectorType l_variableOrderReusableVector_equivalenceStruct_;
         mutable EquivalenceStructureVectorType l_equivalenceStructureVector_equivalenceStruct_;
 
@@ -267,7 +267,7 @@ namespace Hydra::HypergraphPartitioning {
          *      l_clauseThatVariableSubsumesSomeClauseVectorSet_createOccurrenceListStruct_
          * @param variableOrderReusableVector a variable order
          * @param currentComponentVariableSet a set of variables appearing in the current component
-         * @param equivalenceVectorMap a vector map that maps every dominated variable to its representant (used by the equivalence simplification method)
+         * @param equivalenceVectorMap a vector map that maps every dominated variable to its representative (used by the equivalence simplification method)
          * @param equivalenceStructureVector for every variable, it stores a vector of variables that are dominated by that variable (used by the equivalence simplification method)
          */
         void createOccurrenceListStruct(const VariableReusableVectorType& variableOrderReusableVector,

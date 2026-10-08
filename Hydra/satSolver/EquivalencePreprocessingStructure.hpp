@@ -24,6 +24,6 @@ namespace Hydra::SatSolver {
     public:
         bool ignoreMultiOccurrentIgnoredVariables;
         LiteralVectorType implicitImpliedLiteralVector = {};
-        EquivalencePreprocessingStructureType equivalencePreprocessingStructure = {};   // [[representant, dominated_1, ...], ...]
+        EquivalencePreprocessingStructureType equivalencePreprocessingStructure = {};   // [[representative, dominated_1, ...], ...]
     };
 }   // namespace Hydra::SatSolver

@@ -98,11 +98,11 @@ namespace HydraTest::SatSolver {
 
         // Equivalence preprocessing structure
         for (VariableVectorType& equivalence : equivalencePreprocessingStruct.equivalencePreprocessingStructure) {
-            VarT representant = equivalence[0];
+            VarT representative = equivalence[0];
 
             std::sort(equivalence.begin(), equivalence.end());
 
-            actualResult << std::to_string(representant) << ":";
+            actualResult << std::to_string(representative) << ":";
             for (VarT var : equivalence)
                 actualResult << " " << std::to_string(var);
             actualResult << std::endl;

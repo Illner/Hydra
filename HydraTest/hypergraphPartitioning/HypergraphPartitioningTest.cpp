@@ -124,7 +124,7 @@ namespace HydraTest::HypergraphPartitioning {
         for (const VariableVectorType& variableVector : equivalencePreprocessingStruct.equivalencePreprocessingStructure) {
             assert(variableVector.size() > 1);
 
-            // Representant
+            // Representative
             actualResult << std::to_string(variableVector[0]) << " |";
 
             for (VarT var : variableVector)
