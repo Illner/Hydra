@@ -6,14 +6,26 @@ namespace Hydra::Other {
 
     template <typename TypeT>
     TypeT computeNumberOfLiteralsDesignedForMethodsOfTypeCanBeSavedAs(TypeT numberOfVariables) noexcept {
-        return (TypeT)1 + (TypeT)2 * numberOfVariables;
+        return static_cast<TypeT>(1) + static_cast<TypeT>(2) * numberOfVariables;
     }
 
     template <typename TypeT>
     bool variablesCanBeSavedAsTypeT(LargeNumberType numberOfVariables) noexcept {
-        LargeNumberType tmp = std::numeric_limits<TypeT>::max();   // 0, which is not a valid value, is not included
+        LargeNumberType maxValueTypeT = std::numeric_limits<TypeT>::max();   // 0, which is not a valid value, is not included
 
-        if (numberOfVariables <= tmp)
+        --maxValueTypeT;   // because of "for (VarT var = 1; var <= n; ++var)"
+
+        if (numberOfVariables <= maxValueTypeT)
+            return true;
+
+        return false;
+    }
+
+    template <typename TypeT>
+    bool variablesCanBeSavedAsTypeTForCache(LargeNumberType numberOfVariables) noexcept {
+        LargeNumberType maxValueTypeT = std::numeric_limits<TypeT>::max();   // 0, which is not a valid value, is not included
+
+        if (numberOfVariables <= maxValueTypeT)
             return true;
 
         return false;
@@ -25,10 +37,15 @@ namespace Hydra::Other {
     }
 
     template <typename TypeT>
-    bool clauseIdCanBeSavedAsTypeT(LargeNumberType numberOfClauseId) noexcept {
-        LargeNumberType tmp = std::numeric_limits<TypeT>::max();   // O, which can be "considered" as the separator (ContiguousOccurrenceList), is not included
+    bool literalsCanBeSavedAsTypeTForCache(LargeNumberType numberOfVariables) noexcept {
+        return variablesCanBeSavedAsTypeTForCache<TypeT>(computeNumberOfLiteralsDesignedForMethodsOfTypeCanBeSavedAs(numberOfVariables));
+    }
 
-        if (numberOfClauseId <= tmp)
+    template <typename TypeT>
+    bool clauseIdCanBeSavedAsTypeT(LargeNumberType numberOfClauseId) noexcept {
+        LargeNumberType maxValueTypeT = std::numeric_limits<TypeT>::max();   // numberOfClauseId, which can be "considered" as the separator (ContiguousOccurrenceList), is included
+
+        if (numberOfClauseId <= maxValueTypeT)
             return true;
 
         return false;
