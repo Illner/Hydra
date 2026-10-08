@@ -4,7 +4,7 @@
 
 #include "HydraTest/TemplateTest.hpp"
 #include "HydraTest/external/unitTesting/Catch2/catch.hpp"
-#include "HydraTest/other/MergeSortTestResult.hpp"
+#include "HydraTest/other/mergeSort/MergeSortTestResult.hpp"
 
 #include "Hydra/other/Other.hpp"
 
