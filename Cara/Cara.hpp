@@ -13,20 +13,25 @@
 #include "Hydra/compiler/exceptions/ParserException.hpp"
 #include "Hydra/formula/exceptions/FormulaRepresentationException.hpp"
 
-using MpzIntType = Cara::CommandLineArguments::MpzIntType;
-using LargeFloatingNumberType = Hydra::Other::LargeFloatingNumberType;
+namespace Cara {
 
-inline constexpr std::string_view COMMENT_FOR_MODEL_COUNTING_COMPETITION = "c o";
+    using MpzIntType = CommandLineArguments::MpzIntType;
+    using LargeFloatingNumberType = Hydra::Other::LargeFloatingNumberType;
 
-/**
- * Print out the output respecting the format for the model counting competition
- * Model counting type: mc (model counting)
- * @param numberOfModels the number of models
- * @param computingTime [optional] the computing time
- */
-void printModelCountingOutputForModelCountingCompetition(const MpzIntType& numberOfModels, LargeFloatingNumberType computingTime = 0);
+    inline constexpr std::string_view COMMENT_FOR_MODEL_COUNTING_COMPETITION = "c o";
+
+    /**
+     * Print out the output respecting the format for the model counting competition
+     * Model counting type: mc (model counting)
+     * @param numberOfModels the number of models
+     * @param computingTime [optional] the computing time
+     */
+    void printModelCountingOutputForModelCountingCompetition(const MpzIntType& numberOfModels, LargeFloatingNumberType computingTime = 0);
+}   // namespace Cara
 
 int main(int argc, char* argv[]) {
+    using MpzIntType = Cara::MpzIntType;
+    using Cara::COMMENT_FOR_MODEL_COUNTING_COMPETITION;
     using CommandLineArgumentsStruct = typename Cara::CommandLineArguments::CommandLineArgumentsStruct;
 
     // Hydra::Other::printBuildType(std::cout);
@@ -44,26 +49,26 @@ int main(int argc, char* argv[]) {
         std::cout << COMMENT_FOR_MODEL_COUNTING_COMPETITION << std::endl;
 
         try {
-            coreMain(commandLineArgumentsStruct, nullptr, nullptr);
+            Hydra::coreMain(commandLineArgumentsStruct, nullptr, nullptr);
         }
         // The formula is empty
         catch (const Hydra::Exception::Formula::Representation::FormulaIsEmptyException& e) {
-            modifyConfigurationAfterParsingFormula(commandLineArgumentsStruct);
-            printConfigurationBeforeCompilation(commandLineArgumentsStruct);
+            Hydra::modifyConfigurationAfterParsingFormula(commandLineArgumentsStruct);
+            Hydra::printConfigurationBeforeCompilation(commandLineArgumentsStruct);
 
             // Compute the number of models
             MpzIntType numberOfModels = MpzIntType(1) << commandLineArgumentsStruct.numberOfVariables;   // 2^|V|
             numberOfModels *= commandLineArgumentsStruct.mustMultiplyByFactor;
 
-            printModelCountingOutputForModelCountingCompetition(numberOfModels);
+            Cara::printModelCountingOutputForModelCountingCompetition(numberOfModels);
         }
         // There is an empty clause
         catch (const Hydra::Exception::Parser::ClauseIsEmptyException& e) {
-            modifyConfigurationAfterParsingFormula(commandLineArgumentsStruct);
-            printConfigurationBeforeCompilation(commandLineArgumentsStruct);
+            Hydra::modifyConfigurationAfterParsingFormula(commandLineArgumentsStruct);
+            Hydra::printConfigurationBeforeCompilation(commandLineArgumentsStruct);
 
             MpzIntType numberOfModels = MpzIntType(0);
-            printModelCountingOutputForModelCountingCompetition(numberOfModels);
+            Cara::printModelCountingOutputForModelCountingCompetition(numberOfModels);
         }
     }
     catch (const std::exception& e) {
