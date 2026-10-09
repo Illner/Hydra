@@ -35,10 +35,10 @@ int main(int argc, char* argv[]) {
         Hydra::Statistics::Statistics statistics;
 
         // Atomic
-        AtomicBoolType killedByMainThread = false;
+        Hydra::AtomicBoolType killedByMainThread = false;
 
         // Future
-        std::packaged_task<void(CommandLineArgumentsStruct&, StatisticsPtrType, AtomicBoolPtrType)> task(coreMain<CommandLineArgumentsStruct>);
+        std::packaged_task<void(CommandLineArgumentsStruct&, Hydra::StatisticsPtrType, Hydra::AtomicBoolPtrType)> task(Hydra::coreMain<CommandLineArgumentsStruct>);
         auto future = task.get_future();
 
         std::thread thread(std::move(task), std::ref(commandLineArgumentsStruct),
