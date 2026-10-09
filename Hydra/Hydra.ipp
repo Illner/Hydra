@@ -2,7 +2,8 @@
 
 #include "./Hydra.hpp"
 
-#include "Hydra/formula/representation/contiguous/parser/cnf/ContiguousFormulaCnfParser.hpp"
+#include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.hpp"
+#include "Hydra/parser/cnf/CnfParser.hpp"
 
 template <typename CommandLineArgumentsStructT>
 void initialAdjustmentToConfiguration(CommandLineArgumentsStructT& commandLineArgumentsStruct) {
@@ -34,6 +35,8 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
     using LargeNumberType = Hydra::Other::LargeNumberType;
     using ModelCountingTypeEnum = Cara::ModelCountingTypeEnum;
     using DimacsCnfHeaderStruct = Hydra::Other::Parser::DimacsCnfHeaderStruct;
+    using CnfPreprocessorAbstractType = Hydra::Preprocessor::Cnf::CnfPreprocessorAbstract;
+    using ParsedFormulaStruct = Hydra::Preprocessor::Cnf::CnfPreprocessorAbstract::ParsedFormulaStruct;
 
     initialAdjustmentToConfiguration(commandLineArgumentsStruct);
 
@@ -71,7 +74,7 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
 
     // The literals cannot be saved as std::size_t
     LargeNumberType tmp = Hydra::Other::computeNumberOfLiteralsDesignedForMethodsOfTypeCanBeSavedAs(dimacsCnfHeader.numberOfVariables);
-    if (!Hydra::Other::unsignedValueCanBeSavedAsStdSizeT<LargeNumberType>(tmp))
+    if (!Hydra::Other::unsignedValueCanBeSavedAsStdSizeT<LargeNumberType>(tmp, 1))
         throw Hydra::Exception::SomethingCannotBeSavedAsStdSizeTException("literals", tmp);
 
     // The clauses cannot be saved as std::size_t
@@ -86,22 +89,45 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
     commandLineArgumentsStruct.numberOfVariables = static_cast<std::size_t>(dimacsCnfHeader.numberOfVariables);
     #endif
 
+    // The variables cannot be saved as the CNF preprocessor type
+    if (!Hydra::Other::variablesCanBeSavedAsTypeT<CnfPreprocessorAbstractType::VarT>(dimacsCnfHeader.numberOfVariables))
+        throw Hydra::Exception::FormulaHasTooManySomethingException("variables");
+
+    // The literals cannot be saved as the CNF preprocessor type
+    if (!Hydra::Other::literalsCanBeSavedAsTypeT<CnfPreprocessorAbstractType::LiteralT>(dimacsCnfHeader.numberOfVariables))
+        throw Hydra::Exception::FormulaHasTooManySomethingException("literals");
+
+    // The clauses cannot be saved as the CNF preprocessor type
+    if (!Hydra::Other::clauseIdCanBeSavedAsTypeT<CnfPreprocessorAbstractType::ClauseIdT>(dimacsCnfHeader.numberOfClauses))
+        throw Hydra::Exception::FormulaHasTooManySomethingException("clauses");
+
+    ParsedFormulaStruct parsedFormulaStruct = Hydra::Parser::Cnf::parseCnfFormula<CnfPreprocessorAbstractType::VarT,
+                                                                                  CnfPreprocessorAbstractType::LiteralT,
+                                                                                  CnfPreprocessorAbstractType::ClauseIdT>(begin, end,
+                                                                                                                          dimacsCnfHeader, line, modelCountingType, false,
+                                                                                                                          statisticsPtr ? statisticsPtr->getCnfParserStatisticsPtr() : nullptr);
+
+    // CNF preprocessor
+    CnfPreprocessorAbstractUniquePtrType cnfPreprocessorAbstractUniquePtr = initializeCnfPreprocessor(commandLineArgumentsStruct.cnfPreprocessorStruct,
+                                                                                                      statisticsPtr ? statisticsPtr->getCnfPreprocessorStatisticsPtr() : nullptr);
+    ParsedFormulaStruct preprocessedFormulaStruct = cnfPreprocessorAbstractUniquePtr->preprocess(std::move(parsedFormulaStruct));
+
     // ClauseIdT = char8_t
-    if (Hydra::Other::clauseIdCanBeSavedAsTypeT<char8_t>(dimacsCnfHeader.numberOfClauses)) {
+    if (Hydra::Other::clauseIdCanBeSavedAsTypeT<char8_t>(preprocessedFormulaStruct.numberOfClauses)) {
         using ClauseIdT = char8_t;
         TemplateTypeEnum clauseIdTemplateType = TemplateTypeEnum::CHAR8_T;
 
         // VarT = char8_t
-        if (Hydra::Other::variablesCanBeSavedAsTypeT<char8_t>(dimacsCnfHeader.numberOfVariables)) {
+        if (Hydra::Other::variablesCanBeSavedAsTypeT<char8_t>(preprocessedFormulaStruct.numberOfVariables)) {
             using VarT = char8_t;
             TemplateTypeEnum varTemplateType = TemplateTypeEnum::CHAR8_T;
 
             // LiteralT = char8_t
-            if (Hydra::Other::literalsCanBeSavedAsTypeT<char8_t>(dimacsCnfHeader.numberOfVariables)) {
+            if (Hydra::Other::literalsCanBeSavedAsTypeT<char8_t>(preprocessedFormulaStruct.numberOfVariables)) {
                 using LiteralT = char8_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR8_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(std::make_unique<Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>>(ParsedFormulaStruct::convertTypes<VarT, LiteralT, ClauseIdT>(std::move(preprocessedFormulaStruct)), commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -115,12 +141,12 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
 
             // LiteralT = char16_t
             else {
-                assert(Hydra::Other::literalsCanBeSavedAsTypeT<char16_t>(dimacsCnfHeader.numberOfVariables));
+                assert(Hydra::Other::literalsCanBeSavedAsTypeT<char16_t>(preprocessedFormulaStruct.numberOfVariables));
 
                 using LiteralT = char16_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR16_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(std::make_unique<Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>>(ParsedFormulaStruct::convertTypes<VarT, LiteralT, ClauseIdT>(std::move(preprocessedFormulaStruct)), commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -134,16 +160,16 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
         }
 
         // VarT = char16_t
-        else if (Hydra::Other::variablesCanBeSavedAsTypeT<char16_t>(dimacsCnfHeader.numberOfVariables)) {
+        else if (Hydra::Other::variablesCanBeSavedAsTypeT<char16_t>(preprocessedFormulaStruct.numberOfVariables)) {
             using VarT = char16_t;
             TemplateTypeEnum varTemplateType = TemplateTypeEnum::CHAR16_T;
 
             // LiteralT = char16_t
-            if (Hydra::Other::literalsCanBeSavedAsTypeT<char16_t>(dimacsCnfHeader.numberOfVariables)) {
+            if (Hydra::Other::literalsCanBeSavedAsTypeT<char16_t>(preprocessedFormulaStruct.numberOfVariables)) {
                 using LiteralT = char16_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR16_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(std::make_unique<Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>>(ParsedFormulaStruct::convertTypes<VarT, LiteralT, ClauseIdT>(std::move(preprocessedFormulaStruct)), commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -157,12 +183,12 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
 
             // LiteralT = char32_t
             else {
-                assert(Hydra::Other::literalsCanBeSavedAsTypeT<char32_t>(dimacsCnfHeader.numberOfVariables));
+                assert(Hydra::Other::literalsCanBeSavedAsTypeT<char32_t>(preprocessedFormulaStruct.numberOfVariables));
 
                 using LiteralT = char32_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR32_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(std::make_unique<Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>>(ParsedFormulaStruct::convertTypes<VarT, LiteralT, ClauseIdT>(std::move(preprocessedFormulaStruct)), commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -176,16 +202,16 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
         }
 
         // VarT = char32_t
-        else if (Hydra::Other::variablesCanBeSavedAsTypeT<char32_t>(dimacsCnfHeader.numberOfVariables)) {
+        else if (Hydra::Other::variablesCanBeSavedAsTypeT<char32_t>(preprocessedFormulaStruct.numberOfVariables)) {
             using VarT = char32_t;
             TemplateTypeEnum varTemplateType = TemplateTypeEnum::CHAR32_T;
 
             // LiteralT = char32_t
-            if (Hydra::Other::literalsCanBeSavedAsTypeT<char32_t>(dimacsCnfHeader.numberOfVariables)) {
+            if (Hydra::Other::literalsCanBeSavedAsTypeT<char32_t>(preprocessedFormulaStruct.numberOfVariables)) {
                 using LiteralT = char32_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR32_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(std::make_unique<Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>>(ParsedFormulaStruct::convertTypes<VarT, LiteralT, ClauseIdT>(std::move(preprocessedFormulaStruct)), commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -208,21 +234,21 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
     }
 
     // ClauseIdT = char16_t
-    else if (Hydra::Other::clauseIdCanBeSavedAsTypeT<char16_t>(dimacsCnfHeader.numberOfClauses)) {
+    else if (Hydra::Other::clauseIdCanBeSavedAsTypeT<char16_t>(preprocessedFormulaStruct.numberOfClauses)) {
         using ClauseIdT = char16_t;
         TemplateTypeEnum clauseIdTemplateType = TemplateTypeEnum::CHAR16_T;
 
         // VarT = char8_t
-        if (Hydra::Other::variablesCanBeSavedAsTypeT<char8_t>(dimacsCnfHeader.numberOfVariables)) {
+        if (Hydra::Other::variablesCanBeSavedAsTypeT<char8_t>(preprocessedFormulaStruct.numberOfVariables)) {
             using VarT = char8_t;
             TemplateTypeEnum varTemplateType = TemplateTypeEnum::CHAR8_T;
 
             // LiteralT = char8_t
-            if (Hydra::Other::literalsCanBeSavedAsTypeT<char8_t>(dimacsCnfHeader.numberOfVariables)) {
+            if (Hydra::Other::literalsCanBeSavedAsTypeT<char8_t>(preprocessedFormulaStruct.numberOfVariables)) {
                 using LiteralT = char8_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR8_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(std::make_unique<Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>>(ParsedFormulaStruct::convertTypes<VarT, LiteralT, ClauseIdT>(std::move(preprocessedFormulaStruct)), commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -236,12 +262,12 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
 
             // LiteralT = char16_t
             else {
-                assert(Hydra::Other::literalsCanBeSavedAsTypeT<char16_t>(dimacsCnfHeader.numberOfVariables));
+                assert(Hydra::Other::literalsCanBeSavedAsTypeT<char16_t>(preprocessedFormulaStruct.numberOfVariables));
 
                 using LiteralT = char16_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR16_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(std::make_unique<Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>>(ParsedFormulaStruct::convertTypes<VarT, LiteralT, ClauseIdT>(std::move(preprocessedFormulaStruct)), commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -255,16 +281,16 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
         }
 
         // VarT = char16_t
-        else if (Hydra::Other::variablesCanBeSavedAsTypeT<char16_t>(dimacsCnfHeader.numberOfVariables)) {
+        else if (Hydra::Other::variablesCanBeSavedAsTypeT<char16_t>(preprocessedFormulaStruct.numberOfVariables)) {
             using VarT = char16_t;
             TemplateTypeEnum varTemplateType = TemplateTypeEnum::CHAR16_T;
 
             // LiteralT = char16_t
-            if (Hydra::Other::literalsCanBeSavedAsTypeT<char16_t>(dimacsCnfHeader.numberOfVariables)) {
+            if (Hydra::Other::literalsCanBeSavedAsTypeT<char16_t>(preprocessedFormulaStruct.numberOfVariables)) {
                 using LiteralT = char16_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR16_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(std::make_unique<Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>>(ParsedFormulaStruct::convertTypes<VarT, LiteralT, ClauseIdT>(std::move(preprocessedFormulaStruct)), commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -278,12 +304,12 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
 
             // LiteralT = char32_t
             else {
-                assert(Hydra::Other::literalsCanBeSavedAsTypeT<char32_t>(dimacsCnfHeader.numberOfVariables));
+                assert(Hydra::Other::literalsCanBeSavedAsTypeT<char32_t>(preprocessedFormulaStruct.numberOfVariables));
 
                 using LiteralT = char32_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR32_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(std::make_unique<Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>>(ParsedFormulaStruct::convertTypes<VarT, LiteralT, ClauseIdT>(std::move(preprocessedFormulaStruct)), commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -297,16 +323,16 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
         }
 
         // VarT = char32_t
-        else if (Hydra::Other::variablesCanBeSavedAsTypeT<char32_t>(dimacsCnfHeader.numberOfVariables)) {
+        else if (Hydra::Other::variablesCanBeSavedAsTypeT<char32_t>(preprocessedFormulaStruct.numberOfVariables)) {
             using VarT = char32_t;
             TemplateTypeEnum varTemplateType = TemplateTypeEnum::CHAR32_T;
 
             // LiteralT = char32_t
-            if (Hydra::Other::literalsCanBeSavedAsTypeT<char32_t>(dimacsCnfHeader.numberOfVariables)) {
+            if (Hydra::Other::literalsCanBeSavedAsTypeT<char32_t>(preprocessedFormulaStruct.numberOfVariables)) {
                 using LiteralT = char32_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR32_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(std::make_unique<Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>>(ParsedFormulaStruct::convertTypes<VarT, LiteralT, ClauseIdT>(std::move(preprocessedFormulaStruct)), commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -329,21 +355,21 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
     }
 
     // ClauseIdT = char32_t
-    else if (Hydra::Other::clauseIdCanBeSavedAsTypeT<char32_t>(dimacsCnfHeader.numberOfClauses)) {
+    else if (Hydra::Other::clauseIdCanBeSavedAsTypeT<char32_t>(preprocessedFormulaStruct.numberOfClauses)) {
         using ClauseIdT = char32_t;
         TemplateTypeEnum clauseIdTemplateType = TemplateTypeEnum::CHAR32_T;
 
         // VarT = char8_t
-        if (Hydra::Other::variablesCanBeSavedAsTypeT<char8_t>(dimacsCnfHeader.numberOfVariables)) {
+        if (Hydra::Other::variablesCanBeSavedAsTypeT<char8_t>(preprocessedFormulaStruct.numberOfVariables)) {
             using VarT = char8_t;
             TemplateTypeEnum varTemplateType = TemplateTypeEnum::CHAR8_T;
 
             // LiteralT = char8_t
-            if (Hydra::Other::literalsCanBeSavedAsTypeT<char8_t>(dimacsCnfHeader.numberOfVariables)) {
+            if (Hydra::Other::literalsCanBeSavedAsTypeT<char8_t>(preprocessedFormulaStruct.numberOfVariables)) {
                 using LiteralT = char8_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR8_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(std::make_unique<Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>>(ParsedFormulaStruct::convertTypes<VarT, LiteralT, ClauseIdT>(std::move(preprocessedFormulaStruct)), commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -357,12 +383,12 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
 
             // LiteralT = char16_t
             else {
-                assert(Hydra::Other::literalsCanBeSavedAsTypeT<char16_t>(dimacsCnfHeader.numberOfVariables));
+                assert(Hydra::Other::literalsCanBeSavedAsTypeT<char16_t>(preprocessedFormulaStruct.numberOfVariables));
 
                 using LiteralT = char16_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR16_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(std::make_unique<Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>>(ParsedFormulaStruct::convertTypes<VarT, LiteralT, ClauseIdT>(std::move(preprocessedFormulaStruct)), commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -376,16 +402,16 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
         }
 
         // VarT = char16_t
-        else if (Hydra::Other::variablesCanBeSavedAsTypeT<char16_t>(dimacsCnfHeader.numberOfVariables)) {
+        else if (Hydra::Other::variablesCanBeSavedAsTypeT<char16_t>(preprocessedFormulaStruct.numberOfVariables)) {
             using VarT = char16_t;
             TemplateTypeEnum varTemplateType = TemplateTypeEnum::CHAR16_T;
 
             // LiteralT = char16_t
-            if (Hydra::Other::literalsCanBeSavedAsTypeT<char16_t>(dimacsCnfHeader.numberOfVariables)) {
+            if (Hydra::Other::literalsCanBeSavedAsTypeT<char16_t>(preprocessedFormulaStruct.numberOfVariables)) {
                 using LiteralT = char16_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR16_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(std::make_unique<Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>>(ParsedFormulaStruct::convertTypes<VarT, LiteralT, ClauseIdT>(std::move(preprocessedFormulaStruct)), commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -399,12 +425,12 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
 
             // LiteralT = char32_t
             else {
-                assert(Hydra::Other::literalsCanBeSavedAsTypeT<char32_t>(dimacsCnfHeader.numberOfVariables));
+                assert(Hydra::Other::literalsCanBeSavedAsTypeT<char32_t>(preprocessedFormulaStruct.numberOfVariables));
 
                 using LiteralT = char32_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR32_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(std::make_unique<Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>>(ParsedFormulaStruct::convertTypes<VarT, LiteralT, ClauseIdT>(std::move(preprocessedFormulaStruct)), commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
@@ -418,16 +444,16 @@ void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, Statistic
         }
 
         // VarT = char32_t
-        else if (Hydra::Other::variablesCanBeSavedAsTypeT<char32_t>(dimacsCnfHeader.numberOfVariables)) {
+        else if (Hydra::Other::variablesCanBeSavedAsTypeT<char32_t>(preprocessedFormulaStruct.numberOfVariables)) {
             using VarT = char32_t;
             TemplateTypeEnum varTemplateType = TemplateTypeEnum::CHAR32_T;
 
             // LiteralT = char32_t
-            if (Hydra::Other::literalsCanBeSavedAsTypeT<char32_t>(dimacsCnfHeader.numberOfVariables)) {
+            if (Hydra::Other::literalsCanBeSavedAsTypeT<char32_t>(preprocessedFormulaStruct.numberOfVariables)) {
                 using LiteralT = char32_t;
                 TemplateTypeEnum literalTemplateType = TemplateTypeEnum::CHAR32_T;
 
-                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(Hydra::Formula::Representation::Contiguous::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT, std::istreambuf_iterator<char>>(begin, end, dimacsCnfHeader, line, modelCountingType, false, commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
+                Hydra::Compiler<VarT, LiteralT, ClauseIdT> compiler(std::make_unique<Hydra::Formula::Representation::Contiguous::ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>>(ParsedFormulaStruct::convertTypes<VarT, LiteralT, ClauseIdT>(std::move(preprocessedFormulaStruct)), commandLineArgumentsStruct.contiguousFormulaRepresentationConfiguration, statisticsPtr ? statisticsPtr->getFormulaRepresentationStatisticsPtr() : nullptr),
                                                                     commandLineArgumentsStruct.compilerConfiguration, statisticsPtr, killedByMainThread);
                 fileStream.close();
 
