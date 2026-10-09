@@ -200,13 +200,13 @@ namespace Hydra::Cache::CachingScheme::Cara {
         assert((cacheRecordStruct.numberOfVariables + cacheRecordStruct.numberOfRemovedVariables) == l_variableSortedReusableVector_createCacheRecordStruct_.size());
 
         // char8_t
-        if (((this->cacheType_ == CacheTypeEnum::COMPONENT) && Other::literalsCanBeSavedAsTypeT<char8_t>(cacheRecordStruct.numberOfVariables)) ||
-            ((this->cacheType_ == CacheTypeEnum::HYPERGRAPH_CUT) && Other::variablesCanBeSavedAsTypeT<char8_t>(cacheRecordStruct.numberOfVariables)))
+        if (((this->cacheType_ == CacheTypeEnum::COMPONENT) && Other::literalsCanBeSavedAsTypeTForCache<char8_t>(cacheRecordStruct.numberOfVariables)) ||
+            ((this->cacheType_ == CacheTypeEnum::HYPERGRAPH_CUT) && Other::variablesCanBeSavedAsTypeTForCache<char8_t>(cacheRecordStruct.numberOfVariables)))
             this->createSortedKeyWithMapping(cacheRecordStruct.string8, l_clauseIdReusableVector_,
                                              l_variableToLiteralVectorMapping_createCacheRecordStruct_, totalClausesSize);
         // char16_t
-        else if (((this->cacheType_ == CacheTypeEnum::COMPONENT) && Other::literalsCanBeSavedAsTypeT<char16_t>(cacheRecordStruct.numberOfVariables)) ||
-                 ((this->cacheType_ == CacheTypeEnum::HYPERGRAPH_CUT) && Other::variablesCanBeSavedAsTypeT<char16_t>(cacheRecordStruct.numberOfVariables)))
+        else if (((this->cacheType_ == CacheTypeEnum::COMPONENT) && Other::literalsCanBeSavedAsTypeTForCache<char16_t>(cacheRecordStruct.numberOfVariables)) ||
+                 ((this->cacheType_ == CacheTypeEnum::HYPERGRAPH_CUT) && Other::variablesCanBeSavedAsTypeTForCache<char16_t>(cacheRecordStruct.numberOfVariables)))
             this->createSortedKeyWithMapping(cacheRecordStruct.string16, l_clauseIdReusableVector_,
                                              l_variableToLiteralVectorMapping_createCacheRecordStruct_, totalClausesSize);
         // char32_t

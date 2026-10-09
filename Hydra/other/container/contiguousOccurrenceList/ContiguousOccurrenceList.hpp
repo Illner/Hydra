@@ -10,6 +10,7 @@
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
 #include "Hydra/other/Other.hpp"
+#include "Hydra/other/TemplateType.hpp"
 #include "Hydra/other/hashMap/HashMap.hpp"
 
 #include "Hydra/other/container/exceptions/ContiguousOccurrenceListException.hpp"
@@ -33,9 +34,9 @@ namespace Hydra::Container::ContiguousOccurrenceList {
      */
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     class ContiguousOccurrenceList {
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidVarT::value, "Invalid VarT type!");
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidLiteralT::value, "Invalid LiteralT type!");
-        static_assert(Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::isValidClauseT::value, "Invalid ClauseIdT type!");
+        static_assert(Other::isValidVarT<VarT>, "Invalid VarT type!");
+        static_assert(Other::isValidLiteralT<LiteralT>, "Invalid LiteralT type!");
+        static_assert(Other::isValidClauseIdT<ClauseIdT>, "Invalid ClauseIdT type!");
 
     private:
         using LiteralType = typename Formula::Literal<VarT, LiteralT>::LiteralType;

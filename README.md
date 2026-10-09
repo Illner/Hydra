@@ -2,7 +2,7 @@
 
 Hydra is the development repository for the **Bella knowledge compiler** and the **Cara #SAT solver**.
 
-**Version**: v2.2.0 (in development, not yet released)
+<!-- **Version**: v2.2.2 (in development, not yet released) -->
 
 ## Bella
 
@@ -81,21 +81,17 @@ The corresponding binaries are in the locations mentioned above.
 * [Glucose 3.0 (d4v2 version)](https://github.com/crillab/d4v2)  
   `Hydra/external/satSolvers/Glucose_d4`
 
+* [CaDiCaL 3.0.1 (Hydra version)](https://github.com/arminbiere/cadical)  
+  _work in progress_  
+  `Hydra/external/satSolvers/CaDiCaL`
+
 * [MiniSat 2.2.0](https://github.com/niklasso/minisat)  
   _implemented, not used_  
   `Hydra/external/satSolvers/MiniSat`
 
-* [Glucose 4.2.1](https://github.com/audemard/glucose)  
-  _work in progress_  
-  `Hydra/external/satSolvers/Glucose`
-
-* [CaDiCaL 3.0.0](https://github.com/arminbiere/cadical)  
-  _work in progress_  
-  `Hydra/external/satSolvers/CaDiCaL`
-
 ### Hash Maps
 
-* [unordered_dense v4.9.2](https://github.com/martinus/unordered_dense)  
+* [unordered_dense v5.3.1](https://github.com/martinus/unordered_dense)  
   `Hydra/external/hashMaps/unordered_dense`
 
 * [robin-hood-hashing 3.11.5](https://github.com/martinus/robin-hood-hashing)  
@@ -109,15 +105,15 @@ The corresponding binaries are in the locations mentioned above.
 
 * [PaToH v3.3](https://faculty.cc.gatech.edu/~umit/software.html)  
   _used on Linux and macOS_  
-  `Hydra/external/partitioningHypergraphs/PaToH`
+  `Hydra/external/hypergraphPartitioning/PaToH`
 
 * [hMETIS 1.5.3](https://papers.karypis.org/glaros/software/metis/overview.html#hmetis---hypergraph--circuit-partitioning)  
   _used only on Windows_  
-  `Hydra/external/partitioningHypergraphs/hMETIS`
+  `Hydra/external/hypergraphPartitioning/hMETIS`
 
 * [KaHyPar v.1.3.3](https://kahypar.org/)  
   _used on Linux, macOS, and Windows_  
-  `Hydra/external/partitioningHypergraphs/KaHyPar`  
+  `Hydra/external/hypergraphPartitioning/KaHyPar`  
   `Hydra/external/boost` (_precompiled libraries required by KaHyPar_)
 
 ### CNF Preprocessors

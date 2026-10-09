@@ -18,6 +18,26 @@ namespace CaraTest::SharpSolver {
         process(configuration, true);
     }
 
+    /**
+     * Seed MIN_SEED
+     */
+    TEST_CASE(" [SharpSolver] seed MIN_SEED", "[SharpSolver] [.Cara]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.setSeed(Hydra::Other::Seed::MIN_SEED);
+
+        process(configuration, true);
+    }
+
+    /**
+     * Seed MAX_SEED
+     */
+    TEST_CASE(" [SharpSolver] seed MAX_SEED", "[SharpSolver] [.Cara]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.setSeed(Hydra::Other::Seed::MAX_SEED);
+
+        process(configuration, true);
+    }
+
     //region SAT solver
     //region MiniSat
     /**
@@ -4291,18 +4311,18 @@ namespace CaraTest::SharpSolver {
     }
     //endregion
 
-    //region Partitioning hypergraph
+    //region Hypergraph partitioning
     //region KaHyPar
     /**
-     * Partitioning hypergraph (KaHyPar)
+     * Hypergraph partitioning (KaHyPar)
      *      empty cut: allow
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (KaHyPar) (empty cut: allow)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (KaHyPar) (empty cut: allow)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::KAHYPAR;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4312,16 +4332,16 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (KaHyPar)
+     * Hypergraph partitioning (KaHyPar)
      *      empty cut: allow
      *      variable subsumption
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (KaHyPar) (empty cut: allow, variable subsumption)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (KaHyPar) (empty cut: allow, variable subsumption)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::KAHYPAR;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4331,16 +4351,16 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (KaHyPar)
+     * Hypergraph partitioning (KaHyPar)
      *      empty cut: allow
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (KaHyPar) (empty cut: allow, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (KaHyPar) (empty cut: allow, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::KAHYPAR;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4350,17 +4370,17 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (KaHyPar)
+     * Hypergraph partitioning (KaHyPar)
      *      empty cut: allow
      *      variable subsumption
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (KaHyPar) (empty cut: allow, variable subsumption, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (KaHyPar) (empty cut: allow, variable subsumption, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::KAHYPAR;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4370,15 +4390,15 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (KaHyPar)
+     * Hypergraph partitioning (KaHyPar)
      *      empty cut: deny
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (KaHyPar) (empty cut: deny)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (KaHyPar) (empty cut: deny)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::KAHYPAR;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4388,16 +4408,16 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (KaHyPar)
+     * Hypergraph partitioning (KaHyPar)
      *      empty cut: deny
      *      variable subsumption
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (KaHyPar) (empty cut: deny, variable subsumption)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (KaHyPar) (empty cut: deny, variable subsumption)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::KAHYPAR;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4407,16 +4427,16 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (KaHyPar)
+     * Hypergraph partitioning (KaHyPar)
      *      empty cut: deny
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (KaHyPar) (empty cut: deny, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (KaHyPar) (empty cut: deny, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::KAHYPAR;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4426,17 +4446,17 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (KaHyPar)
+     * Hypergraph partitioning (KaHyPar)
      *      empty cut: deny
      *      variable subsumption
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (KaHyPar) (empty cut: deny, variable subsumption, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (KaHyPar) (empty cut: deny, variable subsumption, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::KAHYPAR;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4448,16 +4468,16 @@ namespace CaraTest::SharpSolver {
 
     //region PaToH, hMETIS
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: allow
      *      singleton hyperedge: allow
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: allow)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: allow)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = true;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4467,17 +4487,17 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: allow
      *      singleton hyperedge: allow
      *      variable subsumption
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: allow, variable subsumption)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: allow, variable subsumption)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = true;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4487,17 +4507,17 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: allow
      *      singleton hyperedge: allow
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: allow, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: allow, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = true;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4507,18 +4527,18 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: allow
      *      singleton hyperedge: allow
      *      variable subsumption
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: allow, variable subsumption, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: allow, variable subsumption, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = true;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4528,16 +4548,16 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: allow
      *      singleton hyperedge: deny
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: deny)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: deny)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4547,17 +4567,17 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: allow
      *      singleton hyperedge: deny
      *      variable subsumption
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: deny, variable subsumption)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: deny, variable subsumption)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4567,17 +4587,17 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: allow
      *      singleton hyperedge: deny
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: deny, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: deny, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4587,18 +4607,18 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: allow
      *      singleton hyperedge: deny
      *      variable subsumption
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: deny, variable subsumption, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: deny, variable subsumption, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4608,16 +4628,16 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: deny
      *      singleton hyperedge: allow
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: allow)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: allow)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = true;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4627,17 +4647,17 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: deny
      *      singleton hyperedge: allow
      *      variable subsumption
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: allow, variable subsumption)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: allow, variable subsumption)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = true;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4647,17 +4667,17 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: deny
      *      singleton hyperedge: allow
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: allow, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: allow, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = true;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4667,18 +4687,18 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: deny
      *      singleton hyperedge: allow
      *      variable subsumption
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: allow, variable subsumption, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: allow, variable subsumption, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = true;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4688,16 +4708,16 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: deny
      *      singleton hyperedge: deny
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: deny)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: deny)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4707,17 +4727,17 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: deny
      *      singleton hyperedge: deny
      *      variable subsumption
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: deny, variable subsumption)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: deny, variable subsumption)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4727,17 +4747,17 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: deny
      *      singleton hyperedge: deny
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: deny, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: deny, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4747,18 +4767,18 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: deny
      *      singleton hyperedge: deny
      *      variable subsumption
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: deny, variable subsumption, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: deny, variable subsumption, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4771,15 +4791,15 @@ namespace CaraTest::SharpSolver {
     //region Cara
     #if OPERATING_SYSTEM_MACOS || OPERATING_SYSTEM_LINUX
     /**
-     * Partitioning hypergraph (Cara)
+     * Hypergraph partitioning (Cara)
      *      empty cut: allow
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (Cara) (empty cut: allow)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (Cara) (empty cut: allow)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::CARA;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4789,16 +4809,16 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (Cara)
+     * Hypergraph partitioning (Cara)
      *      empty cut: allow
      *      variable subsumption
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (Cara) (empty cut: allow, variable subsumption)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (Cara) (empty cut: allow, variable subsumption)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::CARA;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4808,16 +4828,16 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (Cara)
+     * Hypergraph partitioning (Cara)
      *      empty cut: allow
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (Cara) (empty cut: allow, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (Cara) (empty cut: allow, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::CARA;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4827,17 +4847,17 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (Cara)
+     * Hypergraph partitioning (Cara)
      *      empty cut: allow
      *      variable subsumption
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (Cara) (empty cut: allow, variable subsumption, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (Cara) (empty cut: allow, variable subsumption, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::CARA;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4847,15 +4867,15 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (Cara)
+     * Hypergraph partitioning (Cara)
      *      empty cut: deny
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (Cara) (empty cut: deny)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (Cara) (empty cut: deny)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::CARA;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4865,16 +4885,16 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (Cara)
+     * Hypergraph partitioning (Cara)
      *      empty cut: deny
      *      variable subsumption
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (Cara) (empty cut: deny, variable subsumption)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (Cara) (empty cut: deny, variable subsumption)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::CARA;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4884,16 +4904,16 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (Cara)
+     * Hypergraph partitioning (Cara)
      *      empty cut: deny
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (Cara) (empty cut: deny, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (Cara) (empty cut: deny, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::CARA;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4903,17 +4923,17 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph (Cara)
+     * Hypergraph partitioning (Cara)
      *      empty cut: deny
      *      variable subsumption
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (Cara) (empty cut: deny, variable subsumption, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (Cara) (empty cut: deny, variable subsumption, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::CARA;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -4925,10 +4945,10 @@ namespace CaraTest::SharpSolver {
     //endregion
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      hypergraph cut recomputation strategy: always
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: always)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (hypergraph cut recomputation strategy: always)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::ALWAYS;
 
@@ -4936,10 +4956,10 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      hypergraph cut recomputation strategy: immense unit propagation - 0.2
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: immense unit propagation - 0.2)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (hypergraph cut recomputation strategy: immense unit propagation - 0.2)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.percentageThresholdOfImmenseUnitPropagationHypergraphCutRecomputationStrategy = 0.2;
         configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION;
@@ -4948,10 +4968,10 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      hypergraph cut recomputation strategy: immense unit propagation - 0.5
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: immense unit propagation - 0.5)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (hypergraph cut recomputation strategy: immense unit propagation - 0.5)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.percentageThresholdOfImmenseUnitPropagationHypergraphCutRecomputationStrategy = 0.5;
         configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION;
@@ -4960,10 +4980,10 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      hypergraph cut recomputation strategy: immense unit propagation - 0.8
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: immense unit propagation - 0.8)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (hypergraph cut recomputation strategy: immense unit propagation - 0.8)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.percentageThresholdOfImmenseUnitPropagationHypergraphCutRecomputationStrategy = 0.8;
         configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION;
@@ -4972,10 +4992,10 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      hypergraph cut recomputation strategy: when current formula is split
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: when current formula is split)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (hypergraph cut recomputation strategy: when current formula is split)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_FORMULA_IS_SPLIT;
 
@@ -4983,10 +5003,10 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      hypergraph cut recomputation strategy: when current hypergraph cut is empty
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (hypergraph cut recomputation strategy: when current hypergraph cut is empty)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (hypergraph cut recomputation strategy: when current hypergraph cut is empty)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY;
 
@@ -4994,11 +5014,11 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: none
      *      variable subsumption type: forward variable subsumption with mapping detection
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (vertex weight type: none, variable subsumption type: forward variable subsumption with mapping detection)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (vertex weight type: none, variable subsumption type: forward variable subsumption with mapping detection)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::NONE;
@@ -5011,11 +5031,11 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: standard
      *      variable subsumption type: forward variable subsumption with mapping detection
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (vertex weight type: standard, variable subsumption type: forward variable subsumption with mapping detection)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (vertex weight type: standard, variable subsumption type: forward variable subsumption with mapping detection)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::STANDARD;
@@ -5028,11 +5048,11 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: clause length
      *      variable subsumption type: forward variable subsumption with mapping detection
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (vertex weight type: clause length, variable subsumption type: forward variable subsumption with mapping detection)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (vertex weight type: clause length, variable subsumption type: forward variable subsumption with mapping detection)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::CLAUSE_LENGTH;
@@ -5045,12 +5065,12 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: none
      *      variable subsumption type: forward variable subsumption with mapping detection
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (vertex weight type: none, variable subsumption type: forward variable subsumption with mapping detection, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (vertex weight type: none, variable subsumption type: forward variable subsumption with mapping detection, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::NONE;
@@ -5063,12 +5083,12 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: standard
      *      variable subsumption type: forward variable subsumption with mapping detection
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (vertex weight type: standard, variable subsumption type: forward variable subsumption with mapping detection, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (vertex weight type: standard, variable subsumption type: forward variable subsumption with mapping detection, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::STANDARD;
@@ -5081,12 +5101,12 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: clause length
      *      variable subsumption type: forward variable subsumption with mapping detection
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (vertex weight type: clause length, variable subsumption type: forward variable subsumption with mapping detection, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (vertex weight type: clause length, variable subsumption type: forward variable subsumption with mapping detection, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::CLAUSE_LENGTH;
@@ -5099,11 +5119,11 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: none
      *      variable subsumption type: one-literal watching algorithm with mapping
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (vertex weight type: none, variable subsumption type: one-literal watching algorithm with mapping)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (vertex weight type: none, variable subsumption type: one-literal watching algorithm with mapping)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::NONE;
@@ -5116,11 +5136,11 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: standard
      *      variable subsumption type: one-literal watching algorithm with mapping
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (vertex weight type: standard, variable subsumption type: one-literal watching algorithm with mapping)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (vertex weight type: standard, variable subsumption type: one-literal watching algorithm with mapping)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::STANDARD;
@@ -5133,11 +5153,11 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: clause length
      *      variable subsumption type: one-literal watching algorithm with mapping
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (vertex weight type: clause length, variable subsumption type: one-literal watching algorithm with mapping)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (vertex weight type: clause length, variable subsumption type: one-literal watching algorithm with mapping)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::CLAUSE_LENGTH;
@@ -5150,12 +5170,12 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: none
      *      variable subsumption type: one-literal watching algorithm with mapping
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (vertex weight type: none, variable subsumption type: one-literal watching algorithm with mapping, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (vertex weight type: none, variable subsumption type: one-literal watching algorithm with mapping, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::NONE;
@@ -5168,12 +5188,12 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: standard
      *      variable subsumption type: one-literal watching algorithm with mapping
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (vertex weight type: standard, variable subsumption type: one-literal watching algorithm with mapping, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (vertex weight type: standard, variable subsumption type: one-literal watching algorithm with mapping, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::STANDARD;
@@ -5186,12 +5206,12 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: clause length
      *      variable subsumption type: one-literal watching algorithm with mapping
      *      equivalence simplification method
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (vertex weight type: clause length, variable subsumption type: one-literal watching algorithm with mapping, equivalence simplification method)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (vertex weight type: clause length, variable subsumption type: one-literal watching algorithm with mapping, equivalence simplification method)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::CLAUSE_LENGTH;
@@ -5204,10 +5224,10 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      variable subsumption type: none
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (variable subsumption type: none)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (variable subsumption type: none)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = false;
 
@@ -5219,11 +5239,11 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      equivalence simplification method
      *      implicit BCP variable order type: random
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (equivalence simplification method, implicit BCP variable order type: random)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (equivalence simplification method, implicit BCP variable order type: random)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::RANDOM;
@@ -5236,11 +5256,11 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      equivalence simplification method
      *      implicit BCP variable order type: variable index
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (equivalence simplification method, implicit BCP variable order type: variable index)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (equivalence simplification method, implicit BCP variable order type: variable index)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::VARIABLE_INDEX;
@@ -5253,11 +5273,11 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      equivalence simplification method
      *      implicit BCP variable order type: clause reduction heuristic (ascending)
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (equivalence simplification method, implicit BCP variable order type: clause reduction heuristic (ascending))", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (equivalence simplification method, implicit BCP variable order type: clause reduction heuristic (ascending))", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_ASCENDING;
@@ -5270,11 +5290,11 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      equivalence simplification method
      *      implicit BCP variable order type: clause reduction heuristic (descending)
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (equivalence simplification method, implicit BCP variable order type: clause reduction heuristic (descending))", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (equivalence simplification method, implicit BCP variable order type: clause reduction heuristic (descending))", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_DESCENDING;
@@ -5287,12 +5307,12 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      variable subsumption
      *      equivalence simplification method
      *      implicit BCP variable order type: random
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (variable subsumption, equivalence simplification method, implicit BCP variable order type: random)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (variable subsumption, equivalence simplification method, implicit BCP variable order type: random)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::RANDOM;
@@ -5305,12 +5325,12 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      variable subsumption
      *      equivalence simplification method
      *      implicit BCP variable order type: variable index
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (variable subsumption, equivalence simplification method, implicit BCP variable order type: variable index)", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (variable subsumption, equivalence simplification method, implicit BCP variable order type: variable index)", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::VARIABLE_INDEX;
@@ -5323,12 +5343,12 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      variable subsumption
      *      equivalence simplification method
      *      implicit BCP variable order type: clause reduction heuristic (ascending)
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (variable subsumption, equivalence simplification method, implicit BCP variable order type: clause reduction heuristic (ascending))", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (variable subsumption, equivalence simplification method, implicit BCP variable order type: clause reduction heuristic (ascending))", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_ASCENDING;
@@ -5341,12 +5361,12 @@ namespace CaraTest::SharpSolver {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      variable subsumption
      *      equivalence simplification method
      *      implicit BCP variable order type: clause reduction heuristic (descending)
      */
-    TEST_CASE(" [SharpSolver] partitioning hypergraph (variable subsumption, equivalence simplification method, implicit BCP variable order type: clause reduction heuristic (descending))", "[SharpSolver] [.Cara]") {
+    TEST_CASE(" [SharpSolver] hypergraph partitioning (variable subsumption, equivalence simplification method, implicit BCP variable order type: clause reduction heuristic (descending))", "[SharpSolver] [.Cara]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_DESCENDING;

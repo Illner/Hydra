@@ -2,21 +2,39 @@
 cmake_minimum_required(VERSION 3.14)
 
 add_library(HydraLibrary STATIC
-        "other/parser/commandLineArgument/CommandLineArgumentParser.cpp"
-        "statistics/StatisticsAbstract.cpp" "statistics/Statistics.cpp" "other/version/Version.cpp"
-        "other/operatingSystem/OperatingSystem.cpp" "other/memory/Memory.cpp" "other/container/vectorSet/VectorSet.cpp"
-        "other/type/arbitraryPrecisionInteger/custom/CustomArbitraryPrecisionInteger.cpp"
-        "external/satSolvers/MiniSat_d4/Solver.cpp" "external/satSolvers/Glucose_d4/core/Solver.cc"
 
         # Statistics
+        "statistics/Statistics.cpp"
+        "statistics/StatisticsAbstract.cpp"
+
+        # SAT solver (external)
+        "external/satSolvers/MiniSat_d4/Solver.cpp"
+        "external/satSolvers/Glucose_d4/core/Solver.cc"
+
+        # CNF preprocessor
+        "preprocessor/cnf/CnfPreprocessorAbstract.cpp"
+        "preprocessor/cnf/none/NoneCnfPreprocessor.cpp"
+
+        # Other
+        "other/seed/Seed.cpp"
+        "other/memory/Memory.cpp"
+        "other/version/Version.cpp"
+        "other/container/vectorSet/VectorSet.cpp"
+        "other/operatingSystem/OperatingSystem.cpp"
+        "other/parser/commandLineArgument/CommandLineArgumentParser.cpp"
+        "other/type/arbitraryPrecisionInteger/custom/CustomArbitraryPrecisionInteger.cpp"
+
+        # Statistics (.cxx)
         "cache/Cache.cxx"
         "circuit/Circuit.cxx"
         "compiler/Compiler.cxx"
+        "parser/cnf/CnfParser.cxx"
         "satSolver/SatSolverAbstract.cxx"
+        "preprocessor/cnf/CnfPreprocessorAbstract.cxx"
         "renHCRecognition/RenHCRecognitionAbstract.cxx"
         "decisionHeuristic/DecisionHeuristicAbstract.cxx"
         "formula/representation/FormulaRepresentationAbstract.cxx"
-        "partitioningHypergraph/PartitioningHypergraphAbstract.cxx")
+        "hypergraphPartitioning/HypergraphPartitioningAbstract.cxx")
 
 # Hydra version
 target_compile_definitions(HydraLibrary PRIVATE
@@ -77,8 +95,12 @@ IF (${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
 
         # Boost (KaHyPar)
         find_and_check_library(BoostKaHyParLibrary "libmini_boost.a" "${BOOST_KAHYPAR_HOME}/macOS/Apple Silicon/")
+
+        # Bipe
+        find_and_check_library(BipeLibrary "libbipe.a" "${BIPE_HOME}/macOS/Apple Silicon/")
     # Intel
     ELSE ()
+        #[[
         # PaToH
         find_and_check_library(PaToHLibrary "libpatoh.a" "${PATOH_HOME}/macOS/Intel/")
 
@@ -87,6 +109,9 @@ IF (${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
 
         # Boost (KaHyPar)
         find_and_check_library(BoostKaHyParLibrary "libmini_boost.a" "${BOOST_KAHYPAR_HOME}/macOS/Intel/")
+        #]]
+
+        message(FATAL_ERROR "Your processor architecture \"${CMAKE_SYSTEM_PROCESSOR}\" is not supported on macOS (Apple Silicon only)!")
     ENDIF ()
 # Windows
 ELSEIF ((${CMAKE_SYSTEM_NAME} STREQUAL "Windows") OR (CMAKE_SYSTEM_NAME STREQUAL "CYGWIN"))
@@ -95,6 +120,9 @@ ELSEIF ((${CMAKE_SYSTEM_NAME} STREQUAL "Windows") OR (CMAKE_SYSTEM_NAME STREQUAL
 
     # Boost (KaHyPar)
     find_and_check_library(BoostKaHyParLibrary "libmini_boost.a" "${BOOST_KAHYPAR_HOME}/Windows/")
+
+    # Bipe
+    find_and_check_library(BipeLibrary "libbipe.a" "${BIPE_HOME}/Windows/")
 # Linux
 ELSEIF (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     # PaToH
@@ -105,6 +133,9 @@ ELSEIF (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
 
     # Boost (KaHyPar)
     find_and_check_library(BoostKaHyParLibrary "libmini_boost.a" "${BOOST_KAHYPAR_HOME}/Linux/")
+
+    # Bipe
+    find_and_check_library(BipeLibrary "libbipe.a" "${BIPE_HOME}/Linux/")
 # Not supported
 ELSE ()
     message(FATAL_ERROR "Your operating system \"${CMAKE_SYSTEM_NAME}\" is not supported!")

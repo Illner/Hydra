@@ -23,15 +23,15 @@ namespace Hydra::Statistics {
     template <typename TimeDurationT>
     class TimerStatistics {
     private:
-        using TimePointType = std::chrono::steady_clock::time_point;
+        inline static constexpr bool isValidTimeDurationT = std::is_same_v<TimeDurationT, std::chrono::nanoseconds> ||
+                                                            std::is_same_v<TimeDurationT, std::chrono::microseconds> ||
+                                                            std::is_same_v<TimeDurationT, std::chrono::milliseconds> ||
+                                                            std::is_same_v<TimeDurationT, std::chrono::seconds>;
+
+        static_assert(isValidTimeDurationT, "Invalid TimeDurationT type!");
 
     private:
-        using isValidTimeDurationT = std::bool_constant<(std::is_same<TimeDurationT, std::chrono::nanoseconds>::value ||
-                                                         std::is_same<TimeDurationT, std::chrono::microseconds>::value ||
-                                                         std::is_same<TimeDurationT, std::chrono::milliseconds>::value ||
-                                                         std::is_same<TimeDurationT, std::chrono::seconds>::value)>;
-
-        static_assert(isValidTimeDurationT::value, "Invalid TimeDurationT type!");
+        using TimePointType = std::chrono::steady_clock::time_point;
 
     public:
         explicit TimerStatistics(std::string&& name)

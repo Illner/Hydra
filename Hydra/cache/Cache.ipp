@@ -24,12 +24,12 @@ namespace Hydra::Cache {
                 break;
             // Clause ID
             case CachingScheme::SaveTypeEnum::CLAUSE_ID:
-                if (std::is_same<ClauseIdT, char8_t>::value) {
+                if (std::is_same_v<ClauseIdT, char8_t>) {
                     cache8_ = Cache8Type(S_CACHE_8_INITIAL_SIZE_);
                     cache16_ = Cache16Type(0);
                     cache32_ = Cache32Type(0);
                 }
-                else if (std::is_same<ClauseIdT, char16_t>::value) {
+                else if (std::is_same_v<ClauseIdT, char16_t>) {
                     cache8_ = Cache8Type(S_CACHE_8_INITIAL_SIZE_);
                     cache16_ = Cache16Type(S_CACHE_16_INITIAL_SIZE_);
                     cache32_ = Cache32Type(0);
@@ -42,14 +42,14 @@ namespace Hydra::Cache {
                 break;
             // Literal (resp. variable)
             case CachingScheme::SaveTypeEnum::LITERAL:
-                if (((cacheType == CacheTypeEnum::COMPONENT) && std::is_same<LiteralT, char8_t>::value) ||
-                    ((cacheType == CacheTypeEnum::HYPERGRAPH_CUT) && std::is_same<VarT, char8_t>::value)) {
+                if (((cacheType == CacheTypeEnum::COMPONENT) && std::is_same_v<LiteralT, char8_t>) ||
+                    ((cacheType == CacheTypeEnum::HYPERGRAPH_CUT) && std::is_same_v<VarT, char8_t>)) {
                     cache8_ = Cache8Type(S_CACHE_8_INITIAL_SIZE_);
                     cache16_ = Cache16Type(0);
                     cache32_ = Cache32Type(0);
                 }
-                else if (((cacheType == CacheTypeEnum::COMPONENT) && std::is_same<LiteralT, char16_t>::value) ||
-                         ((cacheType == CacheTypeEnum::HYPERGRAPH_CUT) && std::is_same<VarT, char16_t>::value)) {
+                else if (((cacheType == CacheTypeEnum::COMPONENT) && std::is_same_v<LiteralT, char16_t>) ||
+                         ((cacheType == CacheTypeEnum::HYPERGRAPH_CUT) && std::is_same_v<VarT, char16_t>)) {
                     cache8_ = Cache8Type(S_CACHE_8_INITIAL_SIZE_);
                     cache16_ = Cache16Type(S_CACHE_16_INITIAL_SIZE_);
                     cache32_ = Cache32Type(0);
@@ -195,16 +195,16 @@ namespace Hydra::Cache {
         LargeNumberType cacheBucketByteSize = S_ID_BYTE_SIZE_;
 
         // ID node
-        if constexpr (std::is_same<CacheValueT, IdNodeType>::value)
+        if constexpr (std::is_same_v<CacheValueT, IdNodeType>)
             cacheBucketByteSize += S_ID_NODE_BYTE_SIZE_;
         // mpz_int
-        else if constexpr (std::is_same<CacheValueT, MpzIntType>::value)
+        else if constexpr (std::is_same_v<CacheValueT, MpzIntType>)
             cacheBucketByteSize += S_LIMB_BYTE_SIZE_ * static_cast<LargeNumberType>(mpz_size(cacheBucketStruct.value.backend().data()));
         // Custom
-        else if constexpr (std::is_same<CacheValueT, CustomType>::value)
+        else if constexpr (std::is_same_v<CacheValueT, CustomType>)
             cacheBucketByteSize += cacheBucketStruct.value.getCurrentByteSize();
         // Variable vector
-        else if constexpr (std::is_same<CacheValueT, VariableVectorType>::value)
+        else if constexpr (std::is_same_v<CacheValueT, VariableVectorType>)
             cacheBucketByteSize += S_VAR_BYTE_SIZE_ * static_cast<LargeNumberType>(cacheBucketStruct.value.capacity());
         else
             throw Exception::NotImplementedException("CacheValueT",
@@ -228,19 +228,19 @@ namespace Hydra::Cache {
         LargeNumberType maxByteSizeCacheBucket = S_ID_BYTE_SIZE_;
 
         // ID node
-        if constexpr (std::is_same<CacheValueT, IdNodeType>::value)
+        if constexpr (std::is_same_v<CacheValueT, IdNodeType>)
             maxByteSizeCacheBucket += S_ID_NODE_BYTE_SIZE_;
         // mpz_int
-        else if constexpr (std::is_same<CacheValueT, MpzIntType>::value) {
+        else if constexpr (std::is_same_v<CacheValueT, MpzIntType>) {
             MpzIntType tmp = MpzIntType(1) << static_cast<std::size_t>(getFormulaRepresentationAbstractPtr()->getNumberOfVariablesInOriginalFormula());   // 2^|V| = max number of models
 
             maxByteSizeCacheBucket += S_LIMB_BYTE_SIZE_ * static_cast<LargeNumberType>(mpz_size(tmp.backend().data()));
         }
         // Custom
-        else if constexpr (std::is_same<CacheValueT, CustomType>::value)
+        else if constexpr (std::is_same_v<CacheValueT, CustomType>)
             maxByteSizeCacheBucket += S_DIGIT_CUSTOM_BYTE_SIZE_ * static_cast<LargeNumberType>(std::floor(static_cast<long double>(getFormulaRepresentationAbstractPtr()->getNumberOfVariablesInOriginalFormula()) * std::log10(2.0L))) + 1;   // |_ |V|*log_10(2) _| + 1
         // Variable vector
-        else if constexpr (std::is_same<CacheValueT, VariableVectorType>::value)
+        else if constexpr (std::is_same_v<CacheValueT, VariableVectorType>)
             maxByteSizeCacheBucket += S_VAR_BYTE_SIZE_ * static_cast<LargeNumberType>(getFormulaRepresentationAbstractPtr()->getNumberOfVariablesInOriginalFormula());
         else
             throw Exception::NotImplementedException("CacheValueT",

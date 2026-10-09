@@ -14,6 +14,7 @@
 #include "Hydra/other/container/fixedVector/FixedVector.hpp"
 #include "Hydra/other/hashMap/HashMap.hpp"
 #include "Hydra/other/parser/Parser.hpp"
+#include "Hydra/parser/cnf/ParsedFormulaStructure.hpp"
 
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
 
@@ -21,7 +22,7 @@
 #include "Hydra/compiler/enums/IgnorePureLiteralTypeEnum.hpp"
 #include "Hydra/formula/enums/ClauseStatusEnum.hpp"
 #include "Hydra/formula/enums/FormulaRepresentationTypeEnum.hpp"
-#include "Hydra/partitioningHypergraph/enums/VertexWeightTypeEnum.hpp"
+#include "Hydra/hypergraphPartitioning/enums/VertexWeightTypeEnum.hpp"
 
 #include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.tpp"
 
@@ -56,31 +57,34 @@ namespace Hydra::Formula::Representation::Contiguous {
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     class ContiguousFormulaRepresentation final : public FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT> {
     private:
-        using LiteralType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
-        using VectorSetType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VectorSetType;
-        using ClauseSizeType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseSizeType;
-        using VariableSetType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableSetType;
-        using LiteralTSetType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::LiteralTSetType;
-        using ClauseIdSetType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdSetType;
-        using VertexWeightType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VertexWeightType;
-        using LiteralVectorType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::LiteralVectorType;
-        using VariableVectorType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableVectorType;
-        using ClauseIdVectorType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType;
-        using VariableVectorMapType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableVectorMapType;
-        using ClauseSizeCounterType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseSizeCounterType;
-        using ConnectedComponentType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ConnectedComponentType;
-        using VertexWeightVectorType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VertexWeightVectorType;
-        using ClauseOffsetVectorType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseOffsetVectorType;
-        using VariableSortedVectorType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableSortedVectorType;
-        using ClauseIdReusableVectorType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdReusableVectorType;
-        using PureVariableRemovedClausesVectorType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::PureVariableRemovedClausesVectorType;
-        using FormulaRepresentationStatisticsPtrType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::FormulaRepresentationStatisticsPtrType;
+        using LiteralType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
+        using VectorSetType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VectorSetType;
+        using ClauseSizeType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseSizeType;
+        using VariableSetType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableSetType;
+        using LiteralTSetType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::LiteralTSetType;
+        using ClauseIdSetType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdSetType;
+        using VertexWeightType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VertexWeightType;
+        using LiteralVectorType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::LiteralVectorType;
+        using VariableVectorType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableVectorType;
+        using ClauseIdVectorType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType;
+        using VariableVectorMapType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableVectorMapType;
+        using ClauseSizeCounterType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseSizeCounterType;
+        using ConnectedComponentType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ConnectedComponentType;
+        using VertexWeightVectorType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VertexWeightVectorType;
+        using ClauseOffsetVectorType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseOffsetVectorType;
+        using VariableSortedVectorType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableSortedVectorType;
+        using ClauseIdReusableVectorType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdReusableVectorType;
+        using PureVariableRemovedClausesVectorType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::PureVariableRemovedClausesVectorType;
+        using FormulaRepresentationStatisticsPtrType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::FormulaRepresentationStatisticsPtrType;
 
     public:
-        using FormulaType = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::FormulaType;
+        using FormulaType = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::FormulaType;
 
     private:
-        using ConnectedComponentStruct = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ConnectedComponentStruct;
+        using ConnectedComponentStruct = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ConnectedComponentStruct;
+
+    public:
+        using ParsedFormulaStruct = Hydra::Parser::Cnf::ParsedFormulaStruct<VarT, LiteralT, ClauseIdT>;
 
     private:
         using ClauseSizeVectorType = std::vector<ClauseSizeType>;
@@ -94,10 +98,10 @@ namespace Hydra::Formula::Representation::Contiguous {
         using ContiguousOccurrenceListType = Container::ContiguousOccurrenceList::ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>;
 
     private:
-        using OmitClauseTypeEnum = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::OmitClauseTypeEnum;
-        using VertexWeightTypeEnum = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VertexWeightTypeEnum;
-        using ModelCountingTypeEnum = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ModelCountingTypeEnum;
-        using IgnorePureLiteralTypeEnum = typename FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::IgnorePureLiteralTypeEnum;
+        using OmitClauseTypeEnum = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::OmitClauseTypeEnum;
+        using VertexWeightTypeEnum = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VertexWeightTypeEnum;
+        using ModelCountingTypeEnum = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ModelCountingTypeEnum;
+        using IgnorePureLiteralTypeEnum = FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::IgnorePureLiteralTypeEnum;
 
     private:
         struct ClauseSizeComparator {
@@ -184,21 +188,14 @@ namespace Hydra::Formula::Representation::Contiguous {
                                                                        static_cast<FormulaSizeType>(formula.size() - numberOfClauses),
                                                                        numberOfVariables, numberOfClauses,
                                                                        formulaRepresentationStatisticsPtr),
-              originalFormula_(std::move(formula)), originalClauseSize_(), originalClauseOffset_(),
+              originalFormula_(std::move(formula)),
               l_clauseNeedsToBeDeactivatedVectorSet_processAddLiteralToPartialAssignment_(numberOfClauses),
-              l_watchedVariableVector_processComputeConnectedComponents_(numberOfClauses, 0), l_computeConnectedComponents_processComputeConnectedComponents_(numberOfVariables),
-              l_firstCall_getCurrentClauses_(true), l_addedClauseVectorSet_getCurrentClauses_(),
-              l_firstCall_getCurrentComponentNotSubsumedClauses_(true), l_subsumedClauseVectorSet_getCurrentComponentNotSubsumedClauses_(),
-              l_firstCall_oneLiteralWatchingAlgorithmSubsumption_(true), l_removeClauseIdVectorSet_oneLiteralWatchingAlgorithmSubsumption_(),
-              l_indexSubsumptionWatcherVector_oneLiteralWatchingAlgorithmSubsumption_(), l_firstCall_oneLiteralWatchingAlgorithmLiteralSubsumption_(true),
-              l_forbiddenLiteralTSet_oneLiteralWatchingAlgorithmLiteralSubsumption_(), l_removeLiteralTSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmLiteralSubsumption_(),
-              l_literalTSubsumptionWatcherVector_oneLiteralWatchingAlgorithmLiteralSubsumption_(), l_firstCall_oneLiteralWatchingAlgorithmVariableSubsumption_(true),
-              l_forbiddenVariableSet_oneLiteralWatchingAlgorithmVariableSubsumption_(), l_removeVariableSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmVariableSubsumption_(),
-              l_variableSubsumptionWatcherVector_oneLiteralWatchingAlgorithmVariableSubsumption_(), configuration_(configuration), clauseIdWatcher_(),
-              currentComponentClausesStack_(), currentComponentClausesFixedVector_(0, numberOfClauses), clauseNumberOfSatisfiedLiterals_(),
-              clauseNumberOfUnsatisfiedLiterals_(), contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences),
-              numberOfPositiveLiteralsInClauseVector_(), numberOfNegativeLiteralsInClauseVector_(),
-              d_currentComponentVariableSetStack_() {
+              l_watchedVariableVector_processComputeConnectedComponents_(numberOfClauses, 0),
+              l_computeConnectedComponents_processComputeConnectedComponents_(numberOfVariables), l_firstCall_getCurrentClauses_(true),
+              l_firstCall_getCurrentComponentNotSubsumedClauses_(true), l_firstCall_oneLiteralWatchingAlgorithmSubsumption_(true),
+              l_firstCall_oneLiteralWatchingAlgorithmLiteralSubsumption_(true), l_firstCall_oneLiteralWatchingAlgorithmVariableSubsumption_(true),
+              configuration_(configuration), currentComponentClausesFixedVector_(0, numberOfClauses),
+              contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences) {
             assert(originalFormula_.size() > 1);
             assert((LiteralT(2) + LiteralT(2) * static_cast<LiteralT>(numberOfVariables)) == static_cast<LiteralT>(literalNumberOfOccurrences.size()));
 
@@ -219,21 +216,14 @@ namespace Hydra::Formula::Representation::Contiguous {
                                                                        static_cast<FormulaSizeType>(formula.size() - numberOfClauses),
                                                                        numberOfVariables, numberOfClauses,
                                                                        formulaRepresentationStatisticsPtr),
-              originalFormula_(formula), originalClauseSize_(), originalClauseOffset_(),
+              originalFormula_(formula),
               l_clauseNeedsToBeDeactivatedVectorSet_processAddLiteralToPartialAssignment_(numberOfClauses),
-              l_watchedVariableVector_processComputeConnectedComponents_(numberOfClauses, 0), l_computeConnectedComponents_processComputeConnectedComponents_(numberOfVariables),
-              l_firstCall_getCurrentClauses_(true), l_addedClauseVectorSet_getCurrentClauses_(),
-              l_firstCall_getCurrentComponentNotSubsumedClauses_(true), l_subsumedClauseVectorSet_getCurrentComponentNotSubsumedClauses_(),
-              l_firstCall_oneLiteralWatchingAlgorithmSubsumption_(true), l_removeClauseIdVectorSet_oneLiteralWatchingAlgorithmSubsumption_(),
-              l_indexSubsumptionWatcherVector_oneLiteralWatchingAlgorithmSubsumption_(), l_firstCall_oneLiteralWatchingAlgorithmLiteralSubsumption_(true),
-              l_forbiddenLiteralTSet_oneLiteralWatchingAlgorithmLiteralSubsumption_(), l_removeLiteralTSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmLiteralSubsumption_(),
-              l_literalTSubsumptionWatcherVector_oneLiteralWatchingAlgorithmLiteralSubsumption_(), l_firstCall_oneLiteralWatchingAlgorithmVariableSubsumption_(true),
-              l_forbiddenVariableSet_oneLiteralWatchingAlgorithmVariableSubsumption_(), l_removeVariableSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmVariableSubsumption_(),
-              l_variableSubsumptionWatcherVector_oneLiteralWatchingAlgorithmVariableSubsumption_(), configuration_(configuration), clauseIdWatcher_(),
-              currentComponentClausesStack_(), currentComponentClausesFixedVector_(0, numberOfClauses), clauseNumberOfSatisfiedLiterals_(),
-              clauseNumberOfUnsatisfiedLiterals_(), contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences),
-              numberOfPositiveLiteralsInClauseVector_(), numberOfNegativeLiteralsInClauseVector_(),
-              d_currentComponentVariableSetStack_() {
+              l_watchedVariableVector_processComputeConnectedComponents_(numberOfClauses, 0),
+              l_computeConnectedComponents_processComputeConnectedComponents_(numberOfVariables), l_firstCall_getCurrentClauses_(true),
+              l_firstCall_getCurrentComponentNotSubsumedClauses_(true), l_firstCall_oneLiteralWatchingAlgorithmSubsumption_(true),
+              l_firstCall_oneLiteralWatchingAlgorithmLiteralSubsumption_(true), l_firstCall_oneLiteralWatchingAlgorithmVariableSubsumption_(true),
+              configuration_(configuration), currentComponentClausesFixedVector_(0, numberOfClauses),
+              contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences) {
             assert(originalFormula_.size() > 1);
             assert((LiteralT(2) + LiteralT(2) * static_cast<LiteralT>(numberOfVariables)) == static_cast<LiteralT>(literalNumberOfOccurrences.size()));
 
@@ -254,20 +244,14 @@ namespace Hydra::Formula::Representation::Contiguous {
                                                                        static_cast<FormulaSizeType>(formula.size() - numberOfClauses),
                                                                        numberOfVariables, numberOfClauses,
                                                                        formulaRepresentationStatisticsPtr),
-              originalFormula_(std::move(formula)), originalClauseSize_(), originalClauseOffset_(),
+              originalFormula_(std::move(formula)),
               l_clauseNeedsToBeDeactivatedVectorSet_processAddLiteralToPartialAssignment_(numberOfClauses),
-              l_watchedVariableVector_processComputeConnectedComponents_(numberOfClauses, 0), l_computeConnectedComponents_processComputeConnectedComponents_(numberOfVariables),
-              l_firstCall_getCurrentClauses_(true), l_addedClauseVectorSet_getCurrentClauses_(),
-              l_firstCall_getCurrentComponentNotSubsumedClauses_(true), l_subsumedClauseVectorSet_getCurrentComponentNotSubsumedClauses_(),
-              l_firstCall_oneLiteralWatchingAlgorithmSubsumption_(true), l_removeClauseIdVectorSet_oneLiteralWatchingAlgorithmSubsumption_(),
-              l_indexSubsumptionWatcherVector_oneLiteralWatchingAlgorithmSubsumption_(), l_firstCall_oneLiteralWatchingAlgorithmLiteralSubsumption_(true),
-              l_forbiddenLiteralTSet_oneLiteralWatchingAlgorithmLiteralSubsumption_(), l_removeLiteralTSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmLiteralSubsumption_(),
-              l_literalTSubsumptionWatcherVector_oneLiteralWatchingAlgorithmLiteralSubsumption_(), l_firstCall_oneLiteralWatchingAlgorithmVariableSubsumption_(true),
-              l_forbiddenVariableSet_oneLiteralWatchingAlgorithmVariableSubsumption_(), l_removeVariableSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmVariableSubsumption_(),
-              l_variableSubsumptionWatcherVector_oneLiteralWatchingAlgorithmVariableSubsumption_(), configuration_(configuration), clauseIdWatcher_(),
-              currentComponentClausesStack_(), currentComponentClausesFixedVector_(0, numberOfClauses), clauseNumberOfSatisfiedLiterals_(),
-              clauseNumberOfUnsatisfiedLiterals_(), contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences),
-              numberOfPositiveLiteralsInClauseVector_(), numberOfNegativeLiteralsInClauseVector_() {
+              l_watchedVariableVector_processComputeConnectedComponents_(numberOfClauses, 0),
+              l_computeConnectedComponents_processComputeConnectedComponents_(numberOfVariables), l_firstCall_getCurrentClauses_(true),
+              l_firstCall_getCurrentComponentNotSubsumedClauses_(true), l_firstCall_oneLiteralWatchingAlgorithmSubsumption_(true),
+              l_firstCall_oneLiteralWatchingAlgorithmLiteralSubsumption_(true), l_firstCall_oneLiteralWatchingAlgorithmVariableSubsumption_(true),
+              configuration_(configuration), currentComponentClausesFixedVector_(0, numberOfClauses),
+              contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences) {
             initializeDataStructures();
         }
 
@@ -279,23 +263,28 @@ namespace Hydra::Formula::Representation::Contiguous {
                                                                        static_cast<FormulaSizeType>(formula.size() - numberOfClauses),
                                                                        numberOfVariables, numberOfClauses,
                                                                        formulaRepresentationStatisticsPtr),
-              originalFormula_(formula), originalClauseSize_(), originalClauseOffset_(),
+              originalFormula_(formula),
               l_clauseNeedsToBeDeactivatedVectorSet_processAddLiteralToPartialAssignment_(numberOfClauses),
-              l_watchedVariableVector_processComputeConnectedComponents_(numberOfClauses, 0), l_computeConnectedComponents_processComputeConnectedComponents_(numberOfVariables),
-              l_firstCall_getCurrentClauses_(true), l_addedClauseVectorSet_getCurrentClauses_(),
-              l_firstCall_getCurrentComponentNotSubsumedClauses_(true), l_subsumedClauseVectorSet_getCurrentComponentNotSubsumedClauses_(),
-              l_firstCall_oneLiteralWatchingAlgorithmSubsumption_(true), l_removeClauseIdVectorSet_oneLiteralWatchingAlgorithmSubsumption_(),
-              l_indexSubsumptionWatcherVector_oneLiteralWatchingAlgorithmSubsumption_(), l_firstCall_oneLiteralWatchingAlgorithmLiteralSubsumption_(true),
-              l_forbiddenLiteralTSet_oneLiteralWatchingAlgorithmLiteralSubsumption_(), l_removeLiteralTSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmLiteralSubsumption_(),
-              l_literalTSubsumptionWatcherVector_oneLiteralWatchingAlgorithmLiteralSubsumption_(), l_firstCall_oneLiteralWatchingAlgorithmVariableSubsumption_(true),
-              l_forbiddenVariableSet_oneLiteralWatchingAlgorithmVariableSubsumption_(), l_removeVariableSubsumptionWatcherVectorSet_oneLiteralWatchingAlgorithmVariableSubsumption_(),
-              l_variableSubsumptionWatcherVector_oneLiteralWatchingAlgorithmVariableSubsumption_(), configuration_(configuration), clauseIdWatcher_(),
-              currentComponentClausesStack_(), currentComponentClausesFixedVector_(0, numberOfClauses), clauseNumberOfSatisfiedLiterals_(),
-              clauseNumberOfUnsatisfiedLiterals_(), contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences),
-              numberOfPositiveLiteralsInClauseVector_(), numberOfNegativeLiteralsInClauseVector_() {
+              l_watchedVariableVector_processComputeConnectedComponents_(numberOfClauses, 0),
+              l_computeConnectedComponents_processComputeConnectedComponents_(numberOfVariables), l_firstCall_getCurrentClauses_(true),
+              l_firstCall_getCurrentComponentNotSubsumedClauses_(true), l_firstCall_oneLiteralWatchingAlgorithmSubsumption_(true),
+              l_firstCall_oneLiteralWatchingAlgorithmLiteralSubsumption_(true), l_firstCall_oneLiteralWatchingAlgorithmVariableSubsumption_(true),
+              configuration_(configuration), currentComponentClausesFixedVector_(0, numberOfClauses),
+              contiguousOccurrenceList_(numberOfClauses, literalNumberOfOccurrences) {
             initializeDataStructures();
         }
         #endif
+        explicit ContiguousFormulaRepresentation(ParsedFormulaStruct&& parsedFormulaStruct,
+                                                 const ContiguousFormulaRepresentationConfiguration& configuration = ContiguousFormulaRepresentationConfiguration(),
+                                                 FormulaRepresentationStatisticsPtrType formulaRepresentationStatisticsPtr = nullptr)
+            : ContiguousFormulaRepresentation(std::move(parsedFormulaStruct.formula), parsedFormulaStruct.numberOfVariables, parsedFormulaStruct.numberOfClauses,
+                                              parsedFormulaStruct.literalNumberOfOccurrences, configuration, formulaRepresentationStatisticsPtr) { }
+
+        explicit ContiguousFormulaRepresentation(const ParsedFormulaStruct& parsedFormulaStruct,
+                                                 const ContiguousFormulaRepresentationConfiguration& configuration = ContiguousFormulaRepresentationConfiguration(),
+                                                 FormulaRepresentationStatisticsPtrType formulaRepresentationStatisticsPtr = nullptr)
+            : ContiguousFormulaRepresentation(parsedFormulaStruct.formula, parsedFormulaStruct.numberOfVariables, parsedFormulaStruct.numberOfClauses,
+                                              parsedFormulaStruct.literalNumberOfOccurrences, configuration, formulaRepresentationStatisticsPtr) { }
 
     private:
         FormulaType originalFormula_;

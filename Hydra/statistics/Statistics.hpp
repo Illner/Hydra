@@ -2,8 +2,6 @@
 
 #include <iostream>
 
-#include "Hydra/other/Other.hpp"
-
 #include "Hydra/cache/enums/CacheTypeEnum.hpp"
 
 #include "Hydra/cache/Cache.hxx"
@@ -11,7 +9,9 @@
 #include "Hydra/compiler/Compiler.hxx"
 #include "Hydra/decisionHeuristic/DecisionHeuristicAbstract.hxx"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hxx"
-#include "Hydra/partitioningHypergraph/PartitioningHypergraphAbstract.hxx"
+#include "Hydra/hypergraphPartitioning/HypergraphPartitioningAbstract.hxx"
+#include "Hydra/parser/cnf/CnfParser.hxx"
+#include "Hydra/preprocessor/cnf/CnfPreprocessorAbstract.hxx"
 #include "Hydra/renHCRecognition/RenHCRecognitionAbstract.hxx"
 #include "Hydra/satSolver/SatSolverAbstract.hxx"
 
@@ -26,20 +26,24 @@ namespace Hydra::Statistics {
         using CacheStatisticsType = Cache::CacheStatistics;
         using CircuitStatisticsType = Circuit::CircuitStatistics;
         using SatSolverStatisticsType = SatSolver::SatSolverStatistics;
+        using CnfParserStatisticsType = Parser::Cnf::CnfParserStatistics;
+        using CnfPreprocessorStatisticsType = Preprocessor::Cnf::CnfPreprocessorStatistics;
         using RenHCRecognitionStatisticsType = RenHCRecognition::RenHCRecognitionStatistics;
         using DecisionHeuristicStatisticsType = DecisionHeuristic::DecisionHeuristicStatistics;
         using FormulaRepresentationStatisticsType = Formula::Representation::FormulaRepresentationStatistics;
-        using PartitioningHypergraphStatisticsType = PartitioningHypergraph::PartitioningHypergraphStatistics;
+        using HypergraphPartitioningStatisticsType = HypergraphPartitioning::HypergraphPartitioningStatistics;
 
     public:
-        using CacheStatisticsPtrType = typename Cache::CacheStatistics::CacheStatisticsPtrType;
-        using CompilerStatisticsPtrType = typename CompilerStatistics::CompilerStatisticsPtrType;
-        using CircuitStatisticsPtrType = typename Circuit::CircuitStatistics::CircuitStatisticsPtrType;
-        using SatSolverStatisticsPtrType = typename SatSolver::SatSolverStatistics::SatSolverStatisticsPtrType;
-        using RenHCRecognitionStatisticsPtrType = typename RenHCRecognition::RenHCRecognitionStatistics::RenHCRecognitionStatisticsPtrType;
-        using DecisionHeuristicStatisticsPtrType = typename DecisionHeuristic::DecisionHeuristicStatistics::DecisionHeuristicStatisticsPtrType;
-        using FormulaRepresentationStatisticsPtrType = typename Formula::Representation::FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType;
-        using PartitioningHypergraphStatisticsPtrType = typename PartitioningHypergraph::PartitioningHypergraphStatistics::PartitioningHypergraphStatisticsPtrType;
+        using CacheStatisticsPtrType = Cache::CacheStatistics::CacheStatisticsPtrType;
+        using CompilerStatisticsPtrType = CompilerStatistics::CompilerStatisticsPtrType;
+        using CircuitStatisticsPtrType = Circuit::CircuitStatistics::CircuitStatisticsPtrType;
+        using SatSolverStatisticsPtrType = SatSolver::SatSolverStatistics::SatSolverStatisticsPtrType;
+        using CnfParserStatisticsPtrType = Parser::Cnf::CnfParserStatistics::CnfParserStatisticsPtrType;
+        using CnfPreprocessorStatisticsPtrType = Preprocessor::Cnf::CnfPreprocessorStatistics::CnfPreprocessorStatisticsPtrType;
+        using RenHCRecognitionStatisticsPtrType = RenHCRecognition::RenHCRecognitionStatistics::RenHCRecognitionStatisticsPtrType;
+        using DecisionHeuristicStatisticsPtrType = DecisionHeuristic::DecisionHeuristicStatistics::DecisionHeuristicStatisticsPtrType;
+        using FormulaRepresentationStatisticsPtrType = Formula::Representation::FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType;
+        using HypergraphPartitioningStatisticsPtrType = HypergraphPartitioning::HypergraphPartitioningStatistics::HypergraphPartitioningStatisticsPtrType;
 
     public:
         using StatisticsPtrType = Statistics*;
@@ -48,10 +52,12 @@ namespace Hydra::Statistics {
         CircuitStatisticsType circuitStatistics_;
         CompilerStatisticsType compilerStatistics_;
         SatSolverStatisticsType satSolverStatistics_;
+        CnfParserStatisticsType cnfParserStatistics_;
+        CnfPreprocessorStatisticsType cnfPreprocessorStatistics_;
         RenHCRecognitionStatisticsType renHCRecognitionStatistics_;
         DecisionHeuristicStatisticsType decisionHeuristicStatistics_;
         FormulaRepresentationStatisticsType formulaRepresentationStatistics_;
-        PartitioningHypergraphStatisticsType partitioningHypergraphStatistics_;
+        HypergraphPartitioningStatisticsType hypergraphPartitioningStatistics_;
         CacheStatisticsType componentCacheStatistics_ = CacheStatisticsType(Cache::CacheTypeEnum::COMPONENT);
         CacheStatisticsType hypergraphCutCacheStatistics_ = CacheStatisticsType(Cache::CacheTypeEnum::HYPERGRAPH_CUT);
 
@@ -67,9 +73,9 @@ namespace Hydra::Statistics {
         SatSolverStatisticsPtrType getSatSolverStatisticsPtr() noexcept;
 
         /**
-         * @return a pointer to the partitioning hypergraph statistics
+         * @return a pointer to the hypergraph partitioning statistics
          */
-        PartitioningHypergraphStatisticsPtrType getPartitioningHypergraphStatisticsPtr() noexcept;
+        HypergraphPartitioningStatisticsPtrType getHypergraphPartitioningStatisticsPtr() noexcept;
 
         /**
          * @return a pointer to the component cache statistics
@@ -100,6 +106,16 @@ namespace Hydra::Statistics {
          * @return a pointer to the renH-C recognition statistics
          */
         RenHCRecognitionStatisticsPtrType getRenHCRecognitionStatisticsPtr() noexcept;
+
+        /**
+         * @return a pointer to the CNF preprocessor statistics
+         */
+        CnfPreprocessorStatisticsPtrType getCnfPreprocessorStatisticsPtr() noexcept;
+
+        /**
+         * @return a pointer to the CNF parser statistics
+         */
+        CnfParserStatisticsPtrType getCnfParserStatisticsPtr() noexcept;
 
         void printStatistics(std::ostream& out, bool addLabels) const;
     };

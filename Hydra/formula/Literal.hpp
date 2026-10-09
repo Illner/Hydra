@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "Hydra/other/Other.hpp"
+#include "Hydra/other/TemplateType.hpp"
 #include "Hydra/other/hashMap/HashMap.hpp"
 #include "Hydra/other/std/Std.hpp"
 
@@ -53,6 +54,9 @@ namespace Hydra::Formula {
      */
     template <typename VarT, typename LiteralT>
     class Literal {
+        static_assert(Other::isValidVarT<VarT>, "Invalid VarT type!");
+        static_assert(Other::isValidLiteralT<LiteralT>, "Invalid LiteralT type!");
+
     public:
         using LiteralType = Literal<VarT, LiteralT>;
         using VariableVectorType = std::vector<VarT>;
@@ -68,17 +72,6 @@ namespace Hydra::Formula {
         using MappingFromVariableToLiteralType = Other::HashMap::MapType<VarT, LiteralType>;
         using MappingFromVariableToOriginalVariableType = Other::HashMap::MapType<VarT, OriginalVarType>;
         using MappingFromOriginalVariableToVariableType = Other::HashMap::MapType<OriginalVarType, VarT>;
-
-    public:
-        using isValidVarT = std::bool_constant<(std::is_same<VarT, char8_t>::value ||
-                                                std::is_same<VarT, char16_t>::value ||
-                                                std::is_same<VarT, char32_t>::value)>;
-        using isValidLiteralT = std::bool_constant<(std::is_same<LiteralT, char8_t>::value ||
-                                                    std::is_same<LiteralT, char16_t>::value ||
-                                                    std::is_same<LiteralT, char32_t>::value)>;
-
-        static_assert(isValidVarT::value, "Invalid VarT type!");
-        static_assert(isValidLiteralT::value, "Invalid LiteralT type!");
 
     public:
         /**

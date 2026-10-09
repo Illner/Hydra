@@ -13,20 +13,20 @@ namespace Hydra::RenHCRecognition::Aspvall {
      * @tparam VarT type used for a variable
      * @tparam LiteralT type used for a literal
      * @tparam ClauseIdT type used for a clause identifier
-     * @tparam VarAspT type used for an Aspvall variable
-     * @tparam LiteralAspT type used for an Aspvall literal
-     * @tparam ClauseIdAspT type used for an Aspvall clause identifier
+     * @tparam AspVarT type used for an Aspvall variable
+     * @tparam AspLiteralT type used for an Aspvall literal
+     * @tparam AspClauseIdT type used for an Aspvall clause identifier
      */
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
     struct AspvallRenHCRecognitionStruct {
     public:
         using ClauseIdVectorType = typename Container::ContiguousOccurrenceList::ContiguousOccurrenceList<VarT, LiteralT, ClauseIdT>::ClauseIdVectorType;
-        using ClauseIdVectorAspType = typename Container::ContiguousOccurrenceList::ContiguousOccurrenceList<VarAspT, LiteralAspT, ClauseIdAspT>::ClauseIdVectorType;
+        using ClauseIdVectorAspType = typename Container::ContiguousOccurrenceList::ContiguousOccurrenceList<AspVarT, AspLiteralT, AspClauseIdT>::ClauseIdVectorType;
 
     public:
-        VarAspT numberOfVariables;
-        LiteralAspT numberOfLiterals;
-        ClauseIdAspT numberOfClauses;
+        AspVarT numberOfVariables;
+        AspLiteralT numberOfLiterals;
+        AspClauseIdT numberOfClauses;
         FormulaSizeType formulaSize;
 
         ClauseIdVectorType mappingFromAspvallClauseIdToOriginalClauseIdVector = ClauseIdVectorType();

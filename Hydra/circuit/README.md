@@ -1,3 +1,3 @@
 # Circuit
 
-![alt text](../../doc/circuit.png "circuit")
+![alt text](../../docs/circuit.png "circuit")

@@ -13,7 +13,8 @@ namespace Hydra::Formula::Representation::Contiguous::Parser::Cnf {
                                                                                               unsigned int& line,
                                                                                               bool forbidClausesContainingComplementaryLiterals,
                                                                                               const ContiguousFormulaRepresentationConfiguration& configuration,
-                                                                                              FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType formulaRepresentationStatisticsPtr) {
+                                                                                              FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType formulaRepresentationStatisticsPtr,
+                                                                                              Hydra::Parser::Cnf::CnfParserStatistics::CnfParserStatisticsPtrType cnfParserStatisticsPtr) {
         Cara::ModelCountingTypeEnum dummyModelCountingType = Cara::ModelCountingTypeEnum::UNDEFINED;
 
         return parseCnfFormula<VarT, LiteralT, ClauseIdT, InputIteratorT>(begin, end,
@@ -21,7 +22,7 @@ namespace Hydra::Formula::Representation::Contiguous::Parser::Cnf {
                                                                           static_cast<ClauseIdT>(dimacsCnfHeaderStruct.numberOfClauses),
                                                                           dimacsCnfHeaderStruct.size,
                                                                           line, dummyModelCountingType, forbidClausesContainingComplementaryLiterals,
-                                                                          configuration, formulaRepresentationStatisticsPtr);
+                                                                          configuration, formulaRepresentationStatisticsPtr, cnfParserStatisticsPtr);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIteratorT>
@@ -30,13 +31,14 @@ namespace Hydra::Formula::Representation::Contiguous::Parser::Cnf {
                                                                                               unsigned int& line, Cara::ModelCountingTypeEnum& modelCountingType,
                                                                                               bool forbidClausesContainingComplementaryLiterals,
                                                                                               const ContiguousFormulaRepresentationConfiguration& configuration,
-                                                                                              FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType formulaRepresentationStatisticsPtr) {
+                                                                                              FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType formulaRepresentationStatisticsPtr,
+                                                                                              Hydra::Parser::Cnf::CnfParserStatistics::CnfParserStatisticsPtrType cnfParserStatisticsPtr) {
         return parseCnfFormula<VarT, LiteralT, ClauseIdT, InputIteratorT>(begin, end,
                                                                           static_cast<VarT>(dimacsCnfHeaderStruct.numberOfVariables),
                                                                           static_cast<ClauseIdT>(dimacsCnfHeaderStruct.numberOfClauses),
                                                                           dimacsCnfHeaderStruct.size,
                                                                           line, modelCountingType, forbidClausesContainingComplementaryLiterals,
-                                                                          configuration, formulaRepresentationStatisticsPtr);
+                                                                          configuration, formulaRepresentationStatisticsPtr, cnfParserStatisticsPtr);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT, std::input_iterator InputIteratorT>
@@ -46,31 +48,17 @@ namespace Hydra::Formula::Representation::Contiguous::Parser::Cnf {
                                                                                               Cara::ModelCountingTypeEnum& modelCountingType,
                                                                                               bool forbidClausesContainingComplementaryLiterals,
                                                                                               const ContiguousFormulaRepresentationConfiguration& configuration,
-                                                                                              FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType formulaRepresentationStatisticsPtr) {
+                                                                                              FormulaRepresentationStatistics::FormulaRepresentationStatisticsPtrType formulaRepresentationStatisticsPtr,
+                                                                                              Hydra::Parser::Cnf::CnfParserStatistics::CnfParserStatisticsPtrType cnfParserStatisticsPtr) {
         using ParsedFormulaStruct = Hydra::Parser::Cnf::ParsedFormulaStruct<VarT, LiteralT, ClauseIdT>;
         using ContiguousFormulaRepresentationType = ContiguousFormulaRepresentation<VarT, LiteralT, ClauseIdT>;
-        using FormulaRepresentationAbstractUniquePtrType = std::unique_ptr<FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>>;
-
-        // Statistics
-        if (formulaRepresentationStatisticsPtr)
-            formulaRepresentationStatisticsPtr->initializeTimer.startStopwatch();
 
         ParsedFormulaStruct parsedFormulaStruct = Hydra::Parser::Cnf::parseCnfFormula<VarT, LiteralT, ClauseIdT>(begin, end,
                                                                                                                  numberOfVariables, numberOfClauses, size,
                                                                                                                  line, modelCountingType,
-                                                                                                                 forbidClausesContainingComplementaryLiterals);
+                                                                                                                 forbidClausesContainingComplementaryLiterals,
+                                                                                                                 cnfParserStatisticsPtr);
 
-        FormulaRepresentationAbstractUniquePtrType formulaRepresentation = std::make_unique<ContiguousFormulaRepresentationType>(std::move(parsedFormulaStruct.formula),
-                                                                                                                                 parsedFormulaStruct.numberOfVariables,
-                                                                                                                                 parsedFormulaStruct.numberOfClauses,
-                                                                                                                                 parsedFormulaStruct.literalNumberOfOccurrences,
-                                                                                                                                 configuration,
-                                                                                                                                 formulaRepresentationStatisticsPtr);
-
-        // Statistics
-        if (formulaRepresentationStatisticsPtr)
-            formulaRepresentationStatisticsPtr->initializeTimer.stopStopwatch();
-
-        return formulaRepresentation;
+        return std::make_unique<ContiguousFormulaRepresentationType>(std::move(parsedFormulaStruct), configuration, formulaRepresentationStatisticsPtr);
     }
 }   // namespace Hydra::Formula::Representation::Contiguous::Parser::Cnf

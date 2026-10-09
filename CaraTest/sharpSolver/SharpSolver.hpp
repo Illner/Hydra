@@ -1,10 +1,10 @@
 #pragma once
 
 #include <cassert>
+#include <exception>
 #include <iterator>
 #include <memory>
 #include <sstream>
-#include <stdexcept>
 #include <string>
 
 #include "HydraTest/TemplateTest.hpp"
@@ -17,6 +17,7 @@
 #include "Hydra/formula/representation/contiguous/parser/cnf/ContiguousFormulaCnfParser.hpp"
 #include "Hydra/other/operatingSystem/OperatingSystem.hpp"
 #include "Hydra/other/parser/Parser.hpp"
+#include "Hydra/other/seed/Seed.hpp"
 
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
 
@@ -38,6 +39,9 @@ namespace CaraTest::SharpSolver {
     inline std::string PATOH_HMETIS_TEST_NAME = "PaToH";
     #endif
 
+    // Seed
+    inline Hydra::Other::Seed::SeedType generatedSeed = Hydra::Other::Seed::NOT_DEFINED_SEED;
+
     using TemplateTest = HydraTest::TemplateTest;
 
     //region Types
@@ -57,7 +61,7 @@ namespace CaraTest::SharpSolver {
     using SatSolverTypeEnum = Hydra::CompilerConfiguration::SatSolverTypeEnum;
     using OmitClauseTypeEnum = Hydra::Cache::CachingScheme::OmitClauseTypeEnum;
     using FormulaInstanceEnum = HydraTest::FormulaInstance::FormulaInstanceEnum;
-    using PartitioningHypergraphTypeEnum = Hydra::PartitioningHypergraphTypeEnum;
+    using HypergraphPartitioningTypeEnum = Hydra::HypergraphPartitioningTypeEnum;
     using GlucoseVsidsScoreTypeEnum = Hydra::SatSolver::Glucose::VsidsScoreTypeEnum;
     using MiniSatVsidsScoreTypeEnum = Hydra::SatSolver::MiniSat::VsidsScoreTypeEnum;
     using VertexWeightTypeEnum = Hydra::CompilerConfiguration::VertexWeightTypeEnum;
@@ -74,10 +78,8 @@ namespace CaraTest::SharpSolver {
     inline SharpSolverConfigurationType createDefaultSharpSolverConfiguration() {
         SharpSolverConfigurationType configuration;
 
-        // Randomness
-        configuration.caraPartitioningHypergraphConfiguration.seed = -1;
-        configuration.patohPartitioningHypergraphConfiguration.seedPatohLibrary = -1;
-        configuration.kahyparPartitioningHypergraphConfiguration.seedKahyparLibrary = -1;
+        // Seed
+        configuration.setSeed(generatedSeed);
 
         // Cache cleaning strategy
         configuration.cacheCleaningStrategyComponentCachingType = CacheCleaningStrategyTypeEnum::NONE;
@@ -106,16 +108,16 @@ namespace CaraTest::SharpSolver {
         configuration.vsadsDecisionHeuristicConfiguration.p = 1;
         configuration.vsadsDecisionHeuristicConfiguration.q = 0.5;
 
-        // Partitioning hypergraph
+        // Hypergraph partitioning
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY;
 
         #if OPERATING_SYSTEM_WINDOWS
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::KAHYPAR;
         #else
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
         #endif
 
         return configuration;

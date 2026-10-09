@@ -28,12 +28,12 @@ namespace Hydra::Cache::CachingScheme::Standard {
         VarT maxVar = *(std::max_element(currentComponentVariableSet.cbegin(), currentComponentVariableSet.cend()));
 
         // char8_t
-        if (((this->cacheType_ == CacheTypeEnum::COMPONENT) && Other::literalsCanBeSavedAsTypeT<char8_t>(maxVar)) ||
-            ((this->cacheType_ == CacheTypeEnum::HYPERGRAPH_CUT) && Other::variablesCanBeSavedAsTypeT<char8_t>(maxVar)))
+        if (((this->cacheType_ == CacheTypeEnum::COMPONENT) && Other::literalsCanBeSavedAsTypeTForCache<char8_t>(maxVar)) ||
+            ((this->cacheType_ == CacheTypeEnum::HYPERGRAPH_CUT) && Other::variablesCanBeSavedAsTypeTForCache<char8_t>(maxVar)))
             fillCacheRecordStruct<char8_t>(currentComponentVariableSet, cacheRecordStruct.string8, cacheRecordStruct);
         // char16_t
-        else if (((this->cacheType_ == CacheTypeEnum::COMPONENT) && Other::literalsCanBeSavedAsTypeT<char16_t>(maxVar)) ||
-                 ((this->cacheType_ == CacheTypeEnum::HYPERGRAPH_CUT) && Other::variablesCanBeSavedAsTypeT<char16_t>(maxVar)))
+        else if (((this->cacheType_ == CacheTypeEnum::COMPONENT) && Other::literalsCanBeSavedAsTypeTForCache<char16_t>(maxVar)) ||
+                 ((this->cacheType_ == CacheTypeEnum::HYPERGRAPH_CUT) && Other::variablesCanBeSavedAsTypeTForCache<char16_t>(maxVar)))
             fillCacheRecordStruct<char16_t>(currentComponentVariableSet, cacheRecordStruct.string16, cacheRecordStruct);
         // char32_t
         else

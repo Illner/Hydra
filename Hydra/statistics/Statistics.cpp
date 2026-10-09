@@ -1,50 +1,62 @@
 #include "./Statistics.hpp"
 
+#include "Hydra/other/Other.hpp"
+
 namespace Hydra::Statistics {
 
-    typename Statistics::DecisionHeuristicStatisticsPtrType
+    Statistics::DecisionHeuristicStatisticsPtrType
     Statistics::getDecisionHeuristicStatisticsPtr() noexcept {
         return &decisionHeuristicStatistics_;
     }
 
-    typename Statistics::SatSolverStatisticsPtrType
+    Statistics::SatSolverStatisticsPtrType
     Statistics::getSatSolverStatisticsPtr() noexcept {
         return &satSolverStatistics_;
     }
 
-    typename Statistics::PartitioningHypergraphStatisticsPtrType
-    Statistics::getPartitioningHypergraphStatisticsPtr() noexcept {
-        return &partitioningHypergraphStatistics_;
+    Statistics::HypergraphPartitioningStatisticsPtrType
+    Statistics::getHypergraphPartitioningStatisticsPtr() noexcept {
+        return &hypergraphPartitioningStatistics_;
     }
 
-    typename Statistics::CacheStatisticsPtrType
+    Statistics::CacheStatisticsPtrType
     Statistics::getComponentCacheStatisticsPtr() noexcept {
         return &componentCacheStatistics_;
     }
 
-    typename Statistics::CacheStatisticsPtrType
+    Statistics::CacheStatisticsPtrType
     Statistics::getHypergraphCutCacheStatisticsPtr() noexcept {
         return &hypergraphCutCacheStatistics_;
     }
 
-    typename Statistics::CircuitStatisticsPtrType
+    Statistics::CircuitStatisticsPtrType
     Statistics::getCircuitStatisticsPtr() noexcept {
         return &circuitStatistics_;
     }
 
-    typename Statistics::CompilerStatisticsPtrType
+    Statistics::CompilerStatisticsPtrType
     Statistics::getCompilerStatisticsPtr() noexcept {
         return &compilerStatistics_;
     }
 
-    typename Statistics::FormulaRepresentationStatisticsPtrType
+    Statistics::FormulaRepresentationStatisticsPtrType
     Statistics::getFormulaRepresentationStatisticsPtr() noexcept {
         return &formulaRepresentationStatistics_;
     }
 
-    typename Statistics::RenHCRecognitionStatisticsPtrType
+    Statistics::RenHCRecognitionStatisticsPtrType
     Statistics::getRenHCRecognitionStatisticsPtr() noexcept {
         return &renHCRecognitionStatistics_;
+    }
+
+    Statistics::CnfPreprocessorStatisticsPtrType
+    Statistics::getCnfPreprocessorStatisticsPtr() noexcept {
+        return &cnfPreprocessorStatistics_;
+    }
+
+    Statistics::CnfParserStatisticsPtrType
+    Statistics::getCnfParserStatisticsPtr() noexcept {
+        return &cnfParserStatistics_;
     }
 
     void Statistics::printStatistics(std::ostream& out, bool addLabels) const {
@@ -57,6 +69,12 @@ namespace Hydra::Statistics {
         // Circuit
         circuitStatistics_.printStatistics(out, addLabels);
 
+        // CNF parser
+        cnfParserStatistics_.printStatistics(out, addLabels);
+
+        // CNF preprocessor
+        cnfPreprocessorStatistics_.printStatistics(out, addLabels);
+
         // Compiler
         compilerStatistics_.printStatistics(out, addLabels);
 
@@ -66,8 +84,8 @@ namespace Hydra::Statistics {
         // SAT solver
         satSolverStatistics_.printStatistics(out, addLabels);
 
-        // Partitioning hypergraph
-        partitioningHypergraphStatistics_.printStatistics(out, addLabels);
+        // Hypergraph partitioning
+        hypergraphPartitioningStatistics_.printStatistics(out, addLabels);
 
         // RenH-C recognition
         renHCRecognitionStatistics_.printStatistics(out, addLabels);

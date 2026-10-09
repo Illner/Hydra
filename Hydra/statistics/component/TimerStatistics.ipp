@@ -28,16 +28,16 @@ namespace Hydra::Statistics {
     template <typename TimeDurationT>
     void TimerStatistics<TimeDurationT>::printTimeDurationAbbreviation(std::ostream& out) const {
         // Nanoseconds
-        if (std::is_same<TimeDurationT, std::chrono::nanoseconds>::value)
+        if (std::is_same_v<TimeDurationT, std::chrono::nanoseconds>)
             out << "ns";
         // Microseconds
-        else if (std::is_same<TimeDurationT, std::chrono::microseconds>::value)
+        else if (std::is_same_v<TimeDurationT, std::chrono::microseconds>)
             out << "us";
         // Milliseconds
-        else if (std::is_same<TimeDurationT, std::chrono::milliseconds>::value)
+        else if (std::is_same_v<TimeDurationT, std::chrono::milliseconds>)
             out << "ms";
         // Seconds
-        else if (std::is_same<TimeDurationT, std::chrono::seconds>::value)
+        else if (std::is_same_v<TimeDurationT, std::chrono::seconds>)
             out << "s";
         else
             throw Exception::NotImplementedException("TimeDurationT",

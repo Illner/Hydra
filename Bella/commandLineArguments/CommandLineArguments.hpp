@@ -99,6 +99,7 @@ namespace Bella::CommandLineArguments {
     inline constexpr ArgumentNameType COUNT_ARGUMENT = "-c";
     inline constexpr ArgumentNameType TIMEOUT_ARGUMENT = "-t";
     inline constexpr ArgumentNameType VERSION_ARGUMENT = "-v";
+    inline constexpr ArgumentNameType SEED_ARGUMENT = "-seed";
     inline constexpr ArgumentNameType METACENTRUM_ARGUMENT = "-m";
     inline constexpr ArgumentNameType READABLE_STATISTICS_ARGUMENT = "-r";
     inline constexpr ArgumentNameType EQUIVALENCE_SIMPLIFICATION_METHOD_ARGUMENT = "-e";
@@ -133,7 +134,7 @@ namespace Bella::CommandLineArguments {
      * @throw MoreHypergraphPartitioningTypesAreMentionedException if more hypergraph partitioning types are mentioned
      * @throw NoHypergraphPartitioningTypeIsMentionedException if no hypergraph partitioning type is mentioned
      */
-    Hydra::PartitioningHypergraphTypeEnum getHypergraphPartitioningType(const ArgumentsType& arguments);
+    Hydra::HypergraphPartitioningTypeEnum getHypergraphPartitioningType(const ArgumentsType& arguments);
 
     /**
      * @param arguments the arguments
@@ -182,7 +183,7 @@ namespace Bella::CommandLineArguments {
      * @return the hypergraph node weight type
      * @throw MoreHypergraphNodeWeightTypesAreMentionedException if more hypergraph node weight types are mentioned
      */
-    Hydra::PartitioningHypergraph::VertexWeightTypeEnum getHypergraphNodeWeightType(const ArgumentsType& arguments);
+    Hydra::HypergraphPartitioning::VertexWeightTypeEnum getHypergraphNodeWeightType(const ArgumentsType& arguments);
 
     /**
      * @param arguments the arguments
@@ -195,4 +196,9 @@ namespace Bella::CommandLineArguments {
      * Print the help
      */
     void printHelp();
+
+    /**
+     * Print the version
+     */
+    void printVersion();
 }   // namespace Bella::CommandLineArguments

@@ -9,6 +9,7 @@
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/formula/partialAssignment/PartialAssignment.hpp"
 #include "Hydra/other/Other.hpp"
+#include "Hydra/other/TemplateType.hpp"
 #include "Hydra/other/hashMap/HashMap.hpp"
 #include "Hydra/other/type/arbitraryPrecisionInteger/ArbitraryPrecisionInteger.hpp"
 
@@ -38,8 +39,8 @@ namespace Hydra::Circuit::Node {
      */
     template <typename VarT, typename LiteralT>
     class NodeAbstract {
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidVarT::value, "Invalid VarT type!");
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidLiteralT::value, "Invalid LiteralT type!");
+        static_assert(Other::isValidVarT<VarT>, "Invalid VarT type!");
+        static_assert(Other::isValidLiteralT<LiteralT>, "Invalid LiteralT type!");
 
     public:
         using LiteralType = typename Formula::Literal<VarT, LiteralT>::LiteralType;

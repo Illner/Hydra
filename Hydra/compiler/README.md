@@ -1,3 +1,3 @@
 # Compiler
 
-![alt text](../../doc/compiler.png "compiler")
+![alt text](../../docs/compiler.png "compiler")

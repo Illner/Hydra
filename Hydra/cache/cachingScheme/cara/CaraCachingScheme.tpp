@@ -66,11 +66,11 @@ namespace Hydra::Cache::CachingScheme::Cara {
         }
 
         /**
-         * Check if the number of sample moments is valid (that is, >= S_NUMBER_OF_SAMPLE_MOMENTS_MINIMUM and <= S_NUMBER_OF_SAMPLE_MOMENTS_MAXIMUM)
+         * Check if the number of sample moments is valid (that is, S_NUMBER_OF_SAMPLE_MOMENTS_MINIMUM <= numberOfSampleMoments <= S_NUMBER_OF_SAMPLE_MOMENTS_MAXIMUM)
          * @param numberOfSampleMoments a number of sample moments
          * @return true if the number of sample moments is valid. Otherwise, false is returned.
          */
-        static bool isValidNumberOfSampleMomentsStatic(NumberOfSampleMomentsType numberOfSampleMoments) noexcept {
+        static bool isNumberOfSampleMomentsValidStatic(NumberOfSampleMomentsType numberOfSampleMoments) noexcept {
             // Minimum check
             if (numberOfSampleMoments < S_NUMBER_OF_SAMPLE_MOMENTS_MINIMUM)
                 return false;

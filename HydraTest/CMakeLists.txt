@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.14)
 project("HydraTest"
         DESCRIPTION "Tests for Hydra")
 
-add_library(HydraTestLibrary STATIC "TemplateTest.cpp")
+add_library(HydraTestLibrary STATIC "TemplateTest.cpp" "RunSession.cpp")
 
 add_executable(HydraTest "HydraTest.cpp"
 
@@ -35,9 +35,6 @@ add_executable(HydraTest "HydraTest.cpp"
         # RenH-C recognition
         "renHCRecognition/aspvall/AspvallRenHCRecognitionTest.cpp"
 
-        # Other
-        "other/MergeSortTest.cpp"
-
         # Container
         "other/container/vectorMap/VectorMapTest.cpp"
         "other/container/vectorSet/VectorSetTest.cpp"
@@ -48,11 +45,13 @@ add_executable(HydraTest "HydraTest.cpp"
         "other/container/contiguousOccurrenceList/ContiguousOccurrenceListTest.cpp"
         "other/container/computeConnectedComponents/ComputeConnectedComponentsTest.cpp"
 
-        # Type
+        # Other
+        "other/mergeSort/MergeSortTest.cpp"
+        "other/canBeSavedAsTypeT/CanBeSavedAsTypeTTest.cpp"
         "other/type/arbitraryPrecisionInteger/custom/CustomArbitraryPrecisionIntegerTest.cpp"
 
-        # Partitioning hypergraph
-        "partitioningHypergraph/PartitioningHypergraphTest.cpp"
+        # Hypergraph partitioning
+        "hypergraphPartitioning/HypergraphPartitioningTest.cpp"
 
         # SAT solver
         "satSolver/glucose/GlucoseSolverTest.cpp"

@@ -11,6 +11,7 @@
 #include "Hydra/formula/Literal.hpp"
 #include "Hydra/formula/partialAssignment/PartialAssignment.hpp"
 #include "Hydra/other/Other.hpp"
+#include "Hydra/other/TemplateType.hpp"
 #include "Hydra/other/container/computeConnectedComponents/ComputeConnectedComponents.hpp"
 #include "Hydra/other/container/reusableVector/ReusableVector.hpp"
 #include "Hydra/other/container/vectorMap/VectorMap.hpp"
@@ -27,7 +28,7 @@
 #include "Hydra/formula/enums/ClauseStatusEnum.hpp"
 #include "Hydra/formula/enums/FormulaRepresentationTypeEnum.hpp"
 #include "Hydra/formula/enums/RecognitionTypeEnum.hpp"
-#include "Hydra/partitioningHypergraph/enums/VertexWeightTypeEnum.hpp"
+#include "Hydra/hypergraphPartitioning/enums/VertexWeightTypeEnum.hpp"
 
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hxx"
 
@@ -61,6 +62,10 @@ namespace Hydra::Formula::Representation {
      */
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     class FormulaRepresentationAbstract {
+        static_assert(Other::isValidVarT<VarT>, "Invalid VarT type!");
+        static_assert(Other::isValidLiteralT<LiteralT>, "Invalid LiteralT type!");
+        static_assert(Other::isValidClauseIdT<ClauseIdT>, "Invalid ClauseIdT type!");
+
     public:
         using LiteralType = typename Literal<VarT, LiteralT>::LiteralType;
         using LiteralSetType = typename Literal<VarT, LiteralT>::LiteralSetType;
@@ -104,16 +109,7 @@ namespace Hydra::Formula::Representation {
         using ModelCountingTypeEnum = Cara::ModelCountingTypeEnum;
         using IgnorePureLiteralTypeEnum = Hydra::IgnorePureLiteralTypeEnum;
         using OmitClauseTypeEnum = Cache::CachingScheme::OmitClauseTypeEnum;
-        using VertexWeightTypeEnum = PartitioningHypergraph::VertexWeightTypeEnum;
-
-    public:
-        using isValidClauseT = std::bool_constant<(std::is_same<ClauseIdT, char8_t>::value ||
-                                                   std::is_same<ClauseIdT, char16_t>::value ||
-                                                   std::is_same<ClauseIdT, char32_t>::value)>;
-
-        static_assert(isValidClauseT::value, "Invalid ClauseIdT type!");
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidVarT::value, "Invalid VarT type!");
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidLiteralT::value, "Invalid LiteralT type!");
+        using VertexWeightTypeEnum = HypergraphPartitioning::VertexWeightTypeEnum;
 
     public:
         #ifndef NDEBUG
@@ -228,7 +224,7 @@ namespace Hydra::Formula::Representation {
         /**
          * Combine two vertex weights
          * Clause_1 with vertexWeight_1 variable subsumes clause_2 with vertexWeight_2
-         * Note: mainly used by PartitioningHypergraph
+         * Note: mainly used by HypergraphPartitioning
          * @param vertexWeight1 first vertex weight
          * @param vertexWeight2 second vertex weight
          * @param vertexWeightType a type of vertex weight
@@ -645,7 +641,7 @@ namespace Hydra::Formula::Representation {
 
         /**
          * Variable subsumption is subsumption that considers only variables, not literals
-         * Note: mainly used by PartitioningHypergraph
+         * Note: mainly used by HypergraphPartitioning
          * Note: the mapping is applied before checking variable subsumption
          * Note: clauseThatVariableSubsumesSomeClauseVectorSet will be cleared at the beginning
          * Note: the corresponding vertex weights MUST be initially set if vertex weights are used

@@ -7,6 +7,7 @@
 #include "Hydra/external/hashMaps/flat_hash_map/flat_hash_map.h"
 #include "Hydra/external/hashMaps/flat_hash_map/unordered_map.h"
 #include "Hydra/external/hashMaps/robin-hood-hashing/robin_hood.h"
+#include "Hydra/external/hashMaps/unordered_dense/huge_page_allocator.h"
 #include "Hydra/external/hashMaps/unordered_dense/unordered_dense.h"
 
 namespace Hydra::Other::HashMap {
@@ -43,15 +44,33 @@ namespace Hydra::Other::HashMap {
 
     // ankerl::unordered_dense
     template <typename K>
-    using UnorderedDenseSetType = ankerl::unordered_dense::set<K>;
+    using AnkerlUnorderedDenseSetType = ankerl::unordered_dense::set<K>;
     template <typename K, typename V>
-    using UnorderedDenseMapType = ankerl::unordered_dense::map<K, V>;
+    using AnkerlUnorderedDenseMapType = ankerl::unordered_dense::map<K, V>;
 
     // ankerl::unordered_dense::segmented
     template <typename K>
-    using UnorderedDenseSegmentedSetType = ankerl::unordered_dense::segmented_set<K>;
+    using AnkerlUnorderedDenseSegmentedSetType = ankerl::unordered_dense::segmented_set<K>;
     template <typename K, typename V>
-    using UnorderedDenseSegmentedMapType = ankerl::unordered_dense::segmented_map<K, V>;
+    using AnkerlUnorderedDenseSegmentedMapType = ankerl::unordered_dense::segmented_map<K, V>;
+
+    // ankerl::unordered_dense::huge_page
+    // Note: huge pages are used only on Linux (transparent hugepages). Otherwise, std::allocator is used.
+    template <typename K>
+    using AnkerlUnorderedDenseHugePageSetType = ankerl::unordered_dense::huge_page::set<K>;
+    template <typename K, typename V>
+    using AnkerlUnorderedDenseHugePageMapType = ankerl::unordered_dense::huge_page::map<K, V>;
+
+    // ankerl::unordered_dense::huge_page::segmented
+    // Note: huge pages are used only on Linux (transparent hugepages). Otherwise, std::allocator is used.
+    template <typename K>
+    using AnkerlUnorderedDenseHugePageSegmentedSetType = ankerl::unordered_dense::huge_page::segmented_set<K,
+                                                                                                           ankerl::unordered_dense::hash<K>, std::equal_to<K>,
+                                                                                                           ankerl::unordered_dense::bucket_type::group, 16 << 20>;
+    template <typename K, typename V>
+    using AnkerlUnorderedDenseHugePageSegmentedMapType = ankerl::unordered_dense::huge_page::segmented_map<K, V,
+                                                                                                           ankerl::unordered_dense::hash<K>, std::equal_to<K>,
+                                                                                                           ankerl::unordered_dense::bucket_type::group, 16 << 20>;
 
     // USED - general
     template <typename K>
@@ -61,7 +80,7 @@ namespace Hydra::Other::HashMap {
 
     // USED - string
     template <typename K>
-    using StringSetType = UnorderedDenseSetType<K>;
+    using StringSetType = AnkerlUnorderedDenseSetType<K>;
     template <typename K, typename V>
-    using StringMapType = UnorderedDenseMapType<K, V>;
+    using StringMapType = AnkerlUnorderedDenseMapType<K, V>;
 }   // namespace Hydra::Other::HashMap

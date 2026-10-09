@@ -4,6 +4,8 @@
 #include <string_view>
 #include <vector>
 
+#include "Hydra/other/seed/Seed.hpp"
+
 #include "Hydra/cache/enums/CacheTypeEnum.hpp"
 
 #include "Hydra/cache/cachingScheme/cara/CaraCachingScheme.tpp"
@@ -53,4 +55,17 @@ namespace Hydra::Other::Parser::CommandLineArgument {
     void getNumberOfSampleMomentsAndSetInCaraCachingSchemeConfiguration(const ArgumentsType& arguments, const ArgumentNameType& argumentName,
                                                                         Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration& caraCachingSchemeConfiguration,
                                                                         Cache::CacheTypeEnum cacheType, bool mandatoryArgumentValue);
+
+    /**
+     * Get the parsed seed based on the argument value
+     * @param arguments the arguments
+     * @param seedArgumentName a seed argument name
+     * @param generateSeedIfNotProvided should a random seed be generated if the argument does not exist
+     * @return the parsed seed if the argument exists. Otherwise,
+     *       generateSeedIfNotProvided: a random seed is returned.
+     *      !generateSeedIfNotProvided: NOT_DEFINED_SEED is returned.
+     * @throw SeedIsNotNumberException if the argument value is not a number
+     * @throw InvalidSeedException if the seed is invalid
+     */
+    Seed::SeedType getSeed(const ArgumentsType& arguments, const ArgumentNameType& seedArgumentName, bool generateSeedIfNotProvided = false);
 }   // namespace Hydra::Other::Parser::CommandLineArgument

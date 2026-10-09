@@ -45,37 +45,37 @@ namespace Hydra::RenHCRecognition::Aspvall::Creation {
     /**
      * Process one clause
      */
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
     inline void processClauseCreateAspvallRenHCRecognition(const Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>* formulaRepresentationAbstractPtr,
-                                                           AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>& aspvallRenHCRecognitionStruct,
-                                                           ClauseIdT clauseId, std::vector<ClauseIdAspT>& literalNumberOfOccurrences,
-                                                           std::vector<Formula::Literal<VarAspT, LiteralAspT>>& formula,
-                                                           ClauseIdAspT& currentAspvallClauseId, VarAspT& newAuxiliaryVariableIndex);
+                                                           AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>& aspvallRenHCRecognitionStruct,
+                                                           ClauseIdT clauseId, std::vector<AspClauseIdT>& literalNumberOfOccurrences,
+                                                           std::vector<Formula::Literal<AspVarT, AspLiteralT>>& formula,
+                                                           AspClauseIdT& currentAspvallClauseId, AspVarT& newAuxiliaryVariableIndex);
 
     /**
      * @tparam VarT type used for a variable
      * @tparam LiteralT type used for a literal
      * @tparam ClauseIdT type used for a clause identifier
-     * @tparam VarAspT type used for an Aspvall variable
-     * @tparam LiteralAspT type used for an Aspvall literal
-     * @tparam ClauseIdAspT type used for an Aspvall clause identifier
+     * @tparam AspVarT type used for an Aspvall variable
+     * @tparam AspLiteralT type used for an Aspvall literal
+     * @tparam AspClauseIdT type used for an Aspvall clause identifier
      * @param formulaRepresentationAbstractPtr a pointer to the formula representation
      * @param aspvallRenHCRecognitionStruct an Aspvall renH-C recognition structure
      * @param ignorePureLiteralType (debug) a type of ignored pure literals
      * @param currentComponentClauseReusableVector (optional) a reusable vector of current component clauses
      * @return renH-C recognition
      */
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
     inline std::unique_ptr<RenHCRecognitionAbstract<VarT, LiteralT, ClauseIdT>>
     createAspvallRenHCRecognition(const Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>* formulaRepresentationAbstractPtr,
-                                  AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>&& aspvallRenHCRecognitionStruct,
+                                  AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>&& aspvallRenHCRecognitionStruct,
                                   IgnorePureLiteralTypeEnum ignorePureLiteralType,
                                   RenHCRecognitionStatistics::RenHCRecognitionStatisticsPtrType renHCRecognitionStatisticsPtr);
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
     inline std::unique_ptr<RenHCRecognitionAbstract<VarT, LiteralT, ClauseIdT>>
     createAspvallRenHCRecognition(const Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>* formulaRepresentationAbstractPtr,
-                                  AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>&& aspvallRenHCRecognitionStruct,
+                                  AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>&& aspvallRenHCRecognitionStruct,
                                   IgnorePureLiteralTypeEnum ignorePureLiteralType,
                                   const typename Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdReusableVectorType& currentComponentClauseReusableVector);
 }   // namespace Hydra::RenHCRecognition::Aspvall::Creation

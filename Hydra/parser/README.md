@@ -1,3 +1,3 @@
 # Parser
 
-![alt text](../../doc/parser.png "parser")
+![alt text](../../docs/parser.png "parser")

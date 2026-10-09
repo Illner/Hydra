@@ -36,6 +36,26 @@ namespace BellaTest::Compiler::wDNNF {
         process(configuration, true, ContiguousFormulaRepresentationConfigurationType(), false);
     }
 
+    /**
+     * Seed MIN_SEED
+     */
+    TEST_CASE(" [Compiler::wDNNF] seed MIN_SEED", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.setSeed(Hydra::Other::Seed::MIN_SEED);
+
+        process(configuration, true);
+    }
+
+    /**
+     * Seed MAX_SEED
+     */
+    TEST_CASE(" [Compiler::wDNNF] seed MAX_SEED", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.setSeed(Hydra::Other::Seed::MAX_SEED);
+
+        process(configuration, true);
+    }
+
     //region SAT solver
     //region MiniSat
     /**
@@ -1285,18 +1305,18 @@ namespace BellaTest::Compiler::wDNNF {
     }
     //endregion
 
-    //region Partitioning hypergraph
+    //region Hypergraph partitioning
     //region KaHyPar
     /**
-     * Partitioning hypergraph (KaHyPar)
+     * Hypergraph partitioning (KaHyPar)
      *      empty cut: allow
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (KaHyPar) (empty cut: allow)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (KaHyPar) (empty cut: allow)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::KAHYPAR;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1306,16 +1326,16 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (KaHyPar)
+     * Hypergraph partitioning (KaHyPar)
      *      empty cut: allow
      *      variable subsumption
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (KaHyPar) (empty cut: allow, variable subsumption)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (KaHyPar) (empty cut: allow, variable subsumption)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::KAHYPAR;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1325,16 +1345,16 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (KaHyPar)
+     * Hypergraph partitioning (KaHyPar)
      *      empty cut: allow
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (KaHyPar) (empty cut: allow, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (KaHyPar) (empty cut: allow, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::KAHYPAR;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1344,17 +1364,17 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (KaHyPar)
+     * Hypergraph partitioning (KaHyPar)
      *      empty cut: allow
      *      variable subsumption
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (KaHyPar) (empty cut: allow, variable subsumption, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (KaHyPar) (empty cut: allow, variable subsumption, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::KAHYPAR;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1364,15 +1384,15 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (KaHyPar)
+     * Hypergraph partitioning (KaHyPar)
      *      empty cut: deny
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (KaHyPar) (empty cut: deny)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (KaHyPar) (empty cut: deny)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::KAHYPAR;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1382,16 +1402,16 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (KaHyPar)
+     * Hypergraph partitioning (KaHyPar)
      *      empty cut: deny
      *      variable subsumption
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (KaHyPar) (empty cut: deny, variable subsumption)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (KaHyPar) (empty cut: deny, variable subsumption)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::KAHYPAR;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1401,16 +1421,16 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (KaHyPar)
+     * Hypergraph partitioning (KaHyPar)
      *      empty cut: deny
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (KaHyPar) (empty cut: deny, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (KaHyPar) (empty cut: deny, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::KAHYPAR;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1420,17 +1440,17 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (KaHyPar)
+     * Hypergraph partitioning (KaHyPar)
      *      empty cut: deny
      *      variable subsumption
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (KaHyPar) (empty cut: deny, variable subsumption, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (KaHyPar) (empty cut: deny, variable subsumption, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::KAHYPAR;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::KAHYPAR;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1442,16 +1462,16 @@ namespace BellaTest::Compiler::wDNNF {
 
     //region PaToH, hMETIS
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: allow
      *      singleton hyperedge: allow
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: allow)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: allow)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = true;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1461,17 +1481,17 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: allow
      *      singleton hyperedge: allow
      *      variable subsumption
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: allow, variable subsumption)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: allow, variable subsumption)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = true;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1481,17 +1501,17 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: allow
      *      singleton hyperedge: allow
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: allow, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: allow, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = true;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1501,18 +1521,18 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: allow
      *      singleton hyperedge: allow
      *      variable subsumption
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: allow, variable subsumption, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: allow, variable subsumption, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = true;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1522,16 +1542,16 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: allow
      *      singleton hyperedge: deny
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: deny)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: deny)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1541,17 +1561,17 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: allow
      *      singleton hyperedge: deny
      *      variable subsumption
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: deny, variable subsumption)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: deny, variable subsumption)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1561,17 +1581,17 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: allow
      *      singleton hyperedge: deny
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: deny, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: deny, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1581,18 +1601,18 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: allow
      *      singleton hyperedge: deny
      *      variable subsumption
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: deny, variable subsumption, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: allow, singleton hyperedge: deny, variable subsumption, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1602,16 +1622,16 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: deny
      *      singleton hyperedge: allow
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: allow)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: allow)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = true;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1621,17 +1641,17 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: deny
      *      singleton hyperedge: allow
      *      variable subsumption
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: allow, variable subsumption)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: allow, variable subsumption)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = true;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1641,17 +1661,17 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: deny
      *      singleton hyperedge: allow
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: allow, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: allow, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = true;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1661,18 +1681,18 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: deny
      *      singleton hyperedge: allow
      *      variable subsumption
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: allow, variable subsumption, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: allow, variable subsumption, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = true;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1682,16 +1702,16 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: deny
      *      singleton hyperedge: deny
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: deny)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: deny)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1701,17 +1721,17 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: deny
      *      singleton hyperedge: deny
      *      variable subsumption
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: deny, variable subsumption)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: deny, variable subsumption)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1721,17 +1741,17 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: deny
      *      singleton hyperedge: deny
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: deny, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: deny, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1741,18 +1761,18 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (PaToH, hMETIS)
+     * Hypergraph partitioning (PaToH, hMETIS)
      *      empty cut: deny
      *      singleton hyperedge: deny
      *      variable subsumption
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: deny, variable subsumption, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (" + PATOH_HMETIS_TEST_NAME + ") (empty cut: deny, singleton hyperedge: deny, variable subsumption, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1765,15 +1785,15 @@ namespace BellaTest::Compiler::wDNNF {
     //region Cara
     #if OPERATING_SYSTEM_MACOS || OPERATING_SYSTEM_LINUX
     /**
-     * Partitioning hypergraph (Cara)
+     * Hypergraph partitioning (Cara)
      *      empty cut: allow
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (Cara) (empty cut: allow)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (Cara) (empty cut: allow)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::CARA;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1783,16 +1803,16 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (Cara)
+     * Hypergraph partitioning (Cara)
      *      empty cut: allow
      *      variable subsumption
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (Cara) (empty cut: allow, variable subsumption)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (Cara) (empty cut: allow, variable subsumption)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::CARA;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1802,16 +1822,16 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (Cara)
+     * Hypergraph partitioning (Cara)
      *      empty cut: allow
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (Cara) (empty cut: allow, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (Cara) (empty cut: allow, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::CARA;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1821,17 +1841,17 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (Cara)
+     * Hypergraph partitioning (Cara)
      *      empty cut: allow
      *      variable subsumption
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (Cara) (empty cut: allow, variable subsumption, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (Cara) (empty cut: allow, variable subsumption, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = true;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::CARA;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1841,15 +1861,15 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (Cara)
+     * Hypergraph partitioning (Cara)
      *      empty cut: deny
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (Cara) (empty cut: deny)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (Cara) (empty cut: deny)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::CARA;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1859,16 +1879,16 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (Cara)
+     * Hypergraph partitioning (Cara)
      *      empty cut: deny
      *      variable subsumption
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (Cara) (empty cut: deny, variable subsumption)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (Cara) (empty cut: deny, variable subsumption)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = false;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::CARA;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1878,16 +1898,16 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (Cara)
+     * Hypergraph partitioning (Cara)
      *      empty cut: deny
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (Cara) (empty cut: deny, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (Cara) (empty cut: deny, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::CARA;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1897,17 +1917,17 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph (Cara)
+     * Hypergraph partitioning (Cara)
      *      empty cut: deny
      *      variable subsumption
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (Cara) (empty cut: deny, variable subsumption, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (Cara) (empty cut: deny, variable subsumption, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.allowEmptyHypergraphCut = false;
         configuration.allowSingletonHyperedge = false;
         configuration.useEquivalenceSimplificationMethod = true;
-        configuration.partitioningHypergraphType = PartitioningHypergraphTypeEnum::CARA;
+        configuration.hypergraphPartitioningType = HypergraphPartitioningTypeEnum::CARA;
 
         // Contiguous formula representation configuration
         ContiguousFormulaRepresentationConfigurationType contiguousFormulaRepresentationConfiguration;
@@ -1919,10 +1939,10 @@ namespace BellaTest::Compiler::wDNNF {
     //endregion
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      hypergraph cut recomputation strategy: always
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (hypergraph cut recomputation strategy: always)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (hypergraph cut recomputation strategy: always)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::ALWAYS;
 
@@ -1930,10 +1950,10 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      hypergraph cut recomputation strategy: immense unit propagation - 0.2
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (hypergraph cut recomputation strategy: immense unit propagation - 0.2)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (hypergraph cut recomputation strategy: immense unit propagation - 0.2)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.percentageThresholdOfImmenseUnitPropagationHypergraphCutRecomputationStrategy = 0.2;
         configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION;
@@ -1942,10 +1962,10 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      hypergraph cut recomputation strategy: immense unit propagation - 0.5
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (hypergraph cut recomputation strategy: immense unit propagation - 0.5)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (hypergraph cut recomputation strategy: immense unit propagation - 0.5)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.percentageThresholdOfImmenseUnitPropagationHypergraphCutRecomputationStrategy = 0.5;
         configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION;
@@ -1954,10 +1974,10 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      hypergraph cut recomputation strategy: immense unit propagation - 0.8
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (hypergraph cut recomputation strategy: immense unit propagation - 0.8)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (hypergraph cut recomputation strategy: immense unit propagation - 0.8)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.percentageThresholdOfImmenseUnitPropagationHypergraphCutRecomputationStrategy = 0.8;
         configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::IMMENSE_UNIT_PROPAGATION;
@@ -1966,10 +1986,10 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      hypergraph cut recomputation strategy: when current formula is split
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (hypergraph cut recomputation strategy: when current formula is split)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (hypergraph cut recomputation strategy: when current formula is split)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_FORMULA_IS_SPLIT;
 
@@ -1977,10 +1997,10 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      hypergraph cut recomputation strategy: when current hypergraph cut is empty
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (hypergraph cut recomputation strategy: when current hypergraph cut is empty)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (hypergraph cut recomputation strategy: when current hypergraph cut is empty)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.hypergraphCutRecomputationStrategyType = HypergraphCutRecomputationStrategyTypeEnum::WHEN_CURRENT_HYPERGRAPH_CUT_IS_EMPTY;
 
@@ -1988,11 +2008,11 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: none
      *      variable subsumption type: forward variable subsumption with mapping detection
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (vertex weight type: none, variable subsumption type: forward variable subsumption with mapping detection)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (vertex weight type: none, variable subsumption type: forward variable subsumption with mapping detection)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::NONE;
@@ -2005,11 +2025,11 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: standard
      *      variable subsumption type: forward variable subsumption with mapping detection
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (vertex weight type: standard, variable subsumption type: forward variable subsumption with mapping detection)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (vertex weight type: standard, variable subsumption type: forward variable subsumption with mapping detection)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::STANDARD;
@@ -2022,11 +2042,11 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: clause length
      *      variable subsumption type: forward variable subsumption with mapping detection
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (vertex weight type: clause length, variable subsumption type: forward variable subsumption with mapping detection)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (vertex weight type: clause length, variable subsumption type: forward variable subsumption with mapping detection)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::CLAUSE_LENGTH;
@@ -2039,12 +2059,12 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: none
      *      variable subsumption type: forward variable subsumption with mapping detection
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (vertex weight type: none, variable subsumption type: forward variable subsumption with mapping detection, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (vertex weight type: none, variable subsumption type: forward variable subsumption with mapping detection, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::NONE;
@@ -2057,12 +2077,12 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: standard
      *      variable subsumption type: forward variable subsumption with mapping detection
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (vertex weight type: standard, variable subsumption type: forward variable subsumption with mapping detection, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (vertex weight type: standard, variable subsumption type: forward variable subsumption with mapping detection, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::STANDARD;
@@ -2075,12 +2095,12 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: clause length
      *      variable subsumption type: forward variable subsumption with mapping detection
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (vertex weight type: clause length, variable subsumption type: forward variable subsumption with mapping detection, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (vertex weight type: clause length, variable subsumption type: forward variable subsumption with mapping detection, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::CLAUSE_LENGTH;
@@ -2093,11 +2113,11 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: none
      *      variable subsumption type: one-literal watching algorithm with mapping
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (vertex weight type: none, variable subsumption type: one-literal watching algorithm with mapping)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (vertex weight type: none, variable subsumption type: one-literal watching algorithm with mapping)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::NONE;
@@ -2110,11 +2130,11 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: standard
      *      variable subsumption type: one-literal watching algorithm with mapping
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (vertex weight type: standard, variable subsumption type: one-literal watching algorithm with mapping)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (vertex weight type: standard, variable subsumption type: one-literal watching algorithm with mapping)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::STANDARD;
@@ -2127,11 +2147,11 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: clause length
      *      variable subsumption type: one-literal watching algorithm with mapping
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (vertex weight type: clause length, variable subsumption type: one-literal watching algorithm with mapping)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (vertex weight type: clause length, variable subsumption type: one-literal watching algorithm with mapping)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = false;
         configuration.vertexWeightType = VertexWeightTypeEnum::CLAUSE_LENGTH;
@@ -2144,12 +2164,12 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: none
      *      variable subsumption type: one-literal watching algorithm with mapping
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (vertex weight type: none, variable subsumption type: one-literal watching algorithm with mapping, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (vertex weight type: none, variable subsumption type: one-literal watching algorithm with mapping, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::NONE;
@@ -2162,12 +2182,12 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: standard
      *      variable subsumption type: one-literal watching algorithm with mapping
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (vertex weight type: standard, variable subsumption type: one-literal watching algorithm with mapping, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (vertex weight type: standard, variable subsumption type: one-literal watching algorithm with mapping, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::STANDARD;
@@ -2180,12 +2200,12 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      vertex weight type: clause length
      *      variable subsumption type: one-literal watching algorithm with mapping
      *      equivalence simplification method
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (vertex weight type: clause length, variable subsumption type: one-literal watching algorithm with mapping, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (vertex weight type: clause length, variable subsumption type: one-literal watching algorithm with mapping, equivalence simplification method)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.vertexWeightType = VertexWeightTypeEnum::CLAUSE_LENGTH;
@@ -2198,10 +2218,10 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      variable subsumption type: none
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (variable subsumption type: none)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (variable subsumption type: none)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = false;
 
@@ -2213,11 +2233,11 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      equivalence simplification method
      *      implicit BCP variable order type: random
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (equivalence simplification method, implicit BCP variable order type: random)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (equivalence simplification method, implicit BCP variable order type: random)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::RANDOM;
@@ -2230,11 +2250,11 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      equivalence simplification method
      *      implicit BCP variable order type: variable index
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (equivalence simplification method, implicit BCP variable order type: variable index)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (equivalence simplification method, implicit BCP variable order type: variable index)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::VARIABLE_INDEX;
@@ -2247,11 +2267,11 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      equivalence simplification method
      *      implicit BCP variable order type: clause reduction heuristic (ascending)
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (equivalence simplification method, implicit BCP variable order type: clause reduction heuristic (ascending))", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (equivalence simplification method, implicit BCP variable order type: clause reduction heuristic (ascending))", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_ASCENDING;
@@ -2264,11 +2284,11 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      equivalence simplification method
      *      implicit BCP variable order type: clause reduction heuristic (descending)
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (equivalence simplification method, implicit BCP variable order type: clause reduction heuristic (descending))", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (equivalence simplification method, implicit BCP variable order type: clause reduction heuristic (descending))", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_DESCENDING;
@@ -2281,12 +2301,12 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      variable subsumption
      *      equivalence simplification method
      *      implicit BCP variable order type: random
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (variable subsumption, equivalence simplification method, implicit BCP variable order type: random)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (variable subsumption, equivalence simplification method, implicit BCP variable order type: random)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::RANDOM;
@@ -2299,12 +2319,12 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      variable subsumption
      *      equivalence simplification method
      *      implicit BCP variable order type: variable index
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (variable subsumption, equivalence simplification method, implicit BCP variable order type: variable index)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (variable subsumption, equivalence simplification method, implicit BCP variable order type: variable index)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::VARIABLE_INDEX;
@@ -2317,12 +2337,12 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      variable subsumption
      *      equivalence simplification method
      *      implicit BCP variable order type: clause reduction heuristic (ascending)
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (variable subsumption, equivalence simplification method, implicit BCP variable order type: clause reduction heuristic (ascending))", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (variable subsumption, equivalence simplification method, implicit BCP variable order type: clause reduction heuristic (ascending))", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_ASCENDING;
@@ -2335,12 +2355,12 @@ namespace BellaTest::Compiler::wDNNF {
     }
 
     /**
-     * Partitioning hypergraph
+     * Hypergraph partitioning
      *      variable subsumption
      *      equivalence simplification method
      *      implicit BCP variable order type: clause reduction heuristic (descending)
      */
-    TEST_CASE(" [Compiler::wDNNF] partitioning hypergraph (variable subsumption, equivalence simplification method, implicit BCP variable order type: clause reduction heuristic (descending))", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] hypergraph partitioning (variable subsumption, equivalence simplification method, implicit BCP variable order type: clause reduction heuristic (descending))", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.useEquivalenceSimplificationMethod = true;
         configuration.implicitBcpVariableOrderType = ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_DESCENDING;

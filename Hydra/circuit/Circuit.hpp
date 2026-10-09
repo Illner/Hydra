@@ -22,9 +22,9 @@
 #include "Hydra/circuit/node/leafNode/formulaLeaf/FormulaLeafAbstract.hpp"
 #include "Hydra/circuit/node/leafNode/formulaLeaf/KromCLeaf.hpp"
 #include "Hydra/circuit/node/leafNode/formulaLeaf/RenHCLeaf.hpp"
-#include "Hydra/formula/Literal.hpp"
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
 #include "Hydra/other/Other.hpp"
+#include "Hydra/other/TemplateType.hpp"
 #include "Hydra/other/hashMap/HashMap.hpp"
 
 #include "Hydra/circuit/exceptions/CircuitException.hpp"
@@ -86,8 +86,8 @@ namespace Hydra::Circuit {
      */
     template <typename VarT, typename LiteralT>
     class Circuit {
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidVarT::value, "Invalid VarT type!");
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidLiteralT::value, "Invalid LiteralT type!");
+        static_assert(Other::isValidVarT<VarT>, "Invalid VarT type!");
+        static_assert(Other::isValidLiteralT<LiteralT>, "Invalid LiteralT type!");
 
     public:
         using LiteralType = typename Node::NodeAbstract<VarT, LiteralT>::LiteralType;

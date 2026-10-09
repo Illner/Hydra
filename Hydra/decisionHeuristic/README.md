@@ -1,3 +1,3 @@
 # Decision heuristic
 
-![alt text](../../doc/decisionHeuristic.png "decision heuristic")
+![alt text](../../docs/decisionHeuristic.png "decision heuristic")

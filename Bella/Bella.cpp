@@ -3,12 +3,14 @@
 #include <cassert>
 #include <fstream>
 #include <ios>
+#include <memory>
 #include <string>
 
 #include "Hydra/circuit/Circuit.hpp"
 #include "Hydra/compiler/Compiler.hpp"
 #include "Hydra/other/Other.hpp"
 #include "Hydra/other/memory/Memory.hpp"
+#include "Hydra/preprocessor/cnf/none/NoneCnfPreprocessor.hpp"
 
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
 
@@ -17,188 +19,204 @@
 
 #include "Hydra/compiler/Compiler.tpp"
 
-void printTemplateTypes(TemplateTypeEnum varT, TemplateTypeEnum literalT, TemplateTypeEnum clauseIdT) {
-    std::cout << "Variable: " << Hydra::Other::templateTypeEnumToString(varT) << std::endl;
-    std::cout << "Literal: " << Hydra::Other::templateTypeEnumToString(literalT) << std::endl;
-    std::cout << "Clause identifier: " << Hydra::Other::templateTypeEnumToString(clauseIdT) << std::endl;
-    std::cout << std::endl;
-}
+namespace Hydra {
 
-template <typename CommandLineArgumentsStructT>
-void printConfigurationBeforeCompilation(const CommandLineArgumentsStructT& commandLineArgumentsStruct) {
-    // Files
-    std::cout << "Input file: " << commandLineArgumentsStruct.inputFilePath << std::endl;
-    if (!commandLineArgumentsStruct.outputFilePath.empty())
-        std::cout << "Output file: " << commandLineArgumentsStruct.outputFilePath << std::endl;
-    if (!commandLineArgumentsStruct.statisticsFilePath.empty())
-        std::cout << "Statistics file: " << commandLineArgumentsStruct.statisticsFilePath << std::endl;
-    std::cout << std::endl;
-
-    // Configuration
-    std::cout << "Timeout: " << std::to_string(commandLineArgumentsStruct.timeout) << " s" << std::endl;
-    std::cout << "SAT solver: " << Hydra::SatSolver::satSolverTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.satSolverType) << std::endl;
-    std::cout << "Decision heuristic: " << Hydra::DecisionHeuristic::decisionHeuristicTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.decisionHeuristicType) << std::endl;
-    std::cout << "Hypergraph partitioning: " << Hydra::partitioningHypergraphTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType) << std::endl;
-    std::cout << "Equivalence simplification method: " << (commandLineArgumentsStruct.compilerConfiguration.useEquivalenceSimplificationMethod ? "true" : "false") << std::endl;
-    std::cout << "Hypergraph node weight type: " << Hydra::PartitioningHypergraph::vertexWeightTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.vertexWeightType) << std::endl;
-    std::cout << "Hypergraph cut recomputation strategy: " << Hydra::hypergraphCutRecomputationStrategyTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.hypergraphCutRecomputationStrategyType) << std::endl;
-    std::cout << "Component caching scheme: " << Hydra::Cache::CachingScheme::cachingSchemeVariantTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.cachingSchemeVariantComponentCachingType);
-    // Cara caching scheme (component caching)
-    if (commandLineArgumentsStruct.compilerConfiguration.cachingSchemeVariantComponentCachingType == Hydra::Cache::CachingScheme::CachingSchemeVariantTypeEnum::CARA)
-        std::cout << " (" << Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::getNumberOfSampleMomentsAsStringStatic(commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeComponentCachingConfiguration.numberOfSampleMoments) << ")";
-    std::cout << std::endl;
-    std::cout << "Component cache cleaning strategy: " << Hydra::Cache::CacheCleaningStrategy::cacheCleaningStrategyTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.cacheCleaningStrategyComponentCachingType) << std::endl;
-    std::cout << "Hypergraph cut caching scheme: " << Hydra::Cache::CachingScheme::cachingSchemeTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.cachingSchemeHypergraphCutCachingType);
-    // Cara caching scheme (hypergraph cut caching)
-    if (commandLineArgumentsStruct.compilerConfiguration.cachingSchemeHypergraphCutCachingType == Hydra::Cache::CachingScheme::CachingSchemeTypeEnum::CARA)
-        std::cout << " (" << Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::getNumberOfSampleMomentsAsStringStatic(commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeHypergraphCutCachingConfiguration.numberOfSampleMoments) << ")";
-    std::cout << std::endl;
-    std::cout << "Hypergraph cut cache cleaning strategy: " << Hydra::Cache::CacheCleaningStrategy::cacheCleaningStrategyTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.cacheCleaningStrategyHypergraphCutCachingType) << std::endl;
-    std::cout << std::endl;
-}
-
-template <typename CommandLineArgumentsStructT>
-void modifyConfigurationAfterParsingFormula([[maybe_unused]] CommandLineArgumentsStructT& commandLineArgumentsStruct) { }
-
-template <typename VarT, typename LiteralT, typename ClauseIdT, typename CommandLineArgumentsStructT>
-void core(Hydra::Compiler<VarT, LiteralT, ClauseIdT>& compiler, const CommandLineArgumentsStructT& commandLineArgumentsStruct) {
-    using TimePointType = std::chrono::steady_clock::time_point;
-    using MemorySizeType = Hydra::Other::Memory::MemorySizeType;
-    using LargeFloatingNumberType = Hydra::Other::LargeFloatingNumberType;
-    using CircuitPtrType = typename Hydra::Compiler<VarT, LiteralT, ClauseIdT>::CircuitPtrType;
-    using NumberOfModelsType = typename Hydra::Circuit::Circuit<VarT, LiteralT>::NumberOfModelsType;
-    using NodeTypeCounterType = typename Hydra::Circuit::Circuit<VarT, LiteralT>::NodeTypeCounterType;
-
-    std::cout << "Compiling..." << std::endl;
-    std::cout << std::endl;
-
-    TimePointType startTime = std::chrono::steady_clock::now();
-    compiler.compile();
-    TimePointType endTime = std::chrono::steady_clock::now();
-
-    // The compilation failed
-    if (!compiler.isCircuitCompiled())
-        throw Hydra::Exception::CompilationFailedException();
-
-    CircuitPtrType circuitPtr = compiler.getCompiledCircuitPtr();
-
-    // Compilation time
-    std::cout << "Compilation time: ";
-    LargeFloatingNumberType compilationTime = 0;
-    // With statistics
-    if (!commandLineArgumentsStruct.statisticsFilePath.empty()) {
-        assert(compiler.getStatisticsPtr());   // statistics exists
-
-        // compilationTime += static_cast<LargeFloatingNumberType>(compiler.getStatisticsPtr()->getFormulaRepresentationStatisticsPtr()->initializeTimer.getSumTime());
-        compilationTime += static_cast<LargeFloatingNumberType>(compiler.getStatisticsPtr()->getCompilerStatisticsPtr()->initializeTimer.getSumTime());
-        compilationTime += static_cast<LargeFloatingNumberType>(compiler.getStatisticsPtr()->getCompilerStatisticsPtr()->compileTimer.getSumTime());
+    void printTemplateTypes(TemplateTypeEnum varT, TemplateTypeEnum literalT, TemplateTypeEnum clauseIdT) {
+        std::cout << "Variable: " << Other::templateTypeEnumToString(varT) << std::endl;
+        std::cout << "Literal: " << Other::templateTypeEnumToString(literalT) << std::endl;
+        std::cout << "Clause identifier: " << Other::templateTypeEnumToString(clauseIdT) << std::endl;
+        std::cout << std::endl;
     }
-    // Without statistics
-    else
-        compilationTime = static_cast<LargeFloatingNumberType>(duration_cast<std::chrono::nanoseconds>(endTime - startTime).count());
 
-    compilationTime /= 1'000'000'000;   // nanoseconds -> seconds
-    std::cout << std::to_string(compilationTime) << " s" << std::endl;
+    template <typename CommandLineArgumentsStructT>
+    void printConfigurationBeforeCompilation(const CommandLineArgumentsStructT& commandLineArgumentsStruct) {
+        // Files
+        std::cout << "Input file: " << commandLineArgumentsStruct.inputFilePath << std::endl;
+        if (!commandLineArgumentsStruct.outputFilePath.empty())
+            std::cout << "Output file: " << commandLineArgumentsStruct.outputFilePath << std::endl;
+        if (!commandLineArgumentsStruct.statisticsFilePath.empty())
+            std::cout << "Statistics file: " << commandLineArgumentsStruct.statisticsFilePath << std::endl;
+        std::cout << std::endl;
 
-    // Used memory
-    std::cout << "Used memory: ";
-    try {
-        MemorySizeType peakUsedMemorySize = Hydra::Other::Memory::getPeakVirtualMemorySize();
-        if (peakUsedMemorySize >= 0)
-            std::cout << std::to_string(peakUsedMemorySize) << " MB" << std::endl;
+        // Configuration
+        std::cout << "Seed: " << std::to_string(commandLineArgumentsStruct.seed) << std::endl;
+        std::cout << "Timeout: " << std::to_string(commandLineArgumentsStruct.timeout) << " s" << std::endl;
+        std::cout << "SAT solver: " << SatSolver::satSolverTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.satSolverType) << std::endl;
+        std::cout << "Decision heuristic: " << DecisionHeuristic::decisionHeuristicTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.decisionHeuristicType) << std::endl;
+        std::cout << "Hypergraph partitioning: " << hypergraphPartitioningTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.hypergraphPartitioningType) << std::endl;
+        std::cout << "Equivalence simplification method: " << (commandLineArgumentsStruct.compilerConfiguration.useEquivalenceSimplificationMethod ? "true" : "false") << std::endl;
+        std::cout << "Hypergraph node weight type: " << HypergraphPartitioning::vertexWeightTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.vertexWeightType) << std::endl;
+        std::cout << "Hypergraph cut recomputation strategy: " << hypergraphCutRecomputationStrategyTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.hypergraphCutRecomputationStrategyType) << std::endl;
+        std::cout << "Component caching scheme: " << Cache::CachingScheme::cachingSchemeVariantTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.cachingSchemeVariantComponentCachingType);
+        // Cara caching scheme (component caching)
+        if (commandLineArgumentsStruct.compilerConfiguration.cachingSchemeVariantComponentCachingType == Cache::CachingScheme::CachingSchemeVariantTypeEnum::CARA)
+            std::cout << " (" << Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::getNumberOfSampleMomentsAsStringStatic(commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeComponentCachingConfiguration.numberOfSampleMoments) << ")";
+        std::cout << std::endl;
+        std::cout << "Component cache cleaning strategy: " << Cache::CacheCleaningStrategy::cacheCleaningStrategyTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.cacheCleaningStrategyComponentCachingType) << std::endl;
+        std::cout << "Hypergraph cut caching scheme: " << Cache::CachingScheme::cachingSchemeTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.cachingSchemeHypergraphCutCachingType);
+        // Cara caching scheme (hypergraph cut caching)
+        if (commandLineArgumentsStruct.compilerConfiguration.cachingSchemeHypergraphCutCachingType == Cache::CachingScheme::CachingSchemeTypeEnum::CARA)
+            std::cout << " (" << Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration::getNumberOfSampleMomentsAsStringStatic(commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeHypergraphCutCachingConfiguration.numberOfSampleMoments) << ")";
+        std::cout << std::endl;
+        std::cout << "Hypergraph cut cache cleaning strategy: " << Cache::CacheCleaningStrategy::cacheCleaningStrategyTypeEnumToString(commandLineArgumentsStruct.compilerConfiguration.cacheCleaningStrategyHypergraphCutCachingType) << std::endl;
+        std::cout << std::endl;
+    }
+
+    template <typename CommandLineArgumentsStructT>
+    void modifyConfigurationAfterParsingFormula([[maybe_unused]] CommandLineArgumentsStructT& commandLineArgumentsStruct) { }
+
+    template <typename CnfPreprocessorStructT>
+    CnfPreprocessorAbstractUniquePtrType initializeCnfPreprocessor(CnfPreprocessorStructT& cnfPreprocessorStruct,
+                                                                   CnfPreprocessorStatisticsPtrType cnfPreprocessorStatisticsPtr) {
+        switch (cnfPreprocessorStruct.cnfPreprocessorVariantType) {
+            case CnfPreprocessorVariantTypeEnum::NONE:
+                return std::make_unique<Preprocessor::Cnf::None::NoneCnfPreprocessor>(cnfPreprocessorStatisticsPtr);
+            default:
+                throw Exception::NotImplementedException(Preprocessor::Cnf::cnfPreprocessorVariantTypeEnumToString(cnfPreprocessorStruct.cnfPreprocessorVariantType),
+                                                         "Hydra::initializeCnfPreprocessor");
+        }
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename CommandLineArgumentsStructT>
+    void core(Compiler<VarT, LiteralT, ClauseIdT>& compiler, const CommandLineArgumentsStructT& commandLineArgumentsStruct) {
+        using TimePointType = std::chrono::steady_clock::time_point;
+        using MemorySizeType = Other::Memory::MemorySizeType;
+        using LargeFloatingNumberType = Other::LargeFloatingNumberType;
+        using CircuitPtrType = typename Compiler<VarT, LiteralT, ClauseIdT>::CircuitPtrType;
+        using NumberOfModelsType = typename Circuit::Circuit<VarT, LiteralT>::NumberOfModelsType;
+        using NodeTypeCounterType = typename Circuit::Circuit<VarT, LiteralT>::NodeTypeCounterType;
+
+        std::cout << "Compiling..." << std::endl;
+        std::cout << std::endl;
+
+        TimePointType startTime = std::chrono::steady_clock::now();
+        compiler.compile();
+        TimePointType endTime = std::chrono::steady_clock::now();
+
+        // The compilation failed
+        if (!compiler.isCircuitCompiled())
+            throw Exception::CompilationFailedException();
+
+        CircuitPtrType circuitPtr = compiler.getCompiledCircuitPtr();
+
+        // Compilation time
+        std::cout << "Compilation time: ";
+        LargeFloatingNumberType compilationTime = 0;
+        // With statistics
+        if (!commandLineArgumentsStruct.statisticsFilePath.empty()) {
+            assert(compiler.getStatisticsPtr());   // statistics exists
+
+            // compilationTime += static_cast<LargeFloatingNumberType>(compiler.getStatisticsPtr()->getFormulaRepresentationStatisticsPtr()->initializeTimer.getSumTime());
+            compilationTime += static_cast<LargeFloatingNumberType>(compiler.getStatisticsPtr()->getCompilerStatisticsPtr()->initializeTimer.getSumTime());
+            compilationTime += static_cast<LargeFloatingNumberType>(compiler.getStatisticsPtr()->getCompilerStatisticsPtr()->compileTimer.getSumTime());
+        }
+        // Without statistics
         else
-            std::cout << "not supported" << std::endl;
-    }
-    catch (...) {
-        std::cout << "something wrong" << std::endl;
-    }
-    std::cout << std::endl;
+            compilationTime = static_cast<LargeFloatingNumberType>(duration_cast<std::chrono::nanoseconds>(endTime - startTime).count());
 
-    std::cout << "Circuit type: " << Hydra::Circuit::circuitTypeEnumToString(circuitPtr->getCircuitType()) << std::endl;
-    std::cout << "Circuit size: " << std::to_string(circuitPtr->getCircuitSize()) << std::endl;
-    std::cout << std::endl;
+        compilationTime /= 1'000'000'000;   // nanoseconds -> seconds
+        std::cout << std::to_string(compilationTime) << " s" << std::endl;
 
-    std::cout << "Number of edges: " << std::to_string(circuitPtr->getNumberOfEdges()) << std::endl;
-    std::cout << "Number of nodes: " << std::to_string(circuitPtr->getNumberOfNodes()) << std::endl;
-    std::cout << "Number of variables: " << std::to_string(circuitPtr->getNumberOfUsedVariables()) << std::endl;
-    std::cout << std::endl;
-
-    // Node types
-    const NodeTypeCounterType& nodeTypeCounter = circuitPtr->getNodeTypeCounter();
-    for (Hydra::Circuit::Node::NodeTypeEnum nodeType : Hydra::Other::extractKeysFromMap(nodeTypeCounter, true)) {
-        Hydra::Circuit::Node::IdNodeType numberOfNodeType = nodeTypeCounter.at(nodeType);
-
-        // No occurrence
-        if (numberOfNodeType == 0)
-            continue;
-
-        std::cout << Hydra::Circuit::Node::nodeTypeEnumToString(nodeType) << ": " << std::to_string(numberOfNodeType) << std::endl;
-    }
-    std::cout << std::endl;
-
-    // Check whether the compiled circuit entails the input CNF formula
-    if (commandLineArgumentsStruct.checkWhetherCircuitEntailsCnfFormula) {
-        std::cout << "Checking whether the compiled circuit entails the input CNF formula..." << std::endl;
-
-        // The compiled circuit does NOT entail the input CNF formula
-        if (!circuitPtr->checkWhetherCircuitEntailsCnfFormula(compiler.getFormulaPtr()))
-            throw Hydra::Exception::CircuitDoesNotEntailCnfFormulaException();
-
-        std::cout << "compiled circuit |= input CNF formula" << std::endl;
-        std::cout << std::endl;
-    }
-
-    // Statistics
-    if (!commandLineArgumentsStruct.statisticsFilePath.empty()) {
-        assert(compiler.getStatisticsPtr());   // statistics exists
-
-        std::cout << "Statistics: ";
-
-        {
-            std::ofstream statisticsFile(commandLineArgumentsStruct.statisticsFilePath, std::ios::out);
-
-            // Statistics file cannot be open
-            if (!statisticsFile.is_open())
-                throw Hydra::Exception::FileCannotBeOpenedException(commandLineArgumentsStruct.statisticsFilePath);
-
-            compiler.getStatisticsPtr()->printStatistics(statisticsFile, commandLineArgumentsStruct.statisticsAddLabels);
+        // Used memory
+        std::cout << "Used memory: ";
+        try {
+            MemorySizeType peakUsedMemorySize = Other::Memory::getPeakVirtualMemorySize();
+            if (peakUsedMemorySize >= 0)
+                std::cout << std::to_string(peakUsedMemorySize) << " MB" << std::endl;
+            else
+                std::cout << "not supported" << std::endl;
         }
-
-        std::cout << "saved" << std::endl;
-    }
-
-    // Output
-    if (!commandLineArgumentsStruct.outputFilePath.empty()) {
-        std::cout << "Compiled circuit: ";
-
-        {
-            std::ofstream outputFile(commandLineArgumentsStruct.outputFilePath, std::ios::out);
-
-            // Output file cannot be open
-            if (!outputFile.is_open())
-                throw Hydra::Exception::FileCannotBeOpenedException(commandLineArgumentsStruct.outputFilePath);
-
-            circuitPtr->printCircuit(outputFile);
+        catch (...) {
+            std::cout << "something wrong" << std::endl;
         }
-
-        std::cout << "saved" << std::endl;
-    }
-
-    if (!commandLineArgumentsStruct.statisticsFilePath.empty() || !commandLineArgumentsStruct.outputFilePath.empty())
         std::cout << std::endl;
 
-    // Number of models
-    if (commandLineArgumentsStruct.numberOfModels) {
-        NumberOfModelsType numberOfModels;
+        std::cout << "Circuit type: " << Circuit::circuitTypeEnumToString(circuitPtr->getCircuitType()) << std::endl;
+        std::cout << "Circuit size: " << std::to_string(circuitPtr->getCircuitSize()) << std::endl;
+        std::cout << std::endl;
 
-        if (Hydra::Other::containInSet(Hydra::Circuit::supportModelCountingCircuitTypeSet, circuitPtr->getCircuitType()))
-            numberOfModels = circuitPtr->modelCounting({});
-        else {
-            std::cerr << "WARNING: the number of models is being computed using enumeration." << std::endl;
+        std::cout << "Number of edges: " << std::to_string(circuitPtr->getNumberOfEdges()) << std::endl;
+        std::cout << "Number of nodes: " << std::to_string(circuitPtr->getNumberOfNodes()) << std::endl;
+        std::cout << "Number of variables: " << std::to_string(circuitPtr->getNumberOfUsedVariables()) << std::endl;
+        std::cout << std::endl;
 
-            numberOfModels = circuitPtr->modelCountingWithPolynomialDelay({}, {});
+        // Node types
+        const NodeTypeCounterType& nodeTypeCounter = circuitPtr->getNodeTypeCounter();
+        for (Circuit::Node::NodeTypeEnum nodeType : Other::extractKeysFromMap(nodeTypeCounter, true)) {
+            Circuit::Node::IdNodeType numberOfNodeType = nodeTypeCounter.at(nodeType);
+
+            // No occurrence
+            if (numberOfNodeType == 0)
+                continue;
+
+            std::cout << Circuit::Node::nodeTypeEnumToString(nodeType) << ": " << std::to_string(numberOfNodeType) << std::endl;
+        }
+        std::cout << std::endl;
+
+        // Check whether the compiled circuit entails the input CNF formula
+        if (commandLineArgumentsStruct.checkWhetherCircuitEntailsCnfFormula) {
+            std::cout << "Checking whether the compiled circuit entails the input CNF formula..." << std::endl;
+
+            // The compiled circuit does NOT entail the input CNF formula
+            if (!circuitPtr->checkWhetherCircuitEntailsCnfFormula(compiler.getFormulaPtr()))
+                throw Exception::CircuitDoesNotEntailCnfFormulaException();
+
+            std::cout << "compiled circuit |= input CNF formula" << std::endl;
+            std::cout << std::endl;
         }
 
-        std::cout << "Number of models: " << numberOfModels << std::endl;
+        // Statistics
+        if (!commandLineArgumentsStruct.statisticsFilePath.empty()) {
+            assert(compiler.getStatisticsPtr());   // statistics exists
+
+            std::cout << "Statistics: ";
+
+            {
+                std::ofstream statisticsFile(commandLineArgumentsStruct.statisticsFilePath, std::ios::out);
+
+                // Statistics file cannot be open
+                if (!statisticsFile.is_open())
+                    throw Exception::FileCannotBeOpenedException(commandLineArgumentsStruct.statisticsFilePath);
+
+                compiler.getStatisticsPtr()->printStatistics(statisticsFile, commandLineArgumentsStruct.statisticsAddLabels);
+            }
+
+            std::cout << "saved" << std::endl;
+        }
+
+        // Output
+        if (!commandLineArgumentsStruct.outputFilePath.empty()) {
+            std::cout << "Compiled circuit: ";
+
+            {
+                std::ofstream outputFile(commandLineArgumentsStruct.outputFilePath, std::ios::out);
+
+                // Output file cannot be open
+                if (!outputFile.is_open())
+                    throw Exception::FileCannotBeOpenedException(commandLineArgumentsStruct.outputFilePath);
+
+                circuitPtr->printCircuit(outputFile);
+            }
+
+            std::cout << "saved" << std::endl;
+        }
+
+        if (!commandLineArgumentsStruct.statisticsFilePath.empty() || !commandLineArgumentsStruct.outputFilePath.empty())
+            std::cout << std::endl;
+
+        // Number of models
+        if (commandLineArgumentsStruct.numberOfModels) {
+            NumberOfModelsType numberOfModels;
+
+            if (Other::containInSet(Circuit::supportModelCountingCircuitTypeSet, circuitPtr->getCircuitType()))
+                numberOfModels = circuitPtr->modelCounting({});
+            else {
+                std::cerr << "WARNING: the number of models is being computed using enumeration." << std::endl;
+
+                numberOfModels = circuitPtr->modelCountingWithPolynomialDelay({}, {});
+            }
+
+            std::cout << "Number of models: " << numberOfModels << std::endl;
+        }
     }
-}
+}   // namespace Hydra

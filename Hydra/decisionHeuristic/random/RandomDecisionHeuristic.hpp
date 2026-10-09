@@ -6,6 +6,7 @@
 #include <random>
 
 #include "Hydra/decisionHeuristic/DecisionHeuristicAbstract.hpp"
+#include "Hydra/other/seed/Seed.hpp"
 
 #include "Hydra/decisionHeuristic/enums/DecisionHeuristicTypeEnum.hpp"
 
@@ -32,15 +33,26 @@ namespace Hydra::DecisionHeuristic::Random {
         RandomDecisionHeuristic(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr, SatSolverAbstractPtrType satSolverAbstractPtr,
                                 IgnorePureLiteralTypeEnum ignorePureLiteralType,
                                 const RandomDecisionHeuristicConfiguration& configuration = RandomDecisionHeuristicConfiguration(),
-                                DecisionHeuristicStatisticsPtrType decisionHeuristicStatisticsPtr = nullptr) noexcept
+                                DecisionHeuristicStatisticsPtrType decisionHeuristicStatisticsPtr = nullptr)
             : DecisionHeuristicAbstract<VarT, LiteralT, ClauseIdT>(formulaRepresentationAbstractPtr, satSolverAbstractPtr, ignorePureLiteralType,
                                                                    DecisionHeuristicTypeEnum::RANDOM, decisionHeuristicStatisticsPtr),
-              configuration_(configuration) { }
+              configuration_(configuration) {
+            assert(Other::Seed::isSeedValid(configuration_.seed));   // seed is valid
+
+            r_generator_processGetDecisionVariable_.seed(configuration_.seed);
+        }
 
     private:
         RandomDecisionHeuristicConfiguration configuration_;
 
+        // Random auxiliary data structures for processGetDecisionVariable
+        mutable std::mt19937 r_generator_processGetDecisionVariable_;
+
     private:
+        /**
+         * Random auxiliary data structures:
+         *      r_generator_processGetDecisionVariable_
+         */
         VarT processGetDecisionVariable(const VariableSetType& selectedVariableSet) const override;
 
     #ifndef NDEBUG

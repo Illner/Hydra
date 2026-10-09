@@ -18,7 +18,7 @@ namespace Cara::CommandLineArguments {
     using ArgumentNameType = typename Hydra::Other::Parser::CommandLineArgument::ArgumentNameType;
     using ArgumentValueType = typename Hydra::Other::Parser::CommandLineArgument::ArgumentValueType;
 
-    inline constexpr std::string_view DESCRIPTION = "     An isomorphism-aware #SAT solver.     ";
+    inline constexpr std::string_view DESCRIPTION = "     An isomorphism-aware #SAT solver     ";
 
     // Files
     inline constexpr ArgumentNameType INPUT_ARGUMENT = "-i";
@@ -41,6 +41,7 @@ namespace Cara::CommandLineArguments {
     // Other options
     inline constexpr ArgumentNameType HELP_ARGUMENT = "-h";
     inline constexpr ArgumentNameType VERSION_ARGUMENT = "-v";
+    inline constexpr ArgumentNameType SEED_ARGUMENT = "-seed";
     inline constexpr ArgumentNameType MUST_MULTIPLY_BY_FACTOR_ARGUMENT = "-mmbf";
     inline constexpr ArgumentNameType NUMBER_OF_SAMPLE_MOMENTS_ARGUMENT = "-nsm";
 
@@ -61,7 +62,7 @@ namespace Cara::CommandLineArguments {
      * @throw MoreHypergraphPartitioningTypesAreMentionedException if more hypergraph partitioning types are mentioned
      * @throw NoHypergraphPartitioningTypeIsMentionedException if no hypergraph partitioning type is mentioned
      */
-    Hydra::PartitioningHypergraphTypeEnum getHypergraphPartitioningType(const ArgumentsType& arguments);
+    Hydra::HypergraphPartitioningTypeEnum getHypergraphPartitioningType(const ArgumentsType& arguments);
 
     /**
      * @param arguments the arguments
@@ -81,4 +82,9 @@ namespace Cara::CommandLineArguments {
      * Print the help
      */
     void printHelp();
+
+    /**
+     * Print the version
+     */
+    void printVersion();
 }   // namespace Cara::CommandLineArguments

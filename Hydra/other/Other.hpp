@@ -35,10 +35,24 @@ namespace Hydra::Other {
     inline bool variablesCanBeSavedAsTypeT(LargeNumberType numberOfVariables) noexcept;
 
     /**
+     * Note: used for cache
+     * @return true if TypeT can be used for saving variables. Otherwise, false is returned.
+     */
+    template <typename TypeT>
+    inline bool variablesCanBeSavedAsTypeTForCache(LargeNumberType numberOfVariables) noexcept;
+
+    /**
      * @return true if TypeT can be used for saving literals. Otherwise, false is returned.
      */
     template <typename TypeT>
     inline bool literalsCanBeSavedAsTypeT(LargeNumberType numberOfVariables) noexcept;
+
+    /**
+     * Note: used for cache
+     * @return true if TypeT can be used for saving literals. Otherwise, false is returned.
+     */
+    template <typename TypeT>
+    inline bool literalsCanBeSavedAsTypeTForCache(LargeNumberType numberOfVariables) noexcept;
 
     /**
      * @return true if TypeT can be used for saving clause identifiers. Otherwise, false is returned.

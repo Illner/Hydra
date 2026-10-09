@@ -2,6 +2,8 @@
 
 #include "./InsertionOperator.hpp"
 
+#include <string>
+
 namespace Hydra::Other::StdExt::InsertionOperator {
 
     std::ostream& operator<<(std::ostream& out, char8_t c) {

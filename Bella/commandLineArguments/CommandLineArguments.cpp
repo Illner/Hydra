@@ -6,6 +6,7 @@
 
 #include "Hydra/other/Other.hpp"
 #include "Hydra/other/parser/Parser.hpp"
+#include "Hydra/other/seed/Seed.hpp"
 
 #include "Bella/commandLineArguments/exceptions/CommandLineArgumentsException.hpp"
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
@@ -54,13 +55,7 @@ namespace Bella::CommandLineArguments {
 
             commandLineArgumentsStruct.exit = true;
 
-            // Version
-            std::cout << "Bella (";
-            Hydra::Other::Version::printHydraVersion(std::cout);
-            std::cout << ")" << std::endl;
-
-            // Build type
-            Hydra::Other::printBuildType(std::cout);
+            printVersion();
 
             return commandLineArgumentsStruct;
         }
@@ -76,7 +71,7 @@ namespace Bella::CommandLineArguments {
         commandLineArgumentsStruct.compilerConfiguration.circuitType = getCircuitType(arguments);
 
         // Hypergraph partitioning
-        commandLineArgumentsStruct.compilerConfiguration.partitioningHypergraphType = getHypergraphPartitioningType(arguments);
+        commandLineArgumentsStruct.compilerConfiguration.hypergraphPartitioningType = getHypergraphPartitioningType(arguments);
 
         // SAT solver
         commandLineArgumentsStruct.compilerConfiguration.satSolverType = getSatSolverType(arguments);
@@ -151,6 +146,10 @@ namespace Bella::CommandLineArguments {
                                                                                                                       commandLineArgumentsStruct.compilerConfiguration.caraCachingSchemeHypergraphCutCachingConfiguration,
                                                                                                                       CacheTypeEnum::HYPERGRAPH_CUT, false);
 
+        // Seed
+        commandLineArgumentsStruct.seed = Hydra::Other::Parser::CommandLineArgument::getSeed(arguments, SEED_ARGUMENT, true);
+        commandLineArgumentsStruct.compilerConfiguration.setSeed(commandLineArgumentsStruct.seed);
+
         // Others
         commandLineArgumentsStruct.compilerConfiguration.vertexWeightType = getHypergraphNodeWeightType(arguments);
         commandLineArgumentsStruct.compilerConfiguration.hypergraphCutRecomputationStrategyType = getHypergraphCutRecomputationStrategyType(arguments);
@@ -159,7 +158,7 @@ namespace Bella::CommandLineArguments {
 
         // Metacentrum
         if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, METACENTRUM_ARGUMENT)) {
-            // program -m < -w | -pw | -nw | -b | -pb | -nb | -kb | -d | -sd > < -ph | -ka | -cd > [-e] [-ccef] -i input_file -s statistics_file -t positive_integer
+            // program -m < -w | -pw | -nw | -b | -pb | -nb | -kb | -d | -sd > < -ph | -ka | -cd > -i input_file -s statistics_file -t positive_integer
             if (argc < 10)
                 throw Hydra::Exception::Other::Parser::CommandLineArgument::InvalidNumberOfArgumentsException();
 
@@ -210,9 +209,6 @@ namespace Bella::CommandLineArguments {
          */
         // Hypergraph partitioning
         commandLineArgumentsStruct.compilerConfiguration.ignoreMultiOccurrentIgnoredVariables = true;
-        commandLineArgumentsStruct.compilerConfiguration.caraPartitioningHypergraphConfiguration.seed = -1;
-        commandLineArgumentsStruct.compilerConfiguration.patohPartitioningHypergraphConfiguration.seedPatohLibrary = -1;
-        commandLineArgumentsStruct.compilerConfiguration.kahyparPartitioningHypergraphConfiguration.seedKahyparLibrary = -1;
         commandLineArgumentsStruct.compilerConfiguration.implicitBcpVariableOrderType = Hydra::SatSolver::ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_DESCENDING;
 
         // SAT solver
@@ -341,14 +337,14 @@ namespace Bella::CommandLineArguments {
         return circuitType;
     }
 
-    Hydra::PartitioningHypergraphTypeEnum getHypergraphPartitioningType(const ArgumentsType& arguments) {
+    Hydra::HypergraphPartitioningTypeEnum getHypergraphPartitioningType(const ArgumentsType& arguments) {
         bool exists = false;
-        Hydra::PartitioningHypergraphTypeEnum hypergraphPartitioningType;
+        Hydra::HypergraphPartitioningTypeEnum hypergraphPartitioningType;
 
         // KaHyPar
         if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, KAHYPAR_HYPERGRAPH_PARTITIONING_ARGUMENT)) {
             exists = true;
-            hypergraphPartitioningType = Hydra::PartitioningHypergraphTypeEnum::KAHYPAR;
+            hypergraphPartitioningType = Hydra::HypergraphPartitioningTypeEnum::KAHYPAR;
         }
 
         // Cara
@@ -357,7 +353,7 @@ namespace Bella::CommandLineArguments {
                 throw Hydra::Exception::CommandLineArguments::MoreHypergraphPartitioningTypesAreMentionedException();
 
             exists = true;
-            hypergraphPartitioningType = Hydra::PartitioningHypergraphTypeEnum::CARA;
+            hypergraphPartitioningType = Hydra::HypergraphPartitioningTypeEnum::CARA;
         }
 
         // PaToH or hMETIS
@@ -366,7 +362,7 @@ namespace Bella::CommandLineArguments {
                 throw Hydra::Exception::CommandLineArguments::MoreHypergraphPartitioningTypesAreMentionedException();
 
             exists = true;
-            hypergraphPartitioningType = Hydra::PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS;
+            hypergraphPartitioningType = Hydra::HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS;
         }
 
         // No hypergraph partitioning type is mentioned
@@ -687,14 +683,14 @@ namespace Bella::CommandLineArguments {
         return cacheCleaningStrategyType;
     }
 
-    Hydra::PartitioningHypergraph::VertexWeightTypeEnum getHypergraphNodeWeightType(const ArgumentsType& arguments) {
+    Hydra::HypergraphPartitioning::VertexWeightTypeEnum getHypergraphNodeWeightType(const ArgumentsType& arguments) {
         bool exists = false;
-        Hydra::PartitioningHypergraph::VertexWeightTypeEnum vertexWeightType;
+        Hydra::HypergraphPartitioning::VertexWeightTypeEnum vertexWeightType;
 
         // None
         if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, NONE_HYPERGRAPH_NODE_WEIGHT_ARGUMENT)) {
             exists = true;
-            vertexWeightType = Hydra::PartitioningHypergraph::VertexWeightTypeEnum::NONE;
+            vertexWeightType = Hydra::HypergraphPartitioning::VertexWeightTypeEnum::NONE;
         }
 
         // Standard
@@ -703,7 +699,7 @@ namespace Bella::CommandLineArguments {
                 throw Exception::CommandLineArguments::MoreHypergraphNodeWeightTypesAreMentionedException();
 
             exists = true;
-            vertexWeightType = Hydra::PartitioningHypergraph::VertexWeightTypeEnum::STANDARD;
+            vertexWeightType = Hydra::HypergraphPartitioning::VertexWeightTypeEnum::STANDARD;
         }
 
         // Clause length
@@ -712,12 +708,12 @@ namespace Bella::CommandLineArguments {
                 throw Exception::CommandLineArguments::MoreHypergraphNodeWeightTypesAreMentionedException();
 
             exists = true;
-            vertexWeightType = Hydra::PartitioningHypergraph::VertexWeightTypeEnum::CLAUSE_LENGTH;
+            vertexWeightType = Hydra::HypergraphPartitioning::VertexWeightTypeEnum::CLAUSE_LENGTH;
         }
 
         // Default
         if (!exists)
-            vertexWeightType = Hydra::PartitioningHypergraph::VertexWeightTypeEnum::CLAUSE_LENGTH;
+            vertexWeightType = Hydra::HypergraphPartitioning::VertexWeightTypeEnum::CLAUSE_LENGTH;
 
         return vertexWeightType;
     }
@@ -776,7 +772,7 @@ namespace Bella::CommandLineArguments {
     }
 
     void printHelp() {
-        const std::string description = "A knowledge compiler for " +
+        const std::string description = "  A knowledge compiler for " +
                                         // Weak and variants
                                         Hydra::Circuit::circuitTypeEnumToString(Hydra::Circuit::CircuitTypeEnum::wDNNF) + ", " +
                                         Hydra::Circuit::circuitTypeEnumToString(Hydra::Circuit::CircuitTypeEnum::pwDNNF) + ", " +
@@ -788,7 +784,7 @@ namespace Bella::CommandLineArguments {
                                         // Hydra::Circuit::circuitTypeEnumToString(Hydra::Circuit::CircuitTypeEnum::Krom_Bella) + ", " +
                                         // Standard
                                         Hydra::Circuit::circuitTypeEnumToString(Hydra::Circuit::CircuitTypeEnum::d_DNNF) + " and " +
-                                        Hydra::Circuit::circuitTypeEnumToString(Hydra::Circuit::CircuitTypeEnum::sd_DNNF) + " circuits.";
+                                        Hydra::Circuit::circuitTypeEnumToString(Hydra::Circuit::CircuitTypeEnum::sd_DNNF) + " circuits  ";
 
         // Title
         Hydra::Other::printTitle(std::cout, "Bella", (int)description.size(), ' ');
@@ -827,8 +823,10 @@ namespace Bella::CommandLineArguments {
         std::cout << " [ " << TIMEOUT_ARGUMENT << " positive_integer (default: " << std::to_string(TIMEOUT_DEFAULT) << ") ]";
         std::cout << std::endl;
 
-        // SAT solvers
+        // Seed
         std::cout << "       ";
+        std::cout << " [ " << SEED_ARGUMENT << " integer (min: " << std::to_string(Hydra::Other::Seed::MIN_SEED) << ", max: " << std::to_string(Hydra::Other::Seed::MAX_SEED) << ", default: randomised) ]";
+        // SAT solvers
         std::cout << " [ " << MINISAT_SAT_SOLVER_ARGUMENT << " | " << GLUCOSE_SAT_SOLVER_ARGUMENT << " ]";
         std::cout << std::endl;
 
@@ -937,9 +935,9 @@ namespace Bella::CommandLineArguments {
         std::cout << std::endl;
 
         std::cout << "Hypergraph node weight types:" << std::endl;
-        std::cout << "\t" << NONE_HYPERGRAPH_NODE_WEIGHT_ARGUMENT << " — " << Hydra::PartitioningHypergraph::vertexWeightTypeEnumToString(Hydra::PartitioningHypergraph::VertexWeightTypeEnum::NONE) << std::endl;
-        std::cout << "\t" << STANDARD_HYPERGRAPH_NODE_WEIGHT_ARGUMENT << " — " << Hydra::PartitioningHypergraph::vertexWeightTypeEnumToString(Hydra::PartitioningHypergraph::VertexWeightTypeEnum::STANDARD) << std::endl;
-        std::cout << "\t" << CLAUSE_LENGTH_HYPERGRAPH_NODE_WEIGHT_ARGUMENT << " — " << Hydra::PartitioningHypergraph::vertexWeightTypeEnumToString(Hydra::PartitioningHypergraph::VertexWeightTypeEnum::CLAUSE_LENGTH) << " (default)" << std::endl;
+        std::cout << "\t" << NONE_HYPERGRAPH_NODE_WEIGHT_ARGUMENT << " — " << Hydra::HypergraphPartitioning::vertexWeightTypeEnumToString(Hydra::HypergraphPartitioning::VertexWeightTypeEnum::NONE) << std::endl;
+        std::cout << "\t" << STANDARD_HYPERGRAPH_NODE_WEIGHT_ARGUMENT << " — " << Hydra::HypergraphPartitioning::vertexWeightTypeEnumToString(Hydra::HypergraphPartitioning::VertexWeightTypeEnum::STANDARD) << std::endl;
+        std::cout << "\t" << CLAUSE_LENGTH_HYPERGRAPH_NODE_WEIGHT_ARGUMENT << " — " << Hydra::HypergraphPartitioning::vertexWeightTypeEnumToString(Hydra::HypergraphPartitioning::VertexWeightTypeEnum::CLAUSE_LENGTH) << " (default)" << std::endl;
         std::cout << std::endl;
 
         std::cout << "Hypergraph cut recomputation strategies:" << std::endl;
@@ -952,10 +950,21 @@ namespace Bella::CommandLineArguments {
 
         std::cout << COUNT_ARGUMENT << " — count the models" << std::endl;
         std::cout << VERSION_ARGUMENT << " — print version information" << std::endl;
+        std::cout << SEED_ARGUMENT << " — set the seed (default: randomised)" << std::endl;
         std::cout << EQUIVALENCE_SIMPLIFICATION_METHOD_ARGUMENT << " — use the equivalence simplification method (highly recommended)" << std::endl;
         std::cout << TIMEOUT_ARGUMENT << " — set the compilation timeout (default: 86400 s)" << std::endl;
         std::cout << READABLE_STATISTICS_ARGUMENT << " — write the statistics file in a human-readable form" << std::endl;
         std::cout << CHECK_CIRCUIT_ENTAILS_CNF_FORMULA_ARGUMENT << " — check whether the compiled circuit entails the input CNF formula" << std::endl;
         std::cout << std::endl;
+    }
+
+    void printVersion() {
+        // Version
+        std::cout << "Bella (";
+        Hydra::Other::Version::printHydraVersion(std::cout);
+        std::cout << ")" << std::endl;
+
+        // Build type
+        Hydra::Other::printBuildType(std::cout);
     }
 }   // namespace Bella::CommandLineArguments

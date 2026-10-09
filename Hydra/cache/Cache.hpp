@@ -18,9 +18,8 @@
 #include "Hydra/cache/CacheRecordStructure.hpp"
 #include "Hydra/cache/CacheStatisticsStructure.hpp"
 #include "Hydra/cache/cachingScheme/CachingSchemeAbstract.hpp"
-#include "Hydra/formula/Literal.hpp"
-#include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
 #include "Hydra/other/Other.hpp"
+#include "Hydra/other/TemplateType.hpp"
 #include "Hydra/other/hashMap/HashMap.hpp"
 
 #include "Hydra/cache/exceptions/CacheException.hpp"
@@ -81,10 +80,10 @@ namespace Hydra::Cache {
      */
     template <typename VarT, typename LiteralT, typename ClauseIdT, typename CacheValueT>
     class Cache {
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidVarT::value, "Invalid VarT type!");
-        static_assert(Formula::Literal<VarT, LiteralT>::isValidLiteralT::value, "Invalid LiteralT type!");
-        static_assert(CacheBucketStruct<VarT, LiteralT, CacheValueT>::isValidCacheValueT::value, "Invalid CacheValueT type!");
-        static_assert(Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::isValidClauseT::value, "Invalid ClauseIdT type!");
+        static_assert(Other::isValidVarT<VarT>, "Invalid VarT type!");
+        static_assert(Other::isValidLiteralT<LiteralT>, "Invalid LiteralT type!");
+        static_assert(Other::isValidClauseIdT<ClauseIdT>, "Invalid ClauseIdT type!");
+        static_assert(CacheBucketStruct<VarT, LiteralT, CacheValueT>::isValidCacheValueT, "Invalid CacheValueT type!");
 
     private:
         using MpzIntType = typename CacheBucketStruct<VarT, LiteralT, CacheValueT>::MpzIntType;

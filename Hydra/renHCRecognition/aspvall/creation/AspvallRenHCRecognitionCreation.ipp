@@ -85,143 +85,143 @@ namespace Hydra::RenHCRecognition::Aspvall::Creation {
         assert(numberOfLiterals > 0);
         assert(numberOfVariables > 0);
 
-        // ClauseIdAspT = char8_t
+        // AspClauseIdT = char8_t
         if (Other::clauseIdCanBeSavedAsTypeT<char8_t>(numberOfClauses)) {
-            using ClauseIdAspT = char8_t;
+            using AspClauseIdT = char8_t;
 
-            // VarAspT = char8_t
+            // AspVarT = char8_t
             if (Other::variablesCanBeSavedAsTypeT<char8_t>(numberOfVariables)) {
-                using VarAspT = char8_t;
+                using AspVarT = char8_t;
 
-                // LiteralAspT = char8_t
+                // AspLiteralT = char8_t
                 if (Other::literalsCanBeSavedAsTypeT<char8_t>(numberOfVariables)) {
-                    using LiteralAspT = char8_t;
+                    using AspLiteralT = char8_t;
 
                     // The initial formula
                     if (initialFormula)
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             renHCRecognitionStatisticsPtr);
                     // The current component formula
                     else
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             currentComponentClauseReusableVector);
                 }
 
-                // LiteralAspT = char16_t
+                // AspLiteralT = char16_t
                 else {
                     assert(Other::literalsCanBeSavedAsTypeT<char16_t>(numberOfVariables));
 
-                    using LiteralAspT = char16_t;
+                    using AspLiteralT = char16_t;
 
                     // The initial formula
                     if (initialFormula)
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             renHCRecognitionStatisticsPtr);
                     // The current component formula
                     else
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             currentComponentClauseReusableVector);
                 }
             }
 
-            // VarAspT = char16_t
+            // AspVarT = char16_t
             else if (Other::variablesCanBeSavedAsTypeT<char16_t>(numberOfVariables)) {
-                using VarAspT = char16_t;
+                using AspVarT = char16_t;
 
-                // LiteralAspT = char16_t
+                // AspLiteralT = char16_t
                 if (Other::literalsCanBeSavedAsTypeT<char16_t>(numberOfVariables)) {
-                    using LiteralAspT = char16_t;
+                    using AspLiteralT = char16_t;
 
                     // The initial formula
                     if (initialFormula)
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             renHCRecognitionStatisticsPtr);
                     // The current component formula
                     else
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             currentComponentClauseReusableVector);
                 }
 
-                // LiteralAspT = char32_t
+                // AspLiteralT = char32_t
                 else {
                     assert(Other::literalsCanBeSavedAsTypeT<char32_t>(numberOfVariables));
 
-                    using LiteralAspT = char32_t;
+                    using AspLiteralT = char32_t;
 
                     // The initial formula
                     if (initialFormula)
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             renHCRecognitionStatisticsPtr);
                     // The current component formula
                     else
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             currentComponentClauseReusableVector);
                 }
             }
 
-            // VarAspT = char32_t
+            // AspVarT = char32_t
             else if (Other::variablesCanBeSavedAsTypeT<char32_t>(numberOfVariables)) {
-                using VarAspT = char32_t;
+                using AspVarT = char32_t;
 
-                // LiteralAspT = char32_t
+                // AspLiteralT = char32_t
                 if (Other::literalsCanBeSavedAsTypeT<char32_t>(numberOfVariables)) {
-                    using LiteralAspT = char32_t;
+                    using AspLiteralT = char32_t;
 
                     // The initial formula
                     if (initialFormula)
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             renHCRecognitionStatisticsPtr);
                     // The current component formula
                     else
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             currentComponentClauseReusableVector);
@@ -237,143 +237,143 @@ namespace Hydra::RenHCRecognition::Aspvall::Creation {
                 throw Exception::RenHCRecognition::AspvallFormulaHasTooManySomethingException("variables");
         }
 
-        // ClauseIdAspT = char16_t
+        // AspClauseIdT = char16_t
         else if (Other::clauseIdCanBeSavedAsTypeT<char16_t>(numberOfClauses)) {
-            using ClauseIdAspT = char16_t;
+            using AspClauseIdT = char16_t;
 
-            // VarAspT = char8_t
+            // AspVarT = char8_t
             if (Other::variablesCanBeSavedAsTypeT<char8_t>(numberOfVariables)) {
-                using VarAspT = char8_t;
+                using AspVarT = char8_t;
 
-                // LiteralAspT = char8_t
+                // AspLiteralT = char8_t
                 if (Other::literalsCanBeSavedAsTypeT<char8_t>(numberOfVariables)) {
-                    using LiteralAspT = char8_t;
+                    using AspLiteralT = char8_t;
 
                     // The initial formula
                     if (initialFormula)
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             renHCRecognitionStatisticsPtr);
                     // The current component formula
                     else
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             currentComponentClauseReusableVector);
                 }
 
-                // LiteralAspT = char16_t
+                // AspLiteralT = char16_t
                 else {
                     assert(Other::literalsCanBeSavedAsTypeT<char16_t>(numberOfVariables));
 
-                    using LiteralAspT = char16_t;
+                    using AspLiteralT = char16_t;
 
                     // The initial formula
                     if (initialFormula)
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             renHCRecognitionStatisticsPtr);
                     // The current component formula
                     else
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             currentComponentClauseReusableVector);
                 }
             }
 
-            // VarAspT = char16_t
+            // AspVarT = char16_t
             else if (Other::variablesCanBeSavedAsTypeT<char16_t>(numberOfVariables)) {
-                using VarAspT = char16_t;
+                using AspVarT = char16_t;
 
-                // LiteralAspT = char16_t
+                // AspLiteralT = char16_t
                 if (Other::literalsCanBeSavedAsTypeT<char16_t>(numberOfVariables)) {
-                    using LiteralAspT = char16_t;
+                    using AspLiteralT = char16_t;
 
                     // The initial formula
                     if (initialFormula)
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             renHCRecognitionStatisticsPtr);
                     // The current component formula
                     else
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             currentComponentClauseReusableVector);
                 }
 
-                // LiteralAspT = char32_t
+                // AspLiteralT = char32_t
                 else {
                     assert(Other::literalsCanBeSavedAsTypeT<char32_t>(numberOfVariables));
 
-                    using LiteralAspT = char32_t;
+                    using AspLiteralT = char32_t;
 
                     // The initial formula
                     if (initialFormula)
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             renHCRecognitionStatisticsPtr);
                     // The current component formula
                     else
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             currentComponentClauseReusableVector);
                 }
             }
 
-            // VarAspT = char32_t
+            // AspVarT = char32_t
             else if (Other::variablesCanBeSavedAsTypeT<char32_t>(numberOfVariables)) {
-                using VarAspT = char32_t;
+                using AspVarT = char32_t;
 
-                // LiteralAspT = char32_t
+                // AspLiteralT = char32_t
                 if (Other::literalsCanBeSavedAsTypeT<char32_t>(numberOfVariables)) {
-                    using LiteralAspT = char32_t;
+                    using AspLiteralT = char32_t;
 
                     // The initial formula
                     if (initialFormula)
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             renHCRecognitionStatisticsPtr);
                     // The current component formula
                     else
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             currentComponentClauseReusableVector);
@@ -389,143 +389,143 @@ namespace Hydra::RenHCRecognition::Aspvall::Creation {
                 throw Exception::RenHCRecognition::AspvallFormulaHasTooManySomethingException("variables");
         }
 
-        // ClauseIdAspT = char32_t
+        // AspClauseIdT = char32_t
         else if (Other::clauseIdCanBeSavedAsTypeT<char32_t>(numberOfClauses)) {
-            using ClauseIdAspT = char32_t;
+            using AspClauseIdT = char32_t;
 
-            // VarAspT = char8_t
+            // AspVarT = char8_t
             if (Other::variablesCanBeSavedAsTypeT<char8_t>(numberOfVariables)) {
-                using VarAspT = char8_t;
+                using AspVarT = char8_t;
 
-                // LiteralAspT = char8_t
+                // AspLiteralT = char8_t
                 if (Other::literalsCanBeSavedAsTypeT<char8_t>(numberOfVariables)) {
-                    using LiteralAspT = char8_t;
+                    using AspLiteralT = char8_t;
 
                     // The initial formula
                     if (initialFormula)
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             renHCRecognitionStatisticsPtr);
                     // The current component formula
                     else
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             currentComponentClauseReusableVector);
                 }
 
-                // LiteralAspT = char16_t
+                // AspLiteralT = char16_t
                 else {
                     assert(Other::literalsCanBeSavedAsTypeT<char16_t>(numberOfVariables));
 
-                    using LiteralAspT = char16_t;
+                    using AspLiteralT = char16_t;
 
                     // The initial formula
                     if (initialFormula)
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             renHCRecognitionStatisticsPtr);
                     // The current component formula
                     else
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             currentComponentClauseReusableVector);
                 }
             }
 
-            // VarAspT = char16_t
+            // AspVarT = char16_t
             else if (Other::variablesCanBeSavedAsTypeT<char16_t>(numberOfVariables)) {
-                using VarAspT = char16_t;
+                using AspVarT = char16_t;
 
-                // LiteralAspT = char16_t
+                // AspLiteralT = char16_t
                 if (Other::literalsCanBeSavedAsTypeT<char16_t>(numberOfVariables)) {
-                    using LiteralAspT = char16_t;
+                    using AspLiteralT = char16_t;
 
                     // The initial formula
                     if (initialFormula)
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             renHCRecognitionStatisticsPtr);
                     // The current component formula
                     else
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             currentComponentClauseReusableVector);
                 }
 
-                // LiteralAspT = char32_t
+                // AspLiteralT = char32_t
                 else {
                     assert(Other::literalsCanBeSavedAsTypeT<char32_t>(numberOfVariables));
 
-                    using LiteralAspT = char32_t;
+                    using AspLiteralT = char32_t;
 
                     // The initial formula
                     if (initialFormula)
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             renHCRecognitionStatisticsPtr);
                     // The current component formula
                     else
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             currentComponentClauseReusableVector);
                 }
             }
 
-            // LiteralAspT = char32_t
+            // AspLiteralT = char32_t
             else if (Other::variablesCanBeSavedAsTypeT<char32_t>(numberOfVariables)) {
-                using VarAspT = char32_t;
+                using AspVarT = char32_t;
 
-                // LiteralAspT = char32_t
+                // AspLiteralT = char32_t
                 if (Other::literalsCanBeSavedAsTypeT<char32_t>(numberOfVariables)) {
-                    using LiteralAspT = char32_t;
+                    using AspLiteralT = char32_t;
 
                     // The initial formula
                     if (initialFormula)
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             renHCRecognitionStatisticsPtr);
                     // The current component formula
                     else
-                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>(formulaRepresentationAbstractPtr,
-                                                                                                                            { static_cast<VarAspT>(numberOfVariables),
-                                                                                                                              static_cast<LiteralAspT>(numberOfLiterals),
-                                                                                                                              static_cast<ClauseIdAspT>(numberOfClauses),
+                        return createAspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>(formulaRepresentationAbstractPtr,
+                                                                                                                            { static_cast<AspVarT>(numberOfVariables),
+                                                                                                                              static_cast<AspLiteralT>(numberOfLiterals),
+                                                                                                                              static_cast<AspClauseIdT>(numberOfClauses),
                                                                                                                               formulaSize },
                                                                                                                             ignorePureLiteralType,
                                                                                                                             currentComponentClauseReusableVector);
@@ -546,22 +546,22 @@ namespace Hydra::RenHCRecognition::Aspvall::Creation {
             throw Exception::RenHCRecognition::AspvallFormulaHasTooManySomethingException("clauses");
     }
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
     void processClauseCreateAspvallRenHCRecognition(const Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>* formulaRepresentationAbstractPtr,
-                                                    AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>& aspvallRenHCRecognitionStruct,
-                                                    ClauseIdT clauseId, std::vector<ClauseIdAspT>& literalNumberOfOccurrences,
-                                                    std::vector<Formula::Literal<VarAspT, LiteralAspT>>& formula,
-                                                    ClauseIdAspT& currentAspvallClauseId, VarAspT& newAuxiliaryVariableIndex) {
+                                                    AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>& aspvallRenHCRecognitionStruct,
+                                                    ClauseIdT clauseId, std::vector<AspClauseIdT>& literalNumberOfOccurrences,
+                                                    std::vector<Formula::Literal<AspVarT, AspLiteralT>>& formula,
+                                                    AspClauseIdT& currentAspvallClauseId, AspVarT& newAuxiliaryVariableIndex) {
         using ClauseSizeType = typename Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseSizeType;
-        using LiteralAspType = typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::LiteralAspType;
+        using LiteralAspType = typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::LiteralAspType;
 
-        VarAspT previousY = 0;
+        AspVarT previousY = 0;
         ClauseSizeType currentLiteralIndex = 0;
         ClauseSizeType maxLiteralIndex = (formulaRepresentationAbstractPtr->getCurrentClauseSize(clauseId) - 1);
 
         for (auto clauseIt = formulaRepresentationAbstractPtr->beginClause(clauseId);
              clauseIt != formulaRepresentationAbstractPtr->endClause(); ++clauseIt) {
-            LiteralAspType lit(static_cast<VarAspT>(clauseIt->getVariable()), clauseIt->isPositive());
+            LiteralAspType lit(static_cast<AspVarT>(clauseIt->getVariable()), clauseIt->isPositive());
 
             // Last literal
             if (currentLiteralIndex++ == maxLiteralIndex) {
@@ -587,7 +587,7 @@ namespace Hydra::RenHCRecognition::Aspvall::Creation {
 
             // Create y_new
             ++newAuxiliaryVariableIndex;
-            VarAspT newY = newAuxiliaryVariableIndex;
+            AspVarT newY = newAuxiliaryVariableIndex;
 
             // First literal
             if (previousY == 0) {
@@ -651,27 +651,27 @@ namespace Hydra::RenHCRecognition::Aspvall::Creation {
         }
     }
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
     std::unique_ptr<RenHCRecognitionAbstract<VarT, LiteralT, ClauseIdT>>
     createAspvallRenHCRecognition(const Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>* formulaRepresentationAbstractPtr,
-                                  AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>&& aspvallRenHCRecognitionStruct,
+                                  AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>&& aspvallRenHCRecognitionStruct,
                                   IgnorePureLiteralTypeEnum ignorePureLiteralType,
                                   RenHCRecognitionStatistics::RenHCRecognitionStatisticsPtrType renHCRecognitionStatisticsPtr) {
-        using AspvallRenHCRecognitionType = AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>;
-        using FormulaAspType = typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::FormulaAspType;
-        using ClauseIdVectorType = typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::ClauseIdVectorType;
-        using ClauseIdVectorAspType = typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::ClauseIdVectorAspType;
+        using AspvallRenHCRecognitionType = AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>;
+        using FormulaAspType = typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::FormulaAspType;
+        using ClauseIdVectorType = typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::ClauseIdVectorType;
+        using ClauseIdVectorAspType = typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::ClauseIdVectorAspType;
 
         // Statistics
         if (renHCRecognitionStatisticsPtr)
             renHCRecognitionStatisticsPtr->creationTimer.startStopwatch();
 
-        ClauseIdAspT currentAspvallClauseId = 0;
-        VarAspT newAuxiliaryVariableIndex = static_cast<VarAspT>(formulaRepresentationAbstractPtr->getNumberOfVariablesInOriginalFormula());
+        AspClauseIdT currentAspvallClauseId = 0;
+        AspVarT newAuxiliaryVariableIndex = static_cast<AspVarT>(formulaRepresentationAbstractPtr->getNumberOfVariablesInOriginalFormula());
 
         FormulaAspType formula;
         formula.reserve(aspvallRenHCRecognitionStruct.formulaSize);
-        ClauseIdVectorAspType literalNumberOfOccurrences(static_cast<typename ClauseIdVectorAspType::size_type>(LiteralAspT(2) + aspvallRenHCRecognitionStruct.numberOfLiterals), 0);
+        ClauseIdVectorAspType literalNumberOfOccurrences(static_cast<typename ClauseIdVectorAspType::size_type>(AspLiteralT(2) + aspvallRenHCRecognitionStruct.numberOfLiterals), 0);
         aspvallRenHCRecognitionStruct.mappingFromAspvallClauseIdToOriginalClauseIdVector = ClauseIdVectorType(static_cast<typename ClauseIdVectorType::size_type>(aspvallRenHCRecognitionStruct.numberOfClauses), 0);
         aspvallRenHCRecognitionStruct.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector = ClauseIdVectorAspType(static_cast<typename ClauseIdVectorAspType::size_type>(ClauseIdT(1) + formulaRepresentationAbstractPtr->getNumberOfOriginalClauses()), 0);
 
@@ -706,23 +706,23 @@ namespace Hydra::RenHCRecognition::Aspvall::Creation {
                                                              ignorePureLiteralType, true, renHCRecognitionStatisticsPtr);
     }
 
-    template <typename VarT, typename LiteralT, typename ClauseIdT, typename VarAspT, typename LiteralAspT, typename ClauseIdAspT>
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename AspVarT, typename AspLiteralT, typename AspClauseIdT>
     std::unique_ptr<RenHCRecognitionAbstract<VarT, LiteralT, ClauseIdT>>
     createAspvallRenHCRecognition(const Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>* formulaRepresentationAbstractPtr,
-                                  AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>&& aspvallRenHCRecognitionStruct,
+                                  AspvallRenHCRecognitionStruct<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>&& aspvallRenHCRecognitionStruct,
                                   IgnorePureLiteralTypeEnum ignorePureLiteralType,
                                   const typename Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::ClauseIdReusableVectorType& currentComponentClauseReusableVector) {
-        using AspvallRenHCRecognitionType = AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>;
-        using FormulaAspType = typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::FormulaAspType;
-        using ClauseIdVectorType = typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::ClauseIdVectorType;
-        using ClauseIdVectorAspType = typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, VarAspT, LiteralAspT, ClauseIdAspT>::ClauseIdVectorAspType;
+        using AspvallRenHCRecognitionType = AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>;
+        using FormulaAspType = typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::FormulaAspType;
+        using ClauseIdVectorType = typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::ClauseIdVectorType;
+        using ClauseIdVectorAspType = typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::ClauseIdVectorAspType;
 
-        ClauseIdAspT currentAspvallClauseId = 0;
-        VarAspT newAuxiliaryVariableIndex = static_cast<VarAspT>(formulaRepresentationAbstractPtr->getNumberOfVariablesInOriginalFormula());
+        AspClauseIdT currentAspvallClauseId = 0;
+        AspVarT newAuxiliaryVariableIndex = static_cast<AspVarT>(formulaRepresentationAbstractPtr->getNumberOfVariablesInOriginalFormula());
 
         FormulaAspType formula;
         formula.reserve(aspvallRenHCRecognitionStruct.formulaSize);
-        ClauseIdVectorAspType literalNumberOfOccurrences(static_cast<typename ClauseIdVectorAspType::size_type>(LiteralAspT(2) + aspvallRenHCRecognitionStruct.numberOfLiterals), 0);
+        ClauseIdVectorAspType literalNumberOfOccurrences(static_cast<typename ClauseIdVectorAspType::size_type>(AspLiteralT(2) + aspvallRenHCRecognitionStruct.numberOfLiterals), 0);
         aspvallRenHCRecognitionStruct.mappingFromAspvallClauseIdToOriginalClauseIdVector = ClauseIdVectorType(static_cast<typename ClauseIdVectorType::size_type>(aspvallRenHCRecognitionStruct.numberOfClauses), 0);
         aspvallRenHCRecognitionStruct.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector = ClauseIdVectorAspType(static_cast<typename ClauseIdVectorAspType::size_type>(ClauseIdT(1) + formulaRepresentationAbstractPtr->getNumberOfOriginalClauses()), 0);
 

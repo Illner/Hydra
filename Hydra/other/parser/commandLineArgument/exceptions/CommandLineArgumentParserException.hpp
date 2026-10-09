@@ -3,6 +3,8 @@
 #include <string>
 #include <string_view>
 
+#include "Hydra/other/seed/Seed.hpp"
+
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
 
 #include "Hydra/cache/enums/CacheTypeEnum.hpp"
@@ -64,5 +66,25 @@ namespace Hydra::Exception::Other::Parser::CommandLineArgument {
     public:
         NumberOfSampleMomentsIsNotNumberCaraCachingSchemeException(const std::string& numberOfSampleMomentsString, Hydra::Cache::CacheTypeEnum cacheType)
             : CommandLineArgumentsParserException("Cara caching scheme (" + Hydra::Cache::cacheTypeEnumToString(cacheType) + ") - the number of sample moments (" + numberOfSampleMomentsString + ") is not a number!") { }
+    };
+
+    /**
+     * Invalid seed
+     */
+    class InvalidSeedException : public CommandLineArgumentsParserException {
+    public:
+        explicit InvalidSeedException(Hydra::Other::LargeNumberType seed)
+            : CommandLineArgumentsParserException("The seed (" + std::to_string(seed) + ") is invalid! " +
+                                                  "The valid seed must be between " + std::to_string(Hydra::Other::Seed::MIN_SEED) +
+                                                  " and " + std::to_string(Hydra::Other::Seed::MAX_SEED) + ".") { }
+    };
+
+    /**
+     * Seed is not a number
+     */
+    class SeedIsNotNumberException : public CommandLineArgumentsParserException {
+    public:
+        explicit SeedIsNotNumberException(const std::string& seedString)
+            : CommandLineArgumentsParserException("The seed (" + seedString + ") is not a number!") { }
     };
 }   // namespace Hydra::Exception::Other::Parser::CommandLineArgument

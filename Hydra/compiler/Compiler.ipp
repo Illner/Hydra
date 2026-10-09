@@ -186,58 +186,58 @@ namespace Hydra {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    void Compiler<VarT, LiteralT, ClauseIdT>::initializePartitioningHypergraph() {
-        switch (configuration_.partitioningHypergraphType) {
+    void Compiler<VarT, LiteralT, ClauseIdT>::initializeHypergraphPartitioning() {
+        switch (configuration_.hypergraphPartitioningType) {
             // Cara
-            case PartitioningHypergraphTypeEnum::CARA:
-            case PartitioningHypergraphTypeEnum::CARA_SPEED:
+            case HypergraphPartitioningTypeEnum::CARA:
+            case HypergraphPartitioningTypeEnum::CARA_SPEED:
                 assert(componentCacheUniquePtr_);
 
                 #if OPERATING_SYSTEM_MACOS || OPERATING_SYSTEM_LINUX
-                partitioningHypergraphAbstractUniquePtr_ = std::make_unique<CaraPartitioningHypergraphType>(formulaRepresentationAbstractUniquePtr_.get(), componentCacheUniquePtr_.get(),
+                hypergraphPartitioningAbstractUniquePtr_ = std::make_unique<CaraHypergraphPartitioningType>(formulaRepresentationAbstractUniquePtr_.get(), componentCacheUniquePtr_.get(),
                                                                                                             configuration_.allowEmptyHypergraphCut, configuration_.allowSingletonHyperedge,
                                                                                                             ignorePureLiteralType_, configuration_.vertexWeightType,
-                                                                                                            configuration_.caraPartitioningHypergraphConfiguration,
-                                                                                                            statisticsPtr_ ? statisticsPtr_->getPartitioningHypergraphStatisticsPtr() : nullptr);
+                                                                                                            configuration_.caraHypergraphPartitioningConfiguration,
+                                                                                                            statisticsPtr_ ? statisticsPtr_->getHypergraphPartitioningStatisticsPtr() : nullptr);
                 #else
                 throw Exception::OperatingSystemIsNotSupportedException();
                 #endif
                 break;
             // KaHyPar
-            case PartitioningHypergraphTypeEnum::KAHYPAR:
-                partitioningHypergraphAbstractUniquePtr_ = std::make_unique<KahyparPartitioningHypergraphType>(formulaRepresentationAbstractUniquePtr_.get(),
+            case HypergraphPartitioningTypeEnum::KAHYPAR:
+                hypergraphPartitioningAbstractUniquePtr_ = std::make_unique<KahyparHypergraphPartitioningType>(formulaRepresentationAbstractUniquePtr_.get(),
                                                                                                                configuration_.allowEmptyHypergraphCut, configuration_.allowSingletonHyperedge,
                                                                                                                ignorePureLiteralType_, configuration_.vertexWeightType,
-                                                                                                               configuration_.kahyparPartitioningHypergraphConfiguration,
-                                                                                                               statisticsPtr_ ? statisticsPtr_->getPartitioningHypergraphStatisticsPtr() : nullptr);
+                                                                                                               configuration_.kahyparHypergraphPartitioningConfiguration,
+                                                                                                               statisticsPtr_ ? statisticsPtr_->getHypergraphPartitioningStatisticsPtr() : nullptr);
                 break;
             // PaToH (Linux, macOS) or hMETIS (Windows)
-            case PartitioningHypergraphTypeEnum::PATOH_OR_HMETIS:
+            case HypergraphPartitioningTypeEnum::PATOH_OR_HMETIS:
                 #if OPERATING_SYSTEM_WINDOWS
-                partitioningHypergraphAbstractUniquePtr_ = std::make_unique<HmetisPartitioningHypergraphType>(formulaRepresentationAbstractUniquePtr_.get(),
+                hypergraphPartitioningAbstractUniquePtr_ = std::make_unique<HmetisHypergraphPartitioningType>(formulaRepresentationAbstractUniquePtr_.get(),
                                                                                                               configuration_.allowEmptyHypergraphCut, configuration_.allowSingletonHyperedge,
                                                                                                               ignorePureLiteralType_, configuration_.vertexWeightType,
-                                                                                                              configuration_.hmetisPartitioningHypergraphConfiguration,
-                                                                                                              statisticsPtr_ ? statisticsPtr_->getPartitioningHypergraphStatisticsPtr() : nullptr);
+                                                                                                              configuration_.hmetisHypergraphPartitioningConfiguration,
+                                                                                                              statisticsPtr_ ? statisticsPtr_->getHypergraphPartitioningStatisticsPtr() : nullptr);
                 #elif OPERATING_SYSTEM_MACOS
-                partitioningHypergraphAbstractUniquePtr_ = std::make_unique<PatohPartitioningHypergraphType>(formulaRepresentationAbstractUniquePtr_.get(),
+                hypergraphPartitioningAbstractUniquePtr_ = std::make_unique<PatohHypergraphPartitioningType>(formulaRepresentationAbstractUniquePtr_.get(),
                                                                                                              configuration_.allowEmptyHypergraphCut, configuration_.allowSingletonHyperedge,
                                                                                                              ignorePureLiteralType_, configuration_.vertexWeightType,
-                                                                                                             configuration_.patohPartitioningHypergraphConfiguration,
-                                                                                                             statisticsPtr_ ? statisticsPtr_->getPartitioningHypergraphStatisticsPtr() : nullptr);
+                                                                                                             configuration_.patohHypergraphPartitioningConfiguration,
+                                                                                                             statisticsPtr_ ? statisticsPtr_->getHypergraphPartitioningStatisticsPtr() : nullptr);
                 #elif OPERATING_SYSTEM_LINUX
-                partitioningHypergraphAbstractUniquePtr_ = std::make_unique<PatohPartitioningHypergraphType>(formulaRepresentationAbstractUniquePtr_.get(),
+                hypergraphPartitioningAbstractUniquePtr_ = std::make_unique<PatohHypergraphPartitioningType>(formulaRepresentationAbstractUniquePtr_.get(),
                                                                                                              configuration_.allowEmptyHypergraphCut, configuration_.allowSingletonHyperedge,
                                                                                                              ignorePureLiteralType_, configuration_.vertexWeightType,
-                                                                                                             configuration_.patohPartitioningHypergraphConfiguration,
-                                                                                                             statisticsPtr_ ? statisticsPtr_->getPartitioningHypergraphStatisticsPtr() : nullptr);
+                                                                                                             configuration_.patohHypergraphPartitioningConfiguration,
+                                                                                                             statisticsPtr_ ? statisticsPtr_->getHypergraphPartitioningStatisticsPtr() : nullptr);
                 #else
                 throw Exception::OperatingSystemIsNotSupportedException();
                 #endif
                 break;
             default:
-                throw Exception::NotImplementedException(partitioningHypergraphTypeEnumToString(configuration_.partitioningHypergraphType),
-                                                         "Hydra::Compiler::initializePartitioningHypergraph");
+                throw Exception::NotImplementedException(hypergraphPartitioningTypeEnumToString(configuration_.hypergraphPartitioningType),
+                                                         "Hydra::Compiler::initializeHypergraphPartitioning");
         }
     }
 
@@ -405,8 +405,8 @@ namespace Hydra {
         Other::printTitle(out, "Decision heuristic", 40, '-');
         decisionHeuristicAbstractUniquePtr_->printDecisionHeuristicDebug(out, false);
 
-        Other::printTitle(out, "Partitioning hypergraph", 40, '-');
-        partitioningHypergraphAbstractUniquePtr_->printPartitioningHypergraphDebug(out, false);
+        Other::printTitle(out, "Hypergraph partitioning", 40, '-');
+        hypergraphPartitioningAbstractUniquePtr_->printHypergraphPartitioningDebug(out, false);
     }
     #endif
 }   // namespace Hydra
