@@ -1,4 +1,8 @@
-# Hydra
+<!-- # Hydra -->
+
+<p align="center">
+  <img src="./logo.svg" alt="Hydra" width="500">
+</p>
 
 Hydra is the development repository for the **Bella knowledge compiler** and the **Cara #SAT solver**.
 
