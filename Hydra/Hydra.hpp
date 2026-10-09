@@ -26,50 +26,53 @@
 #include "Hydra/compiler/Compiler.tpp"
 #include "Hydra/formula/representation/contiguous/ContiguousFormulaRepresentation.tpp"
 
-using AtomicBoolType = std::atomic<bool>;
-using AtomicBoolPtrType = const AtomicBoolType*;
-using TemplateTypeEnum = Hydra::Other::TemplateTypeEnum;
-using StatisticsPtrType = Hydra::Statistics::Statistics::StatisticsPtrType;
-using CnfPreprocessorVariantTypeEnum = Hydra::Preprocessor::Cnf::CnfPreprocessorVariantTypeEnum;
-using CnfPreprocessorAbstractUniquePtrType = std::unique_ptr<Hydra::Preprocessor::Cnf::CnfPreprocessorAbstract>;
-using CnfPreprocessorStatisticsPtrType = Hydra::Preprocessor::Cnf::CnfPreprocessorAbstract::CnfPreprocessorStatisticsPtrType;
+namespace Hydra {
 
-template <typename CommandLineArgumentsStructT>
-void initialAdjustmentToConfiguration(CommandLineArgumentsStructT& commandLineArgumentsStruct);
+    using AtomicBoolType = std::atomic<bool>;
+    using AtomicBoolPtrType = const AtomicBoolType*;
+    using TemplateTypeEnum = Other::TemplateTypeEnum;
+    using StatisticsPtrType = Statistics::Statistics::StatisticsPtrType;
+    using CnfPreprocessorVariantTypeEnum = Preprocessor::Cnf::CnfPreprocessorVariantTypeEnum;
+    using CnfPreprocessorAbstractUniquePtrType = std::unique_ptr<Preprocessor::Cnf::CnfPreprocessorAbstract>;
+    using CnfPreprocessorStatisticsPtrType = Preprocessor::Cnf::CnfPreprocessorAbstract::CnfPreprocessorStatisticsPtrType;
 
-/**
- * Note: DECLARED BUT NOT DEFINED FUNCTION
- */
-void printTemplateTypes(TemplateTypeEnum varT, TemplateTypeEnum literalT, TemplateTypeEnum clauseIdT);
+    template <typename CommandLineArgumentsStructT>
+    void initialAdjustmentToConfiguration(CommandLineArgumentsStructT& commandLineArgumentsStruct);
 
-/**
- * Note: DECLARED BUT NOT DEFINED FUNCTION
- */
-template <typename CommandLineArgumentsStructT>
-void printConfigurationBeforeCompilation(const CommandLineArgumentsStructT& commandLineArgumentsStruct);
+    /**
+     * Note: DECLARED BUT NOT DEFINED FUNCTION
+     */
+    void printTemplateTypes(TemplateTypeEnum varT, TemplateTypeEnum literalT, TemplateTypeEnum clauseIdT);
 
-/**
- * Note: DECLARED BUT NOT DEFINED FUNCTION
- */
-template <typename CommandLineArgumentsStructT>
-void modifyConfigurationAfterParsingFormula(CommandLineArgumentsStructT& commandLineArgumentsStruct);
+    /**
+     * Note: DECLARED BUT NOT DEFINED FUNCTION
+     */
+    template <typename CommandLineArgumentsStructT>
+    void printConfigurationBeforeCompilation(const CommandLineArgumentsStructT& commandLineArgumentsStruct);
 
-/**
- * Initialize the CNF preprocessor
- * Note: DECLARED BUT NOT DEFINED FUNCTION
- * @return the CNF preprocessor
- */
-template <typename CnfPreprocessorStructT>
-CnfPreprocessorAbstractUniquePtrType initializeCnfPreprocessor(CnfPreprocessorStructT& cnfPreprocessorStruct,
-                                                               CnfPreprocessorStatisticsPtrType cnfPreprocessorStatisticsPtr);
+    /**
+     * Note: DECLARED BUT NOT DEFINED FUNCTION
+     */
+    template <typename CommandLineArgumentsStructT>
+    void modifyConfigurationAfterParsingFormula(CommandLineArgumentsStructT& commandLineArgumentsStruct);
 
-/**
- * Note: DECLARED BUT NOT DEFINED FUNCTION
- */
-template <typename VarT, typename LiteralT, typename ClauseIdT, typename CommandLineArgumentsStructT>
-void core(Hydra::Compiler<VarT, LiteralT, ClauseIdT>& compiler, const CommandLineArgumentsStructT& commandLineArgumentsStruct);
+    /**
+     * Initialize the CNF preprocessor
+     * Note: DECLARED BUT NOT DEFINED FUNCTION
+     * @return the CNF preprocessor
+     */
+    template <typename CnfPreprocessorStructT>
+    CnfPreprocessorAbstractUniquePtrType initializeCnfPreprocessor(CnfPreprocessorStructT& cnfPreprocessorStruct,
+                                                                   CnfPreprocessorStatisticsPtrType cnfPreprocessorStatisticsPtr);
 
-template <typename CommandLineArgumentsStructT>
-void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, StatisticsPtrType statisticsPtr, AtomicBoolPtrType killedByMainThread = nullptr);
+    /**
+     * Note: DECLARED BUT NOT DEFINED FUNCTION
+     */
+    template <typename VarT, typename LiteralT, typename ClauseIdT, typename CommandLineArgumentsStructT>
+    void core(Compiler<VarT, LiteralT, ClauseIdT>& compiler, const CommandLineArgumentsStructT& commandLineArgumentsStruct);
+
+    template <typename CommandLineArgumentsStructT>
+    void coreMain(CommandLineArgumentsStructT& commandLineArgumentsStruct, StatisticsPtrType statisticsPtr, AtomicBoolPtrType killedByMainThread = nullptr);
+}   // namespace Hydra
 
 #include "./Hydra.ipp"
