@@ -2,7 +2,7 @@
 
 Hydra is the development repository for the **Bella knowledge compiler** and the **Cara #SAT solver**.
 
-**Version**: v2.2.0 (in development, not yet released)
+<!-- **Version**: v2.2.2 (in development, not yet released) -->
 
 ## Bella
 
@@ -81,17 +81,13 @@ The corresponding binaries are in the locations mentioned above.
 * [Glucose 3.0 (d4v2 version)](https://github.com/crillab/d4v2)  
   `Hydra/external/satSolvers/Glucose_d4`
 
+* [CaDiCaL 3.0.1 (Hydra version)](https://github.com/arminbiere/cadical)  
+  _work in progress_  
+  `Hydra/external/satSolvers/CaDiCaL`
+
 * [MiniSat 2.2.0](https://github.com/niklasso/minisat)  
   _implemented, not used_  
   `Hydra/external/satSolvers/MiniSat`
-
-* [Glucose 4.2.1](https://github.com/audemard/glucose)  
-  _work in progress_  
-  `Hydra/external/satSolvers/Glucose`
-
-* [CaDiCaL 3.0.1](https://github.com/arminbiere/cadical)  
-  _work in progress_  
-  `Hydra/external/satSolvers/CaDiCaL`
 
 ### Hash Maps
 
