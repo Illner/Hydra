@@ -6,7 +6,7 @@
 
 Hydra is the development repository for the **Bella knowledge compiler** and the **Cara #SAT solver**.
 
-<!-- **Version**: v2.2.2 (in development, not yet released) -->
+**Version**: v2.3.0 (in development, not yet released)
 
 ## Bella
 
