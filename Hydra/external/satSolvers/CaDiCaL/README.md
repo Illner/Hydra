@@ -13,18 +13,17 @@ structures, but that goal was only achieved partially, at least for instance
 compared to Lingeling.
 
 However, the code is much better documented and CaDiCaL actually became in
-general faster than Lingeling even though it is missing some preprocessors
-(mostly parity and cardinality constraint reasoning), which would be crucial
+general faster than Lingeling even though it is missing some preprocessors (mostly parity and cardinality constraint reasoning), which would be crucial
 to solve certain instances.
 
 Use `./configure && make` to configure and build `cadical` and the library
-`libcadical.a` in the default `build` sub-directory.  The header file of
+`libcadical.a` in the default `build` sub-directory. The header file of
 the library is [`src/cadical.hpp`](src/cadical.hpp) and includes an example
 for API usage.
-  
+
 See [`BUILD.md`](BUILD.md) for options and more details related to the build
 process and [`test/README.md`](test/README.md) for testing the library and
-the solver.  Since release 1.5.1 we have a [`NEWS.md`](NEWS.md) file.
+the solver. Since release 1.5.1 we have a [`NEWS.md`](NEWS.md) file.
 You might also want to check out [`CONTRIBUTING.md`](CONTRIBUTING.md) on
 if you want to contribute.
 

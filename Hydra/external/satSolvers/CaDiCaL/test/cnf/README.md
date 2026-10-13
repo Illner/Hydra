@@ -1,6 +1,6 @@
 These are CNF files tested with `run.sh` which actually needs to be called
 from an immediate sub-directory of CaDiCaL (such as the directory `..` one
-level up).  Log and proof files are saved in the build directory.
+level up). Log and proof files are saved in the build directory.
 
 The `.cnf` files are in DIMACS format.
 

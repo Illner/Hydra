@@ -3,14 +3,14 @@
 
 namespace CaDiCaL {
 
-struct score_smaller {
-  Internal *internal;
-  score_smaller (Internal *i) : internal (i) {}
-  bool operator() (unsigned a, unsigned b);
-};
+    struct score_smaller {
+        Internal* internal;
+        score_smaller(Internal* i) : internal(i) { }
+        bool operator()(unsigned a, unsigned b);
+    };
 
-typedef heap<score_smaller> ScoreSchedule;
+    typedef heap<score_smaller> ScoreSchedule;
 
-} // namespace CaDiCaL
+}   // namespace CaDiCaL
 
 #endif

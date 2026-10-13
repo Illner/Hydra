@@ -9,16 +9,16 @@
 
 namespace CaDiCaL {
 
-class Testing {
-  Solver *solver;
+    class Testing {
+        Solver* solver;
 
-public:
-  Testing (Solver &s) : solver (&s) {}
-  Testing (Solver *s) : solver (s) {}
-  Internal *internal () { return solver->internal; }
-  External *external () { return solver->external; }
-};
+    public:
+        Testing(Solver& s) : solver(&s) { }
+        Testing(Solver* s) : solver(s) { }
+        Internal* internal() { return solver->internal; }
+        External* external() { return solver->external; }
+    };
 
-} // namespace CaDiCaL
+}   // namespace CaDiCaL
 
 #endif

@@ -6,50 +6,49 @@
 
 namespace CaDiCaL {
 
-class DratTracer : public FileTracer {
-
-  Internal *internal;
-  File *file;
-  bool binary;
+    class DratTracer : public FileTracer {
+        Internal* internal;
+        File* file;
+        bool binary;
 #ifndef QUIET
-  int64_t added, deleted;
+        int64_t added, deleted;
 #endif
-  void put_binary_zero ();
-  void put_binary_lit (int external_lit);
+        void put_binary_zero();
+        void put_binary_lit(int external_lit);
 
-  // support DRAT
-  void drat_add_clause (const std::vector<int> &);
-  void drat_delete_clause (const std::vector<int> &);
+        // support DRAT
+        void drat_add_clause(const std::vector<int>&);
+        void drat_delete_clause(const std::vector<int>&);
 
-public:
-  // own and delete 'file'
-  DratTracer (Internal *, File *file, bool binary);
-  ~DratTracer ();
+    public:
+        // own and delete 'file'
+        DratTracer(Internal*, File* file, bool binary);
+        ~DratTracer();
 
-  void connect_internal (Internal *i) override;
-  void begin_proof (int64_t) override {} // skip
+        void connect_internal(Internal* i) override;
+        void begin_proof(int64_t) override { }   // skip
 
-  void add_original_clause (int64_t, bool, const std::vector<int> &,
-                            bool = false) override {} // skip
+        void add_original_clause(int64_t, bool, const std::vector<int>&,
+                                 bool = false) override { }   // skip
 
-  void add_derived_clause (int64_t, bool, int, const std::vector<int> &,
-                           const std::vector<int64_t> &) override;
+        void add_derived_clause(int64_t, bool, int, const std::vector<int>&,
+                                const std::vector<int64_t>&) override;
 
-  void delete_clause (int64_t, bool, const std::vector<int> &) override;
+        void delete_clause(int64_t, bool, const std::vector<int>&) override;
 
-  void finalize_clause (int64_t, const std::vector<int> &) override {
-  } // skip
+        void finalize_clause(int64_t, const std::vector<int>&) override {
+        }   // skip
 
-  void report_status (int, int64_t) override {} // skip
+        void report_status(int, int64_t) override { }   // skip
 
 #ifndef QUIET
-  void print_statistics ();
+        void print_statistics();
 #endif
-  bool closed () override;
-  void close (bool) override;
-  void flush (bool) override;
-};
+        bool closed() override;
+        void close(bool) override;
+        void flush(bool) override;
+    };
 
-} // namespace CaDiCaL
+}   // namespace CaDiCaL
 
 #endif

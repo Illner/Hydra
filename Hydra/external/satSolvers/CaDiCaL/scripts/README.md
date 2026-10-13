@@ -13,7 +13,7 @@ and a script which builds and tests all configurations
     CXX=g++-4.8 ./build-and-test-all-configurations.sh
 
 where as the code shows the compiler (default `g++`) is specified through
-the environment variable `CXX` (as for `../configure`).  Then there are
+the environment variable `CXX` (as for `../configure`). Then there are
 scripts for producing a source release
 
     ./make-src-release.sh          # archive as 'cadical-VERSION-GITID.tar.xz'

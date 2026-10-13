@@ -15,20 +15,20 @@
 // include another header file (like this one) beside 'cadical.hpp'.
 
 #ifndef PRINTF_FORMAT
-#ifdef __MINGW32__
-#define __USE_MINGW_ANSI_STDIO 1
-#define PRINTF_FORMAT __MINGW_PRINTF_FORMAT
-#else
-#define PRINTF_FORMAT printf
-#endif
+    #ifdef __MINGW32__
+        #define __USE_MINGW_ANSI_STDIO 1
+        #define PRINTF_FORMAT __MINGW_PRINTF_FORMAT
+    #else
+        #define PRINTF_FORMAT printf
+    #endif
 #endif
 
 #include <cinttypes>
 
 #ifdef NDEBUG
-#undef assert
-#define assert(...) \
-  if (!(...)) \
-    __builtin_unreachable ();
+    #undef assert
+    #define assert(...) \
+        if (!(...))     \
+            __builtin_unreachable();
 #endif
 #endif

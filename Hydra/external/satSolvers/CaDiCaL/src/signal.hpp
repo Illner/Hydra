@@ -3,35 +3,34 @@
 
 namespace CaDiCaL {
 
-// Helper class for handling signals in applications.
+    // Helper class for handling signals in applications.
 
-class Handler {
-public:
-  Handler () {}
-  virtual ~Handler () {}
-  virtual void catch_signal (int sig) = 0;
+    class Handler {
+    public:
+        Handler() { }
+        virtual ~Handler() { }
+        virtual void catch_signal(int sig) = 0;
 #ifndef _WIN32
-  virtual void catch_alarm ();
+        virtual void catch_alarm();
 #endif
-};
+    };
 
-class Signal {
-
-public:
-  static void set (Handler *);
-  static void reset ();
+    class Signal {
+    public:
+        static void set(Handler*);
+        static void reset();
 #ifndef _WIN32
-  static void alarm (int seconds);
-  static void reset_alarm ();
+        static void alarm(int seconds);
+        static void reset_alarm();
 #endif
 
-  static const char *name (int sig);
+        static const char* name(int sig);
 
-  static void set_received (int sig);
-  static int received ();
-  static bool interrupted ();
-};
+        static void set_received(int sig);
+        static int received();
+        static bool interrupted();
+    };
 
-} // namespace CaDiCaL
+}   // namespace CaDiCaL
 
 #endif

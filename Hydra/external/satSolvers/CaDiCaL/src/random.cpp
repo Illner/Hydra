@@ -29,15 +29,17 @@
 */
 
 #ifdef DO_PRINT_HASH
-#define PRINT_HASH(H) \
-  do { \
-    printf ("c PRINT_HASH %32s () = %020" PRIu64 "\n", __func__, H); \
-    fflush (stdout); \
-  } while (0)
+    #define PRINT_HASH(H)                                                   \
+        do {                                                                \
+            printf("c PRINT_HASH %32s () = %020" PRIu64 "\n", __func__, H); \
+            fflush(stdout);                                                 \
+        }                                                                   \
+        while (0)
 #else
-#define PRINT_HASH(...) \
-  do { \
-  } while (0)
+    #define PRINT_HASH(...) \
+        do {                \
+        }                   \
+        while (0)
 #endif
 
 /*------------------------------------------------------------------------*/
@@ -48,25 +50,25 @@
 
 namespace CaDiCaL {
 
-static uint64_t hash_machine_identifier () {
-  FILE *file = fopen ("/var/lib/dbus/machine-id", "r");
-  uint64_t res = 0;
-  if (file) {
-    char buffer[128];
-    memset (buffer, 0, sizeof buffer);
-    size_t bytes = fread (buffer, 1, sizeof buffer - 1, file);
-    assert (bytes);
-    fclose (file);
-    if (bytes && bytes < sizeof buffer) {
-      buffer[bytes] = 0;
-      res = hash_string (buffer);
+    static uint64_t hash_machine_identifier() {
+        FILE* file = fopen("/var/lib/dbus/machine-id", "r");
+        uint64_t res = 0;
+        if (file) {
+            char buffer[128];
+            memset(buffer, 0, sizeof buffer);
+            size_t bytes = fread(buffer, 1, sizeof buffer - 1, file);
+            assert(bytes);
+            fclose(file);
+            if (bytes && bytes < sizeof buffer) {
+                buffer[bytes] = 0;
+                res = hash_string(buffer);
+            }
+        }
+        PRINT_HASH(res);
+        return res;
     }
-  }
-  PRINT_HASH (res);
-  return res;
-}
 
-} // namespace CaDiCaL
+}   // namespace CaDiCaL
 
 /*------------------------------------------------------------------------*/
 
@@ -81,59 +83,59 @@ static uint64_t hash_machine_identifier () {
 #ifndef _WIN32
 
 extern "C" {
-#include <ifaddrs.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/socket.h>
+    #include <ifaddrs.h>
+    #include <netdb.h>
+    #include <netinet/in.h>
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <sys/socket.h>
 }
 
 #endif
 
 namespace CaDiCaL {
 
-static uint64_t hash_network_addresses () {
-  uint64_t res = 0;
+    static uint64_t hash_network_addresses() {
+        uint64_t res = 0;
 
-  // We still need to properly port this to Windows, but since accessing the
-  // IP address is only required for better randomization during testing
-  // (running 'mobical' on a cluster for instance) it is not crucial unless
-  // you really need to run 'mobical' on a Windows cluster where each node
-  // has identical IP addresses.
+        // We still need to properly port this to Windows, but since accessing the
+        // IP address is only required for better randomization during testing
+        // (running 'mobical' on a cluster for instance) it is not crucial unless
+        // you really need to run 'mobical' on a Windows cluster where each node
+        // has identical IP addresses.
 
 #ifndef _WIN32
-  struct ifaddrs *addrs;
-  if (!getifaddrs (&addrs)) {
-    for (struct ifaddrs *addr = addrs; addr; addr = addr->ifa_next) {
-      if (!addr->ifa_addr)
-        continue;
-      const int family = addr->ifa_addr->sa_family;
-      if (family == AF_INET || family == AF_INET6) {
-        const int size = (family == AF_INET) ? sizeof (struct sockaddr_in)
-                                             : sizeof (struct sockaddr_in6);
-        char buffer[128];
-        if (!getnameinfo (addr->ifa_addr, size, buffer, sizeof buffer, 0, 0,
-                          NI_NUMERICHOST)) {
-          uint64_t tmp = hash_string (buffer);
-#ifdef DO_PRINT_HASH
-          printf ("c PRINT_HASH %35s = %020" PRIu64 "\n", buffer, tmp);
-          fflush (stdout);
-#endif
-          res ^= tmp;
-          res *= 10000000000000000051ul;
+        struct ifaddrs* addrs;
+        if (!getifaddrs(&addrs)) {
+            for (struct ifaddrs* addr = addrs; addr; addr = addr->ifa_next) {
+                if (!addr->ifa_addr)
+                    continue;
+                const int family = addr->ifa_addr->sa_family;
+                if (family == AF_INET || family == AF_INET6) {
+                    const int size = (family == AF_INET) ? sizeof(struct sockaddr_in)
+                                                         : sizeof(struct sockaddr_in6);
+                    char buffer[128];
+                    if (!getnameinfo(addr->ifa_addr, size, buffer, sizeof buffer, 0, 0,
+                                     NI_NUMERICHOST)) {
+                        uint64_t tmp = hash_string(buffer);
+    #ifdef DO_PRINT_HASH
+                        printf("c PRINT_HASH %35s = %020" PRIu64 "\n", buffer, tmp);
+                        fflush(stdout);
+    #endif
+                        res ^= tmp;
+                        res *= 10000000000000000051ul;
+                    }
+                }
+            }
+            freeifaddrs(addrs);
         }
-      }
-    }
-    freeifaddrs (addrs);
-  }
 #endif
 
-  PRINT_HASH (res);
-  return res;
-}
+        PRINT_HASH(res);
+        return res;
+    }
 
-} // namespace CaDiCaL
+}   // namespace CaDiCaL
 
 /*------------------------------------------------------------------------*/
 
@@ -145,13 +147,13 @@ extern "C" {
 
 namespace CaDiCaL {
 
-static uint64_t hash_time () {
-  uint64_t res = ::time (0);
-  PRINT_HASH (res);
-  return res;
-}
+    static uint64_t hash_time() {
+        uint64_t res = ::time(0);
+        PRINT_HASH(res);
+        return res;
+    }
 
-} // namespace CaDiCaL
+}   // namespace CaDiCaL
 
 /*------------------------------------------------------------------------*/
 
@@ -164,13 +166,13 @@ extern "C" {
 
 namespace CaDiCaL {
 
-static uint64_t hash_process () {
-  uint64_t res = getpid ();
-  PRINT_HASH (res);
-  return res;
-}
+    static uint64_t hash_process() {
+        uint64_t res = getpid();
+        PRINT_HASH(res);
+        return res;
+    }
 
-} // namespace CaDiCaL
+}   // namespace CaDiCaL
 
 /*------------------------------------------------------------------------*/
 
@@ -180,28 +182,28 @@ static uint64_t hash_process () {
 
 namespace CaDiCaL {
 
-static uint64_t hash_clock_cycles () {
-  uint64_t res = std::clock ();
-  PRINT_HASH (res);
-  return res;
-}
+    static uint64_t hash_clock_cycles() {
+        uint64_t res = std::clock();
+        PRINT_HASH(res);
+        return res;
+    }
 
-} // namespace CaDiCaL
+}   // namespace CaDiCaL
 
 /*------------------------------------------------------------------------*/
 
 namespace CaDiCaL {
 
-Random::Random () : state (1) {
-  add (hash_machine_identifier ());
-  add (hash_network_addresses ());
-  add (hash_clock_cycles ());
-  add (hash_process ());
-  add (hash_time ());
+    Random::Random() : state(1) {
+        add(hash_machine_identifier());
+        add(hash_network_addresses());
+        add(hash_clock_cycles());
+        add(hash_process());
+        add(hash_time());
 #ifdef DO_PRINT_HASH
-  printf ("c PRINT_HASH %32s    = %020" PRIu64 "\n", "combined", state);
-  fflush (stdout);
+        printf("c PRINT_HASH %32s    = %020" PRIu64 "\n", "combined", state);
+        fflush(stdout);
 #endif
-}
+    }
 
-} // namespace CaDiCaL
+}   // namespace CaDiCaL

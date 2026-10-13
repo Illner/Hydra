@@ -35,11 +35,13 @@ The methods `label_variable` and `label_clause` provide that and use indices
 starting from 1 to assign variables / clauses.
 
 Label variables via `label_variable` and the following types:
+
 - `CaDiCraig::A_LOCAL`
 - `CaDiCraig::B_LOCAL`
 - `CaDiCraig::GLOBAL`
 
 Label clauses via `label_clause` and the following types:
+
 - `CaDiCraig::A_CLAUSE`
 - `CaDiCraig::B_CLAUSE`
 
@@ -69,6 +71,7 @@ form using the Tseitin transformation.
 
 Multiple partial interpolants can be built during solving to later be used
 for building a final interpolant.
+
 - `CaDiCraig::SYMMETRIC`
 - `CaDiCraig::ASYMMETRIC`
 - `CaDiCraig::DUAL_SYMMETRIC`

@@ -4,7 +4,7 @@ model based tester `mobical` (in `mobical.app`).
 
 The `configure` script and link to the `makefile` in the root directory
 can be used from within the `src` sub-directory too and then will just work
-as if used from the root directory.  For instance
+as if used from the root directory. For instance
 
     ./configure && make test
 

@@ -17,14 +17,13 @@ Version 3.0.0
 Breaking Changes:
 
 - Renamed `get_entrailed_literals` function to `implied` after it became
-  deprecated in the 2.2.0 release.  Due to removing the former function from
-  the interface it is a breaking change, but the function has the same
-  (slightly extended in release 2.2.0) semantics as before and users can just
+  deprecated in the 2.2.0 release. Due to removing the former function from
+  the interface it is a breaking change, but the function has the same (slightly extended in release 2.2.0) semantics as before and users can just
   replace `get_entrailed_literals` by `implied`.
 
 - Renamed the `reserve` function to `resize` after it became deprecated in the
   2.2.0 release due to its misleading name (cf. semantics of `reserve` and
-  `resize` for `std::vector`).  Users can replace in their code simply replace
+  `resize` for `std::vector`). Users can replace in their code simply replace
   `reserve` by `resize` though as semantics of the function did not
   change at all.
 
@@ -39,22 +38,21 @@ Breaking Changes:
 
   This became necessary for proof checking in incremental SAT solving when
   using techniques, such as BVA (`factor`), that rely on the introduction of
-  extension variables.  These effectively internal variables necessarily
+  extension variables. These effectively internal variables necessarily
   have to occur in proofs and have to be distinguished from actual external
-  user variables.  Our solution is to force the user to ask the solver for
+  user variables. Our solution is to force the user to ask the solver for
   unused variable ranges, which avoids overlap with extension variables.
 
   Only these declared variables can then be used as freely as before.
   However, at this moment, for one-shot-solving there is no usage change,
-  nor for the first solving/simplification call to the SAT solver.  The same
-  applies if all techniques relying on extension variables are disabled
-  (currently when `factor` is disabled).
+  nor for the first solving/simplification call to the SAT solver. The same
+  applies if all techniques relying on extension variables are disabled (currently when `factor` is disabled).
 
   But for incremental usage, while keeping `factor` enabled (the default
   since release 3.0.0), the user has to follow this new API contract.
   Disabling `factor` is an alternative, but that can have the consequence to
   reduce solving efficiency, particularly for hard combinatorial benchmarks,
-  such as pigeon hole formulas.  We are also already working on further use
+  such as pigeon hole formulas. We are also already working on further use
   case s of extension variables, for which this new API contract will also
   apply (and then probably already during adding clauses or constraints).
 
@@ -131,7 +129,7 @@ User Facing Changes:
   propagator). Set `luckyassumptions` to false if you do not want that.
 
 - The `val` function now has a Boolean as second argument that checks that
-  the variables was declared. The default is the old behavior.  The new
+  the variables was declared. The default is the old behavior. The new
   behavior can be useful for debugging applications.
 
 - Fixed `VeriPB` compatibility issues.
@@ -143,13 +141,12 @@ User Facing Changes:
 
 - The `reserve` function became **deprecated** and is going to be replaced
   by the new `resize`  function due to its misleading name (compared to
-  `std::vector`).  Users can in their code simply replace `reserve` by
-  `resize`.  The next major release will remove `reserve`.
+  `std::vector`). Users can in their code simply replace `reserve` by
+  `resize`. The next major release will remove `reserve`.
 
 - Bounded variable addition aka `factor` (see below) remains disabled by
-  default as it requires a change in incremental usage when enabled.  The
-  next major release will (A) enable `factor` by default and accordingly
-  (B) require the usage of `var` resp. `declare_more_variables` for adding
+  default as it requires a change in incremental usage when enabled. The
+  next major release will (A) enable `factor` by default and accordingly (B) require the usage of `var` resp. `declare_more_variables` for adding
   new variables in incremental solving (and keeping `factor` enabled).
   This **breaking-change** is postponed until the next major release.
 
@@ -160,26 +157,26 @@ New and Improved Techniques:
 
 - Bounded Variable Addition (BVA) or also called `factor`.
 
-  + Reverse of BVE, searches for clause sets with a certain structure,
-    and factors out common variables using extended resolution and new
-    variables to derive equisatisfiable clauses which replace the old ones.
+    + Reverse of BVE, searches for clause sets with a certain structure,
+      and factors out common variables using extended resolution and new
+      variables to derive equisatisfiable clauses which replace the old ones.
 
-  + Warning:  We have `factor` off in the 2.2 release (to avoid breaking API
-    changes) but enabling it will break API usage as extension variables can
-    not occur in input clauses. The user will need to use `var ()` or
-    `declare_more_variables ()` when `factor` is enabled for incremental
-    solving to make sure that this does not happen.  We plan to activate
-    `factor` by default with the next major release (3.0.0).
+    + Warning:  We have `factor` off in the 2.2 release (to avoid breaking API
+      changes) but enabling it will break API usage as extension variables can
+      not occur in input clauses. The user will need to use `var ()` or
+      `declare_more_variables ()` when `factor` is enabled for incremental
+      solving to make sure that this does not happen. We plan to activate
+      `factor` by default with the next major release (3.0.0).
 
 - Clausal Sweeping.
 
-  + Introducing the 'kitten' solver to cadical. Enables semantic search
-    for equivalences in sub-parts of the formula.
+    + Introducing the 'kitten' solver to cadical. Enables semantic search
+      for equivalences in sub-parts of the formula.
 
 - Ticks for improved scheduling
 
-  + You can now also use ticks to limit the runtime like the
-    conflict/decision limit before.
+    + You can now also use ticks to limit the runtime like the
+      conflict/decision limit before.
 
 - Improved vivify with a new tier-based scheduling.
 
@@ -205,19 +202,17 @@ Version 2.1.3
 - New interface to support propagation of assumptions. The following functions
   are available now:
 
-  + `propagate ()`: Applies unit propagation on the assumptions given to the
-    solver previously (supposed to be called instead of `solve ()`).
+    + `propagate ()`: Applies unit propagation on the assumptions given to the
+      solver previously (supposed to be called instead of `solve ()`).
 
-  + `get_entrailed_literals (std::vector<int> &)`: In case `propagate ()`
-    returned `0` (UNKNOWN), this function returns (the subset of) those
-    literals that were assigned based on the assumptions and propagation.
-    Those assigned literals that are tainted on the reconstruction stack
-    (due to some preprocessing) are not returned, thus it is safe to
-    combine it with the formula simplifications.
+    + `get_entrailed_literals (std::vector<int> &)`: In case `propagate ()`
+      returned `0` (UNKNOWN), this function returns (the subset of) those
+      literals that were assigned based on the assumptions and propagation.
+      Those assigned literals that are tainted on the reconstruction stack (due to some preprocessing) are not returned, thus it is safe to
+      combine it with the formula simplifications.
 
 - LIDRUP proofs now include information about queries that returned with
   UNKNOWN result.
-
 
 Version 2.1.2
 -------------
@@ -229,13 +224,13 @@ Version 2.1.2
 
 - New IPASIR-UP options, with the same default as in 1.1:
 
-   + `exteagerreasons` where the solver eagerly asks for reasons before
-     analysing conflicts instead of being lazy (default: eager)
+    + `exteagerreasons` where the solver eagerly asks for reasons before
+      analysing conflicts instead of being lazy (default: eager)
 
-   + `exteagerrecalc` where the solver recalculates the levels on the
-     trail before conflict analysis (default: on). Mostly useful if
-     the solver provides many propagations in a lazy fashion. Requires
-     `exteagerreasons` to be on to have any effect.
+    + `exteagerrecalc` where the solver recalculates the levels on the
+      trail before conflict analysis (default: on). Mostly useful if
+      the solver provides many propagations in a lazy fashion. Requires
+      `exteagerreasons` to be on to have any effect.
 
 - Fix performance regression for incremental SAT solving due to too
   eager garbage collection before any incremental call in favor of
@@ -259,24 +254,24 @@ Version 2.1.0
   version of CaDiCaL requires to modify the consuming code to
   accommodate to the new syntax:
 
-  - Notification of assignments is batched into arrays and no more fixed
-    flags are passed during notification (`breaking change`)
+    - Notification of assignments is batched into arrays and no more fixed
+      flags are passed during notification (`breaking change`)
 
-  - Allow clauses learned from the propagator to be deleted (see
-    `is_forgettable` parameter and `are_reasons_forgettable` Boolean flag)
-    (`breaking change`)
+    - Allow clauses learned from the propagator to be deleted (see
+      `is_forgettable` parameter and `are_reasons_forgettable` Boolean flag)
+      (`breaking change`)
 
-  - Added support to generate incremental proofs (LIDRUP) while
-    using IPASIR-UP
+    - Added support to generate incremental proofs (LIDRUP) while
+      using IPASIR-UP
 
-  - Users can force to backtrack during `cb_decide` (see function
-    `force_backtrack`)
+    - Users can force to backtrack during `cb_decide` (see function
+      `force_backtrack`)
 
-  - Removed unnecessary notifications of backtrack during
-    inprocessing (supposed to solve issue #92).
+    - Removed unnecessary notifications of backtrack during
+      inprocessing (supposed to solve issue #92).
 
-  - Call again `cb_propagate` if during final model checking a new
-    clause is added.
+    - Call again `cb_propagate` if during final model checking a new
+      clause is added.
 
 - Added a new interface `FixedAssignmentListener`: Eagerly calls a
   callback whenever a variable is fixed during search.
@@ -361,7 +356,7 @@ Version 1.8.0
 
 - More fine-grained handling of printing proof size information by
   adding `bool print = false` flags to the `flush_proof_trace` and
-  the `close_proof_trace` API calls.  The former prints the number
+  the `close_proof_trace` API calls. The former prints the number
   of addition and deletion steps, while the latter prints the size
   of the proof size (and the actual number of bytes if compressed).
   The main effect is that by default printing of proof size disabled
@@ -377,7 +372,7 @@ Version 1.7.4
 
 - As `fork` and `wait` do not exist on Windows writing compressed files
   through `pipe/fork/exec/wait` has to be disabled for Windows cross
-  compilation to go through.  Alternatively one could go back to `popen`
+  compilation to go through. Alternatively one could go back to `popen`
   for writing compressed files on Windows which however is not safe and
   therefore we simply decided to disable that feature for windows.
   Compressed file reading still (and as far we are aware safely) uses
@@ -392,24 +387,24 @@ Version 1.7.3
 
 - Incremental lazy backtracking (ILB) enabled by `--ilb` allows
   to add new clauses incrementally while keeping the assignments
-  on the trail.  Also works for assumptions (`--ilbassumptions`).
+  on the trail. Also works for assumptions (`--ilbassumptions`).
 
 - Reimplication (`--reimply`) fixes assignment levels of literals by
   "elevating" them (assigning a lower decision level and propagating them
-  out-of-order on this lower decision level).  Out-of-order assignments are
+  out-of-order on this lower decision level). Out-of-order assignments are
   introduced by chronological backtracking, adding external clauses during
-  solving (e.g., by a user propagation) or simply by ILB.  Reimplication
+  solving (e.g., by a user propagation) or simply by ILB. Reimplication
   improves quality of learned clauses and potentially shortens search in
   such cases.
 
 - A new proof tracer interface allows to add a proof `Tracer` through the
   API (via `connect_proof_tracer`). This feature allows to use custom
-  proof tracers to process clausal proofs on-the-fly while solving.  Both
+  proof tracers to process clausal proofs on-the-fly while solving. Both
   proofs steps with proof antecedents (needed for instance for
   interpolation) as well as without (working directly on DRAT level) are
   supported.
 
-- Reworked options for proof tracing to be less confusing.  Support for
+- Reworked options for proof tracing to be less confusing. Support for
   `DRAT`, `LRAT`, `FRAT` and `VeriPB` (with or without antecedents).
 
 Version 1.7.2
@@ -439,11 +434,11 @@ Version 1.6.0
 -------------
 
 - Added IPASIR-UP functions to the API to support external propagation,
-  external decisions, and clause addition during search.  For more details
+  external decisions, and clause addition during search. For more details
   see the following paper at SAT 2023:
 
- Katalin Fazekas, Aina Niemetz, Mathias Preiner, Markus Kirchweger, Stefan
- Szeider and Armin Biere. IPASIR-UP: User Propagators for CDCL.
+Katalin Fazekas, Aina Niemetz, Mathias Preiner, Markus Kirchweger, Stefan
+Szeider and Armin Biere. IPASIR-UP: User Propagators for CDCL.
 
 - During decisions the phase set by `void phase (int lit)` has now higher
   precedence than the initial phase set by options `phase` and `forcephase`.
@@ -478,8 +473,8 @@ Version 1.5.4
 - Added `bool flip (int lit)` to API.
 
 - Fixed different garbage collection times with and without clause IDs (with
-  `./configure -l` or just `./configure`).  This solves issue #44 by John
-  Reeves.  At the same time made sure to trigger garbage collection
+  `./configure -l` or just `./configure`). This solves issue #44 by John
+  Reeves. At the same time made sure to trigger garbage collection
   independent on the number of clause header bytes by relying on the number
   of garbage literals instead.
 

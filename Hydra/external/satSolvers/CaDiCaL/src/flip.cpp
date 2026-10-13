@@ -2,14 +2,13 @@
 
 namespace CaDiCaL {
 
-bool Internal::flip (int lit) {
+    bool Internal::flip(int lit) {
+        // Do not try to flip inactive literals except for unused variables.
 
-  // Do not try to flip inactive literals except for unused variables.
+        if (!active(lit) && !flags(lit).unused())
+            return false;
 
-  if (!active (lit) && !flags (lit).unused ())
-    return false;
-
-  /*
+        /*
   if (flags (lit).unused ()) {
     assert (lit <= max_var);
     mark_active (lit);
@@ -18,252 +17,248 @@ bool Internal::flip (int lit) {
   }
   */
 
-  // TODO: Unused case is not handled yet.
-  // if (flags (lit).unused ()) return false;
+        // TODO: Unused case is not handled yet.
+        // if (flags (lit).unused ()) return false;
 
-  // Need to reestablish proper watching invariants as if there are no
-  // blocking literals as flipping in principle does not work with them.
+        // Need to reestablish proper watching invariants as if there are no
+        // blocking literals as flipping in principle does not work with them.
 
-  if (propergated < trail.size ())
-    propergate ();
+        if (propergated < trail.size())
+            propergate();
 
-  LOG ("trying to flip %d", lit);
+        LOG("trying to flip %d", lit);
 
-  const int idx = vidx (lit);
-  const signed char original_value = vals[idx];
-  assert (original_value);
-  lit = original_value < 0 ? -idx : idx;
-  assert (val (lit) > 0);
+        const int idx = vidx(lit);
+        const signed char original_value = vals[idx];
+        assert(original_value);
+        lit = original_value < 0 ? -idx : idx;
+        assert(val(lit) > 0);
 
-  // Here we go over all the clauses in which 'lit' is watched by 'lit' and
-  // check whether assigning 'lit' to false would break watching invariants
-  // or even make the clause false.  We also try to find replacement
-  // watches in case this fixes the watching invariant.  This code is very
-  // similar to propagation of a literal in 'Internal::propagate'.
+        // Here we go over all the clauses in which 'lit' is watched by 'lit' and
+        // check whether assigning 'lit' to false would break watching invariants
+        // or even make the clause false.  We also try to find replacement
+        // watches in case this fixes the watching invariant.  This code is very
+        // similar to propagation of a literal in 'Internal::propagate'.
 
-  bool res = true;
+        bool res = true;
 
-  Watches &ws = watches (lit);
-  const const_watch_iterator eow = ws.end ();
-  watch_iterator bow = ws.begin ();
+        Watches& ws = watches(lit);
+        const const_watch_iterator eow = ws.end();
+        watch_iterator bow = ws.begin();
 
-  // We first go over binary watches/clauses first as this is cheaper and
-  // has higher chance of failure and we can not use blocking literals.
+        // We first go over binary watches/clauses first as this is cheaper and
+        // has higher chance of failure and we can not use blocking literals.
 
-  for (const_watch_iterator i = bow; i != eow; i++) {
-    const Watch w = *i;
-    if (!w.binary ())
-      continue;
-    const signed char b = val (w.blit);
-    if (b > 0)
-      continue;
-    assert (b < 0);
-    res = false;
-    break;
-  }
+        for (const_watch_iterator i = bow; i != eow; i++) {
+            const Watch w = *i;
+            if (!w.binary())
+                continue;
+            const signed char b = val(w.blit);
+            if (b > 0)
+                continue;
+            assert(b < 0);
+            res = false;
+            break;
+        }
 
-  if (res) {
-    const_watch_iterator i = bow;
-    watch_iterator j = bow;
+        if (res) {
+            const_watch_iterator i = bow;
+            watch_iterator j = bow;
 
-    while (i != eow) {
+            while (i != eow) {
+                const Watch w = *j++ = *i++;
 
-      const Watch w = *j++ = *i++;
+                if (w.binary())
+                    continue;
 
-      if (w.binary ())
-        continue;
+                if (w.clause->garbage) {
+                    j--;
+                    continue;
+                }
 
-      if (w.clause->garbage) {
-        j--;
-        continue;
-      }
+                literal_iterator lits = w.clause->begin();
 
-      literal_iterator lits = w.clause->begin ();
+                const int other = lits[0] ^ lits[1] ^ lit;
+                const signed char u = val(other);
+                if (u > 0)
+                    continue;
 
-      const int other = lits[0] ^ lits[1] ^ lit;
-      const signed char u = val (other);
-      if (u > 0)
-        continue;
+                const int size = w.clause->size;
+                const literal_iterator middle = lits + w.clause->pos;
+                const const_literal_iterator end = lits + size;
+                literal_iterator k = middle;
 
-      const int size = w.clause->size;
-      const literal_iterator middle = lits + w.clause->pos;
-      const const_literal_iterator end = lits + size;
-      literal_iterator k = middle;
+                int r = 0;
+                signed char v = -1;
+                while (k != end && (v = val(r = *k)) < 0)
+                    k++;
+                if (v < 0) {
+                    k = lits + 2;
+                    assert(w.clause->pos <= size);
+                    while (k != middle && (v = val(r = *k)) < 0)
+                        k++;
+                }
 
-      int r = 0;
-      signed char v = -1;
-      while (k != end && (v = val (r = *k)) < 0)
-        k++;
-      if (v < 0) {
-        k = lits + 2;
-        assert (w.clause->pos <= size);
-        while (k != middle && (v = val (r = *k)) < 0)
-          k++;
-      }
+                if (v < 0) {
+                    res = false;
+                    break;
+                }
 
-      if (v < 0) {
-        res = false;
-        break;
-      }
+                assert(v > 0);
+                assert(lits + 2 <= k), assert(k <= w.clause->end());
+                w.clause->pos = k - lits;
+                lits[0] = other, lits[1] = r, *k = lit;
+                watch_literal(r, lit, w.clause);
+                j--;
+            }
 
-      assert (v > 0);
-      assert (lits + 2 <= k), assert (k <= w.clause->end ());
-      w.clause->pos = k - lits;
-      lits[0] = other, lits[1] = r, *k = lit;
-      watch_literal (r, lit, w.clause);
-      j--;
-    }
+            if (j != i) {
+                while (i != eow)
+                    *j++ = *i++;
 
-    if (j != i) {
-
-      while (i != eow)
-        *j++ = *i++;
-
-      ws.resize (j - ws.begin ());
-    }
-  }
+                ws.resize(j - ws.begin());
+            }
+        }
 #ifdef LOGGING
-  if (res)
-    LOG ("literal %d can be flipped", lit);
-  else
-    LOG ("literal %d can not be flipped", lit);
+        if (res)
+            LOG("literal %d can be flipped", lit);
+        else
+            LOG("literal %d can not be flipped", lit);
 #endif
 
-  if (res) {
+        if (res) {
+            const int idx = vidx(lit);
+            const signed char original_value = vals[idx];
+            assert(original_value);
+            lit = original_value < 0 ? -idx : idx;
+            assert(val(lit) > 0);
 
-    const int idx = vidx (lit);
-    const signed char original_value = vals[idx];
-    assert (original_value);
-    lit = original_value < 0 ? -idx : idx;
-    assert (val (lit) > 0);
+            LOG("flipping value of %d = 1 to %d = -1", lit, lit);
 
-    LOG ("flipping value of %d = 1 to %d = -1", lit, lit);
+            set_val(idx, -original_value);
+            assert(val(-lit) > 0);
+            assert(val(lit) < 0);
 
-    set_val (idx, -original_value);
-    assert (val (-lit) > 0);
-    assert (val (lit) < 0);
-
-    Var &v = var (idx);
-    assert (trail[v.trail] == lit);
-    trail[v.trail] = -lit;
-    if (opts.ilb) {
-      if (!changed_val)
-        changed_val = lit;
-      else {
-        assert (val (changed_val));
-        if (v.level < var (changed_val).level) {
-          changed_val = lit;
+            Var& v = var(idx);
+            assert(trail[v.trail] == lit);
+            trail[v.trail] = -lit;
+            if (opts.ilb) {
+                if (!changed_val)
+                    changed_val = lit;
+                else {
+                    assert(val(changed_val));
+                    if (v.level < var(changed_val).level) {
+                        changed_val = lit;
+                    }
+                }
+            }
         }
-      }
+        else
+            LOG("flipping value of %d failed", lit);
+
+        return res;
     }
-  } else
-    LOG ("flipping value of %d failed", lit);
 
-  return res;
-}
+    bool Internal::flippable(int lit) {
+        // Can not check inactive literals except for unused variables.
 
-bool Internal::flippable (int lit) {
+        if (!active(lit) && !flags(lit).unused())
+            return false;
 
-  // Can not check inactive literals except for unused variables.
-
-  if (!active (lit) && !flags (lit).unused ())
-    return false;
-
-  /*
+        /*
   if (flags (lit).unused ()) {
     assert (lit <= max_var);
     mark_active (lit);
     return true;
   }
   */
-  // TODO: Unused case is not handled yet
-  // if (flags (lit).unused ()) return false;
+        // TODO: Unused case is not handled yet
+        // if (flags (lit).unused ()) return false;
 
-  // Need to reestablish proper watching invariants as if there are no
-  // blocking literals as flipping in principle does not work with them.
+        // Need to reestablish proper watching invariants as if there are no
+        // blocking literals as flipping in principle does not work with them.
 
-  if (propergated < trail.size ())
-    propergate ();
+        if (propergated < trail.size())
+            propergate();
 
-  LOG ("checking whether %d is flippable", lit);
+        LOG("checking whether %d is flippable", lit);
 
-  const int idx = vidx (lit);
-  const signed char original_value = vals[idx];
-  assert (original_value);
-  lit = original_value < 0 ? -idx : idx;
-  assert (val (lit) > 0);
+        const int idx = vidx(lit);
+        const signed char original_value = vals[idx];
+        assert(original_value);
+        lit = original_value < 0 ? -idx : idx;
+        assert(val(lit) > 0);
 
-  // Here we go over all the clauses in which 'lit' is watched by 'lit' and
-  // check whether assigning 'lit' to false would break watching invariants
-  // or even make the clause false.  In contrast to 'flip' we do not try to
-  // find replacement literals but do use blocking literals'.  Therefore we
-  // also do not split the traversal code into two parts.
+        // Here we go over all the clauses in which 'lit' is watched by 'lit' and
+        // check whether assigning 'lit' to false would break watching invariants
+        // or even make the clause false.  In contrast to 'flip' we do not try to
+        // find replacement literals but do use blocking literals'.  Therefore we
+        // also do not split the traversal code into two parts.
 
-  bool res = true;
+        bool res = true;
 
-  Watches &ws = watches (lit);
-  const const_watch_iterator eow = ws.end ();
-  for (watch_iterator i = ws.begin (); i != eow; i++) {
+        Watches& ws = watches(lit);
+        const const_watch_iterator eow = ws.end();
+        for (watch_iterator i = ws.begin(); i != eow; i++) {
+            const Watch w = *i;
+            const signed char b = val(w.blit);
+            if (b > 0)
+                continue;
+            assert(b < 0);
 
-    const Watch w = *i;
-    const signed char b = val (w.blit);
-    if (b > 0)
-      continue;
-    assert (b < 0);
+            if (w.binary()) {
+                res = false;
+                break;
+            }
 
-    if (w.binary ()) {
-      res = false;
-      break;
-    }
+            if (w.clause->garbage)
+                continue;
 
-    if (w.clause->garbage)
-      continue;
+            literal_iterator lits = w.clause->begin();
 
-    literal_iterator lits = w.clause->begin ();
+            const int other = lits[0] ^ lits[1] ^ lit;
+            const signed char u = val(other);
+            if (u > 0) {
+                i->blit = other;
+                continue;
+            }
 
-    const int other = lits[0] ^ lits[1] ^ lit;
-    const signed char u = val (other);
-    if (u > 0) {
-      i->blit = other;
-      continue;
-    }
+            const int size = w.clause->size;
+            const literal_iterator middle = lits + w.clause->pos;
+            const const_literal_iterator end = lits + size;
+            literal_iterator k = middle;
 
-    const int size = w.clause->size;
-    const literal_iterator middle = lits + w.clause->pos;
-    const const_literal_iterator end = lits + size;
-    literal_iterator k = middle;
+            int r = 0;
+            signed char v = -1;
+            while (k != end && (v = val(r = *k)) < 0)
+                k++;
+            if (v < 0) {
+                k = lits + 2;
+                assert(w.clause->pos <= size);
+                while (k != middle && (v = val(r = *k)) < 0)
+                    k++;
+            }
 
-    int r = 0;
-    signed char v = -1;
-    while (k != end && (v = val (r = *k)) < 0)
-      k++;
-    if (v < 0) {
-      k = lits + 2;
-      assert (w.clause->pos <= size);
-      while (k != middle && (v = val (r = *k)) < 0)
-        k++;
-    }
+            if (v < 0) {
+                res = false;
+                break;
+            }
 
-    if (v < 0) {
-      res = false;
-      break;
-    }
-
-    assert (v > 0);
-    assert (lits + 2 <= k);
-    assert (k <= w.clause->end ());
-    w.clause->pos = k - lits;
-    i->blit = r;
-  }
+            assert(v > 0);
+            assert(lits + 2 <= k);
+            assert(k <= w.clause->end());
+            w.clause->pos = k - lits;
+            i->blit = r;
+        }
 
 #ifdef LOGGING
-  if (res)
-    LOG ("literal %d can be flipped", lit);
-  else
-    LOG ("literal %d can not be flipped", lit);
+        if (res)
+            LOG("literal %d can be flipped", lit);
+        else
+            LOG("literal %d can not be flipped", lit);
 #endif
 
-  return res;
-}
+        return res;
+    }
 
-} // namespace CaDiCaL
+}   // namespace CaDiCaL
