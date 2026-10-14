@@ -1,12 +1,29 @@
-# CMake project for CaDiCaL
+# CMake project for CaDiCaL (Hydra version)
 cmake_minimum_required(VERSION 3.14)
 
-# Collect all .cpp files from the CaDiCaL source directory
-file(GLOB CADICAL_SRC_FILES "src/*.cpp")
+# Sources of the library
+file(GLOB CADICAL_SOURCE_FILES CONFIGURE_DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c")     # kitten.c
 
-add_library(CaDiCaLLibrary STATIC ${CADICAL_SRC_FILES})
+# Exclude the command-line tools 'cadical' and 'mobical'
+list(REMOVE_ITEM CADICAL_SOURCE_FILES
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/cadical.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/mobical.cpp")
 
-target_include_directories(CaDiCaLLibrary PUBLIC src)
+add_library(CaDiCaLLibrary OBJECT ${CADICAL_SOURCE_FILES})
+
+# No warnings
+target_compile_options(CaDiCaLLibrary PRIVATE -w)
 
 target_compile_definitions(CaDiCaLLibrary PRIVATE NBUILD)
-target_compile_definitions(CaDiCaLLibrary PRIVATE NCLOSEFROM)
+
+IF (CMAKE_SYSTEM_NAME STREQUAL "CYGWIN")
+    target_compile_definitions(CaDiCaLLibrary PRIVATE _GNU_SOURCE NCLOSEFROM)
+ENDIF ()
+
+IF (${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+    target_compile_definitions(CaDiCaLLibrary PRIVATE NCLOSEFROM)
+ENDIF ()
+
+target_compile_definitions(CaDiCaLLibrary PUBLIC CaDiCaL=CaDiCaL_Hydra)
