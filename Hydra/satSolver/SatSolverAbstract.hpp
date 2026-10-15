@@ -46,11 +46,11 @@ namespace Hydra::SatSolver {
         static_assert(Other::isValidClauseIdT<ClauseIdT>, "Invalid ClauseIdT type!");
 
     public:
-        using LiteralType = typename Formula::Literal<VarT, LiteralT>::LiteralType;
-        using VariableSetType = typename Formula::Literal<VarT, LiteralT>::VariableSetType;
-        using LiteralVectorType = typename Formula::Literal<VarT, LiteralT>::LiteralVectorType;
-        using VariableVectorType = typename Formula::Literal<VarT, LiteralT>::VariableVectorType;
-        using SatSolverStatisticsPtrType = typename SatSolverStatistics::SatSolverStatisticsPtrType;
+        using LiteralType = Formula::Literal<VarT, LiteralT>::LiteralType;
+        using VariableSetType = Formula::Literal<VarT, LiteralT>::VariableSetType;
+        using LiteralVectorType = Formula::Literal<VarT, LiteralT>::LiteralVectorType;
+        using VariableVectorType = Formula::Literal<VarT, LiteralT>::VariableVectorType;
+        using SatSolverStatisticsPtrType = SatSolverStatistics::SatSolverStatisticsPtrType;
 
     public:
         using LiteralReusableVectorType = Container::ReusableVector::ReusableVector<LiteralType>;
@@ -63,7 +63,7 @@ namespace Hydra::SatSolver {
         using BoolVectorType = std::vector<bool>;
 
     private:
-        using VariableReusableVectorType = typename Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableReusableVectorType;
+        using VariableReusableVectorType = Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableReusableVectorType;
 
     private:
         using VectorSetType = Container::VectorSet::VectorSet;

@@ -35,13 +35,13 @@ namespace Hydra::SatSolver::MiniSat {
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     class MiniSatSolver final : public SatSolverAbstract<VarT, LiteralT, ClauseIdT> {
     private:
-        using LiteralType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
-        using BoolVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::BoolVectorType;
-        using VariableSetType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::VariableSetType;
-        using LiteralVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralVectorType;
-        using LiteralReusableVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralReusableVectorType;
-        using SatSolverStatisticsPtrType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::SatSolverStatisticsPtrType;
-        using FormulaRepresentationAbstractPtrType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::FormulaRepresentationAbstractPtrType;
+        using LiteralType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
+        using BoolVectorType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::BoolVectorType;
+        using VariableSetType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::VariableSetType;
+        using LiteralVectorType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralVectorType;
+        using LiteralReusableVectorType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralReusableVectorType;
+        using SatSolverStatisticsPtrType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::SatSolverStatisticsPtrType;
+        using FormulaRepresentationAbstractPtrType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::FormulaRepresentationAbstractPtrType;
 
     private:
         using MiniSatSolverType = MiniSatCore::Solver;
