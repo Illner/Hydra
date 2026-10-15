@@ -36,7 +36,6 @@ namespace Hydra::SatSolver::MiniSat {
     class MiniSatSolver final : public SatSolverAbstract<VarT, LiteralT, ClauseIdT> {
     private:
         using LiteralType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
-        using BoolVectorType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::BoolVectorType;
         using VariableSetType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::VariableSetType;
         using LiteralVectorType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralVectorType;
         using LiteralReusableVectorType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralReusableVectorType;
@@ -54,8 +53,7 @@ namespace Hydra::SatSolver::MiniSat {
                       const MiniSatSolverConfiguration& configuration = MiniSatSolverConfiguration(),
                       SatSolverStatisticsPtrType satSolverStatisticsPtr = nullptr)
             : SatSolverAbstract<VarT, LiteralT, ClauseIdT>(formulaRepresentationAbstractPtr, SatSolverTypeEnum::MINISAT, satSolverStatisticsPtr),
-              activeModel_(false), variableAssumptionVector_(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormulaUsedForIndexing(), false),
-              configuration_(configuration),
+              activeModel_(false), configuration_(configuration),
               l_restrictedVariableMiniSatVector_processIsSatisfiable_(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula()),
               l_firstCall_unitPropagation_(true) {
             // The variables cannot be saved as std::size_t
@@ -82,7 +80,6 @@ namespace Hydra::SatSolver::MiniSat {
     private:
         bool activeModel_;
         MiniSatSolverType solver_;
-        BoolVectorType variableAssumptionVector_;
 
         MiniSatSolverConfiguration configuration_;
 
@@ -125,10 +122,8 @@ namespace Hydra::SatSolver::MiniSat {
         bool processUnitPropagation(const VariableSetType& restrictedVariableSet, LiteralReusableVectorType& impliedLiteralReusableVector,
                                     bool includeAssumptions) override;
 
-        bool unitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
-                             LiteralReusableVectorType& impliedLiteralReusableVector) override;
-
-        bool isVariableAssigned(VarT variable) const override;
+        bool processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
+                                    LiteralReusableVectorType& impliedLiteralReusableVector) override;
 
         VsidsScoreType getVsidsScore(VarT variable) const override;
 

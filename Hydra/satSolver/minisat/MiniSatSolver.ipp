@@ -90,11 +90,6 @@ namespace Hydra::SatSolver::MiniSat {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     void MiniSatSolver<VarT, LiteralT, ClauseIdT>::processAssignLiteral(const LiteralType& lit) {
-        assert(lit.getVariable() < variableAssumptionVector_.size());
-        assert(!variableAssumptionVector_[lit.getVariable()]);   // variable is not assigned
-
-        variableAssumptionVector_[lit.getVariable()] = true;
-
         MiniSatCore::Lit litMiniSat = convertLiteralToLiteralMiniSat(lit);
         activeModel_ = activeModel_ && !solver_.isAssigned(MiniSatCore::var(litMiniSat));
 
@@ -102,12 +97,8 @@ namespace Hydra::SatSolver::MiniSat {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    void MiniSatSolver<VarT, LiteralT, ClauseIdT>::processUnassignLiteral(const LiteralType& lit) {
-        assert(lit.getVariable() < variableAssumptionVector_.size());
-        assert(variableAssumptionVector_[lit.getVariable()]);   // variable is assigned
+    void MiniSatSolver<VarT, LiteralT, ClauseIdT>::processUnassignLiteral([[maybe_unused]] const LiteralType& lit) {
         assert(solver_.assumptions.last() == convertLiteralToLiteralMiniSat(lit));
-
-        variableAssumptionVector_[lit.getVariable()] = false;
 
         solver_.assumptions.pop();
         solver_.cancelUntil(solver_.assumptions.size());
@@ -159,10 +150,8 @@ namespace Hydra::SatSolver::MiniSat {
 
                     VarT var = convertVariableMiniSatToVariable(MiniSatCore::var(litMiniSat));
 
-                    assert(var < variableAssumptionVector_.size());
-
                     // It is an assumption
-                    if (!includeAssumptions && variableAssumptionVector_[var])
+                    if (!includeAssumptions && this->isVariableAssigned(var))
                         continue;
 
                     if (!Other::containInSet(restrictedVariableSet, var))
@@ -174,10 +163,8 @@ namespace Hydra::SatSolver::MiniSat {
             // Iterating restricted variables
             else {
                 for (VarT var : restrictedVariableSet) {
-                    assert(var < variableAssumptionVector_.size());
-
                     // It is an assumption
-                    if (!includeAssumptions && variableAssumptionVector_[var])
+                    if (!includeAssumptions && this->isVariableAssigned(var))
                         continue;
 
                     MiniSatCore::Var varMiniSat = convertVariableToVariableMiniSat(var);
@@ -197,10 +184,8 @@ namespace Hydra::SatSolver::MiniSat {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool MiniSatSolver<VarT, LiteralT, ClauseIdT>::unitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
-                                                                   LiteralReusableVectorType& impliedLiteralReusableVector) {
-        assert(!variableAssumptionVector_[lit.getVariable()]);   // variable is not assigned
-
+    bool MiniSatSolver<VarT, LiteralT, ClauseIdT>::processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
+                                                                          LiteralReusableVectorType& impliedLiteralReusableVector) {
         // Initialize local auxiliary data structures
         if (l_firstCall_unitPropagation_) {
             l_impliedLiteralMiniSatReusableVector_unitPropagation_ = LiteralMiniSatReusableVectorType(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
@@ -208,7 +193,6 @@ namespace Hydra::SatSolver::MiniSat {
             l_firstCall_unitPropagation_ = false;
         }
 
-        impliedLiteralReusableVector.clear();
         l_impliedLiteralMiniSatReusableVector_unitPropagation_.clear();
 
         solver_.refillAssums();
@@ -222,8 +206,8 @@ namespace Hydra::SatSolver::MiniSat {
                 if (!Other::containInSet(restrictedVariableSet, impliedLit.getVariable()))
                     continue;
 
-                assert(impliedLit != ~lit);                                     // not a complementary literal
-                assert(!variableAssumptionVector_[impliedLit.getVariable()]);   // variable is not assigned
+                assert(impliedLit != ~lit);                                    // not a complementary literal
+                assert(!this->isVariableAssigned(impliedLit.getVariable()));   // variable is not assigned
 
                 if (impliedLit == lit)
                     continue;
@@ -236,13 +220,6 @@ namespace Hydra::SatSolver::MiniSat {
 
         // A contradiction was derived
         return false;
-    }
-
-    template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool MiniSatSolver<VarT, LiteralT, ClauseIdT>::isVariableAssigned(VarT variable) const {
-        assert(variable < variableAssumptionVector_.size());
-
-        return variableAssumptionVector_[variable];
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
@@ -274,13 +251,6 @@ namespace Hydra::SatSolver::MiniSat {
         out << "Assumption:";
         for (int i = 0; i < solver_.assumptions.size(); ++i)
             out << " " << convertLiteralMiniSatToLiteral(solver_.assumptions[i]);
-        out << std::endl;
-
-        out << "Variable assumption:";
-        for (VarT var = 1; var < variableAssumptionVector_.size(); ++var) {
-            if (variableAssumptionVector_[var])
-                out << " " << std::to_string(var);
-        }
         out << std::endl
             << std::endl;
 

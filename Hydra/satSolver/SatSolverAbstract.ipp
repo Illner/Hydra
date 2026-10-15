@@ -58,8 +58,31 @@ namespace Hydra::SatSolver {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
+    bool SatSolverAbstract<VarT, LiteralT, ClauseIdT>::isVariableAssigned(VarT variable) const {
+        assert(variable < variableAssumptionVector_.size());
+
+        return variableAssumptionVector_[variable];
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    bool SatSolverAbstract<VarT, LiteralT, ClauseIdT>::unitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
+                                                                       LiteralReusableVectorType& impliedLiteralReusableVector) {
+        assert(lit.getVariable() < variableAssumptionVector_.size());
+        assert(!variableAssumptionVector_[lit.getVariable()]);   // variable is not assigned
+
+        impliedLiteralReusableVector.clear();
+
+        return processUnitPropagation(lit, restrictedVariableSet, impliedLiteralReusableVector);
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
     void SatSolverAbstract<VarT, LiteralT, ClauseIdT>::assignLiteral(const LiteralType& lit,
                                                                      [[maybe_unused]] bool checkLiteral) {
+        assert(lit.getVariable() < variableAssumptionVector_.size());
+        assert(!variableAssumptionVector_[lit.getVariable()]);   // variable is not assigned
+
+        variableAssumptionVector_[lit.getVariable()] = true;
+
         processAssignLiteral(lit);
 
         #ifndef NDEBUG
@@ -84,6 +107,11 @@ namespace Hydra::SatSolver {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     void SatSolverAbstract<VarT, LiteralT, ClauseIdT>::unassignLiteral(const LiteralType& lit) {
+        assert(lit.getVariable() < variableAssumptionVector_.size());
+        assert(variableAssumptionVector_[lit.getVariable()]);   // variable is assigned
+
+        variableAssumptionVector_[lit.getVariable()] = false;
+
         processUnassignLiteral(lit);
 
         #ifndef NDEBUG
@@ -383,6 +411,14 @@ namespace Hydra::SatSolver {
             formulaRepresentationAbstractPtr_->printCurrentFormulaDebug(out);
             out << std::endl;
         }
+
+        // Variable assumption
+        out << "Variable assumption:";
+        for (VarT var = 1; var < variableAssumptionVector_.size(); ++var) {
+            if (variableAssumptionVector_[var])
+                out << " " << std::to_string(var);
+        }
+        out << std::endl;
 
         // SAT solver
         this->processPrintSatSolverDebug(out, printCoreSatSolver, printLearntClauses);

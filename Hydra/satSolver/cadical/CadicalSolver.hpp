@@ -55,10 +55,8 @@ namespace Hydra::SatSolver::Cadical {
         bool processUnitPropagation(const VariableSetType& restrictedVariableSet, LiteralReusableVectorType& impliedLiteralReusableVector,
                                     bool includeAssumptions) override;
 
-        bool unitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
-                             LiteralReusableVectorType& impliedLiteralReusableVector) override;
-
-        bool isVariableAssigned(VarT variable) const override;
+        bool processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
+                                    LiteralReusableVectorType& impliedLiteralReusableVector) override;
 
     public:
         VsidsScoreType getVsidsScore(VarT variable) const override;

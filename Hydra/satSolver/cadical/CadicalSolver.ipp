@@ -52,17 +52,10 @@ namespace Hydra::SatSolver::Cadical {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool CadicalSolver<VarT, LiteralT, ClauseIdT>::unitPropagation([[maybe_unused]] const LiteralType& lit,
-                                                                   [[maybe_unused]] const VariableSetType& restrictedVariableSet,
-                                                                   LiteralReusableVectorType& impliedLiteralReusableVector) {
-        impliedLiteralReusableVector.clear();
-
-        throw Exception::NotImplementedException("", "unitPropagation");
-    }
-
-    template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool CadicalSolver<VarT, LiteralT, ClauseIdT>::isVariableAssigned([[maybe_unused]] VarT variable) const {
-        throw Exception::NotImplementedException("", "isVariableAssigned");
+    bool CadicalSolver<VarT, LiteralT, ClauseIdT>::processUnitPropagation([[maybe_unused]] const LiteralType& lit,
+                                                                          [[maybe_unused]] const VariableSetType& restrictedVariableSet,
+                                                                          [[maybe_unused]] LiteralReusableVectorType& impliedLiteralReusableVector) {
+        throw Exception::NotImplementedException("", "processUnitPropagation");
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>

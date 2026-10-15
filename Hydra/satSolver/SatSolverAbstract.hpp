@@ -33,6 +33,7 @@ namespace Hydra::SatSolver {
      * Copy and move methods are disabled!
      * Exception:
      *      SatSolverDoesNotSupportVsidsException
+     *      SomethingCannotBeSavedAsStdSizeTException
      *      SatSolverDoesNotSupportUnitPropagationException
      *      IthElementOfAssignmentDoesNotCorrespondToIthElementOfPartialAssignmentException (debug)
      * @tparam VarT type used for a variable
@@ -70,10 +71,15 @@ namespace Hydra::SatSolver {
 
     public:
         SatSolverAbstract(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr, SatSolverTypeEnum satSolverType,
-                          SatSolverStatisticsPtrType satSolverStatisticsPtr) noexcept
-            : satSolverType_(satSolverType), l_firstCall_unitPropagation_(true), l_firstCall_createEquivalencePreprocessingStruct_(true),
-              numberOfGetDecisionVariableCalls_(0), formulaRepresentationAbstractPtr_(formulaRepresentationAbstractPtr),
-              satSolverStatisticsPtr_(satSolverStatisticsPtr) { }
+                          SatSolverStatisticsPtrType satSolverStatisticsPtr)
+            : satSolverType_(satSolverType),
+              variableAssumptionVector_(formulaRepresentationAbstractPtr->getNumberOfVariablesInOriginalFormulaUsedForIndexing(), false),
+              l_firstCall_unitPropagation_(true), l_firstCall_createEquivalencePreprocessingStruct_(true), numberOfGetDecisionVariableCalls_(0),
+              formulaRepresentationAbstractPtr_(formulaRepresentationAbstractPtr), satSolverStatisticsPtr_(satSolverStatisticsPtr) {
+            // The variables cannot be saved as std::size_t
+            if (!Other::unsignedValueCanBeSavedAsStdSizeT<VarT>(formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula(), 1))
+                throw Exception::SomethingCannotBeSavedAsStdSizeTException("variables", formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
+        }
 
         SatSolverAbstract(const SatSolverAbstract&) = delete;
         SatSolverAbstract(SatSolverAbstract&&) noexcept = delete;
@@ -85,6 +91,7 @@ namespace Hydra::SatSolver {
 
     private:
         SatSolverTypeEnum satSolverType_;
+        BoolVectorType variableAssumptionVector_;
 
         // Local auxiliary data structures for unitPropagation
         bool l_firstCall_unitPropagation_;
@@ -125,19 +132,8 @@ namespace Hydra::SatSolver {
         virtual bool processUnitPropagation(const VariableSetType& restrictedVariableSet, LiteralReusableVectorType& impliedLiteralReusableVector,
                                             bool includeAssumptions) = 0;
 
-        /**
-         * Assign the literal and do unit propagation (that is, boolean constraint propagation)
-         * Assert: the literal MUST NOT be assigned
-         * Note: the implied literals are NOT assigned
-         * Note: impliedLiteralReusableVector will be cleared at the beginning
-         * @param lit a literal
-         * @param restrictedVariableSet a restriction
-         * @param impliedLiteralReusableVector a reusable vector of implied literals
-         * @return true if NO contradiction was derived. Otherwise, false is returned.
-         * @throw SatSolverDoesNotSupportUnitPropagationException if the SAT solver does not support unit propagation
-         */
-        virtual bool unitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
-                                     LiteralReusableVectorType& impliedLiteralReusableVector) = 0;
+        virtual bool processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
+                                            LiteralReusableVectorType& impliedLiteralReusableVector) = 0;
 
         /**
          * Initialize the SAT solver
@@ -155,7 +151,20 @@ namespace Hydra::SatSolver {
          * @param variable a variable
          * @return true if the variable is assigned. Otherwise, false is returned.
          */
-        virtual bool isVariableAssigned(VarT variable) const = 0;
+        bool isVariableAssigned(VarT variable) const;
+
+        /**
+         * Assign the literal and do unit propagation (that is, boolean constraint propagation)
+         * Assert: the literal MUST NOT be assigned
+         * Note: the implied literals are NOT assigned
+         * Note: impliedLiteralReusableVector will be cleared at the beginning
+         * @param lit a literal
+         * @param restrictedVariableSet a restriction
+         * @param impliedLiteralReusableVector a reusable vector of implied literals
+         * @return true if NO contradiction was derived. Otherwise, false is returned.
+         * @throw SatSolverDoesNotSupportUnitPropagationException if the SAT solver does not support unit propagation
+         */
+        bool unitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet, LiteralReusableVectorType& impliedLiteralReusableVector);
 
     public:
         /**

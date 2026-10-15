@@ -90,11 +90,6 @@ namespace Hydra::SatSolver::Glucose {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     void GlucoseSolver<VarT, LiteralT, ClauseIdT>::processAssignLiteral(const LiteralType& lit) {
-        assert(lit.getVariable() < variableAssumptionVector_.size());
-        assert(!variableAssumptionVector_[lit.getVariable()]);   // variable is not assigned
-
-        variableAssumptionVector_[lit.getVariable()] = true;
-
         GlucoseCore::Lit litGlucose = convertLiteralToLiteralGlucose(lit);
         activeModel_ = activeModel_ && !solver_.isAssigned(GlucoseCore::var(litGlucose));
 
@@ -102,12 +97,8 @@ namespace Hydra::SatSolver::Glucose {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    void GlucoseSolver<VarT, LiteralT, ClauseIdT>::processUnassignLiteral(const LiteralType& lit) {
-        assert(lit.getVariable() < variableAssumptionVector_.size());
-        assert(variableAssumptionVector_[lit.getVariable()]);   // variable is assigned
+    void GlucoseSolver<VarT, LiteralT, ClauseIdT>::processUnassignLiteral([[maybe_unused]] const LiteralType& lit) {
         assert(solver_.assumptions.last() == convertLiteralToLiteralGlucose(lit));
-
-        variableAssumptionVector_[lit.getVariable()] = false;
 
         solver_.assumptions.pop();
         solver_.cancelUntil(solver_.assumptions.size());
@@ -159,10 +150,8 @@ namespace Hydra::SatSolver::Glucose {
 
                     VarT var = convertVariableGlucoseToVariable(GlucoseCore::var(litGlucose));
 
-                    assert(var < variableAssumptionVector_.size());
-
                     // It is an assumption
-                    if (!includeAssumptions && variableAssumptionVector_[var])
+                    if (!includeAssumptions && this->isVariableAssigned(var))
                         continue;
 
                     if (!Other::containInSet(restrictedVariableSet, var))
@@ -174,10 +163,8 @@ namespace Hydra::SatSolver::Glucose {
             // Iterating restricted variables
             else {
                 for (VarT var : restrictedVariableSet) {
-                    assert(var < variableAssumptionVector_.size());
-
                     // It is an assumption
-                    if (!includeAssumptions && variableAssumptionVector_[var])
+                    if (!includeAssumptions && this->isVariableAssigned(var))
                         continue;
 
                     GlucoseCore::Var varGlucose = convertVariableToVariableGlucose(var);
@@ -197,10 +184,8 @@ namespace Hydra::SatSolver::Glucose {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::unitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
-                                                                   LiteralReusableVectorType& impliedLiteralReusableVector) {
-        assert(!variableAssumptionVector_[lit.getVariable()]);   // variable is not assigned
-
+    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
+                                                                          LiteralReusableVectorType& impliedLiteralReusableVector) {
         // Initialize local auxiliary data structures
         if (l_firstCall_unitPropagation_) {
             l_impliedLiteralGlucoseReusableVector_unitPropagation_ = LiteralGlucoseReusableVectorType(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
@@ -208,7 +193,6 @@ namespace Hydra::SatSolver::Glucose {
             l_firstCall_unitPropagation_ = false;
         }
 
-        impliedLiteralReusableVector.clear();
         l_impliedLiteralGlucoseReusableVector_unitPropagation_.clear();
 
         // No contradiction was derived
@@ -223,7 +207,7 @@ namespace Hydra::SatSolver::Glucose {
                 assert(impliedLit != ~lit);   // not a complementary literal
 
                 // Variable is already assigned
-                if (variableAssumptionVector_[impliedLit.getVariable()])
+                if (this->isVariableAssigned(impliedLit.getVariable()))
                     continue;
 
                 if (impliedLit == lit)
@@ -237,13 +221,6 @@ namespace Hydra::SatSolver::Glucose {
 
         // A contradiction was derived
         return false;
-    }
-
-    template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::isVariableAssigned(VarT variable) const {
-        assert(variable < variableAssumptionVector_.size());
-
-        return variableAssumptionVector_[variable];
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
@@ -272,13 +249,6 @@ namespace Hydra::SatSolver::Glucose {
         out << "Assumption:";
         for (int i = 0; i < solver_.assumptions.size(); ++i)
             out << " " << convertLiteralGlucoseToLiteral(solver_.assumptions[i]);
-        out << std::endl;
-
-        out << "Variable assumption:";
-        for (VarT var = 1; var < variableAssumptionVector_.size(); ++var) {
-            if (variableAssumptionVector_[var])
-                out << " " << std::to_string(var);
-        }
         out << std::endl
             << std::endl;
 
