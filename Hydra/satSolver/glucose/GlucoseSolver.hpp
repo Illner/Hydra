@@ -54,11 +54,10 @@ namespace Hydra::SatSolver::Glucose {
                       const GlucoseSolverConfiguration& configuration = GlucoseSolverConfiguration(),
                       SatSolverStatisticsPtrType satSolverStatisticsPtr = nullptr)
             : SatSolverAbstract<VarT, LiteralT, ClauseIdT>(formulaRepresentationAbstractPtr, SatSolverTypeEnum::GLUCOSE, satSolverStatisticsPtr),
-              activeModel_(false), solver_(),
-              variableAssumptionVector_(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormulaUsedForIndexing(), false),
+              activeModel_(false), variableAssumptionVector_(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormulaUsedForIndexing(), false),
               configuration_(configuration),
               l_restrictedVariableGlucoseVector_processIsSatisfiable_(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula()),
-              l_firstCall_unitPropagation_(true), l_impliedLiteralGlucoseReusableVector_unitPropagation_() {
+              l_firstCall_unitPropagation_(true) {
             // The variables cannot be saved as std::size_t
             if (!Other::unsignedValueCanBeSavedAsStdSizeT<VarT>(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula(), 1))
                 throw Exception::SomethingCannotBeSavedAsStdSizeTException("variables", this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());

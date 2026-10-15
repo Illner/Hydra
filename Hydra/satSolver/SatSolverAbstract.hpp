@@ -71,11 +71,7 @@ namespace Hydra::SatSolver {
     public:
         SatSolverAbstract(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr, SatSolverTypeEnum satSolverType,
                           SatSolverStatisticsPtrType satSolverStatisticsPtr) noexcept
-            : satSolverType_(satSolverType), l_firstCall_unitPropagation_(true), l_impliedLiteralReusableVector_unitPropagation_(),
-              l_firstCall_createEquivalencePreprocessingStruct_(true), l_ignoredVariableVectorSet_createEquivalencePreprocessingStruct_(),
-              l_positiveLiteralTVectorSet_createEquivalencePreprocessingStruct_(), l_variableOrderReusableVector_createEquivalencePreprocessingStruct_(),
-              l_positiveUnitPropagationLiteralReusableVector_createEquivalencePreprocessingStruct_(),
-              l_negativeUnitPropagationLiteralReusableVector_createEquivalencePreprocessingStruct_(), initiallyImpliedLiterals_(),
+            : satSolverType_(satSolverType), l_firstCall_unitPropagation_(true), l_firstCall_createEquivalencePreprocessingStruct_(true),
               numberOfGetDecisionVariableCalls_(0), formulaRepresentationAbstractPtr_(formulaRepresentationAbstractPtr),
               satSolverStatisticsPtr_(satSolverStatisticsPtr) { }
 
@@ -182,7 +178,7 @@ namespace Hydra::SatSolver {
 
         /**
          * Unassign the literal
-         * Assert: the literal MUST be assigned
+         * Assert: the literal MUST be the last assigned literal
          * @param lit a literal
          */
         void unassignLiteral(const LiteralType& lit);
