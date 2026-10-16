@@ -37,7 +37,27 @@ namespace Hydra::SatSolver {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
+    bool SatSolverAbstract<VarT, LiteralT, ClauseIdT>::isVariableAssigned(VarT variable) const {
+        assert(variable < variableAssumptionVector_.size());
+
+        return variableAssumptionVector_[variable];
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
+    bool SatSolverAbstract<VarT, LiteralT, ClauseIdT>::unitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
+                                                                       LiteralReusableVectorType& impliedLiteralReusableVector) {
+        assert(lit.getVariable() < variableAssumptionVector_.size());
+        assert(!variableAssumptionVector_[lit.getVariable()]);   // variable is not assigned
+
+        impliedLiteralReusableVector.clear();
+
+        return processUnitPropagation(lit, restrictedVariableSet, impliedLiteralReusableVector);
+    }
+
+    template <typename VarT, typename LiteralT, typename ClauseIdT>
     void SatSolverAbstract<VarT, LiteralT, ClauseIdT>::computeAndSetInitiallyImpliedLiterals() {
+        assert(initiallyImpliedLiterals_.empty());
+
         // Statistics
         if (satSolverStatisticsPtr_)
             satSolverStatisticsPtr_->initiallyImpliedLiteralsTimer.startStopwatch();
@@ -55,24 +75,6 @@ namespace Hydra::SatSolver {
 
             satSolverStatisticsPtr_->initiallyImpliedLiteralsTimer.stopStopwatch();
         }
-    }
-
-    template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool SatSolverAbstract<VarT, LiteralT, ClauseIdT>::isVariableAssigned(VarT variable) const {
-        assert(variable < variableAssumptionVector_.size());
-
-        return variableAssumptionVector_[variable];
-    }
-
-    template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool SatSolverAbstract<VarT, LiteralT, ClauseIdT>::unitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
-                                                                       LiteralReusableVectorType& impliedLiteralReusableVector) {
-        assert(lit.getVariable() < variableAssumptionVector_.size());
-        assert(!variableAssumptionVector_[lit.getVariable()]);   // variable is not assigned
-
-        impliedLiteralReusableVector.clear();
-
-        return processUnitPropagation(lit, restrictedVariableSet, impliedLiteralReusableVector);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>

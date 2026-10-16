@@ -49,9 +49,9 @@ namespace Hydra::SatSolver::Glucose {
         using LiteralGlucoseReusableVectorType = Container::ReusableVector::ReusableVector<GlucoseCore::Lit>;
 
     public:
-        GlucoseSolver(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr, bool computeInitiallyImpliedLiterals,
-                      const GlucoseSolverConfiguration& configuration = GlucoseSolverConfiguration(),
-                      SatSolverStatisticsPtrType satSolverStatisticsPtr = nullptr)
+        explicit GlucoseSolver(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr,
+                               const GlucoseSolverConfiguration& configuration = GlucoseSolverConfiguration(),
+                               SatSolverStatisticsPtrType satSolverStatisticsPtr = nullptr)
             : SatSolverAbstract<VarT, LiteralT, ClauseIdT>(formulaRepresentationAbstractPtr, SatSolverTypeEnum::GLUCOSE, satSolverStatisticsPtr),
               activeModel_(false), configuration_(configuration),
               l_restrictedVariableGlucoseVector_processIsSatisfiable_(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula()),
@@ -71,10 +71,6 @@ namespace Hydra::SatSolver::Glucose {
             this->initializeSatSolver();
 
             solver_.setNeedModel(false);
-
-            // Compute initially implied literals
-            if (computeInitiallyImpliedLiterals)
-                this->computeAndSetInitiallyImpliedLiterals();
         }
 
     private:

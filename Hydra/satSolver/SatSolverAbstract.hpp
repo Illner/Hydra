@@ -146,12 +146,6 @@ namespace Hydra::SatSolver {
         void initializeSatSolver();
 
         /**
-         * Compute and set the initially implied literals
-         * Note: used for statistics
-         */
-        void computeAndSetInitiallyImpliedLiterals();
-
-        /**
          * @param variable a variable
          * @return true if the variable is assigned. Otherwise, false is returned.
          */
@@ -169,6 +163,16 @@ namespace Hydra::SatSolver {
          * @throw SatSolverDoesNotSupportUnitPropagationException if the SAT solver does not support unit propagation
          */
         bool unitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet, LiteralReusableVectorType& impliedLiteralReusableVector);
+
+    #if defined(TEST)
+    public:
+    #endif
+        /**
+         * Compute and set the initially implied literals
+         * Assert: initiallyImpliedLiterals_ MUST be empty
+         * Note: used for statistics
+         */
+        void computeAndSetInitiallyImpliedLiterals();
 
     public:
         /**

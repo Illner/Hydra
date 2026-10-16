@@ -41,20 +41,31 @@ namespace HydraTest::DecisionHeuristic {
     //endregion
 
     inline SatSolverAbstractUniquePtrType createSatSolver(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr,
-                                                          SatSolverTypeEnum satSolverType = SatSolverTypeEnum::MINISAT) {
+                                                          SatSolverTypeEnum satSolverType = SatSolverTypeEnum::MINISAT,
+                                                          bool computeInitiallyImpliedLiterals = true) {
+        SatSolverAbstractUniquePtrType satSolverAbstractUniquePtr;
+
         switch (satSolverType) {
                 // MiniSat
             case SatSolverTypeEnum::MINISAT:
-                return std::make_unique<MiniSatSolverType>(formulaRepresentationAbstractPtr, true);
+                satSolverAbstractUniquePtr = std::make_unique<MiniSatSolverType>(formulaRepresentationAbstractPtr);
+                break;
                 // Glucose
             case SatSolverTypeEnum::GLUCOSE:
-                return std::make_unique<GlucoseSolverType>(formulaRepresentationAbstractPtr, true);
+                satSolverAbstractUniquePtr = std::make_unique<GlucoseSolverType>(formulaRepresentationAbstractPtr);
+                break;
                 // CaDiCaL
             case SatSolverTypeEnum::CADICAL:
-                return std::make_unique<CadicalSolverType>(formulaRepresentationAbstractPtr);
+                satSolverAbstractUniquePtr = std::make_unique<CadicalSolverType>(formulaRepresentationAbstractPtr);
+                break;
             default:
                 throw Hydra::Exception::SomethingIsWrongException();
         }
+
+        if (computeInitiallyImpliedLiterals)
+            satSolverAbstractUniquePtr->computeAndSetInitiallyImpliedLiterals();
+
+        return satSolverAbstractUniquePtr;
     }
 
     inline void printDecisionHeuristic(DecisionHeuristicAbstractConstPtrType decisionHeuristicAbstractPtr, std::stringstream& actualResult,

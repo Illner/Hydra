@@ -108,12 +108,12 @@ namespace Hydra {
     void Compiler<VarT, LiteralT, ClauseIdT>::initializeSatSolver() {
         switch (configuration_.satSolverType) {
             case SatSolverTypeEnum::MINISAT:
-                satSolverAbstractUniquePtr_ = std::make_unique<MiniSatSolverType>(formulaRepresentationAbstractUniquePtr_.get(), false,
+                satSolverAbstractUniquePtr_ = std::make_unique<MiniSatSolverType>(formulaRepresentationAbstractUniquePtr_.get(),
                                                                                   configuration_.miniSatSolverConfiguration,
                                                                                   statisticsPtr_ ? statisticsPtr_->getSatSolverStatisticsPtr() : nullptr);
                 break;
             case SatSolverTypeEnum::GLUCOSE:
-                satSolverAbstractUniquePtr_ = std::make_unique<GlucoseSolverType>(formulaRepresentationAbstractUniquePtr_.get(), false,
+                satSolverAbstractUniquePtr_ = std::make_unique<GlucoseSolverType>(formulaRepresentationAbstractUniquePtr_.get(),
                                                                                   configuration_.glucoseSolverConfiguration,
                                                                                   statisticsPtr_ ? statisticsPtr_->getSatSolverStatisticsPtr() : nullptr);
                 break;

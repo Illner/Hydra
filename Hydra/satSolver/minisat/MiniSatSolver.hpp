@@ -49,9 +49,9 @@ namespace Hydra::SatSolver::MiniSat {
         using LiteralMiniSatReusableVectorType = Container::ReusableVector::ReusableVector<MiniSatCore::Lit>;
 
     public:
-        MiniSatSolver(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr, bool computeInitiallyImpliedLiterals,
-                      const MiniSatSolverConfiguration& configuration = MiniSatSolverConfiguration(),
-                      SatSolverStatisticsPtrType satSolverStatisticsPtr = nullptr)
+        explicit MiniSatSolver(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr,
+                               const MiniSatSolverConfiguration& configuration = MiniSatSolverConfiguration(),
+                               SatSolverStatisticsPtrType satSolverStatisticsPtr = nullptr)
             : SatSolverAbstract<VarT, LiteralT, ClauseIdT>(formulaRepresentationAbstractPtr, SatSolverTypeEnum::MINISAT, satSolverStatisticsPtr),
               activeModel_(false), configuration_(configuration),
               l_restrictedVariableMiniSatVector_processIsSatisfiable_(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula()),
@@ -71,10 +71,6 @@ namespace Hydra::SatSolver::MiniSat {
             this->initializeSatSolver();
 
             solver_.setNeedModel(false);
-
-            // Compute initially implied literals
-            if (computeInitiallyImpliedLiterals)
-                this->computeAndSetInitiallyImpliedLiterals();
         }
 
     private:

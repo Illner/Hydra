@@ -18,6 +18,18 @@ namespace HydraTest::SatSolver::Glucose {
     using GlucoseSolverType = Hydra::SatSolver::Glucose::GlucoseSolver<VarT, LiteralT, ClauseIdT>;
     //endregion
 
+    //region Functions
+    SatSolverAbstractUniquePtrType createSatSolver(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr,
+                                                   bool computeInitiallyImpliedLiterals = true) {
+        SatSolverAbstractUniquePtrType satSolverAbstractUniquePtr = std::make_unique<GlucoseSolverType>(formulaRepresentationAbstractPtr);
+
+        if (computeInitiallyImpliedLiterals)
+            satSolverAbstractUniquePtr->computeAndSetInitiallyImpliedLiterals();
+
+        return satSolverAbstractUniquePtr;
+    }
+    //endregion
+
     /**
      * Constructor
      */
@@ -30,7 +42,7 @@ namespace HydraTest::SatSolver::Glucose {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaWithUnitClauses<VarT, LiteralT, ClauseIdT>();
             printCurrentFormula(formulaRepresentation.get(), actualResult);
 
-            SatSolverAbstractUniquePtrType satSolver = std::make_unique<GlucoseSolverType>(formulaRepresentation.get(), true);
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
             printSatSolver(satSolver.get(), actualResult);
         }
         catch (const std::exception& e) {
@@ -53,7 +65,7 @@ namespace HydraTest::SatSolver::Glucose {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaWithConflictingUnitClauses<VarT, LiteralT, ClauseIdT>();
             printCurrentFormula(formulaRepresentation.get(), actualResult);
 
-            SatSolverAbstractUniquePtrType satSolver = std::make_unique<GlucoseSolverType>(formulaRepresentation.get(), true);
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
             printSatSolver(satSolver.get(), actualResult);
 
             bool isSatisfiable = satSolver->isSatisfiable();
@@ -79,7 +91,7 @@ namespace HydraTest::SatSolver::Glucose {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaWithUnitClauses<VarT, LiteralT, ClauseIdT>();
             printCurrentFormula(formulaRepresentation.get(), actualResult);
 
-            SatSolverAbstractUniquePtrType satSolver = std::make_unique<GlucoseSolverType>(formulaRepresentation.get(), true);
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
             printSatSolver(satSolver.get(), actualResult);
 
             bool isSatisfiable = satSolver->isSatisfiable();
@@ -105,7 +117,7 @@ namespace HydraTest::SatSolver::Glucose {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createUnsatisfiableFormula<VarT, LiteralT, ClauseIdT>();
             printCurrentFormula(formulaRepresentation.get(), actualResult);
 
-            SatSolverAbstractUniquePtrType satSolver = std::make_unique<GlucoseSolverType>(formulaRepresentation.get(), true);
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
             printSatSolver(satSolver.get(), actualResult);
 
             bool isSatisfiable = satSolver->isSatisfiable();
@@ -131,7 +143,7 @@ namespace HydraTest::SatSolver::Glucose {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createSatisfiableFormula<VarT, LiteralT, ClauseIdT>();
             printCurrentFormula(formulaRepresentation.get(), actualResult);
 
-            SatSolverAbstractUniquePtrType satSolver = std::make_unique<GlucoseSolverType>(formulaRepresentation.get(), true);
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
             printSatSolver(satSolver.get(), actualResult);
 
             isSatisfiableAssumptions(formulaRepresentation.get(), satSolver.get(), actualResult);
@@ -156,7 +168,7 @@ namespace HydraTest::SatSolver::Glucose {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaForUnitPropagation<VarT, LiteralT, ClauseIdT>();
             printCurrentFormula(formulaRepresentation.get(), actualResult);
 
-            SatSolverAbstractUniquePtrType satSolver = std::make_unique<GlucoseSolverType>(formulaRepresentation.get(), true);
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
             printSatSolver(satSolver.get(), actualResult);
 
             processUnitPropagation(formulaRepresentation.get(), satSolver.get(), actualResult);
@@ -181,7 +193,7 @@ namespace HydraTest::SatSolver::Glucose {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaForUnitPropagation<VarT, LiteralT, ClauseIdT>();
             printCurrentFormula(formulaRepresentation.get(), actualResult);
 
-            SatSolverAbstractUniquePtrType satSolver = std::make_unique<GlucoseSolverType>(formulaRepresentation.get(), true);
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
             printSatSolver(satSolver.get(), actualResult);
 
             processUnitPropagationRestrictions(formulaRepresentation.get(), satSolver.get(), actualResult);
@@ -206,7 +218,7 @@ namespace HydraTest::SatSolver::Glucose {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaForEquivalencePreprocessingStructure<VarT, LiteralT, ClauseIdT>();
             printCurrentFormula(formulaRepresentation.get(), actualResult);
 
-            SatSolverAbstractUniquePtrType satSolver = std::make_unique<GlucoseSolverType>(formulaRepresentation.get(), true);
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
             printSatSolver(satSolver.get(), actualResult);
 
             EquivalencePreprocessingStruct equivalencePreprocessingStruct = satSolver->createEquivalencePreprocessingStruct(generateSelectedVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula()),
@@ -234,7 +246,7 @@ namespace HydraTest::SatSolver::Glucose {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaForEquivalencePreprocessingStructure<VarT, LiteralT, ClauseIdT>();
             printCurrentFormula(formulaRepresentation.get(), actualResult);
 
-            SatSolverAbstractUniquePtrType satSolver = std::make_unique<GlucoseSolverType>(formulaRepresentation.get(), true);
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
             printSatSolver(satSolver.get(), actualResult);
 
             processEquivalencePreprocessingStructureSelectedVariables(satSolver.get(), actualResult);
@@ -259,7 +271,7 @@ namespace HydraTest::SatSolver::Glucose {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaForEquivalencePreprocessingStructure2<VarT, LiteralT, ClauseIdT>();
             printCurrentFormula(formulaRepresentation.get(), actualResult);
 
-            SatSolverAbstractUniquePtrType satSolver = std::make_unique<GlucoseSolverType>(formulaRepresentation.get(), true);
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
             printSatSolver(satSolver.get(), actualResult);
 
             EquivalencePreprocessingStruct equivalencePreprocessingStruct = satSolver->createEquivalencePreprocessingStruct(generateSelectedVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula()),
@@ -287,7 +299,7 @@ namespace HydraTest::SatSolver::Glucose {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaForEquivalencePreprocessingStructure2<VarT, LiteralT, ClauseIdT>();
             printCurrentFormula(formulaRepresentation.get(), actualResult);
 
-            SatSolverAbstractUniquePtrType satSolver = std::make_unique<GlucoseSolverType>(formulaRepresentation.get(), true);
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
             printSatSolver(satSolver.get(), actualResult);
 
             EquivalencePreprocessingStruct equivalencePreprocessingStruct = satSolver->createEquivalencePreprocessingStruct(generateSelectedVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula()),
@@ -315,7 +327,7 @@ namespace HydraTest::SatSolver::Glucose {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaForEquivalencePreprocessingStructure2<VarT, LiteralT, ClauseIdT>();
             printCurrentFormula(formulaRepresentation.get(), actualResult);
 
-            SatSolverAbstractUniquePtrType satSolver = std::make_unique<GlucoseSolverType>(formulaRepresentation.get(), true);
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
             printSatSolver(satSolver.get(), actualResult);
 
             EquivalencePreprocessingStruct equivalencePreprocessingStruct = satSolver->createEquivalencePreprocessingStruct(generateSelectedVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula()),
@@ -343,7 +355,7 @@ namespace HydraTest::SatSolver::Glucose {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormulaForEquivalencePreprocessingStructure2<VarT, LiteralT, ClauseIdT>();
             printCurrentFormula(formulaRepresentation.get(), actualResult);
 
-            SatSolverAbstractUniquePtrType satSolver = std::make_unique<GlucoseSolverType>(formulaRepresentation.get(), true);
+            SatSolverAbstractUniquePtrType satSolver = createSatSolver(formulaRepresentation.get());
             printSatSolver(satSolver.get(), actualResult);
 
             EquivalencePreprocessingStruct equivalencePreprocessingStruct = satSolver->createEquivalencePreprocessingStruct(generateSelectedVariableSet(formulaRepresentation->getNumberOfVariablesInOriginalFormula()),
