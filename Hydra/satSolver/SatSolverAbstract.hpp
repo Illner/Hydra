@@ -79,6 +79,10 @@ namespace Hydra::SatSolver {
             // The variables cannot be saved as std::size_t
             if (!Other::unsignedValueCanBeSavedAsStdSizeT<VarT>(formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula(), 1))
                 throw Exception::SomethingCannotBeSavedAsStdSizeTException("variables", formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
+
+            #ifndef NDEBUG
+            d_assumptionLiteralVector_.reserve(formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
+            #endif
         }
 
         SatSolverAbstract(const SatSolverAbstract&) = delete;
@@ -274,7 +278,7 @@ namespace Hydra::SatSolver {
     #ifndef NDEBUG
     private:
         bool d_initialSimplification_ = false;
-        VarT d_numberOfAssignedVariables_ = 0;
+        LiteralVectorType d_assumptionLiteralVector_;
 
     public:
         void printSatSolverDebug(std::ostream& out, bool printCoreSatSolver = true, bool printCurrentFormula = false, bool printLearntClauses = false) const;

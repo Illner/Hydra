@@ -88,14 +88,14 @@ namespace Hydra::SatSolver {
         #ifndef NDEBUG
         // Check if the added literal corresponds to the partial assignment in the formula representation
         if (checkLiteral) {
-            const LiteralType& litInPartialAssignment = formulaRepresentationAbstractPtr_->getIthElementOfPartialAssignmentDebug(d_numberOfAssignedVariables_);
+            const LiteralType& litInPartialAssignment = formulaRepresentationAbstractPtr_->getIthElementOfPartialAssignmentDebug(static_cast<VarT>(d_assumptionLiteralVector_.size()));
 
             if (lit != litInPartialAssignment)
-                throw Exception::SatSolver::IthElementOfAssignmentDoesNotCorrespondToIthElementOfPartialAssignmentException(d_numberOfAssignedVariables_,
+                throw Exception::SatSolver::IthElementOfAssignmentDoesNotCorrespondToIthElementOfPartialAssignmentException(static_cast<VarT>(d_assumptionLiteralVector_.size()),
                                                                                                                             lit, litInPartialAssignment);
         }
 
-        ++d_numberOfAssignedVariables_;
+        d_assumptionLiteralVector_.emplace_back(lit);
         #endif
     }
 
@@ -108,15 +108,15 @@ namespace Hydra::SatSolver {
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     void SatSolverAbstract<VarT, LiteralT, ClauseIdT>::unassignLiteral(const LiteralType& lit) {
         assert(lit.getVariable() < variableAssumptionVector_.size());
-        assert(variableAssumptionVector_[lit.getVariable()]);   // variable is assigned
+        assert(variableAssumptionVector_[lit.getVariable()]);                                        // variable is assigned
+        assert(!d_assumptionLiteralVector_.empty() && (d_assumptionLiteralVector_.back() == lit));   // literal is the last assigned one
 
         variableAssumptionVector_[lit.getVariable()] = false;
 
         processUnassignLiteral(lit);
 
         #ifndef NDEBUG
-        assert(d_numberOfAssignedVariables_ > 0);
-        --d_numberOfAssignedVariables_;
+        d_assumptionLiteralVector_.pop_back();
         #endif
     }
 
@@ -137,7 +137,7 @@ namespace Hydra::SatSolver {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     bool SatSolverAbstract<VarT, LiteralT, ClauseIdT>::isSatisfiable() {
-        assert(d_numberOfAssignedVariables_ == 0);   // no assignment
+        assert(d_assumptionLiteralVector_.empty());   // no assignment
 
         // Statistics
         if (satSolverStatisticsPtr_)
@@ -411,6 +411,12 @@ namespace Hydra::SatSolver {
             formulaRepresentationAbstractPtr_->printCurrentFormulaDebug(out);
             out << std::endl;
         }
+
+        // Assumption
+        out << "Assumption:";
+        for (const LiteralType& lit : d_assumptionLiteralVector_)
+            out << " " << lit;
+        out << std::endl;
 
         // Variable assumption
         out << "Variable assumption:";

@@ -245,12 +245,7 @@ namespace Hydra::SatSolver::Glucose {
         out << "VSIDS score type: " << vsidsScoreTypeEnumToString(configuration_.vsidsScoreType) << std::endl;
         if (configuration_.vsidsScoreType == VsidsScoreTypeEnum::D4_V2)
             out << "Frequency decay for VSIDS score: " << std::to_string(configuration_.frequencyDecayD4v2VsidsScore) << std::endl;
-
-        out << "Assumption:";
-        for (int i = 0; i < solver_.assumptions.size(); ++i)
-            out << " " << convertLiteralGlucoseToLiteral(solver_.assumptions[i]);
-        out << std::endl
-            << std::endl;
+        out << std::endl;
 
         if (!printCoreSatSolver)
             return;
