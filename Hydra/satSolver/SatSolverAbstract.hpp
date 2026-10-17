@@ -178,7 +178,7 @@ namespace Hydra::SatSolver {
         /**
          * Initial simplification
          * Assert: MUST be called at most once
-         * Note: used for statistics
+         * Assert: input formula MUST be satisfiable
          * Note: called only once at the beginning of the compilation
          */
         void initialSimplification();

@@ -20,12 +20,15 @@ namespace Hydra::SatSolver {
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     void SatSolverAbstract<VarT, LiteralT, ClauseIdT>::initialSimplification() {
         assert(!d_initialSimplification_);   // has not yet been called
+        assert(processIsSatisfiable());      // input formula is satisfiable
 
         // Statistics
         if (satSolverStatisticsPtr_)
             satSolverStatisticsPtr_->initialSimplificationTimer.startStopwatch();
 
         processInitialSimplification();
+
+        computeAndSetInitiallyImpliedLiterals();
 
         // Statistics
         if (satSolverStatisticsPtr_)

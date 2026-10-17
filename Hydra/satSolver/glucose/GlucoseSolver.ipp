@@ -69,12 +69,8 @@ namespace Hydra::SatSolver::Glucose {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     void GlucoseSolver<VarT, LiteralT, ClauseIdT>::processInitialSimplification() {
-        assert(solver_.solveWithAssumptions());   // input formula is satisfiable
-
         solver_.simplify();
         solver_.remove_satisfied = false;
-
-        this->computeAndSetInitiallyImpliedLiterals();
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>

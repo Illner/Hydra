@@ -69,12 +69,8 @@ namespace Hydra::SatSolver::MiniSat {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     void MiniSatSolver<VarT, LiteralT, ClauseIdT>::processInitialSimplification() {
-        assert(solver_.solveWithAssumptions());   // input formula is satisfiable
-
         solver_.simplify();
         solver_.remove_satisfied = false;
-
-        this->computeAndSetInitiallyImpliedLiterals();
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
