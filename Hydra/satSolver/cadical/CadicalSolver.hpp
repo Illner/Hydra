@@ -10,6 +10,8 @@
 
 #include "Hydra/satSolver/enums/SatSolverTypeEnum.hpp"
 
+#include "Hydra/satSolver/cadical/CadicalSolver.tpp"
+
 namespace Hydra::SatSolver::Cadical {
 
     using VsidsScoreType = Hydra::SatSolver::VsidsScoreType;
@@ -32,8 +34,13 @@ namespace Hydra::SatSolver::Cadical {
 
     public:
         explicit CadicalSolver(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr,
+                               const CadicalSolverConfiguration& configuration = CadicalSolverConfiguration(),
                                SatSolverStatisticsPtrType satSolverStatisticsPtr = nullptr)
-            : SatSolverAbstract<VarT, LiteralT, ClauseIdT>(formulaRepresentationAbstractPtr, SatSolverTypeEnum::CADICAL, satSolverStatisticsPtr) { }
+            : SatSolverAbstract<VarT, LiteralT, ClauseIdT>(formulaRepresentationAbstractPtr, SatSolverTypeEnum::CADICAL, satSolverStatisticsPtr),
+              configuration_(configuration) { }
+
+    private:
+        CadicalSolverConfiguration configuration_;
 
     private:
         void processInitializeSatSolver() override;

@@ -119,6 +119,7 @@ namespace Hydra {
                 break;
             case SatSolverTypeEnum::CADICAL:
                 satSolverAbstractUniquePtr_ = std::make_unique<CadicalSolverType>(formulaRepresentationAbstractUniquePtr_.get(),
+                                                                                  configuration_.cadicalSolverConfiguration,
                                                                                   statisticsPtr_ ? statisticsPtr_->getSatSolverStatisticsPtr() : nullptr);
                 break;
             default:
