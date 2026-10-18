@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <iostream>
 
 #include "Hydra/formula/representation/FormulaRepresentationAbstract.hpp"
@@ -19,6 +20,9 @@ namespace Hydra::SatSolver::Cadical {
     /**
      * CaDiCaL solver (final class)
      * Exceptions:
+     *      SomethingCannotBeSavedAsIntException
+     *      SomethingCannotBeSavedAsStdSizeTException
+     *      SomethingCannotBeSavedAsTypeNameException
      * @tparam VarT type used for a variable
      * @tparam LiteralT type used for a literal
      * @tparam ClauseIdT type used for a clause identifier
@@ -37,7 +41,19 @@ namespace Hydra::SatSolver::Cadical {
                                const CadicalSolverConfiguration& configuration = CadicalSolverConfiguration(),
                                SatSolverStatisticsPtrType satSolverStatisticsPtr = nullptr)
             : SatSolverAbstract<VarT, LiteralT, ClauseIdT>(formulaRepresentationAbstractPtr, SatSolverTypeEnum::CADICAL, satSolverStatisticsPtr),
-              configuration_(configuration) { }
+              configuration_(configuration) {
+            // The literals cannot be saved as int
+            if (!Other::unsignedValueCanBeSavedAsInt<LiteralT>(this->formulaRepresentationAbstractPtr_->getNumberOfLiteralsInOriginalFormula(), 3))
+                throw Exception::SomethingCannotBeSavedAsIntException("literals", this->formulaRepresentationAbstractPtr_->getNumberOfLiteralsInOriginalFormula());
+
+            // The clauses cannot be saved as std::size_t
+            if (!Other::unsignedValueCanBeSavedAsStdSizeT<ClauseIdT>(this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses()))
+                throw Exception::SomethingCannotBeSavedAsStdSizeTException("clauses", this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses());
+
+            // The clauses cannot be saved as std::int64_t
+            if (!Other::unsignedValueCanBeSavedAsTypeT<std::int64_t>(this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses()))
+                throw Exception::SomethingCannotBeSavedAsTypeNameException("clauses", this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses(), "std::int64_t");
+        }
 
     private:
         CadicalSolverConfiguration configuration_;
