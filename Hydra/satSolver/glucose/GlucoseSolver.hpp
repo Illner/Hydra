@@ -27,7 +27,6 @@ namespace Hydra::SatSolver::Glucose {
      * Glucose solver (final class)
      * Exceptions:
      *      SomethingCannotBeSavedAsIntException
-     *      SomethingCannotBeSavedAsStdSizeTException
      * @tparam VarT type used for a variable
      * @tparam LiteralT type used for a literal
      * @tparam ClauseIdT type used for a clause identifier
@@ -56,17 +55,13 @@ namespace Hydra::SatSolver::Glucose {
               activeModel_(false), configuration_(configuration),
               l_restrictedVariableGlucoseVector_processIsSatisfiable_(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula()),
               l_firstCall_unitPropagation_(true) {
-            // The variables cannot be saved as std::size_t
-            if (!Other::unsignedValueCanBeSavedAsStdSizeT<VarT>(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula(), 1))
-                throw Exception::SomethingCannotBeSavedAsStdSizeTException("variables", this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
-
             // The literals cannot be saved as int
             if (!Other::unsignedValueCanBeSavedAsInt<LiteralT>(this->formulaRepresentationAbstractPtr_->getNumberOfLiteralsInOriginalFormula()))
                 throw Exception::SomethingCannotBeSavedAsIntException("literals", this->formulaRepresentationAbstractPtr_->getNumberOfLiteralsInOriginalFormula());
 
-            // The clauses cannot be saved as std::size_t
-            if (!Other::unsignedValueCanBeSavedAsStdSizeT<ClauseIdT>(this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses()))
-                throw Exception::SomethingCannotBeSavedAsStdSizeTException("clauses", this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses());
+            // The clauses cannot be saved as int
+            if (!Other::unsignedValueCanBeSavedAsInt<ClauseIdT>(this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses()))
+                throw Exception::SomethingCannotBeSavedAsIntException("clauses", this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses());
 
             this->initializeSatSolver();
 
