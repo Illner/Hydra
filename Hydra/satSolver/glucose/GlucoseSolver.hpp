@@ -77,7 +77,7 @@ namespace Hydra::SatSolver::Glucose {
         // Local auxiliary data structures for processIsSatisfiable
         VariableGlucoseVectorType l_restrictedVariableGlucoseVector_processIsSatisfiable_;
 
-        // Local auxiliary data structures for unitPropagation
+        // Local auxiliary data structures for processUnitPropagation
         bool l_firstCall_processUnitPropagation_;
         LiteralGlucoseReusableVectorType l_impliedLiteralGlucoseReusableVector_processUnitPropagation_;
 

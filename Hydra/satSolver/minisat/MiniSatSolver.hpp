@@ -77,7 +77,7 @@ namespace Hydra::SatSolver::MiniSat {
         // Local auxiliary data structures for processIsSatisfiable
         VariableMiniSatVectorType l_restrictedVariableMiniSatVector_processIsSatisfiable_;
 
-        // Local auxiliary data structures for unitPropagation
+        // Local auxiliary data structures for processUnitPropagation
         bool l_firstCall_processUnitPropagation_;
         LiteralMiniSatReusableVectorType l_impliedLiteralMiniSatReusableVector_processUnitPropagation_;
 
