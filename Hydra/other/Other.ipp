@@ -62,8 +62,15 @@ namespace Hydra::Other {
     }
 
     template <typename TypeT>
-    bool unsignedValueCanBeSavedAsInt(TypeT unsignedValue) noexcept {
+    bool unsignedValueCanBeSavedAsInt(TypeT unsignedValue, LargeNumberType increase) noexcept {
         LargeNumberType maxValueInt = std::numeric_limits<int>::max();
+
+        // Invalid increase
+        if (increase > maxValueInt)
+            return false;
+
+        // The increase
+        maxValueInt -= increase;
 
         if (unsignedValue <= maxValueInt)
             return true;
@@ -74,6 +81,10 @@ namespace Hydra::Other {
     template <typename TypeT>
     bool unsignedValueCanBeSavedAsStdSizeT(TypeT unsignedValue, LargeNumberType increase) noexcept {
         LargeNumberType maxValueStdSizeT = std::numeric_limits<std::size_t>::max();
+
+        // Invalid increase
+        if (increase > maxValueStdSizeT)
+            return false;
 
         // The increase
         maxValueStdSizeT -= increase;
