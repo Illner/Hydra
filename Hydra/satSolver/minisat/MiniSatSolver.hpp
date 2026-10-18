@@ -54,7 +54,7 @@ namespace Hydra::SatSolver::MiniSat {
             : SatSolverAbstract<VarT, LiteralT, ClauseIdT>(formulaRepresentationAbstractPtr, SatSolverTypeEnum::MINISAT, satSolverStatisticsPtr),
               activeModel_(false), configuration_(configuration),
               l_restrictedVariableMiniSatVector_processIsSatisfiable_(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula()),
-              l_firstCall_unitPropagation_(true) {
+              l_firstCall_processUnitPropagation_(true) {
             // The literals cannot be saved as int
             if (!Other::unsignedValueCanBeSavedAsInt<LiteralT>(this->formulaRepresentationAbstractPtr_->getNumberOfLiteralsInOriginalFormula()))
                 throw Exception::SomethingCannotBeSavedAsIntException("literals", this->formulaRepresentationAbstractPtr_->getNumberOfLiteralsInOriginalFormula());
@@ -78,8 +78,8 @@ namespace Hydra::SatSolver::MiniSat {
         VariableMiniSatVectorType l_restrictedVariableMiniSatVector_processIsSatisfiable_;
 
         // Local auxiliary data structures for unitPropagation
-        bool l_firstCall_unitPropagation_;
-        LiteralMiniSatReusableVectorType l_impliedLiteralMiniSatReusableVector_unitPropagation_;
+        bool l_firstCall_processUnitPropagation_;
+        LiteralMiniSatReusableVectorType l_impliedLiteralMiniSatReusableVector_processUnitPropagation_;
 
     private:
         static bool lboolIsTrue(const MiniSatCore::lbool& b);
@@ -119,8 +119,8 @@ namespace Hydra::SatSolver::MiniSat {
 
         /**
          * Local auxiliary data structures:
-         *      l_firstCall_unitPropagation_
-         *      l_impliedLiteralMiniSatReusableVector_unitPropagation_
+         *      l_firstCall_processUnitPropagation_
+         *      l_impliedLiteralMiniSatReusableVector_processUnitPropagation_
          */
         bool processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
                                     LiteralReusableVectorType& impliedLiteralReusableVector) override;

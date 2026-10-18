@@ -183,20 +183,20 @@ namespace Hydra::SatSolver::MiniSat {
     bool MiniSatSolver<VarT, LiteralT, ClauseIdT>::processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
                                                                           LiteralReusableVectorType& impliedLiteralReusableVector) {
         // Initialize local auxiliary data structures
-        if (l_firstCall_unitPropagation_) {
-            l_impliedLiteralMiniSatReusableVector_unitPropagation_ = LiteralMiniSatReusableVectorType(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
+        if (l_firstCall_processUnitPropagation_) {
+            l_impliedLiteralMiniSatReusableVector_processUnitPropagation_ = LiteralMiniSatReusableVectorType(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
 
-            l_firstCall_unitPropagation_ = false;
+            l_firstCall_processUnitPropagation_ = false;
         }
 
-        l_impliedLiteralMiniSatReusableVector_unitPropagation_.clear();
+        l_impliedLiteralMiniSatReusableVector_processUnitPropagation_.clear();
 
         solver_.refillAssums();
 
         // No contradiction was derived
-        if (solver_.decideAndComputeUnit(convertLiteralToLiteralMiniSat(lit), l_impliedLiteralMiniSatReusableVector_unitPropagation_)) {
+        if (solver_.decideAndComputeUnit(convertLiteralToLiteralMiniSat(lit), l_impliedLiteralMiniSatReusableVector_processUnitPropagation_)) {
             // Iterate the implied literals
-            for (const MiniSatCore::Lit& impliedLitMiniSat : l_impliedLiteralMiniSatReusableVector_unitPropagation_) {
+            for (const MiniSatCore::Lit& impliedLitMiniSat : l_impliedLiteralMiniSatReusableVector_processUnitPropagation_) {
                 LiteralType impliedLit = convertLiteralMiniSatToLiteral(impliedLitMiniSat);
 
                 if (!Other::containInSet(restrictedVariableSet, impliedLit.getVariable()))
