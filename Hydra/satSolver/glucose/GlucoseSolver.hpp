@@ -54,7 +54,7 @@ namespace Hydra::SatSolver::Glucose {
             : SatSolverAbstract<VarT, LiteralT, ClauseIdT>(formulaRepresentationAbstractPtr, SatSolverTypeEnum::GLUCOSE, satSolverStatisticsPtr),
               activeModel_(false), configuration_(configuration),
               l_restrictedVariableGlucoseVector_processIsSatisfiable_(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula()),
-              l_firstCall_unitPropagation_(true) {
+              l_firstCall_processUnitPropagation_(true) {
             // The literals cannot be saved as int
             if (!Other::unsignedValueCanBeSavedAsInt<LiteralT>(this->formulaRepresentationAbstractPtr_->getNumberOfLiteralsInOriginalFormula()))
                 throw Exception::SomethingCannotBeSavedAsIntException("literals", this->formulaRepresentationAbstractPtr_->getNumberOfLiteralsInOriginalFormula());
@@ -78,8 +78,8 @@ namespace Hydra::SatSolver::Glucose {
         VariableGlucoseVectorType l_restrictedVariableGlucoseVector_processIsSatisfiable_;
 
         // Local auxiliary data structures for unitPropagation
-        bool l_firstCall_unitPropagation_;
-        LiteralGlucoseReusableVectorType l_impliedLiteralGlucoseReusableVector_unitPropagation_;
+        bool l_firstCall_processUnitPropagation_;
+        LiteralGlucoseReusableVectorType l_impliedLiteralGlucoseReusableVector_processUnitPropagation_;
 
     private:
         static bool lboolIsTrue(const GlucoseCore::lbool& b);
@@ -106,6 +106,10 @@ namespace Hydra::SatSolver::Glucose {
 
         bool processIsSatisfiable() override;
 
+        /**
+         * Local auxiliary data structures:
+         *      l_restrictedVariableGlucoseVector_processIsSatisfiable_
+         */
         bool processIsSatisfiable(const VariableSetType& restrictedVariableSet) override;
 
         void processGetDecisionVariableIsCalled(const VariableSetType& currentComponentVariableSet) override;
@@ -113,6 +117,11 @@ namespace Hydra::SatSolver::Glucose {
         bool processUnitPropagation(const VariableSetType& restrictedVariableSet, LiteralReusableVectorType& impliedLiteralReusableVector,
                                     bool includeAssumptions) override;
 
+        /**
+         * Local auxiliary data structures:
+         *      l_firstCall_processUnitPropagation_
+         *      l_impliedLiteralGlucoseReusableVector_processUnitPropagation_
+         */
         bool processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
                                     LiteralReusableVectorType& impliedLiteralReusableVector) override;
 

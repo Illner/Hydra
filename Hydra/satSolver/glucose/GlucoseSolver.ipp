@@ -183,18 +183,18 @@ namespace Hydra::SatSolver::Glucose {
     bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
                                                                           LiteralReusableVectorType& impliedLiteralReusableVector) {
         // Initialize local auxiliary data structures
-        if (l_firstCall_unitPropagation_) {
-            l_impliedLiteralGlucoseReusableVector_unitPropagation_ = LiteralGlucoseReusableVectorType(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
+        if (l_firstCall_processUnitPropagation_) {
+            l_impliedLiteralGlucoseReusableVector_processUnitPropagation_ = LiteralGlucoseReusableVectorType(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
 
-            l_firstCall_unitPropagation_ = false;
+            l_firstCall_processUnitPropagation_ = false;
         }
 
-        l_impliedLiteralGlucoseReusableVector_unitPropagation_.clear();
+        l_impliedLiteralGlucoseReusableVector_processUnitPropagation_.clear();
 
         // No contradiction was derived
-        if (solver_.decideAndComputeUnit(convertLiteralToLiteralGlucose(lit), l_impliedLiteralGlucoseReusableVector_unitPropagation_)) {
+        if (solver_.decideAndComputeUnit(convertLiteralToLiteralGlucose(lit), l_impliedLiteralGlucoseReusableVector_processUnitPropagation_)) {
             // Iterate the implied literals
-            for (const GlucoseCore::Lit& impliedLitGlucose : l_impliedLiteralGlucoseReusableVector_unitPropagation_) {
+            for (const GlucoseCore::Lit& impliedLitGlucose : l_impliedLiteralGlucoseReusableVector_processUnitPropagation_) {
                 LiteralType impliedLit = convertLiteralGlucoseToLiteral(impliedLitGlucose);
 
                 if (!Other::containInSet(restrictedVariableSet, impliedLit.getVariable()))
