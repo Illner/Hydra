@@ -106,6 +106,10 @@ namespace Hydra::SatSolver::MiniSat {
 
         bool processIsSatisfiable() override;
 
+        /**
+         * Local auxiliary data structures:
+         *      l_restrictedVariableMiniSatVector_processIsSatisfiable_
+         */
         bool processIsSatisfiable(const VariableSetType& restrictedVariableSet) override;
 
         void processGetDecisionVariableIsCalled(const VariableSetType& currentComponentVariableSet) override;
@@ -113,6 +117,11 @@ namespace Hydra::SatSolver::MiniSat {
         bool processUnitPropagation(const VariableSetType& restrictedVariableSet, LiteralReusableVectorType& impliedLiteralReusableVector,
                                     bool includeAssumptions) override;
 
+        /**
+         * Local auxiliary data structures:
+         *      l_firstCall_unitPropagation_
+         *      l_impliedLiteralMiniSatReusableVector_unitPropagation_
+         */
         bool processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
                                     LiteralReusableVectorType& impliedLiteralReusableVector) override;
 
