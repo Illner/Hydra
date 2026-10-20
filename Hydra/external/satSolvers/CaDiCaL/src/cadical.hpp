@@ -248,17 +248,17 @@ namespace CaDiCaL {
 
         // ADDED
         /**
-   * Has no side effects
-   * Note: scores are only bumped in stable mode (see 'stabilizeonly') and
-   *       are rescaled from time to time, so only compare scores read at
-   *       the same time
-   * Note: require (VALID)
-   * Note: ensure (VALID)
-   * Contract: 'var' MUST be a declared variable (0 < var <= vars ()), not
-   *           a literal, and not an extension variable added by the solver
-   * @param var a variable
-   * @return the (E)VSIDS score of the variable (0 if never bumped)
-   */
+         * Has no side effects
+         * Note: scores are only bumped in stable mode (see 'stabilizeonly') and
+         *       are rescaled from time to time, so only compare scores read at
+         *       the same time
+         * Note: require (VALID)
+         * Note: ensure (VALID)
+         * Contract: 'var' MUST be a declared variable (0 < var <= vars ()), not
+         *           a literal, and not an extension variable added by the solver
+         * @param var a variable
+         * @return the (E)VSIDS score of the variable (0 if never bumped)
+         */
         double get_vsids_score(int var) const;
 
         // Core functionality as in the IPASIR incremental SAT solver interface.
@@ -305,65 +305,65 @@ namespace CaDiCaL {
 
         // ADDED
         /**
-   * Push the literal on the persistent assumption stack
-   * Unlike 'assume', persistent assumptions are NOT reset after 'solve',
-   * 'propagate' or 'reset_assumptions', only by 'pop_assumption'.  They are
-   * decided first, in push order, one decision level each, and their trail
-   * is kept between calls (as 'cancelUntil (assumptions.size ())' in
-   * MiniSat), so 'propagate' and 'solve_restricted' only propagate what
-   * changed since the last call, while 'solve' still starts from the root
-   * level as without persistent assumptions.
-   * Assumptions from 'assume' are added on top and reset as usual.
-   * Note: 'failed' works for persistent assumptions as for 'assume'
-   * Note: 'propagate' (and so 'implied') is complete only with respect to
-   *       the current clauses.  Clients needing complete unit propagation
-   *       on their original clauses (e.g., knowledge compilers) freeze all
-   *       variables and set 'vivifyirred=0', since vivifying irredundant
-   *       clauses removes the ones implied through propagation in one
-   *       direction only (root-level units are on the trail or 'fixed').
-   * Note: require (READY)
-   * Note: ensure (STEADY)
-   * Contract: no pending assumptions from 'assume', no proof tracing
-   *           (including 'checkproof'), no external propagator
-   * @param lit a literal
-   */
+         * Push the literal on the persistent assumption stack
+         * Unlike 'assume', persistent assumptions are NOT reset after 'solve',
+         * 'propagate' or 'reset_assumptions', only by 'pop_assumption'.  They are
+         * decided first, in push order, one decision level each, and their trail
+         * is kept between calls (as 'cancelUntil (assumptions.size ())' in
+         * MiniSat), so 'propagate' and 'solve_restricted' only propagate what
+         * changed since the last call, while 'solve' still starts from the root
+         * level as without persistent assumptions.
+         * Assumptions from 'assume' are added on top and reset as usual.
+         * Note: 'failed' works for persistent assumptions as for 'assume'
+         * Note: 'propagate' (and so 'implied') is complete only with respect to
+         *       the current clauses.  Clients needing complete unit propagation
+         *       on their original clauses (e.g., knowledge compilers) freeze all
+         *       variables and set 'vivifyirred=0', since vivifying irredundant
+         *       clauses removes the ones implied through propagation in one
+         *       direction only (root-level units are on the trail or 'fixed').
+         * Note: require (READY)
+         * Note: ensure (STEADY)
+         * Contract: no pending assumptions from 'assume', no proof tracing
+         *           (including 'checkproof'), no external propagator
+         * @param lit a literal
+         */
         void push_assumption(int lit);
 
         // ADDED
         /**
-   * Pop the last pushed persistent assumption
-   * Note: require (READY)
-   * Note: ensure (STEADY)
-   * Contract: 'lit' MUST be the last pushed persistent assumption, and
-   *           there are no pending assumptions from 'assume'
-   * @param lit a literal
-   */
+         * Pop the last pushed persistent assumption
+         * Note: require (READY)
+         * Note: ensure (STEADY)
+         * Contract: 'lit' MUST be the last pushed persistent assumption, and
+         *           there are no pending assumptions from 'assume'
+         * @param lit a literal
+         */
         void pop_assumption(int lit);
 
         // ADDED
         /**
-   * Solve with decisions restricted to the given variables (as d4's MiniSat
-   * with 'rebuildWithConnectedComponent'): the trail of the persistent
-   * assumptions is kept, only the given variables are decided, and the
-   * result is 10 as soon as they are all assigned without conflict.
-   * Thus the variables MUST be closed under the clauses not satisfied by
-   * the assumptions (and their propagation), i.e., such a clause with one
-   * of the variables contains only these variables or falsified literals,
-   * e.g., a connected component.  Then 10 means that the clauses with
-   * these variables are satisfiable under the assumptions (20 as usual).
-   * Neither lucky phases, local search, preprocessing, nor rephasing run.
-   * Note: the model is partial (only the given variables and propagated
-   *       literals are assigned), so 'val' is meaningful only for them
-   * Note: the variables should be frozen (eliminated ones are skipped
-   *       once 'compact' removed them, before that they are decided like
-   *       unconstrained variables)
-   * Note: require (READY)
-   * Note: ensure (SATISFIED | UNSATISFIED | INCONCLUSIVE)
-   * Contract: 'vars' are variables (not literals), no external propagator,
-   *           no proof tracing (including 'checkproof')
-   * @param vars the decision variables
-   * @return 10 = satisfiable, 20 = unsatisfiable, 0 = unknown
-   */
+         * Solve with decisions restricted to the given variables (as d4's MiniSat
+         * with 'rebuildWithConnectedComponent'): the trail of the persistent
+         * assumptions is kept, only the given variables are decided, and the
+         * result is 10 as soon as they are all assigned without conflict.
+         * Thus the variables MUST be closed under the clauses not satisfied by
+         * the assumptions (and their propagation), i.e., such a clause with one
+         * of the variables contains only these variables or falsified literals,
+         * e.g., a connected component.  Then 10 means that the clauses with
+         * these variables are satisfiable under the assumptions (20 as usual).
+         * Neither lucky phases, local search, preprocessing, nor rephasing run.
+         * Note: the model is partial (only the given variables and propagated
+         *       literals are assigned), so 'val' is meaningful only for them
+         * Note: the variables should be frozen (eliminated ones are skipped
+         *       once 'compact' removed them, before that they are decided like
+         *       unconstrained variables)
+         * Note: require (READY)
+         * Note: ensure (SATISFIED | UNSATISFIED | INCONCLUSIVE)
+         * Contract: 'vars' are variables (not literals), no external propagator,
+         *           no proof tracing (including 'checkproof')
+         * @param vars the decision variables
+         * @return 10 = satisfiable, 20 = unsatisfiable, 0 = unknown
+         */
         int solve_restricted(const std::vector<int>& vars);
 
         // Try to solve the current formula.  Returns
@@ -605,43 +605,45 @@ namespace CaDiCaL {
 
         // ADDED
         /**
-   * Like 'implied', but only the literals assigned on the decision level
-   * of the last assumption, that is, the last assumption itself (unless it
-   * was already implied) and the literals it implies beyond the earlier
-   * assumptions (as 'decideAndComputeUnit' in d4's MiniSat)
-   * Note: exact after 'propagate', while after a satisfiable 'solve' it
-   *       might also contain literals implied by earlier assumptions
-   *       (chronological backtracking does not move them to lower levels)
-   * Note: empty if there are no assumptions
-   * Note: require (INCONCLUSIVE | SATISFIED)
-   * Note: ensure (INCONCLUSIVE | SATISFIED)
-   * @param implicants the implied literals (cleared first)
-   */
+         * Like 'implied', but only the literals assigned on the decision level
+         * of the last assumption, that is, the last assumption itself (unless it
+         * was already implied) and the literals it implies beyond the earlier
+         * assumptions (as 'decideAndComputeUnit' in d4's MiniSat)
+         * Note: exact after 'propagate', while after a satisfiable 'solve' it
+         *       might also contain literals implied by earlier assumptions
+         *       (chronological backtracking does not move them to lower levels)
+         * Note: empty if there are no assumptions
+         * Note: implicants will be cleared at the beginning
+         * Note: require (INCONCLUSIVE | SATISFIED)
+         * Note: ensure (INCONCLUSIVE | SATISFIED)
+         * @param implicants the implied literals
+         */
         void implied_by_last_assumption(std::vector<int>& implicants);
 
         // ADDED
         /**
-   * The value of the literal on the current trail, including root-level
-   * units (removed from the trail by 'compact'), that is, after 'propagate'
-   * whether it is implied by the assumptions (in time independent of the
-   * size of the trail, unlike 'implied')
-   * Note: require (VALID)
-   * Note: ensure (VALID)
-   * @param lit a literal
-   * @return 'lit' if true, '-lit' if false, 0 if unassigned
-   */
+         * The value of the literal on the current trail, including root-level
+         * units (removed from the trail by 'compact'), that is, after 'propagate'
+         * whether it is implied by the assumptions (in time independent of the
+         * size of the trail, unlike 'implied')
+         * Note: require (VALID)
+         * Note: ensure (VALID)
+         * @param lit a literal
+         * @return 'lit' if true, '-lit' if false, 0 if unassigned
+         */
         int trail_value(int lit) const;
 
         // ADDED
         /**
-   * The literals assigned above the root level on the current trail (in
-   * trail order), e.g., after 'solve' (or 'solve_restricted') failed under
-   * assumptions, the assignment when the failure was found (as the trail
-   * in 'analyzeFinal' of MiniSat)
-   * Note: require (VALID)
-   * Note: ensure (VALID)
-   * @param lits the literals (cleared first)
-   */
+         * The literals assigned above the root level on the current trail (in
+         * trail order), e.g., after 'solve' (or 'solve_restricted') failed under
+         * assumptions, the assignment when the failure was found (as the trail
+         * in 'analyzeFinal' of MiniSat)
+         * Note: lits will be cleared at the beginning
+         * Note: require (VALID)
+         * Note: ensure (VALID)
+         * @param lits the literals
+         */
         void trail_above_root(std::vector<int>& lits);
 
         //------------------------------------------------------------------------
