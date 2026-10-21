@@ -42,10 +42,12 @@ namespace Hydra::SatSolver::MiniSat {
         using FormulaRepresentationAbstractPtrType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::FormulaRepresentationAbstractPtrType;
 
     private:
+        using LiteralMiniSatType = MiniSatCore::Lit;
+        using VariableMiniSatType = MiniSatCore::Var;
         using MiniSatSolverType = MiniSatCore::Solver;
-        using LiteralMiniSatVectorType = MiniSatCore::vec<MiniSatCore::Lit>;
-        using VariableMiniSatVectorType = MiniSatCore::vec<MiniSatCore::Var>;
-        using LiteralMiniSatReusableVectorType = Container::ReusableVector::ReusableVector<MiniSatCore::Lit>;
+        using LiteralMiniSatVectorType = MiniSatCore::vec<LiteralMiniSatType>;
+        using VariableMiniSatVectorType = MiniSatCore::vec<VariableMiniSatType>;
+        using LiteralMiniSatReusableVectorType = Container::ReusableVector::ReusableVector<LiteralMiniSatType>;
 
     public:
         explicit MiniSatSolver(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr,
@@ -86,10 +88,10 @@ namespace Hydra::SatSolver::MiniSat {
         static bool lboolIsFalse(const MiniSatCore::lbool& b);
         static bool lboolIsUndef(const MiniSatCore::lbool& b);
 
-        static MiniSatCore::Var convertVariableToVariableMiniSat(VarT variable);
-        static VarT convertVariableMiniSatToVariable(MiniSatCore::Var variableMiniSat);
-        static MiniSatCore::Lit convertLiteralToLiteralMiniSat(const LiteralType& literal);
-        static LiteralType convertLiteralMiniSatToLiteral(const MiniSatCore::Lit& literalMiniSat);
+        static VariableMiniSatType convertVariableToVariableMiniSat(VarT variable);
+        static VarT convertVariableMiniSatToVariable(VariableMiniSatType variableMiniSat);
+        static LiteralMiniSatType convertLiteralToLiteralMiniSat(const LiteralType& literal);
+        static LiteralType convertLiteralMiniSatToLiteral(const LiteralMiniSatType& literalMiniSat);
 
         /**
          * Initialize the SAT solver

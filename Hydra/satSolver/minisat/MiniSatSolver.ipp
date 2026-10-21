@@ -20,27 +20,29 @@ namespace Hydra::SatSolver::MiniSat {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    MiniSatCore::Var MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertVariableToVariableMiniSat(VarT variable) {
+    MiniSatSolver<VarT, LiteralT, ClauseIdT>::VariableMiniSatType
+    MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertVariableToVariableMiniSat(VarT variable) {
         assert(variable > 0);   // valid variable
 
-        return static_cast<MiniSatCore::Var>(variable - 1);
+        return static_cast<VariableMiniSatType>(variable - 1);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    VarT MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertVariableMiniSatToVariable(MiniSatCore::Var variableMiniSat) {
+    VarT MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertVariableMiniSatToVariable(VariableMiniSatType variableMiniSat) {
         assert(variableMiniSat >= 0);   // valid variable
 
         return static_cast<VarT>(variableMiniSat + 1);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    MiniSatCore::Lit MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertLiteralToLiteralMiniSat(const LiteralType& literal) {
+    MiniSatSolver<VarT, LiteralT, ClauseIdT>::LiteralMiniSatType
+    MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertLiteralToLiteralMiniSat(const LiteralType& literal) {
         return MiniSatCore::mkLit(convertVariableToVariableMiniSat(literal.getVariable()), literal.isNegative());
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     typename MiniSatSolver<VarT, LiteralT, ClauseIdT>::LiteralType
-    MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertLiteralMiniSatToLiteral(const MiniSatCore::Lit& literalMiniSat) {
+    MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertLiteralMiniSatToLiteral(const LiteralMiniSatType& literalMiniSat) {
         return LiteralType(convertVariableMiniSatToVariable(MiniSatCore::var(literalMiniSat)), !MiniSatCore::sign(literalMiniSat));
     }
 
@@ -78,7 +80,7 @@ namespace Hydra::SatSolver::MiniSat {
         this->initiallyImpliedLiterals_.reserve(static_cast<typename LiteralVectorType::size_type>(solver_.nAssigns()));
 
         for (int i = 0; i < solver_.trail.size(); ++i) {
-            const MiniSatCore::Lit& litMiniSat = solver_.trail[i];
+            const LiteralMiniSatType& litMiniSat = solver_.trail[i];
 
             this->initiallyImpliedLiterals_.emplace_back(convertLiteralMiniSatToLiteral(litMiniSat));
         }
@@ -86,7 +88,7 @@ namespace Hydra::SatSolver::MiniSat {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     void MiniSatSolver<VarT, LiteralT, ClauseIdT>::processAssignLiteral(const LiteralType& lit) {
-        MiniSatCore::Lit litMiniSat = convertLiteralToLiteralMiniSat(lit);
+        LiteralMiniSatType litMiniSat = convertLiteralToLiteralMiniSat(lit);
         activeModel_ = activeModel_ && !solver_.isAssigned(MiniSatCore::var(litMiniSat));
 
         solver_.assumptions.push(litMiniSat);
@@ -142,7 +144,7 @@ namespace Hydra::SatSolver::MiniSat {
             // Iterating trail
             if (solver_.trail.size() < static_cast<int>(restrictedVariableSet.size())) {
                 for (int i = 0; i < solver_.trail.size(); ++i) {
-                    const MiniSatCore::Lit& litMiniSat = solver_.trail[i];
+                    const LiteralMiniSatType& litMiniSat = solver_.trail[i];
 
                     VarT var = convertVariableMiniSatToVariable(MiniSatCore::var(litMiniSat));
 
@@ -163,7 +165,7 @@ namespace Hydra::SatSolver::MiniSat {
                     if (!includeAssumptions && this->isVariableAssigned(var))
                         continue;
 
-                    MiniSatCore::Var varMiniSat = convertVariableToVariableMiniSat(var);
+                    VariableMiniSatType varMiniSat = convertVariableToVariableMiniSat(var);
 
                     if (!solver_.isAssigned(varMiniSat))
                         continue;
@@ -196,7 +198,7 @@ namespace Hydra::SatSolver::MiniSat {
         // No contradiction was derived
         if (solver_.decideAndComputeUnit(convertLiteralToLiteralMiniSat(lit), l_impliedLiteralMiniSatReusableVector_processUnitPropagation_)) {
             // Iterate the implied literals
-            for (const MiniSatCore::Lit& impliedLitMiniSat : l_impliedLiteralMiniSatReusableVector_processUnitPropagation_) {
+            for (const LiteralMiniSatType& impliedLitMiniSat : l_impliedLiteralMiniSatReusableVector_processUnitPropagation_) {
                 LiteralType impliedLit = convertLiteralMiniSatToLiteral(impliedLitMiniSat);
 
                 if (!Other::containInSet(restrictedVariableSet, impliedLit.getVariable()))
@@ -285,7 +287,7 @@ namespace Hydra::SatSolver::MiniSat {
                 continue;
 
             for (int j = 0; j < clause.size(); ++j) {
-                const MiniSatCore::Lit& lit = clause[j];
+                const LiteralMiniSatType& lit = clause[j];
 
                 // The literal is not assigned
                 if (lboolIsUndef(solver_.value(lit))) {
@@ -312,7 +314,7 @@ namespace Hydra::SatSolver::MiniSat {
                     continue;
 
                 for (int j = 0; j < clause.size(); ++j) {
-                    const MiniSatCore::Lit& lit = clause[j];
+                    const LiteralMiniSatType& lit = clause[j];
 
                     // The literal is not assigned
                     if (lboolIsUndef(solver_.value(lit))) {

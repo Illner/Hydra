@@ -42,10 +42,12 @@ namespace Hydra::SatSolver::Glucose {
         using FormulaRepresentationAbstractPtrType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::FormulaRepresentationAbstractPtrType;
 
     private:
+        using LiteralGlucoseType = GlucoseCore::Lit;
+        using VariableGlucoseType = GlucoseCore::Var;
         using GlucoseSolverType = GlucoseCore::Solver;
-        using LiteralGlucoseVectorType = GlucoseCore::vec<GlucoseCore::Lit>;
-        using VariableGlucoseVectorType = GlucoseCore::vec<GlucoseCore::Var>;
-        using LiteralGlucoseReusableVectorType = Container::ReusableVector::ReusableVector<GlucoseCore::Lit>;
+        using LiteralGlucoseVectorType = GlucoseCore::vec<LiteralGlucoseType>;
+        using VariableGlucoseVectorType = GlucoseCore::vec<VariableGlucoseType>;
+        using LiteralGlucoseReusableVectorType = Container::ReusableVector::ReusableVector<LiteralGlucoseType>;
 
     public:
         explicit GlucoseSolver(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr,
@@ -86,10 +88,10 @@ namespace Hydra::SatSolver::Glucose {
         static bool lboolIsFalse(const GlucoseCore::lbool& b);
         static bool lboolIsUndef(const GlucoseCore::lbool& b);
 
-        static GlucoseCore::Var convertVariableToVariableGlucose(VarT variable);
-        static VarT convertVariableGlucoseToVariable(GlucoseCore::Var variableGlucose);
-        static GlucoseCore::Lit convertLiteralToLiteralGlucose(const LiteralType& literal);
-        static LiteralType convertLiteralGlucoseToLiteral(const GlucoseCore::Lit& literalGlucose);
+        static VariableGlucoseType convertVariableToVariableGlucose(VarT variable);
+        static VarT convertVariableGlucoseToVariable(VariableGlucoseType variableGlucose);
+        static LiteralGlucoseType convertLiteralToLiteralGlucose(const LiteralType& literal);
+        static LiteralType convertLiteralGlucoseToLiteral(const LiteralGlucoseType& literalGlucose);
 
         /**
          * Initialize the SAT solver
