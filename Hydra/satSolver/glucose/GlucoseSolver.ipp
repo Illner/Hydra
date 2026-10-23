@@ -55,6 +55,7 @@ namespace Hydra::SatSolver::Glucose {
         for (VarT var = 1; var <= this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula(); ++var)
             solver_.newVar();
 
+        // Add the clauses
         for (ClauseIdT clauseId = 0; clauseId < this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses(); ++clauseId) {
             for (auto clauseIt = this->formulaRepresentationAbstractPtr_->beginClause(clauseId);
                  clauseIt != this->formulaRepresentationAbstractPtr_->endClause(); ++clauseIt) {
