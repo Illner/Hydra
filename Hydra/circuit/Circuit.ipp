@@ -1069,7 +1069,8 @@ namespace Hydra::Circuit {
         ConsistencyCheckCacheType cache(getNumberOfNodes());
         PartialAssignmentType partialAssignment(totalNumberOfVariables_);
 
-        for (ClauseIdT2 clauseId = 0; clauseId < formulaPtr->getNumberOfOriginalClauses(); ++clauseId) {
+        const ClauseIdT2 numberOfOriginalClauses = formulaPtr->getNumberOfOriginalClauses();
+        for (ClauseIdT2 clauseId = 0; clauseId < numberOfOriginalClauses; ++clauseId) {
             assert(formulaPtr->isClauseUntouched(clauseId));   // clause is untouched
 
             cache.clear();

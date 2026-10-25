@@ -73,24 +73,26 @@ namespace Hydra::RenHCRecognition {
             // Only for the initial formula
             if (d_initialFormula_) {
                 // The variables cannot be saved as std::size_t
-                if (!Other::unsignedValueCanBeSavedAsStdSizeT<VarT>(formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula(), 1))
-                    throw Exception::SomethingCannotBeSavedAsStdSizeTException("variables", formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
+                const VarT numberOfVariablesInOriginalFormula = formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula();
+                if (!Other::unsignedValueCanBeSavedAsStdSizeT<VarT>(numberOfVariablesInOriginalFormula, 1))
+                    throw Exception::SomethingCannotBeSavedAsStdSizeTException("variables", numberOfVariablesInOriginalFormula);
 
                 // The clauses cannot be saved as std::size_t
-                if (!Other::unsignedValueCanBeSavedAsStdSizeT<ClauseIdT>(formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses()))
-                    throw Exception::SomethingCannotBeSavedAsStdSizeTException("clauses", formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses());
+                const ClauseIdT numberOfOriginalClauses = formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses();
+                if (!Other::unsignedValueCanBeSavedAsStdSizeT<ClauseIdT>(numberOfOriginalClauses))
+                    throw Exception::SomethingCannotBeSavedAsStdSizeTException("clauses", numberOfOriginalClauses);
 
-                d_assignmentStack_.reserve(formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
+                d_assignmentStack_.reserve(numberOfVariablesInOriginalFormula);
 
                 // Set inactive clauses
-                for (ClauseIdT clauseId = 0; clauseId < formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses(); ++clauseId) {
+                for (ClauseIdT clauseId = 0; clauseId < numberOfOriginalClauses; ++clauseId) {
                     // Satisfied clause
                     if (formulaRepresentationAbstractPtr_->isClauseSatisfied(clauseId))
                         d_activeClauseVector_[clauseId] = false;
                 }
 
                 // Set assigned variables
-                for (VarT var = 1; var <= formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula(); ++var) {
+                for (VarT var = 1; var <= numberOfVariablesInOriginalFormula; ++var) {
                     if (formulaRepresentationAbstractPtr_->isVariableAssigned(var))
                         d_assignedVariableVector_[var] = true;
                 }

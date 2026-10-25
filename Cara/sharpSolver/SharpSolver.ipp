@@ -287,8 +287,9 @@ namespace Hydra {
         VarT numberOfMissingVariables = 0;
 
         // Create the current component set
-        VariableSetType currentComponentVariableSet(formulaRepresentationAbstractUniquePtr_->getNumberOfVariablesInOriginalFormula());
-        for (VarT var = 1; var <= formulaRepresentationAbstractUniquePtr_->getNumberOfVariablesInOriginalFormula(); ++var) {
+        const VarT numberOfVariablesInOriginalFormula = formulaRepresentationAbstractUniquePtr_->getNumberOfVariablesInOriginalFormula();
+        VariableSetType currentComponentVariableSet(numberOfVariablesInOriginalFormula);
+        for (VarT var = 1; var <= numberOfVariablesInOriginalFormula; ++var) {
             // Free variables are ignored
             if (formulaRepresentationAbstractUniquePtr_->isVariableFree(var)) {
                 ++numberOfMissingVariables;

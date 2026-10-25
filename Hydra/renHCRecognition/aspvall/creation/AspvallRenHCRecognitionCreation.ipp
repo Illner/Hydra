@@ -27,7 +27,8 @@ namespace Hydra::RenHCRecognition::Aspvall::Creation {
 
         // The initial formula
         if (initialFormula) {
-            for (ClauseIdT clauseId = 0; clauseId < formulaRepresentationAbstractPtr->getNumberOfOriginalClauses(); ++clauseId) {
+            const ClauseIdT numberOfOriginalClauses = formulaRepresentationAbstractPtr->getNumberOfOriginalClauses();
+            for (ClauseIdT clauseId = 0; clauseId < numberOfOriginalClauses; ++clauseId) {
                 // Satisfied clause
                 if (formulaRepresentationAbstractPtr->isClauseSatisfied(clauseId))
                     continue;
@@ -666,6 +667,8 @@ namespace Hydra::RenHCRecognition::Aspvall::Creation {
         if (renHCRecognitionStatisticsPtr)
             renHCRecognitionStatisticsPtr->creationTimer.startStopwatch();
 
+        const ClauseIdT numberOfOriginalClauses = formulaRepresentationAbstractPtr->getNumberOfOriginalClauses();
+
         AspClauseIdT currentAspvallClauseId = 0;
         AspVarT newAuxiliaryVariableIndex = static_cast<AspVarT>(formulaRepresentationAbstractPtr->getNumberOfVariablesInOriginalFormula());
 
@@ -673,9 +676,9 @@ namespace Hydra::RenHCRecognition::Aspvall::Creation {
         formula.reserve(aspvallRenHCRecognitionStruct.formulaSize);
         ClauseIdVectorAspType literalNumberOfOccurrences(static_cast<typename ClauseIdVectorAspType::size_type>(AspLiteralT(2) + aspvallRenHCRecognitionStruct.numberOfLiterals), 0);
         aspvallRenHCRecognitionStruct.mappingFromAspvallClauseIdToOriginalClauseIdVector = ClauseIdVectorType(static_cast<typename ClauseIdVectorType::size_type>(aspvallRenHCRecognitionStruct.numberOfClauses), 0);
-        aspvallRenHCRecognitionStruct.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector = ClauseIdVectorAspType(static_cast<typename ClauseIdVectorAspType::size_type>(ClauseIdT(1) + formulaRepresentationAbstractPtr->getNumberOfOriginalClauses()), 0);
+        aspvallRenHCRecognitionStruct.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector = ClauseIdVectorAspType(static_cast<typename ClauseIdVectorAspType::size_type>(ClauseIdT(1) + numberOfOriginalClauses), 0);
 
-        for (ClauseIdT clauseId = 0; clauseId < formulaRepresentationAbstractPtr->getNumberOfOriginalClauses(); ++clauseId) {
+        for (ClauseIdT clauseId = 0; clauseId < numberOfOriginalClauses; ++clauseId) {
             // Original clause -> first Aspvall clause
             assert(aspvallRenHCRecognitionStruct.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector[clauseId] == 0);   // not initialized
             aspvallRenHCRecognitionStruct.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector[clauseId] = currentAspvallClauseId;
@@ -717,6 +720,8 @@ namespace Hydra::RenHCRecognition::Aspvall::Creation {
         using ClauseIdVectorType = typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::ClauseIdVectorType;
         using ClauseIdVectorAspType = typename AspvallRenHCRecognition<VarT, LiteralT, ClauseIdT, AspVarT, AspLiteralT, AspClauseIdT>::ClauseIdVectorAspType;
 
+        const ClauseIdT numberOfOriginalClauses = formulaRepresentationAbstractPtr->getNumberOfOriginalClauses();
+
         AspClauseIdT currentAspvallClauseId = 0;
         AspVarT newAuxiliaryVariableIndex = static_cast<AspVarT>(formulaRepresentationAbstractPtr->getNumberOfVariablesInOriginalFormula());
 
@@ -724,13 +729,13 @@ namespace Hydra::RenHCRecognition::Aspvall::Creation {
         formula.reserve(aspvallRenHCRecognitionStruct.formulaSize);
         ClauseIdVectorAspType literalNumberOfOccurrences(static_cast<typename ClauseIdVectorAspType::size_type>(AspLiteralT(2) + aspvallRenHCRecognitionStruct.numberOfLiterals), 0);
         aspvallRenHCRecognitionStruct.mappingFromAspvallClauseIdToOriginalClauseIdVector = ClauseIdVectorType(static_cast<typename ClauseIdVectorType::size_type>(aspvallRenHCRecognitionStruct.numberOfClauses), 0);
-        aspvallRenHCRecognitionStruct.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector = ClauseIdVectorAspType(static_cast<typename ClauseIdVectorAspType::size_type>(ClauseIdT(1) + formulaRepresentationAbstractPtr->getNumberOfOriginalClauses()), 0);
+        aspvallRenHCRecognitionStruct.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector = ClauseIdVectorAspType(static_cast<typename ClauseIdVectorAspType::size_type>(ClauseIdT(1) + numberOfOriginalClauses), 0);
 
         assert(!currentComponentClauseReusableVector.empty());   // at least one clause
 
         auto currentComponentClauseIt = currentComponentClauseReusableVector.cbegin();
 
-        for (ClauseIdT clauseId = 0; clauseId < formulaRepresentationAbstractPtr->getNumberOfOriginalClauses(); ++clauseId) {
+        for (ClauseIdT clauseId = 0; clauseId < numberOfOriginalClauses; ++clauseId) {
             // Original clause -> first Aspvall clause
             assert(aspvallRenHCRecognitionStruct.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector[clauseId] == 0);   // not initialized
             aspvallRenHCRecognitionStruct.mappingFromOriginalClauseIdToFirstAspvallClauseIdVector[clauseId] = currentAspvallClauseId;

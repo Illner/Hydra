@@ -52,11 +52,13 @@ namespace Hydra::SatSolver::MiniSat {
         clause.capacity(static_cast<int>(this->formulaRepresentationAbstractPtr_->getMaxOriginalClauseSize()));
 
         // Add the variables
-        for (VarT var = 1; var <= this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula(); ++var)
+        const VarT numberOfVariablesInOriginalFormula = this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula();
+        for (VarT var = 1; var <= numberOfVariablesInOriginalFormula; ++var)
             solver_.newVar();
 
         // Add the clauses
-        for (ClauseIdT clauseId = 0; clauseId < this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses(); ++clauseId) {
+        const ClauseIdT numberOfOriginalClauses = this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses();
+        for (ClauseIdT clauseId = 0; clauseId < numberOfOriginalClauses; ++clauseId) {
             for (auto clauseIt = this->formulaRepresentationAbstractPtr_->beginClause(clauseId);
                  clauseIt != this->formulaRepresentationAbstractPtr_->endClause(); ++clauseIt) {
                 assert(convertVariableToVariableMiniSat(clauseIt->getVariable()) < solver_.nVars());
