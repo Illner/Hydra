@@ -72,7 +72,9 @@ namespace Hydra::SatSolver::Glucose {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     void GlucoseSolver<VarT, LiteralT, ClauseIdT>::processInitialSimplification() {
-        solver_.simplify();
+        [[maybe_unused]] bool ok = solver_.simplify();
+        assert(ok);
+
         solver_.remove_satisfied = false;
     }
 
@@ -224,13 +226,19 @@ namespace Hydra::SatSolver::Glucose {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     VsidsScoreType GlucoseSolver<VarT, LiteralT, ClauseIdT>::getVsidsScore(VarT variable) const {
+        VariableGlucoseType varGlucose = convertVariableToVariableGlucose(variable);
+
         switch (configuration_.vsidsScoreType) {
             // D4v2
             case VsidsScoreTypeEnum::D4_V2:
-                return static_cast<VsidsScoreType>(solver_.scoreActivity[convertVariableToVariableGlucose(variable)]);
+                assert(varGlucose < solver_.scoreActivity.size());   // valid variable
+
+                return static_cast<VsidsScoreType>(solver_.scoreActivity[varGlucose]);
             // Glucose
             case VsidsScoreTypeEnum::GLUCOSE:
-                return static_cast<VsidsScoreType>(solver_.activity[convertVariableToVariableGlucose(variable)]);
+                assert(varGlucose < solver_.activity.size());   // valid variable
+
+                return static_cast<VsidsScoreType>(solver_.activity[varGlucose]);
             default:
                 throw Exception::NotImplementedException(vsidsScoreTypeEnumToString(configuration_.vsidsScoreType),
                                                          "Hydra::SatSolver::Glucose::GlucoseSolver::getVsidsScore");

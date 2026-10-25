@@ -72,7 +72,9 @@ namespace Hydra::SatSolver::MiniSat {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     void MiniSatSolver<VarT, LiteralT, ClauseIdT>::processInitialSimplification() {
-        solver_.simplify();
+        [[maybe_unused]] bool ok = solver_.simplify();
+        assert(ok);
+
         solver_.remove_satisfied = false;
     }
 
@@ -223,16 +225,24 @@ namespace Hydra::SatSolver::MiniSat {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     VsidsScoreType MiniSatSolver<VarT, LiteralT, ClauseIdT>::getVsidsScore(VarT variable) const {
+        VariableMiniSatType varMiniSat = convertVariableToVariableMiniSat(variable);
+
         switch (configuration_.vsidsScoreType) {
             // D4
             case VsidsScoreTypeEnum::D4:
-                return static_cast<VsidsScoreType>(solver_.scoreActivityD4[convertVariableToVariableMiniSat(variable)]);
+                assert(varMiniSat < solver_.scoreActivityD4.size());   // valid variable
+
+                return static_cast<VsidsScoreType>(solver_.scoreActivityD4[varMiniSat]);
             // D4v2
             case VsidsScoreTypeEnum::D4_V2:
-                return static_cast<VsidsScoreType>(solver_.scoreActivityD4v2[convertVariableToVariableMiniSat(variable)]);
+                assert(varMiniSat < solver_.scoreActivityD4v2.size());   // valid variable
+
+                return static_cast<VsidsScoreType>(solver_.scoreActivityD4v2[varMiniSat]);
             // MiniSat
             case VsidsScoreTypeEnum::MINISAT:
-                return static_cast<VsidsScoreType>(solver_.activity[convertVariableToVariableMiniSat(variable)]);
+                assert(varMiniSat < solver_.activity.size());   // valid variable
+
+                return static_cast<VsidsScoreType>(solver_.activity[varMiniSat]);
             default:
                 throw Exception::NotImplementedException(vsidsScoreTypeEnumToString(configuration_.vsidsScoreType),
                                                          "Hydra::SatSolver::MiniSat::MiniSatSolver::getVsidsScore");
