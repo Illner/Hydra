@@ -320,7 +320,8 @@ namespace Hydra::Formula::Representation::Contiguous {
         currentComponentClausesStack_.emplace_back(static_cast<ClauseIdT>(currentComponentClausesFixedVector_.size()));
 
         // lit
-        for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != contiguousOccurrenceList_.end(lit.getLiteralT()); ++it) {
+        const auto endIt = contiguousOccurrenceList_.end(lit.getLiteralT());
+        for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != endIt; ++it) {
             ClauseIdT clauseId = *it;
 
             assert(!this->isClauseSatisfied(clauseId));   // clause is not satisfied
@@ -353,7 +354,8 @@ namespace Hydra::Formula::Representation::Contiguous {
         }
 
         // ~lit
-        for (auto it = contiguousOccurrenceList_.begin(complementaryLit.getLiteralT()); it != contiguousOccurrenceList_.end(complementaryLit.getLiteralT()); ++it) {
+        const auto complementaryEndIt = contiguousOccurrenceList_.end(complementaryLit.getLiteralT());
+        for (auto it = contiguousOccurrenceList_.begin(complementaryLit.getLiteralT()); it != complementaryEndIt; ++it) {
             ClauseIdT clauseId = *it;
 
             assert(!this->isClauseSatisfied(clauseId));   // clause is not satisfied
@@ -394,7 +396,8 @@ namespace Hydra::Formula::Representation::Contiguous {
         LiteralType complementaryLit = ~lit;
 
         // lit
-        for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != contiguousOccurrenceList_.end(lit.getLiteralT()); ++it) {
+        const auto endIt = contiguousOccurrenceList_.end(lit.getLiteralT());
+        for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != endIt; ++it) {
             ClauseIdT clauseId = *it;
 
             assert(this->isClauseSatisfied(clauseId));   // clause is satisfied
@@ -422,7 +425,8 @@ namespace Hydra::Formula::Representation::Contiguous {
         currentComponentClausesStack_.pop_back();
 
         // ~lit
-        for (auto it = contiguousOccurrenceList_.begin(complementaryLit.getLiteralT()); it != contiguousOccurrenceList_.end(complementaryLit.getLiteralT()); ++it) {
+        const auto complementaryEndIt = contiguousOccurrenceList_.end(complementaryLit.getLiteralT());
+        for (auto it = contiguousOccurrenceList_.begin(complementaryLit.getLiteralT()); it != complementaryEndIt; ++it) {
             ClauseIdT clauseId = *it;
 
             assert(!this->isClauseSatisfied(clauseId));   // clause is not satisfied
@@ -742,7 +746,8 @@ namespace Hydra::Formula::Representation::Contiguous {
         assert(!this->isVariableAssigned(lit.getVariable()));           // variable is not assigned
         assert(isVariableInCurrentComponentDebug(lit.getVariable()));   // variable is in the current component
 
-        for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != contiguousOccurrenceList_.end(lit.getLiteralT()); ++it) {
+        const auto endIt = contiguousOccurrenceList_.end(lit.getLiteralT());
+        for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != endIt; ++it) {
             // Unit clause
             if (getCurrentClauseSize(*it) == 1)
                 return true;

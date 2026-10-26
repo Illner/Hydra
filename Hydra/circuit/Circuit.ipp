@@ -891,6 +891,8 @@ namespace Hydra::Circuit {
         if (!root_.has_value())
             throw Exception::Circuit::RootIsNotSetException();
 
+        const IdNodeType numberOfNodes = getNumberOfNodes();
+
         Other::printTitle(out, " Bella ", 19, '-', COMMENT);
 
         out << COMMENT << " " << circuitTypeEnumToString(getCircuitType()) << std::endl;
@@ -898,7 +900,7 @@ namespace Hydra::Circuit {
 
         // nnf number_of_nodes number_of_edges number_of_variables [size]
         out << NNF_HEADER_STRING << " "
-            << std::to_string(getNumberOfNodes()) << " "
+            << std::to_string(numberOfNodes) << " "
             << std::to_string(getNumberOfEdges()) << " "
             << std::to_string(getNumberOfUsedVariables());
 
@@ -916,7 +918,7 @@ namespace Hydra::Circuit {
         }
 
         // Nodes
-        for (IdNodeType id = 0; id < getNumberOfNodes(); ++id)
+        for (IdNodeType id = 0; id < numberOfNodes; ++id)
             nodeUniquePtrVector_[id]->printNode(out, mappingFromVariableToOriginalVariable_);
     }
 
@@ -1105,10 +1107,12 @@ namespace Hydra::Circuit {
     #ifndef NDEBUG
     template <typename VarT, typename LiteralT>
     void Circuit<VarT, LiteralT>::printCircuitDebug(std::ostream& out) {
+        const IdNodeType numberOfNodes = getNumberOfNodes();
+
         out << "Circuit - " << circuitTypeEnumToString(getCircuitType()) << std::endl
             << "Size: " << std::to_string(getCircuitSize()) << std::endl
             << "Number of edges: " << std::to_string(getNumberOfEdges()) << std::endl
-            << "Number of nodes: " << std::to_string(getNumberOfNodes()) << std::endl
+            << "Number of nodes: " << std::to_string(numberOfNodes) << std::endl
             << "Number of leaves: " << std::to_string(getNumberOfLeaves()) << std::endl
             << "Number of inner nodes: " << std::to_string(getNumberOfInnerNodes()) << std::endl
             << "Number of used variables: " << std::to_string(getNumberOfUsedVariables()) << std::endl;
@@ -1137,7 +1141,7 @@ namespace Hydra::Circuit {
         out << std::endl;
 
         out << "Nodes:" << std::endl;
-        for (IdNodeType id = 0; id < getNumberOfNodes(); ++id) {
+        for (IdNodeType id = 0; id < numberOfNodes; ++id) {
             out << std::to_string(id) << ": ";
             nodeUniquePtrVector_[id]->printNodeDebug(out);
         }

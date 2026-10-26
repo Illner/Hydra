@@ -201,7 +201,8 @@ namespace Hydra::RenHCRecognition::Aspvall {
                 l_variableStateVector_.assignVariable(lit.getVariable(), lit.isPositive());
 
                 // Satisfy the clauses containing the pure literal
-                for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != contiguousOccurrenceList_.end(lit.getLiteralT()); ++it) {
+                const auto endIt = contiguousOccurrenceList_.end(lit.getLiteralT());
+                for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != endIt; ++it) {
                     AspClauseIdT aspvallClauseId = *it;
 
                     assert(aspvallClauseId < l_satisfiedClauseVector_.size());
@@ -290,7 +291,8 @@ namespace Hydra::RenHCRecognition::Aspvall {
         #endif
 
         // lit
-        for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != contiguousOccurrenceList_.end(lit.getLiteralT()); ++it) {
+        const auto endIt = contiguousOccurrenceList_.end(lit.getLiteralT());
+        for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != endIt; ++it) {
             AspClauseIdT aspvallClauseId = *it;
 
             assert(aspvallClauseId < l_satisfiedClauseVector_.size());
@@ -304,7 +306,8 @@ namespace Hydra::RenHCRecognition::Aspvall {
         }
 
         // ~lit
-        for (auto it = contiguousOccurrenceList_.begin(lit.getComplementaryLiteralT()); it != contiguousOccurrenceList_.end(lit.getComplementaryLiteralT()); ++it) {
+        const auto complementaryEndIt = contiguousOccurrenceList_.end(lit.getComplementaryLiteralT());
+        for (auto it = contiguousOccurrenceList_.begin(lit.getComplementaryLiteralT()); it != complementaryEndIt; ++it) {
             AspClauseIdT aspvallClauseId = *it;
 
             assert(aspvallClauseId < l_satisfiedClauseVector_.size());
