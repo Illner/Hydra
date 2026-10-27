@@ -172,6 +172,7 @@ namespace Hydra::SatSolver::Glucose {
 
                     VariableGlucoseType varGlucose = convertVariableToVariableGlucose(var);
 
+                    // The variable is NOT implied
                     if (!solver_.isAssigned(varGlucose))
                         continue;
 

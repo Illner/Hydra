@@ -172,6 +172,7 @@ namespace Hydra::SatSolver::MiniSat {
 
                     VariableMiniSatType varMiniSat = convertVariableToVariableMiniSat(var);
 
+                    // The variable is NOT implied
                     if (!solver_.isAssigned(varMiniSat))
                         continue;
 
