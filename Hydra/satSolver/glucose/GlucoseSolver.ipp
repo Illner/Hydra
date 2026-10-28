@@ -133,7 +133,8 @@ namespace Hydra::SatSolver::Glucose {
         if (configuration_.vsidsScoreType == VsidsScoreTypeEnum::D4_V2) {
             // Decay the variable scores
             if (configuration_.frequencyDecayD4v2VsidsScore && !(this->numberOfGetDecisionVariableCalls_ % configuration_.frequencyDecayD4v2VsidsScore)) {
-                for (int i = 0; i < solver_.scoreActivity.size(); ++i)
+                const int vecSize = solver_.scoreActivity.size();
+                for (int i = 0; i < vecSize; ++i)
                     solver_.scoreActivity[i] /= 2;
             }
         }
@@ -144,47 +145,47 @@ namespace Hydra::SatSolver::Glucose {
                                                                           LiteralReusableVectorType& impliedLiteralReusableVector, bool includeAssumptions) {
         assert(impliedLiteralReusableVector.empty());
 
-        // The current formula is satisfiable
-        if (solver_.propagateAssumption()) {
-            // Iterating trail
-            if (solver_.trail.size() < static_cast<int>(restrictedVariableSet.size())) {
-                for (int i = 0; i < solver_.trail.size(); ++i) {
-                    const LiteralGlucoseType& litGlucose = solver_.trail[i];
+        // A contradiction was derived
+        if (!solver_.propagateAssumption())
+            return false;
 
-                    VarT var = convertVariableGlucoseToVariable(GlucoseCore::var(litGlucose));
+        const int trailSize = solver_.trail.size();
 
-                    // It is an assumption
-                    if (!includeAssumptions && this->isVariableAssigned(var))
-                        continue;
+        // Iterating trail
+        if (trailSize < static_cast<int>(restrictedVariableSet.size())) {
+            for (int i = 0; i < trailSize; ++i) {
+                const LiteralGlucoseType& litGlucose = solver_.trail[i];
 
-                    if (!Other::containInSet(restrictedVariableSet, var))
-                        continue;
+                VarT var = convertVariableGlucoseToVariable(GlucoseCore::var(litGlucose));
 
-                    impliedLiteralReusableVector.emplace_back(var, !GlucoseCore::sign(litGlucose));
-                }
+                // It is an assumption
+                if (!includeAssumptions && this->isVariableAssigned(var))
+                    continue;
+
+                if (!Other::containInSet(restrictedVariableSet, var))
+                    continue;
+
+                impliedLiteralReusableVector.emplace_back(var, !GlucoseCore::sign(litGlucose));
             }
-            // Iterating restricted variables
-            else {
-                for (VarT var : restrictedVariableSet) {
-                    // It is an assumption
-                    if (!includeAssumptions && this->isVariableAssigned(var))
-                        continue;
+        }
+        // Iterating restricted variables
+        else {
+            for (VarT var : restrictedVariableSet) {
+                // It is an assumption
+                if (!includeAssumptions && this->isVariableAssigned(var))
+                    continue;
 
-                    VariableGlucoseType varGlucose = convertVariableToVariableGlucose(var);
+                VariableGlucoseType varGlucose = convertVariableToVariableGlucose(var);
 
-                    // The variable is NOT implied
-                    if (!solver_.isAssigned(varGlucose))
-                        continue;
+                // The variable is NOT implied
+                if (!solver_.isAssigned(varGlucose))
+                    continue;
 
-                    impliedLiteralReusableVector.push_back(convertLiteralGlucoseToLiteral(solver_.litAssigned(varGlucose)));
-                }
+                impliedLiteralReusableVector.push_back(convertLiteralGlucoseToLiteral(solver_.litAssigned(varGlucose)));
             }
-
-            return true;
         }
 
-        // The current formula is NOT satisfiable
-        return false;
+        return true;
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>

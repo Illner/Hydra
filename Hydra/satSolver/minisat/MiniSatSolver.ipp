@@ -133,7 +133,8 @@ namespace Hydra::SatSolver::MiniSat {
         if (configuration_.vsidsScoreType == VsidsScoreTypeEnum::D4_V2) {
             // Decay the variable scores
             if (configuration_.frequencyDecayD4v2VsidsScore && !(this->numberOfGetDecisionVariableCalls_ % configuration_.frequencyDecayD4v2VsidsScore)) {
-                for (int i = 0; i < solver_.scoreActivityD4v2.size(); ++i)
+                const int vecSize = solver_.scoreActivityD4v2.size();
+                for (int i = 0; i < vecSize; ++i)
                     solver_.scoreActivityD4v2[i] /= 2;
             }
         }
@@ -144,47 +145,47 @@ namespace Hydra::SatSolver::MiniSat {
                                                                           LiteralReusableVectorType& impliedLiteralReusableVector, bool includeAssumptions) {
         assert(impliedLiteralReusableVector.empty());
 
-        // The current formula is satisfiable
-        if (solver_.propagateAssumption()) {
-            // Iterating trail
-            if (solver_.trail.size() < static_cast<int>(restrictedVariableSet.size())) {
-                for (int i = 0; i < solver_.trail.size(); ++i) {
-                    const LiteralMiniSatType& litMiniSat = solver_.trail[i];
+        // A contradiction was derived
+        if (!solver_.propagateAssumption())
+            return false;
 
-                    VarT var = convertVariableMiniSatToVariable(MiniSatCore::var(litMiniSat));
+        const int trailSize = solver_.trail.size();
 
-                    // It is an assumption
-                    if (!includeAssumptions && this->isVariableAssigned(var))
-                        continue;
+        // Iterating trail
+        if (trailSize < static_cast<int>(restrictedVariableSet.size())) {
+            for (int i = 0; i < trailSize; ++i) {
+                const LiteralMiniSatType& litMiniSat = solver_.trail[i];
 
-                    if (!Other::containInSet(restrictedVariableSet, var))
-                        continue;
+                VarT var = convertVariableMiniSatToVariable(MiniSatCore::var(litMiniSat));
 
-                    impliedLiteralReusableVector.emplace_back(var, !MiniSatCore::sign(litMiniSat));
-                }
+                // It is an assumption
+                if (!includeAssumptions && this->isVariableAssigned(var))
+                    continue;
+
+                if (!Other::containInSet(restrictedVariableSet, var))
+                    continue;
+
+                impliedLiteralReusableVector.emplace_back(var, !MiniSatCore::sign(litMiniSat));
             }
-            // Iterating restricted variables
-            else {
-                for (VarT var : restrictedVariableSet) {
-                    // It is an assumption
-                    if (!includeAssumptions && this->isVariableAssigned(var))
-                        continue;
+        }
+        // Iterating restricted variables
+        else {
+            for (VarT var : restrictedVariableSet) {
+                // It is an assumption
+                if (!includeAssumptions && this->isVariableAssigned(var))
+                    continue;
 
-                    VariableMiniSatType varMiniSat = convertVariableToVariableMiniSat(var);
+                VariableMiniSatType varMiniSat = convertVariableToVariableMiniSat(var);
 
-                    // The variable is NOT implied
-                    if (!solver_.isAssigned(varMiniSat))
-                        continue;
+                // The variable is NOT implied
+                if (!solver_.isAssigned(varMiniSat))
+                    continue;
 
-                    impliedLiteralReusableVector.push_back(convertLiteralMiniSatToLiteral(solver_.litAssigned(varMiniSat)));
-                }
+                impliedLiteralReusableVector.push_back(convertLiteralMiniSatToLiteral(solver_.litAssigned(varMiniSat)));
             }
-
-            return true;
         }
 
-        // The current formula is NOT satisfiable
-        return false;
+        return true;
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
