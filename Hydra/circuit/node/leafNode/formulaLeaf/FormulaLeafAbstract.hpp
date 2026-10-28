@@ -161,7 +161,7 @@ namespace Hydra::Circuit::Node {
          * Implied literals will be added to the partial assignment (partialAssignment)
          * The partial assignment will be cleared if a contradiction is found during unit propagation
          * @param partialAssignment a partial assignment
-         * @return true if the formula is consistent after applying unit propagation. Otherwise, false is returned.
+         * @return true if NO contradiction was derived. Otherwise, false is returned.
          */
         bool unitPropagation(PartialAssignmentType& partialAssignment);
 

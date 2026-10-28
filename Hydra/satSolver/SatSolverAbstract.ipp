@@ -193,14 +193,14 @@ namespace Hydra::SatSolver {
 
         l_impliedLiteralReusableVector_unitPropagation_.clear();
 
-        bool isSatisfiable = processUnitPropagation(restrictedVariableSet, l_impliedLiteralReusableVector_unitPropagation_, includeAssumptions);
+        bool noContradiction = processUnitPropagation(restrictedVariableSet, l_impliedLiteralReusableVector_unitPropagation_, includeAssumptions);
 
-        assert(isSatisfiable || l_impliedLiteralReusableVector_unitPropagation_.empty());   // contradiction -> not implied literals
+        assert(noContradiction || l_impliedLiteralReusableVector_unitPropagation_.empty());   // contradiction -> not implied literals
 
         // Statistics
         if (satSolverStatisticsPtr_) {
-            // The formula is satisfiable
-            if (isSatisfiable) {
+            // No contradiction was derived
+            if (noContradiction) {
                 satSolverStatisticsPtr_->numberOfImpliedLiteralsCounter.addCount(static_cast<Statistics::LargeNumberType>(l_impliedLiteralReusableVector_unitPropagation_.size()));
                 satSolverStatisticsPtr_->ratioOfNumberOfImpliedLiteralsToNumberOfVariablesCounter.addCount(static_cast<Statistics::LargeFloatingNumberType>(l_impliedLiteralReusableVector_unitPropagation_.size()) / static_cast<Statistics::LargeFloatingNumberType>(restrictedVariableSet.size()));
             }
@@ -208,7 +208,7 @@ namespace Hydra::SatSolver {
             satSolverStatisticsPtr_->unitPropagationTimer.stopStopwatch();
         }
 
-        return isSatisfiable;
+        return noContradiction;
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>

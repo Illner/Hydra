@@ -215,8 +215,8 @@ namespace Hydra {
 
         VarT numberOfVariablesBeforeUnitPropagation = static_cast<VarT>(currentComponentVariableSet.size());
 
-        [[maybe_unused]] bool isSatisfiable = satSolverAbstractUniquePtr_->unitPropagation(currentComponentVariableSet, false);
-        assert(isSatisfiable);   // current formula is satisfiable
+        [[maybe_unused]] bool noContradiction = satSolverAbstractUniquePtr_->unitPropagation(currentComponentVariableSet, false);
+        assert(noContradiction);   // no contradiction was derived
 
         // Get (sorted) implied literals
         LiteralVectorType impliedLiteralVector = satSolverAbstractUniquePtr_->getImpliedLiteralVectorFromPreviousCallOfUnitPropagation(true);
