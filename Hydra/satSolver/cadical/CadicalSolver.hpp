@@ -53,6 +53,9 @@ namespace Hydra::SatSolver::Cadical {
         using LiteralCadicalVectorType = std::vector<LiteralCadicalType>;
         using VariableCadicalVectorType = std::vector<VariableCadicalType>;
 
+    private:
+        using ReturnStatusEnum = CadicalCore::Status;
+
     public:
         explicit CadicalSolver(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr,
                                const CadicalSolverConfiguration& configuration = CadicalSolverConfiguration(),
@@ -77,6 +80,7 @@ namespace Hydra::SatSolver::Cadical {
 
             l_restrictedVariableCadicalVector_processIsSatisfiable_.reserve(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
 
+            setSatSolverOptions();
             this->initializeSatSolver();
         }
 
@@ -101,6 +105,7 @@ namespace Hydra::SatSolver::Cadical {
         static VarT convertVariableCadicalToVariable(VariableCadicalType variableCadical);
         static LiteralCadicalType convertLiteralToLiteralCadical(const LiteralType& literal);
         static LiteralType convertLiteralCadicalToLiteral(LiteralCadicalType literalCadical);
+        static VariableCadicalType convertLiteralCadicalToVariableCadical(LiteralCadicalType literalCadical);
 
         /**
          * Bump the Hydra VSIDS score of the variables on the trail when unsatisfiability is found
@@ -108,6 +113,12 @@ namespace Hydra::SatSolver::Cadical {
          *      l_trailLiteralCadicalVector_bumpHydraVsidsScore_
          */
         void bumpHydraVsidsScore();
+
+        /**
+         * Set options of the SAT solver
+         * Note: options MUST be set at the beginning
+         */
+        void setSatSolverOptions();
 
         /**
          * Initialize the SAT solver
@@ -147,6 +158,9 @@ namespace Hydra::SatSolver::Cadical {
 
     #ifndef NDEBUG
     private:
+        /**
+         * Note: CaDiCaL cannot traverse the learnt clauses
+         */
         void processPrintSatSolverDebug(std::ostream& out, bool printCoreSatSolver, bool printLearntClauses) const override;
 
         /**
