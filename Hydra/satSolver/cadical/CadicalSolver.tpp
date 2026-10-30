@@ -26,8 +26,8 @@ namespace Hydra::SatSolver::Cadical {
         /**
          * The schedule for learned-clause reduction, that is, the number of conflicts after a reduction until the next one. Set to
          * (0) for reduceInt^2 / 2 * (number of reductions so far + 1),
-         * (1) for reduceInt * sqrt(number of conflicts),
-         * (2) for reduceInt * log(number of conflicts), that is, fewer learned clauses are kept.
+         * (1) for reduceInt * SQRT(number of conflicts),
+         * (2) for reduceInt * LOG(number of conflicts), that is, fewer learned clauses are kept.
          * CaDiCaL option (default): reduceopt (1)
          */
         int reduceOptCadical = 2;
