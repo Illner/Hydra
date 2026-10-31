@@ -14,6 +14,8 @@
 
 #include "Hydra/compiler/exceptions/CompilerException.hpp"
 
+#include "Hydra/satSolver/cadical/enums/ReduceOptTypeEnum.hpp"
+#include "Hydra/satSolver/cadical/enums/ShrinkTypeEnum.hpp"
 #include "Hydra/satSolver/cadical/enums/VsidsScoreTypeEnum.hpp"
 #include "Hydra/satSolver/enums/SatSolverTypeEnum.hpp"
 
