@@ -2,6 +2,8 @@
 
 #include "Hydra/other/Other.hpp"
 
+#include "Hydra/satSolver/cadical/enums/ReduceOptTypeEnum.hpp"
+#include "Hydra/satSolver/cadical/enums/ShrinkTypeEnum.hpp"
 #include "Hydra/satSolver/cadical/enums/VsidsScoreTypeEnum.hpp"
 
 namespace Hydra::SatSolver::Cadical {
@@ -24,13 +26,10 @@ namespace Hydra::SatSolver::Cadical {
         LargeNumberType frequencyDecayHydraVsidsScore = 2048;
 
         /**
-         * The schedule for learned-clause reduction, that is, the number of conflicts after a reduction until the next one. Set to
-         * (0) for reduceInt^2 / 2 * (number of reductions so far + 1),
-         * (1) for reduceInt * SQRT(number of conflicts),
-         * (2) for reduceInt * LOG(number of conflicts), that is, fewer learned clauses are kept.
-         * CaDiCaL option (default): reduceopt (1)
+         * The schedule for learned-clause reduction, that is, the number of conflicts after a reduction until the next one
+         * CaDiCaL option (default): reduceopt (SQRT_OF_CONFLICTS)
          */
-        int reduceOptCadical = 2;
+        ReduceOptTypeEnum reduceOptTypeCadical = ReduceOptTypeEnum::LOG_OF_CONFLICTS;
 
         /**
          * The base interval for learned-clause reduction, that is, the constant in the schedule selected by reduceOpt.
@@ -70,14 +69,10 @@ namespace Hydra::SatSolver::Cadical {
         int scoreFactorCadical = 950;
 
         /**
-         * Shrinking of the learned clauses, that is, the literals of each decision level are replaced by a single literal if possible. Set to
-         * (0) for no shrinking (only minimization, if enabled),
-         * (1) for shrinking using only binary reason clauses,
-         * (2) for shrinking using all reason clauses,
-         * (3) for shrinking using all reason clauses, and minimizing literals of lower decision levels instead of giving up.
-         * CaDiCaL option (default): shrink (3)
+         * Shrinking of the learned clauses, that is, the literals of each decision level are replaced by a single literal if possible
+         * CaDiCaL option (default): shrink (ALL_REASON_CLAUSES_AND_MINIMIZING_LOWER_DECISION_LEVELS)
          */
-        int shrinkCadical = 3;
+        ShrinkTypeEnum shrinkTypeCadical = ShrinkTypeEnum::ALL_REASON_CLAUSES_AND_MINIMIZING_LOWER_DECISION_LEVELS;
 
         /**
          * Phases used for the decisions. Set to
