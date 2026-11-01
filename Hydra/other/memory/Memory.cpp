@@ -5,13 +5,13 @@ namespace Hydra::Other::Memory {
     MemorySizeType convertMegabytesToBytes(MemorySizeType memorySizeInMegabytes) {
         assert(memorySizeInMegabytes != NOT_SUPPORTED_VIRTUAL_MEMORY_SIZE_VALUE);   // valid size
 
-        return memorySizeInMegabytes * static_cast<MemorySizeType>(1'048'576);   // 1024 * 1024
+        return memorySizeInMegabytes * static_cast<MemorySizeType>(1'048'576);   // 1'024 * 1'024
     }
 
     MemorySizeType convertGigabytesToBytes(MemorySizeType memorySizeInGigabytes) {
         assert(memorySizeInGigabytes != NOT_SUPPORTED_VIRTUAL_MEMORY_SIZE_VALUE);   // valid size
 
-        return memorySizeInGigabytes * static_cast<MemorySizeType>(1'073'741'824);   // 1024 * 1024 * 1024
+        return memorySizeInGigabytes * static_cast<MemorySizeType>(1'073'741'824);   // 1'024 * 1'024 * 1'024
     }
 
     #if OPERATING_SYSTEM_WINDOWS
@@ -22,13 +22,13 @@ namespace Hydra::Other::Memory {
     MemorySizeType getPeakVirtualMemorySize() {
         PROCESS_MEMORY_COUNTERS_EX pmc;
         GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PROCESS_MEMORY_COUNTERS*>(&pmc), sizeof(pmc));
-        return MemorySizeType(pmc.PeakPagefileUsage) / MemorySizeType(1024 * 1024);
+        return MemorySizeType(pmc.PeakPagefileUsage) / MemorySizeType(1'024 * 1'024);
     }
 
     MemorySizeType getCurrentVirtualMemorySize() {
         PROCESS_MEMORY_COUNTERS_EX pmc;
         GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PROCESS_MEMORY_COUNTERS*>(&pmc), sizeof(pmc));
-        return MemorySizeType(pmc.PrivateUsage) / MemorySizeType(1024 * 1024);
+        return MemorySizeType(pmc.PrivateUsage) / MemorySizeType(1'024 * 1'024);
     }
     #elif OPERATING_SYSTEM_MACOS
     #include <malloc/malloc.h>
@@ -40,7 +40,7 @@ namespace Hydra::Other::Memory {
     MemorySizeType getCurrentVirtualMemorySize() {
         malloc_statistics_t stats;
         malloc_zone_statistics(nullptr, &stats);
-        return MemorySizeType(stats.max_size_in_use) / MemorySizeType(1024 * 1024);
+        return MemorySizeType(stats.max_size_in_use) / MemorySizeType(1'024 * 1'024);
     }
     #elif OPERATING_SYSTEM_LINUX
     MemorySizeType getPeakVirtualMemorySize() {
@@ -85,7 +85,7 @@ namespace Hydra::Other::Memory {
 
                     try {
                         memorySize = Parser::parsePositiveNumber<MemorySizeType>(begin, end, 0, false);
-                        memorySize /= MemorySizeType(1024);
+                        memorySize /= MemorySizeType(1'024);
                     }
                     catch (const Exception::Parser::ParserException& e) {
                     }
