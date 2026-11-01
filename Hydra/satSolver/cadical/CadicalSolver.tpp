@@ -23,7 +23,7 @@ namespace Hydra::SatSolver::Cadical {
         /**
          * Frequency decay for Hydra VSIDS score
          */
-        LargeNumberType frequencyDecayHydraVsidsScore = 2048;
+        LargeNumberType frequencyDecayHydraVsidsScore = 2'048;
 
         /**
          * The schedule for learned-clause reduction, that is, the number of conflicts after a reduction until the next one
@@ -54,8 +54,8 @@ namespace Hydra::SatSolver::Cadical {
         /**
          * Restart schedule. Set to
          * (false) for restarts depending on the glue of the recently learned clauses (Glucose-style),
-         * (true) for restarts following the reluctant doubling sequence, that is, the Luby sequence (1, 1, 2, 1, 1, 2, 4, ...) times reluctantint (that is, 1024) conflicts, where the sequence starts over when it reaches reluctantmax (that is, 1'048'576).
-         * Note: the sequence starts over with every call of CaDiCaL, so with true, a call with fewer than 1024 conflicts never restarts
+         * (true) for restarts following the reluctant doubling sequence, that is, the Luby sequence (1, 1, 2, 1, 1, 2, 4, ...) times reluctantint (that is, 1'024) conflicts, where the sequence starts over when it reaches reluctantmax (that is, 1'048'576).
+         * Note: the sequence starts over with every call of CaDiCaL, so with true, a call with fewer than 1'024 conflicts never restarts
          * CaDiCaL option (default): reluctant (true)
          */
         bool reluctantCadical = true;

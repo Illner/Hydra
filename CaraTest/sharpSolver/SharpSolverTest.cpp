@@ -343,12 +343,12 @@ namespace CaraTest::SharpSolver {
     /**
      * SAT solver - MiniSat
      *      VSIDS score: D4v2
-     *      frequency decay: 2048
+     *      frequency decay: 2'048
      */
-    TEST_CASE("[SharpSolver] SAT solver - MiniSat (VSIDS score: D4v2, frequency decay: 2048)", "[SharpSolver]") {
+    TEST_CASE("[SharpSolver] SAT solver - MiniSat (VSIDS score: D4v2, frequency decay: 2'048)", "[SharpSolver]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.satSolverType = SatSolverTypeEnum::MINISAT;
-        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
+        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 2'048;
         configuration.miniSatSolverConfiguration.vsidsScoreType = MiniSatVsidsScoreTypeEnum::D4_V2;
 
         process(configuration, false);
@@ -357,12 +357,12 @@ namespace CaraTest::SharpSolver {
     /**
      * SAT solver - MiniSat
      *      VSIDS score: D4v2
-     *      frequency decay: 8192
+     *      frequency decay: 8'192
      */
-    TEST_CASE("[SharpSolver] SAT solver - MiniSat (VSIDS score: D4v2, frequency decay: 8192)", "[SharpSolver]") {
+    TEST_CASE("[SharpSolver] SAT solver - MiniSat (VSIDS score: D4v2, frequency decay: 8'192)", "[SharpSolver]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.satSolverType = SatSolverTypeEnum::MINISAT;
-        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 8192;
+        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 8'192;
         configuration.miniSatSolverConfiguration.vsidsScoreType = MiniSatVsidsScoreTypeEnum::D4_V2;
 
         process(configuration, false);
@@ -469,12 +469,12 @@ namespace CaraTest::SharpSolver {
     /**
      * SAT solver - Glucose
      *      VSIDS score: D4v2
-     *      frequency decay: 2048
+     *      frequency decay: 2'048
      */
-    TEST_CASE("[SharpSolver] SAT solver - Glucose (VSIDS score: D4v2, frequency decay: 2048)", "[SharpSolver]") {
+    TEST_CASE("[SharpSolver] SAT solver - Glucose (VSIDS score: D4v2, frequency decay: 2'048)", "[SharpSolver]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.satSolverType = SatSolverTypeEnum::GLUCOSE;
-        configuration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
+        configuration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 2'048;
         configuration.glucoseSolverConfiguration.vsidsScoreType = GlucoseVsidsScoreTypeEnum::D4_V2;
 
         process(configuration, false);
@@ -483,12 +483,12 @@ namespace CaraTest::SharpSolver {
     /**
      * SAT solver - Glucose
      *      VSIDS score: D4v2
-     *      frequency decay: 8192
+     *      frequency decay: 8'192
      */
-    TEST_CASE("[SharpSolver] SAT solver - Glucose (VSIDS score: D4v2, frequency decay: 8192)", "[SharpSolver]") {
+    TEST_CASE("[SharpSolver] SAT solver - Glucose (VSIDS score: D4v2, frequency decay: 8'192)", "[SharpSolver]") {
         SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
         configuration.satSolverType = SatSolverTypeEnum::GLUCOSE;
-        configuration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 8192;
+        configuration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 8'192;
         configuration.glucoseSolverConfiguration.vsidsScoreType = GlucoseVsidsScoreTypeEnum::D4_V2;
 
         process(configuration, false);

@@ -98,7 +98,7 @@ namespace BellaTest::Compiler {
 
         // SAT solver
         configuration.satSolverType = SatSolverTypeEnum::MINISAT;
-        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
+        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 2'048;
         configuration.miniSatSolverConfiguration.vsidsScoreType = MiniSatVsidsScoreTypeEnum::D4_V2;
 
         // Decision heuristic
