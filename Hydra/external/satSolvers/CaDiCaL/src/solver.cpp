@@ -1094,6 +1094,16 @@ namespace CaDiCaL {
         return res;
     }
 
+    // ADDED
+    int Solver::assumption_trail_value(int lit) const {
+        TRACE("assumption_trail_value", lit);
+        REQUIRE_VALID_STATE();
+        REQUIRE_VALID_LIT(lit);
+        int res = external->assumption_trail_value(lit);
+        LOG_API_CALL_RETURNS("assumption_trail_value", lit, res);
+        return res;
+    }
+
     void Solver::phase(int lit) {
         TRACE("phase", lit);
         REQUIRE_VALID_OR_SOLVING_STATE();

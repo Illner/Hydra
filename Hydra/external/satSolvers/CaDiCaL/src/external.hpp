@@ -329,6 +329,7 @@ namespace CaDiCaL {
         int solve(bool preprocess_only);
         int solve_restricted(const std::vector<int>& evars);   // ADDED
         int trail_value(int elit) const;                       // ADDED
+        int assumption_trail_value(int elit) const;            // ADDED
         void trail_above_root(std::vector<int>& elits);        // ADDED
 
         // We call it 'ival' as abbreviation for 'val' with 'int' return type to

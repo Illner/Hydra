@@ -1,6 +1,7 @@
 // NEW_FILE
 // Tests the persistent assumptions ('push_assumption', 'pop_assumption'),
-// 'implied_by_last_assumption', 'trail_value' and 'trail_above_root' of
+// 'implied_by_last_assumption', 'trail_value', 'assumption_trail_value'
+// and 'trail_above_root' of
 // this fork (the checks do not depend on 'assert', so they also run in
 // optimized builds), first on
 // small fixed formulas, then on random formulas against reference solvers
@@ -130,6 +131,38 @@ static void test_implied() {
     CHECK(s.trail_value(2) == 0);
     CHECK(s.trail_value(5) == 5);
     s.pop_assumption(4);
+}
+
+static void test_assumption_trail_value() {
+    // After a satisfiable 'solve' the model is still on the trail, but only
+    // the root level and the levels of the persistent assumptions count.
+    Solver s;
+    s.set("lucky", 0);
+    s.clause(-1, 2);
+    s.clause(-2, 3);
+    s.clause(4);      // root-level unit
+    s.clause(5, 6);   // decided by 'solve'
+    s.clause(7, 8);   // decided by 'solve'
+    for (int v = 1; v <= 8; v++)
+        s.freeze(v);
+    s.push_assumption(1);
+    CHECK(s.propagate() == 0);
+    for (int v = 1; v <= 8; v++)   // nothing above the assumptions
+        CHECK(s.assumption_trail_value(v) == s.trail_value(v));
+    CHECK(s.solve() == 10);
+    CHECK(s.assumption_trail_value(1) == 1);    // the assumption
+    CHECK(s.assumption_trail_value(-2) == 2);   // implied by it
+    CHECK(s.assumption_trail_value(3) == 3);
+    CHECK(s.assumption_trail_value(4) == 4);   // root-level unit
+    for (int v = 5; v <= 8; v++) {
+        CHECK(s.trail_value(v));   // the model
+        CHECK(!s.assumption_trail_value(v));
+    }
+    s.pop_assumption(1);
+    CHECK(s.propagate() == 0);
+    for (int v = 1; v <= 3; v++)
+        CHECK(!s.assumption_trail_value(v));
+    CHECK(s.assumption_trail_value(4) == 4);
 }
 
 static void test_trail_above_root() {
@@ -473,7 +506,11 @@ static void test_compaction() {
         CHECK(s.fixed(v) == 1);
         CHECK(s.trail_value(v) == v);
         CHECK(s.trail_value(-v) == v);
+        CHECK(s.assumption_trail_value(v) == v);
+        CHECK(s.assumption_trail_value(-v) == v);
     }
+    CHECK(s.trail_value(14));               // decided by 'solve'
+    CHECK(!s.assumption_trail_value(14));   // above the assumptions
     vector<int> last;
     s.push_assumption(4);   // already fixed
     CHECK(s.propagate() != 20);
@@ -530,6 +567,43 @@ static int reference(const vector<vector<int>>& clauses,
     if (extra)
         r.assume(extra);
     return r.solve();
+}
+
+// Unit propagation over the clauses under the assumptions (a reference for
+// 'assumption_trail_value'): false on a conflict, otherwise 'value[v]' is 1
+// or -1 if variable 'v' is assigned, and 0 if not.
+
+static bool unit_propagation(const vector<vector<int>>& clauses,
+                             const vector<int>& assumptions, int n,
+                             vector<signed char>& value) {
+    value.assign(n + 1, 0);
+    for (const auto& lit : assumptions) {
+        const signed char tmp = lit > 0 ? 1 : -1;
+        if (value[abs(lit)] == -tmp)
+            return false;
+        value[abs(lit)] = tmp;
+    }
+    for (bool changed = true; changed;) {
+        changed = false;
+        for (const auto& c : clauses) {
+            int unassigned = 0, last = 0;
+            bool satisfied = false;
+            for (const auto& lit : c) {
+                const signed char tmp = value[abs(lit)];
+                if (!tmp)
+                    unassigned++, last = lit;
+                else if ((tmp > 0) == (lit > 0))
+                    satisfied = true;
+            }
+            if (satisfied)
+                continue;
+            if (!unassigned)
+                return false;
+            if (unassigned == 1)
+                value[abs(last)] = last > 0 ? 1 : -1, changed = true;
+        }
+    }
+    return true;
 }
 
 static int find_root(vector<int>& uf, int x) {
@@ -690,13 +764,27 @@ static void test_random(int seeds) {
             else if (op < 6) {
                 const int res = s.solve();
                 CHECK(res == reference(clauses, stack));
-                if (res == 10)
+                if (res == 10) {
                     for (const auto& c : clauses) {
                         bool satisfied = false;
                         for (const auto& lit : c)
                             satisfied |= s.val(lit) == lit;
                         CHECK(satisfied);
                     }
+                    // The assignment under the assumptions without the model: it
+                    // contains unit propagation over the clauses, and every other
+                    // literal is implied by the assumptions (learned clauses), so it
+                    // is never a decision of the model.
+                    vector<signed char> value;
+                    CHECK(unit_propagation(clauses, stack, n, value));
+                    for (int v = 1; v <= n; v++) {
+                        const int lit = s.assumption_trail_value(v);
+                        if (value[v])
+                            CHECK(lit == (value[v] > 0 ? v : -v));
+                        else if (lit)
+                            CHECK(reference(clauses, stack, -lit) == 20);
+                    }
+                }
             }
             else if (op < 8) {   // restricted on components of the residual
                 if (s.propagate() == 20) {
@@ -805,6 +893,7 @@ int main() {
     test_push_pop();
     test_duplicates();
     test_implied();
+    test_assumption_trail_value();
     test_trail_above_root();
     test_extension_variables();
     test_reset_assumptions();

@@ -748,6 +748,31 @@ namespace CaDiCaL {
                                         : 0;
     }
 
+    // ADDED
+    // As 'trail_value', but literals on decision levels above the persistent
+    // assumptions (each of which has its own level) count as unassigned.
+    // Correctness: after a satisfiable 'solve' the model is still on the trail,
+    // so 'trail_value' gives the model instead of the assignment under the
+    // assumptions (Hydra prints the current formula in its debug output).  The
+    // representative of the fixed variables is assigned on the root level.
+
+    int External::assumption_trail_value(int elit) const {
+        assert(elit);
+        assert(elit != INT_MIN);
+        const int eidx = abs(elit);
+        if (eidx > max_var)
+            return 0;
+        int ilit = e2i[eidx];
+        if (!ilit)
+            return 0;
+        if (elit < 0)
+            ilit = -ilit;
+        const signed char tmp = internal->val(ilit);
+        if (!tmp || internal->var(ilit).level > (int)internal->persistent)
+            return 0;
+        return tmp > 0 ? elit : -elit;
+    }
+
     void External::terminate() { internal->terminate(); }
 
     int External::lookahead() {
