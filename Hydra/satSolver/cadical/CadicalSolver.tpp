@@ -32,7 +32,7 @@ namespace Hydra::SatSolver::Cadical {
         ReduceOptTypeEnum reduceOptTypeCadical = ReduceOptTypeEnum::LOG_OF_CONFLICTS;
 
         /**
-         * The base interval for learned-clause reduction, that is, the constant in the schedule selected by reduceOpt
+         * The base interval for learned-clause reduction, that is, the constant in the schedule selected by reduceOptTypeCadical (reduceopt)
          * Values: from 2 to 1'000'000
          * Note: larger values mean fewer reductions, that is, more learned clauses are kept
          * CaDiCaL option (default): reduceint (25)
