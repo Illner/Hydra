@@ -32,7 +32,7 @@ namespace Hydra::SatSolver::Cadical {
         ReduceOptTypeEnum reduceOptTypeCadical = ReduceOptTypeEnum::LOG_OF_CONFLICTS;
 
         /**
-         * The base interval for learned-clause reduction, that is, the constant in the schedule selected by reduceOpt.
+         * The base interval for learned-clause reduction, that is, the constant in the schedule selected by reduceOpt
          * Values: from 2 to 1'000'000
          * Note: larger values mean fewer reductions, that is, more learned clauses are kept
          * CaDiCaL option (default): reduceint (25)
@@ -54,7 +54,7 @@ namespace Hydra::SatSolver::Cadical {
         /**
          * Restart schedule. Set to
          * (false) for restarts depending on the glue of the recently learned clauses (Glucose-style),
-         * (true) for restarts following the reluctant doubling sequence, that is, the Luby sequence (1, 1, 2, 1, 1, 2, 4, ...) times reluctantint (that is, 1024) conflicts, where the sequence starts over when it reaches reluctantmax (that is, 1048576).
+         * (true) for restarts following the reluctant doubling sequence, that is, the Luby sequence (1, 1, 2, 1, 1, 2, 4, ...) times reluctantint (that is, 1024) conflicts, where the sequence starts over when it reaches reluctantmax (that is, 1'048'576).
          * Note: the sequence starts over with every call of CaDiCaL, so with true, a call with fewer than 1024 conflicts never restarts
          * CaDiCaL option (default): reluctant (true)
          */
