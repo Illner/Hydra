@@ -9,10 +9,10 @@ namespace Hydra::SatSolver::Cadical {
      * CaDiCaL option: shrink
      */
     enum class ShrinkTypeEnum {
-        NONE = 0,                                                     // no shrinking (only minimization, if enabled)
-        BINARY_REASON_CLAUSES = 1,                                    // shrinking using only binary reason clauses
-        ALL_REASON_CLAUSES = 2,                                       // shrinking using all reason clauses
-        ALL_REASON_CLAUSES_AND_MINIMIZING_LOWER_DECISION_LEVELS = 3   // shrinking using all reason clauses, and minimizing literals of lower decision levels instead of giving up
+        NONE = 0,                                     // no shrinking (only minimization, if enabled)
+        BINARY_REASON_CLAUSES = 1,                    // shrinking using only binary reason clauses
+        ALL_REASON_CLAUSES = 2,                       // shrinking using all reason clauses
+        ALL_REASON_CLAUSES_MINIMIZING_PULLED_IN = 3   // shrinking using all reason clauses, trying to minimize pulled-in lower-level literals
     };
 
     inline std::string shrinkTypeEnumToString(ShrinkTypeEnum shrinkType) noexcept {
@@ -23,8 +23,8 @@ namespace Hydra::SatSolver::Cadical {
                 return "shrinking using only binary reason clauses";
             case ShrinkTypeEnum::ALL_REASON_CLAUSES:
                 return "shrinking using all reason clauses";
-            case ShrinkTypeEnum::ALL_REASON_CLAUSES_AND_MINIMIZING_LOWER_DECISION_LEVELS:
-                return "shrinking using all reason clauses, and minimizing literals of lower decision levels instead of giving up";
+            case ShrinkTypeEnum::ALL_REASON_CLAUSES_MINIMIZING_PULLED_IN:
+                return "shrinking using all reason clauses, trying to minimize pulled-in lower-level literals";
             default:
                 return "name not set";
         }

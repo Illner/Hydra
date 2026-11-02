@@ -70,9 +70,9 @@ namespace Hydra::SatSolver::Cadical {
 
         /**
          * Shrinking of the learned clauses, that is, the literals of each decision level are replaced by a single literal if possible
-         * CaDiCaL option (default): shrink (ALL_REASON_CLAUSES_AND_MINIMIZING_LOWER_DECISION_LEVELS)
+         * CaDiCaL option (default): shrink (ALL_REASON_CLAUSES_MINIMIZING_PULLED_IN)
          */
-        ShrinkTypeEnum shrinkTypeCadical = ShrinkTypeEnum::ALL_REASON_CLAUSES_AND_MINIMIZING_LOWER_DECISION_LEVELS;
+        ShrinkTypeEnum shrinkTypeCadical = ShrinkTypeEnum::ALL_REASON_CLAUSES_MINIMIZING_PULLED_IN;
 
         /**
          * Phases used for the decisions. Set to
