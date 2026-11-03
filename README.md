@@ -79,15 +79,14 @@ The corresponding binaries are in the locations mentioned above.
 
 ### SAT Solvers
 
+* [CaDiCaL 3.0.1 (Hydra version)](https://github.com/Illner/CaDiCaL)  
+  `Hydra/external/satSolvers/CaDiCaL`
+
 * [MiniSat 2.2.0 (d4v2 version)](https://github.com/crillab/d4v2)  
   `Hydra/external/satSolvers/MiniSat_d4`
 
 * [Glucose 3.0 (d4v2 version)](https://github.com/crillab/d4v2)  
   `Hydra/external/satSolvers/Glucose_d4`
-
-* [CaDiCaL 3.0.1 (Hydra version)](https://github.com/arminbiere/cadical)  
-  _work in progress_  
-  `Hydra/external/satSolvers/CaDiCaL`
 
 * [MiniSat 2.2.0](https://github.com/niklasso/minisat)  
   _implemented, not used_  
