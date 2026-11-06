@@ -158,6 +158,20 @@ namespace Hydra::SatSolver::Cadical {
 
         VsidsScoreType getVsidsScore(VarT variable) const override;
 
+    private:
+        class CurrentFormulaPrinter final : public CadicalCore::ClauseIterator {
+        public:
+            explicit CurrentFormulaPrinter(const CadicalSolverType& cadicalSolver, std::ostream& out = std::cout)
+                : out_(out), cadicalSolver_(cadicalSolver) { }
+
+        private:
+            std::ostream& out_;
+            const CadicalSolverType& cadicalSolver_;
+
+        public:
+            bool clause(const LiteralCadicalVectorType& clauseCadical) override;
+        };
+
     #ifndef NDEBUG
     private:
         /**
