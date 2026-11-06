@@ -110,7 +110,7 @@ namespace Hydra::SatSolver::Cadical {
         static VariableCadicalType convertLiteralCadicalToVariableCadical(LiteralCadicalType literalCadical);
 
         /**
-         * Bump the Hydra VSIDS score of the variables on the trail when unsatisfiability is found
+         * Bump the Hydra VSIDS scores of the variables on the trail when unsatisfiability is found
          * Local auxiliary data structures:
          *      l_trailLiteralCadicalVector_bumpHydraVsidsScore_
          */
