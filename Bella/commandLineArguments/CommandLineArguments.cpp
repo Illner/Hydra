@@ -15,6 +15,7 @@
 
 #include "Hydra/cache/cachingScheme/enums/OmitClauseTypeEnum.hpp"
 #include "Hydra/cache/enums/CacheTypeEnum.hpp"
+#include "Hydra/satSolver/glucose/enums/VsidsScoreTypeEnum.hpp"
 #include "Hydra/satSolver/minisat/enums/VsidsScoreTypeEnum.hpp"
 
 #include "Hydra/compiler/Compiler.tpp"
