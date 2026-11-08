@@ -10,6 +10,10 @@ add_executable(BellaCompiler "Bella.cpp"
 
 copy_shmetis_windows(BellaCompiler)
 
-set_target_properties(BellaCompiler PROPERTIES OUTPUT_NAME "Bella")
+IF (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set_target_properties(BellaCompiler PROPERTIES OUTPUT_NAME "Bella_debug")
+ELSE ()
+    set_target_properties(BellaCompiler PROPERTIES OUTPUT_NAME "Bella")
+ENDIF ()
 
 target_link_libraries(BellaCompiler PRIVATE HydraLibrary)

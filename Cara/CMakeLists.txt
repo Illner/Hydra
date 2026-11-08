@@ -10,6 +10,10 @@ add_executable(CaraSolver "Cara.cpp"
 
 copy_shmetis_windows(CaraSolver)
 
-set_target_properties(CaraSolver PROPERTIES OUTPUT_NAME "Cara")
+IF (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set_target_properties(CaraSolver PROPERTIES OUTPUT_NAME "Cara_debug")
+ELSE ()
+    set_target_properties(CaraSolver PROPERTIES OUTPUT_NAME "Cara")
+ENDIF ()
 
 target_link_libraries(CaraSolver PRIVATE HydraLibrary)

@@ -114,12 +114,12 @@ ENDIF ()
 add_subdirectory(Hydra)
 
 # Add Bella
-IF (BUILD_BELLA)
+IF (BUILD_BELLA AND NOT BUILD_TEST)
     add_subdirectory(Bella)
 ENDIF ()
 
 # Add Cara
-IF (BUILD_CARA)
+IF (BUILD_CARA AND NOT BUILD_TEST)
     add_subdirectory(Cara)
 ENDIF ()
 
