@@ -29,7 +29,7 @@ namespace Hydra::SatSolver::Cadical {
          * The schedule for learned-clause reduction, that is, the number of conflicts after a reduction until the next one
          * CaDiCaL option (default): reduceopt (SQRT_OF_CONFLICTS)
          */
-        ReduceOptTypeEnum reduceOptTypeCadical = ReduceOptTypeEnum::LOG_OF_CONFLICTS;
+        ReduceOptTypeEnum reduceOptTypeCadical = ReduceOptTypeEnum::SQRT_OF_CONFLICTS;
 
         /**
          * The base interval for learned-clause reduction, that is, the constant in the schedule selected by reduceOptTypeCadical (reduceopt)
