@@ -49,7 +49,7 @@ namespace Hydra::SatSolver::Cadical {
          * Note: no variable is eliminated or substituted, since all variables are frozen
          * CaDiCaL function, argument (default): simplify, rounds (3)
          */
-        int maximumNumberOfPreprocessingRoundsForSimplificationCadical = 3;
+        int maximumNumberOfPreprocessingRoundsForSimplificationCadical = 1;
 
         /**
          * Restart schedule. Set to
