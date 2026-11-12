@@ -725,9 +725,15 @@ namespace CaDiCaL {
         /*----------------------------------------------------------------------*/
         // tier 1 and tier 2 limits
         if (incremental && opts.recomputetier) {
-            for (auto m : { true, false })
+            for (auto m : { true, false }) {   // CHANGED
+                // ADDED (performance): 'bump_clause' increments 'used' together with
+                // 'bump_used', so a histogram with zero 'bump_used' is already zero
+                // (this runs on every 'propagate' and 'solve' call).
+                if (!stats.bump_used[m])   // ADDED
+                    continue;              // ADDED
                 for (auto& u : stats.used[m])
                     u = 0;
+            }   // ADDED
             stats.bump_used = { 0, 0 };
             for (auto u : { true, false }) {
                 tier1[u] = max(tier1[u], opts.tier1minglue ? opts.tier1minglue : 2);

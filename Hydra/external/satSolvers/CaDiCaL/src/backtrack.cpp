@@ -21,10 +21,16 @@ namespace CaDiCaL {
         // ADDED (correctness): during 'solve_restricted' only the restricted
         // variables go back on the heap, and they are counted as unassigned (see
         // 'restricted_satisfied').
+        //
+        // ADDED (performance): outside of 'solve_restricted' a restricted heap is
+        // rebuilt by the next 'restrict_scores' and completed by
+        // 'unrestrict_scores' before any other search, so backtracking in
+        // 'push_assumption', 'pop_assumption' and 'propagate' skips it.
         const bool on_heap = !restricted || flags(idx).restricted;   // ADDED
         if (restricted && on_heap)                                   // ADDED
             restricted_unassigned++;                                 // ADDED
-        if (on_heap && !scores.contains(idx))                        // CHANGED
+        const bool skip_heap = !restricted && scores_restricted;     // ADDED
+        if (on_heap && !skip_heap && !scores.contains(idx))          // CHANGED
             scores.push_back(idx);
 
         // For VMTF we need to update the 'queue.unassigned' pointer in case this

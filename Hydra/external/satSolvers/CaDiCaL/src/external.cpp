@@ -562,14 +562,16 @@ namespace CaDiCaL {
 
     // ADDED
     void External::implied_by_last_assumption(std::vector<int>& trailed) {
-        std::vector<int> ilit_implicants;
-        internal->implied_by_last_assumption(ilit_implicants);
+        // Performance: the member 'implied_ilits' keeps its capacity, while a
+        // local vector grew from empty on every call.
+        implied_ilits.clear();
+        internal->implied_by_last_assumption(implied_ilits);
 
         // Filtered as in 'implied' above.
 
         trailed.clear();
 
-        for (const auto& ilit : ilit_implicants) {
+        for (const auto& ilit : implied_ilits) {
             assert(ilit);
             const int elit = internal->externalize(ilit);
             const int eidx = abs(elit);

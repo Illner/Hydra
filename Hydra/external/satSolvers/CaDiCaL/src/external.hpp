@@ -98,6 +98,10 @@ namespace CaDiCaL {
 
         vector<unsigned> frozentab;   // Reference counts for frozen variables.
 
+        // ADDED (performance): buffer of 'implied_by_last_assumption', reused
+        // instead of a temporary vector on every call (allocations).
+        vector<int> implied_ilits;
+
         // Regularly checked terminator if non-zero.  The terminator is set from
         // 'Solver::set (Terminator *)' and checked by 'Internal::terminating ()'.
 
