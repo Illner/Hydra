@@ -13,6 +13,7 @@
 
 #include "Hydra/cache/cachingScheme/enums/PreprocessingTypeEnum.hpp"
 #include "Hydra/cache/enums/CacheTypeEnum.hpp"
+#include "Hydra/satSolver/cadical/enums/VsidsScoreTypeEnum.hpp"
 #include "Hydra/satSolver/glucose/enums/VsidsScoreTypeEnum.hpp"
 #include "Hydra/satSolver/minisat/enums/VsidsScoreTypeEnum.hpp"
 
@@ -161,6 +162,8 @@ namespace Cara::CommandLineArguments {
         commandLineArgumentsStruct.compilerConfiguration.implicitBcpVariableOrderType = Hydra::SatSolver::ImplicitBcpVariableOrderTypeEnum::CLAUSE_REDUCTION_HEURISTIC_DESCENDING;
 
         // SAT solver
+        commandLineArgumentsStruct.compilerConfiguration.cadicalSolverConfiguration.frequencyDecayHydraVsidsScore = 2'048;
+        commandLineArgumentsStruct.compilerConfiguration.cadicalSolverConfiguration.vsidsScoreType = Hydra::SatSolver::Cadical::VsidsScoreTypeEnum::HYDRA;
         commandLineArgumentsStruct.compilerConfiguration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 2'048;
         commandLineArgumentsStruct.compilerConfiguration.miniSatSolverConfiguration.vsidsScoreType = Hydra::SatSolver::MiniSat::VsidsScoreTypeEnum::D4_V2;
         commandLineArgumentsStruct.compilerConfiguration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 2'048;
@@ -221,8 +224,17 @@ namespace Cara::CommandLineArguments {
         bool exists = false;
         SatSolverTypeEnum satSolverType;
 
+        // CaDiCaL
+        if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, CADICAL_SAT_SOLVER_ARGUMENT)) {
+            exists = true;
+            satSolverType = SatSolverTypeEnum::CADICAL;
+        }
+
         // MiniSat
         if (Hydra::Other::Parser::CommandLineArgument::argumentExists(arguments, MINISAT_SAT_SOLVER_ARGUMENT)) {
+            if (exists)
+                throw Hydra::Exception::CommandLineArguments::MoreSatSolversAreMentionedException();
+
             exists = true;
             satSolverType = SatSolverTypeEnum::MINISAT;
         }
@@ -238,7 +250,7 @@ namespace Cara::CommandLineArguments {
 
         // No SAT solver is mentioned
         if (!exists)
-            satSolverType = SatSolverTypeEnum::MINISAT;
+            satSolverType = SatSolverTypeEnum::CADICAL;
 
         return satSolverType;
     }
@@ -309,7 +321,7 @@ namespace Cara::CommandLineArguments {
 
         // SAT solvers
         std::cout << "      ";
-        std::cout << " [ " << MINISAT_SAT_SOLVER_ARGUMENT << " | " << GLUCOSE_SAT_SOLVER_ARGUMENT << " ]";
+        std::cout << " [ " << CADICAL_SAT_SOLVER_ARGUMENT << " | " << MINISAT_SAT_SOLVER_ARGUMENT << " | " << GLUCOSE_SAT_SOLVER_ARGUMENT << " ]";
         // Preprocessing types of Cara caching scheme
         std::cout << " [ " << NONE_PREPROCESSING_TYPE_ARGUMENT << " | " << NOT_DUPLICATE_CLAUSES_PREPROCESSING_TYPE_ARGUMENT << " | " << NOT_SUBSUMED_CLAUSES_PREPROCESSING_TYPE_ARGUMENT << " ]";
         std::cout << std::endl;
@@ -328,7 +340,8 @@ namespace Cara::CommandLineArguments {
         std::cout << std::endl;
 
         std::cout << "SAT solvers:" << std::endl;
-        std::cout << "\t" << MINISAT_SAT_SOLVER_ARGUMENT << " — " << Hydra::SatSolver::satSolverTypeEnumToString(Hydra::SatSolver::SatSolverTypeEnum::MINISAT) << " (default)" << std::endl;
+        std::cout << "\t" << CADICAL_SAT_SOLVER_ARGUMENT << " — " << Hydra::SatSolver::satSolverTypeEnumToString(Hydra::SatSolver::SatSolverTypeEnum::CADICAL) << " (default)" << std::endl;
+        std::cout << "\t" << MINISAT_SAT_SOLVER_ARGUMENT << " — " << Hydra::SatSolver::satSolverTypeEnumToString(Hydra::SatSolver::SatSolverTypeEnum::MINISAT) << std::endl;
         std::cout << "\t" << GLUCOSE_SAT_SOLVER_ARGUMENT << " — " << Hydra::SatSolver::satSolverTypeEnumToString(Hydra::SatSolver::SatSolverTypeEnum::GLUCOSE) << std::endl;
         std::cout << std::endl;
 
