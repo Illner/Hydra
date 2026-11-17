@@ -58,10 +58,13 @@ namespace CaraTest::SharpSolver {
     using NumberOfModelsType = Hydra::Compiler<VarT, LiteralT, ClauseIdT>::NumberOfModelsType;
 
     using CircuitTypeEnum = Hydra::CompilerConfiguration::CircuitTypeEnum;
+    using CadicalShrinkTypeEnum = Hydra::SatSolver::Cadical::ShrinkTypeEnum;
     using SatSolverTypeEnum = Hydra::CompilerConfiguration::SatSolverTypeEnum;
     using OmitClauseTypeEnum = Hydra::Cache::CachingScheme::OmitClauseTypeEnum;
     using FormulaInstanceEnum = HydraTest::FormulaInstance::FormulaInstanceEnum;
     using HypergraphPartitioningTypeEnum = Hydra::HypergraphPartitioningTypeEnum;
+    using CadicalReduceOptTypeEnum = Hydra::SatSolver::Cadical::ReduceOptTypeEnum;
+    using CadicalVsidsScoreTypeEnum = Hydra::SatSolver::Cadical::VsidsScoreTypeEnum;
     using GlucoseVsidsScoreTypeEnum = Hydra::SatSolver::Glucose::VsidsScoreTypeEnum;
     using MiniSatVsidsScoreTypeEnum = Hydra::SatSolver::MiniSat::VsidsScoreTypeEnum;
     using VertexWeightTypeEnum = Hydra::CompilerConfiguration::VertexWeightTypeEnum;
