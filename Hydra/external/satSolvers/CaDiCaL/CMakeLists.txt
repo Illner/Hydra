@@ -16,7 +16,7 @@ add_library(CaDiCaLLibrary OBJECT ${CADICAL_SOURCE_FILES})
 # No warnings
 target_compile_options(CaDiCaLLibrary PRIVATE -w)
 
-target_compile_definitions(CaDiCaLLibrary PRIVATE NBUILD)
+target_compile_definitions(CaDiCaLLibrary PRIVATE NBUILD QUIET)
 
 IF (CMAKE_SYSTEM_NAME STREQUAL "CYGWIN")
     target_compile_definitions(CaDiCaLLibrary PRIVATE _GNU_SOURCE NCLOSEFROM)
