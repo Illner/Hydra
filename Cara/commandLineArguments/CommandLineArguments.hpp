@@ -30,6 +30,7 @@ namespace Cara::CommandLineArguments {
     inline constexpr ArgumentNameType PATOH_HMETIS_HYPERGRAPH_PARTITIONING_ARGUMENT = "-ph";
 
     // SAT solvers
+    inline constexpr ArgumentNameType CADICAL_SAT_SOLVER_ARGUMENT = "-c";
     inline constexpr ArgumentNameType MINISAT_SAT_SOLVER_ARGUMENT = "-m";
     inline constexpr ArgumentNameType GLUCOSE_SAT_SOLVER_ARGUMENT = "-g";
 

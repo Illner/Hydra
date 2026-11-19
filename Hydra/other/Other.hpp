@@ -67,10 +67,11 @@ namespace Hydra::Other {
     inline bool unsignedValueCanBeSavedAsTypeT(LargeNumberType unsignedValue) noexcept;
 
     /**
-     * @return true if int can be used for saving unsignedValue. Otherwise, false is returned.
+     * @param increase an increase
+     * @return true if int can be used for saving (unsignedValue + increase). Otherwise, false is returned.
      */
     template <typename TypeT>
-    inline bool unsignedValueCanBeSavedAsInt(TypeT unsignedValue) noexcept;
+    inline bool unsignedValueCanBeSavedAsInt(TypeT unsignedValue, LargeNumberType increase = 0) noexcept;
 
     /**
      * @param increase an increase

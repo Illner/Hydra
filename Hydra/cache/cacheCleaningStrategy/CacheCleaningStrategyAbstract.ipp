@@ -83,8 +83,8 @@ namespace Hydra::Cache::CacheCleaningStrategy {
 
         if (cachePtr_) {
             out << "Size (bytes): " << std::to_string(this->cachePtr_->cacheCleaningStrategyByteSize_) << std::endl;
-            out << "The maximum size (in bytes) of a strategy overhead: " << std::to_string(maxByteSizeStrategyOverhead_) << std::endl;
-            out << "The maximum size (in bytes) of an entry (including strategy overhead): " << std::to_string(maxByteSizeEntryWithStrategyOverhead_) << std::endl;
+            out << "Maximum size (in bytes) of a strategy overhead: " << std::to_string(maxByteSizeStrategyOverhead_) << std::endl;
+            out << "Maximum size (in bytes) of an entry (including strategy overhead): " << std::to_string(maxByteSizeEntryWithStrategyOverhead_) << std::endl;
         }
 
         out << "Cache pointer: ";

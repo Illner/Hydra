@@ -22,7 +22,7 @@
 namespace Cara {
 
     void printModelCountingOutputForModelCountingCompetition(const MpzIntType& numberOfModels, LargeFloatingNumberType computingTime) {
-        bool satisfiable = (numberOfModels != 0);
+        bool isSatisfiable = (numberOfModels > 0);
 
         // Computing time
         if (computingTime != 0)
@@ -30,7 +30,7 @@ namespace Cara {
 
         // s SATISFIABLE|UNSATISFIABLE|UNKNOWN
         std::cout << "s ";
-        if (satisfiable)
+        if (isSatisfiable)
             std::cout << "SATISFIABLE";
         else
             std::cout << "UNSATISFIABLE";
@@ -41,7 +41,7 @@ namespace Cara {
 
         // c s [log10-estimate|neglog10-estimate] VALUE
         std::cout << "c s log10-estimate ";
-        if (satisfiable) {
+        if (isSatisfiable) {
             boost::multiprecision::mpf_float::default_precision(128);
             std::cout.precision(std::numeric_limits<boost::multiprecision::cpp_dec_float_50>::digits10);
             std::cout << boost::multiprecision::log10(boost::multiprecision::cpp_dec_float_100(numberOfModels));
@@ -52,7 +52,7 @@ namespace Cara {
 
         // c s SOLVERTYPE PRECISION NOTATION VALUE
         std::cout << "c s exact arb int ";
-        if (satisfiable)
+        if (isSatisfiable)
             std::cout << numberOfModels;
         else
             std::cout << "0";

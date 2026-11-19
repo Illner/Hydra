@@ -17,8 +17,8 @@ namespace Hydra::Circuit::Node {
         PartialAssignmentType partialAssignmentCopy = partialAssignment;
 
         // Initial unit propagation (full assignment)
-        bool result = this->unitPropagation(partialAssignmentCopy);
-        if (!result)
+        bool noContradiction = this->unitPropagation(partialAssignmentCopy);
+        if (!noContradiction)
             return false;
 
         for (VarT var : variableSet) {
@@ -30,9 +30,9 @@ namespace Hydra::Circuit::Node {
             LiteralType litPos(var, true);
             PartialAssignmentType partialAssignmentCopyTmp = partialAssignmentCopy;
             partialAssignmentCopyTmp.addLiteral(litPos);
-            result = this->unitPropagation(partialAssignmentCopyTmp);
+            noContradiction = this->unitPropagation(partialAssignmentCopyTmp);
 
-            if (result) {
+            if (noContradiction) {
                 partialAssignmentCopy = std::move(partialAssignmentCopyTmp);
                 continue;
             }
@@ -41,9 +41,9 @@ namespace Hydra::Circuit::Node {
             LiteralType litNeg(var, false);
             partialAssignmentCopyTmp = partialAssignmentCopy;
             partialAssignmentCopyTmp.addLiteral(litNeg);
-            result = this->unitPropagation(partialAssignmentCopyTmp);
+            noContradiction = this->unitPropagation(partialAssignmentCopyTmp);
 
-            if (result) {
+            if (noContradiction) {
                 partialAssignmentCopy = std::move(partialAssignmentCopyTmp);
                 continue;
             }

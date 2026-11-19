@@ -31,6 +31,7 @@
 #include "Hydra/hypergraphPartitioning/hmetis/HmetisHypergraphPartitioning.tpp"
 #include "Hydra/hypergraphPartitioning/kahypar/KahyparHypergraphPartitioning.tpp"
 #include "Hydra/hypergraphPartitioning/patoh/PatohHypergraphPartitioning.tpp"
+#include "Hydra/satSolver/cadical/CadicalSolver.tpp"
 #include "Hydra/satSolver/glucose/GlucoseSolver.tpp"
 #include "Hydra/satSolver/minisat/MiniSatSolver.tpp"
 
@@ -41,6 +42,7 @@ namespace Hydra {
      */
     struct CompilerConfiguration {
     public:
+        using CadicalSolverConfigurationType = SatSolver::Cadical::CadicalSolverConfiguration;
         using GlucoseSolverConfigurationType = SatSolver::Glucose::GlucoseSolverConfiguration;
         using MiniSatSolverConfigurationType = SatSolver::MiniSat::MiniSatSolverConfiguration;
         using CaraCachingSchemeConfigurationType = Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration;
@@ -113,6 +115,7 @@ namespace Hydra {
          * SAT solver
          */
         SatSolverTypeEnum satSolverType = SatSolverTypeEnum::MINISAT;
+        CadicalSolverConfigurationType cadicalSolverConfiguration;
         GlucoseSolverConfigurationType glucoseSolverConfiguration;
         MiniSatSolverConfigurationType miniSatSolverConfiguration;
 

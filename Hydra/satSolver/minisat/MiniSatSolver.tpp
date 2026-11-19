@@ -21,6 +21,6 @@ namespace Hydra::SatSolver::MiniSat {
         /**
          * Frequency decay for D4v2 VSIDS score
          */
-        LargeNumberType frequencyDecayD4v2VsidsScore = 2048;
+        LargeNumberType frequencyDecayD4v2VsidsScore = 2'048;
     };
 }   // namespace Hydra::SatSolver::MiniSat

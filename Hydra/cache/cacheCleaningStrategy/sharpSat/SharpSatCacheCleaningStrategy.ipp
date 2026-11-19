@@ -221,7 +221,7 @@ namespace Hydra::Cache::CacheCleaningStrategy::SharpSat {
         // Configuration
         out << "Reset time: " << std::to_string(configuration_.resetTime) << std::endl;
         out << "Percentage of entries that will be deleted: " << std::to_string(configuration_.percentageOfDeletedEntries) << std::endl;
-        out << "The maximum size (in bytes) of the cache: " << std::to_string(configuration_.maxByteSizeCache) << std::endl;
+        out << "Maximum size (in bytes) of the cache: " << std::to_string(configuration_.maxByteSizeCache) << std::endl;
 
         out << "Mapping from ID to time" << std::endl;
         printMappingFromIdToTimeDebug(out);

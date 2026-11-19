@@ -27,7 +27,6 @@ namespace Hydra::SatSolver::Glucose {
      * Glucose solver (final class)
      * Exceptions:
      *      SomethingCannotBeSavedAsIntException
-     *      SomethingCannotBeSavedAsStdSizeTException
      * @tparam VarT type used for a variable
      * @tparam LiteralT type used for a literal
      * @tparam ClauseIdT type used for a clause identifier
@@ -35,74 +34,64 @@ namespace Hydra::SatSolver::Glucose {
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     class GlucoseSolver final : public SatSolverAbstract<VarT, LiteralT, ClauseIdT> {
     private:
-        using LiteralType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
-        using BoolVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::BoolVectorType;
-        using VariableSetType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::VariableSetType;
-        using LiteralVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralVectorType;
-        using LiteralReusableVectorType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralReusableVectorType;
-        using SatSolverStatisticsPtrType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::SatSolverStatisticsPtrType;
-        using FormulaRepresentationAbstractPtrType = typename SatSolverAbstract<VarT, LiteralT, ClauseIdT>::FormulaRepresentationAbstractPtrType;
+        using LiteralType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
+        using VariableSetType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::VariableSetType;
+        using LiteralVectorType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralVectorType;
+        using LiteralReusableVectorType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralReusableVectorType;
+        using SatSolverStatisticsPtrType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::SatSolverStatisticsPtrType;
+        using FormulaRepresentationAbstractPtrType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::FormulaRepresentationAbstractPtrType;
 
     private:
+        using LiteralGlucoseType = GlucoseCore::Lit;
+        using VariableGlucoseType = GlucoseCore::Var;
         using GlucoseSolverType = GlucoseCore::Solver;
-        using LiteralGlucoseVectorType = GlucoseCore::vec<GlucoseCore::Lit>;
-        using VariableGlucoseVectorType = GlucoseCore::vec<GlucoseCore::Var>;
-        using LiteralGlucoseReusableVectorType = Container::ReusableVector::ReusableVector<GlucoseCore::Lit>;
+        using LiteralGlucoseVectorType = GlucoseCore::vec<LiteralGlucoseType>;
+        using VariableGlucoseVectorType = GlucoseCore::vec<VariableGlucoseType>;
+        using LiteralGlucoseReusableVectorType = Container::ReusableVector::ReusableVector<LiteralGlucoseType>;
 
     public:
-        GlucoseSolver(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr, bool computeInitiallyImpliedLiterals,
-                      const GlucoseSolverConfiguration& configuration = GlucoseSolverConfiguration(),
-                      SatSolverStatisticsPtrType satSolverStatisticsPtr = nullptr)
+        explicit GlucoseSolver(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr,
+                               const GlucoseSolverConfiguration& configuration = GlucoseSolverConfiguration(),
+                               SatSolverStatisticsPtrType satSolverStatisticsPtr = nullptr)
             : SatSolverAbstract<VarT, LiteralT, ClauseIdT>(formulaRepresentationAbstractPtr, SatSolverTypeEnum::GLUCOSE, satSolverStatisticsPtr),
-              activeModel_(false), solver_(),
-              variableAssumptionVector_(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormulaUsedForIndexing(), false),
-              configuration_(configuration),
+              activeModel_(false), configuration_(configuration),
               l_restrictedVariableGlucoseVector_processIsSatisfiable_(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula()),
-              l_firstCall_unitPropagation_(true), l_impliedLiteralGlucoseReusableVector_unitPropagation_() {
-            // The variables cannot be saved as std::size_t
-            if (!Other::unsignedValueCanBeSavedAsStdSizeT<VarT>(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula(), 1))
-                throw Exception::SomethingCannotBeSavedAsStdSizeTException("variables", this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
-
+              l_firstCall_processUnitPropagation_(true) {
             // The literals cannot be saved as int
             if (!Other::unsignedValueCanBeSavedAsInt<LiteralT>(this->formulaRepresentationAbstractPtr_->getNumberOfLiteralsInOriginalFormula()))
                 throw Exception::SomethingCannotBeSavedAsIntException("literals", this->formulaRepresentationAbstractPtr_->getNumberOfLiteralsInOriginalFormula());
 
-            // The clauses cannot be saved as std::size_t
-            if (!Other::unsignedValueCanBeSavedAsStdSizeT<ClauseIdT>(this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses()))
-                throw Exception::SomethingCannotBeSavedAsStdSizeTException("clauses", this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses());
+            // The clauses cannot be saved as int
+            if (!Other::unsignedValueCanBeSavedAsInt<ClauseIdT>(this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses()))
+                throw Exception::SomethingCannotBeSavedAsIntException("clauses", this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses());
 
             this->initializeSatSolver();
 
             solver_.setNeedModel(false);
-
-            // Compute initially implied literals
-            if (computeInitiallyImpliedLiterals)
-                this->computeAndSetInitiallyImpliedLiterals();
         }
 
     private:
         bool activeModel_;
         GlucoseSolverType solver_;
-        BoolVectorType variableAssumptionVector_;
 
         GlucoseSolverConfiguration configuration_;
 
         // Local auxiliary data structures for processIsSatisfiable
         VariableGlucoseVectorType l_restrictedVariableGlucoseVector_processIsSatisfiable_;
 
-        // Local auxiliary data structures for unitPropagation
-        bool l_firstCall_unitPropagation_;
-        LiteralGlucoseReusableVectorType l_impliedLiteralGlucoseReusableVector_unitPropagation_;
+        // Local auxiliary data structures for processUnitPropagation
+        bool l_firstCall_processUnitPropagation_;
+        LiteralGlucoseReusableVectorType l_impliedLiteralGlucoseReusableVector_processUnitPropagation_;
 
     private:
         static bool lboolIsTrue(const GlucoseCore::lbool& b);
         static bool lboolIsFalse(const GlucoseCore::lbool& b);
         static bool lboolIsUndef(const GlucoseCore::lbool& b);
 
-        static GlucoseCore::Var convertVariableToVariableGlucose(VarT variable);
-        static VarT convertVariableGlucoseToVariable(GlucoseCore::Var variableGlucose);
-        static GlucoseCore::Lit convertLiteralToLiteralGlucose(const LiteralType& literal);
-        static LiteralType convertLiteralGlucoseToLiteral(const GlucoseCore::Lit& literalGlucose);
+        static VariableGlucoseType convertVariableToVariableGlucose(VarT variable);
+        static VarT convertVariableGlucoseToVariable(VariableGlucoseType variableGlucose);
+        static LiteralGlucoseType convertLiteralToLiteralGlucose(const LiteralType& literal);
+        static LiteralType convertLiteralGlucoseToLiteral(const LiteralGlucoseType& literalGlucose);
 
         /**
          * Initialize the SAT solver
@@ -119,6 +108,10 @@ namespace Hydra::SatSolver::Glucose {
 
         bool processIsSatisfiable() override;
 
+        /**
+         * Local auxiliary data structures:
+         *      l_restrictedVariableGlucoseVector_processIsSatisfiable_
+         */
         bool processIsSatisfiable(const VariableSetType& restrictedVariableSet) override;
 
         void processGetDecisionVariableIsCalled(const VariableSetType& currentComponentVariableSet) override;
@@ -126,10 +119,13 @@ namespace Hydra::SatSolver::Glucose {
         bool processUnitPropagation(const VariableSetType& restrictedVariableSet, LiteralReusableVectorType& impliedLiteralReusableVector,
                                     bool includeAssumptions) override;
 
-        bool unitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
-                             LiteralReusableVectorType& impliedLiteralReusableVector) override;
-
-        bool isVariableAssigned(VarT variable) const override;
+        /**
+         * Local auxiliary data structures:
+         *      l_firstCall_processUnitPropagation_
+         *      l_impliedLiteralGlucoseReusableVector_processUnitPropagation_
+         */
+        bool processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
+                                    LiteralReusableVectorType& impliedLiteralReusableVector) override;
 
         VsidsScoreType getVsidsScore(VarT variable) const override;
 

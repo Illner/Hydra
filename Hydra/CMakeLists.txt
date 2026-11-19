@@ -52,6 +52,10 @@ ELSE ()
 ENDIF ()
 target_include_directories(HydraLibrary SYSTEM PUBLIC ${Boost_INCLUDE_DIRS})
 
+# CaDiCaL (Hydra version)
+add_subdirectory(external/satSolvers/CaDiCaL)
+target_link_libraries(HydraLibrary PUBLIC CaDiCaLLibrary)
+
 # GMP
 find_library(GMPLibrary NAMES gmp)
 # GMP was NOT found

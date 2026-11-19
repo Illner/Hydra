@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.14)
 
 project(Hydra
-        VERSION 2.2.2)
+        VERSION 2.3.0)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -114,12 +114,12 @@ ENDIF ()
 add_subdirectory(Hydra)
 
 # Add Bella
-IF (BUILD_BELLA)
+IF (BUILD_BELLA AND NOT BUILD_TEST)
     add_subdirectory(Bella)
 ENDIF ()
 
 # Add Cara
-IF (BUILD_CARA)
+IF (BUILD_CARA AND NOT BUILD_TEST)
     add_subdirectory(Cara)
 ENDIF ()
 

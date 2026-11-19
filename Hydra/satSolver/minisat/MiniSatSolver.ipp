@@ -20,27 +20,29 @@ namespace Hydra::SatSolver::MiniSat {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    MiniSatCore::Var MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertVariableToVariableMiniSat(VarT variable) {
+    MiniSatSolver<VarT, LiteralT, ClauseIdT>::VariableMiniSatType
+    MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertVariableToVariableMiniSat(VarT variable) {
         assert(variable > 0);   // valid variable
 
-        return static_cast<MiniSatCore::Var>(variable - 1);
+        return static_cast<VariableMiniSatType>(variable - 1);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    VarT MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertVariableMiniSatToVariable(MiniSatCore::Var variableMiniSat) {
+    VarT MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertVariableMiniSatToVariable(VariableMiniSatType variableMiniSat) {
         assert(variableMiniSat >= 0);   // valid variable
 
         return static_cast<VarT>(variableMiniSat + 1);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    MiniSatCore::Lit MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertLiteralToLiteralMiniSat(const LiteralType& literal) {
+    MiniSatSolver<VarT, LiteralT, ClauseIdT>::LiteralMiniSatType
+    MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertLiteralToLiteralMiniSat(const LiteralType& literal) {
         return MiniSatCore::mkLit(convertVariableToVariableMiniSat(literal.getVariable()), literal.isNegative());
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     typename MiniSatSolver<VarT, LiteralT, ClauseIdT>::LiteralType
-    MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertLiteralMiniSatToLiteral(const MiniSatCore::Lit& literalMiniSat) {
+    MiniSatSolver<VarT, LiteralT, ClauseIdT>::convertLiteralMiniSatToLiteral(const LiteralMiniSatType& literalMiniSat) {
         return LiteralType(convertVariableMiniSatToVariable(MiniSatCore::var(literalMiniSat)), !MiniSatCore::sign(literalMiniSat));
     }
 
@@ -50,10 +52,13 @@ namespace Hydra::SatSolver::MiniSat {
         clause.capacity(static_cast<int>(this->formulaRepresentationAbstractPtr_->getMaxOriginalClauseSize()));
 
         // Add the variables
-        for (VarT var = 1; var <= this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula(); ++var)
+        const VarT numberOfVariablesInOriginalFormula = this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula();
+        for (VarT var = 1; var <= numberOfVariablesInOriginalFormula; ++var)
             solver_.newVar();
 
-        for (ClauseIdT clauseId = 0; clauseId < this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses(); ++clauseId) {
+        // Add the clauses
+        const ClauseIdT numberOfOriginalClauses = this->formulaRepresentationAbstractPtr_->getNumberOfOriginalClauses();
+        for (ClauseIdT clauseId = 0; clauseId < numberOfOriginalClauses; ++clauseId) {
             for (auto clauseIt = this->formulaRepresentationAbstractPtr_->beginClause(clauseId);
                  clauseIt != this->formulaRepresentationAbstractPtr_->endClause(); ++clauseIt) {
                 assert(convertVariableToVariableMiniSat(clauseIt->getVariable()) < solver_.nVars());
@@ -69,12 +74,10 @@ namespace Hydra::SatSolver::MiniSat {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     void MiniSatSolver<VarT, LiteralT, ClauseIdT>::processInitialSimplification() {
-        assert(solver_.solveWithAssumptions());   // input formula is satisfiable
+        [[maybe_unused]] bool ok = solver_.simplify();
+        assert(ok);
 
-        solver_.simplify();
         solver_.remove_satisfied = false;
-
-        this->computeAndSetInitiallyImpliedLiterals();
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
@@ -82,7 +85,7 @@ namespace Hydra::SatSolver::MiniSat {
         this->initiallyImpliedLiterals_.reserve(static_cast<typename LiteralVectorType::size_type>(solver_.nAssigns()));
 
         for (int i = 0; i < solver_.trail.size(); ++i) {
-            const MiniSatCore::Lit& litMiniSat = solver_.trail[i];
+            const LiteralMiniSatType& litMiniSat = solver_.trail[i];
 
             this->initiallyImpliedLiterals_.emplace_back(convertLiteralMiniSatToLiteral(litMiniSat));
         }
@@ -90,24 +93,15 @@ namespace Hydra::SatSolver::MiniSat {
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
     void MiniSatSolver<VarT, LiteralT, ClauseIdT>::processAssignLiteral(const LiteralType& lit) {
-        assert(lit.getVariable() < variableAssumptionVector_.size());
-        assert(!variableAssumptionVector_[lit.getVariable()]);   // variable is not assigned
-
-        variableAssumptionVector_[lit.getVariable()] = true;
-
-        MiniSatCore::Lit litMiniSat = convertLiteralToLiteralMiniSat(lit);
+        LiteralMiniSatType litMiniSat = convertLiteralToLiteralMiniSat(lit);
         activeModel_ = activeModel_ && !solver_.isAssigned(MiniSatCore::var(litMiniSat));
 
         solver_.assumptions.push(litMiniSat);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    void MiniSatSolver<VarT, LiteralT, ClauseIdT>::processUnassignLiteral(const LiteralType& lit) {
-        assert(lit.getVariable() < variableAssumptionVector_.size());
-        assert(variableAssumptionVector_[lit.getVariable()]);   // variable is assigned
+    void MiniSatSolver<VarT, LiteralT, ClauseIdT>::processUnassignLiteral([[maybe_unused]] const LiteralType& lit) {
         assert(solver_.assumptions.last() == convertLiteralToLiteralMiniSat(lit));
-
-        variableAssumptionVector_[lit.getVariable()] = false;
 
         solver_.assumptions.pop();
         solver_.cancelUntil(solver_.assumptions.size());
@@ -139,7 +133,8 @@ namespace Hydra::SatSolver::MiniSat {
         if (configuration_.vsidsScoreType == VsidsScoreTypeEnum::D4_V2) {
             // Decay the variable scores
             if (configuration_.frequencyDecayD4v2VsidsScore && !(this->numberOfGetDecisionVariableCalls_ % configuration_.frequencyDecayD4v2VsidsScore)) {
-                for (int i = 0; i < solver_.scoreActivityD4v2.size(); ++i)
+                const int vecSize = solver_.scoreActivityD4v2.size();
+                for (int i = 0; i < vecSize; ++i)
                     solver_.scoreActivityD4v2[i] /= 2;
             }
         }
@@ -150,80 +145,74 @@ namespace Hydra::SatSolver::MiniSat {
                                                                           LiteralReusableVectorType& impliedLiteralReusableVector, bool includeAssumptions) {
         assert(impliedLiteralReusableVector.empty());
 
-        // The current formula is satisfiable
-        if (solver_.propagateAssumption()) {
-            // Iterating trail
-            if (solver_.trail.size() < static_cast<int>(restrictedVariableSet.size())) {
-                for (int i = 0; i < solver_.trail.size(); ++i) {
-                    const MiniSatCore::Lit& litMiniSat = solver_.trail[i];
+        // A contradiction was derived
+        if (!solver_.propagateAssumption())
+            return false;
 
-                    VarT var = convertVariableMiniSatToVariable(MiniSatCore::var(litMiniSat));
+        const int trailSize = solver_.trail.size();
 
-                    assert(var < variableAssumptionVector_.size());
+        // Iterating trail
+        if (trailSize < static_cast<int>(restrictedVariableSet.size())) {
+            for (int i = 0; i < trailSize; ++i) {
+                const LiteralMiniSatType& litMiniSat = solver_.trail[i];
 
-                    // It is an assumption
-                    if (!includeAssumptions && variableAssumptionVector_[var])
-                        continue;
+                VarT var = convertVariableMiniSatToVariable(MiniSatCore::var(litMiniSat));
 
-                    if (!Other::containInSet(restrictedVariableSet, var))
-                        continue;
+                // It is an assumption
+                if (!includeAssumptions && this->isVariableAssigned(var))
+                    continue;
 
-                    impliedLiteralReusableVector.emplace_back(var, !MiniSatCore::sign(litMiniSat));
-                }
+                if (!Other::containInSet(restrictedVariableSet, var))
+                    continue;
+
+                impliedLiteralReusableVector.emplace_back(var, !MiniSatCore::sign(litMiniSat));
             }
-            // Iterating restricted variables
-            else {
-                for (VarT var : restrictedVariableSet) {
-                    assert(var < variableAssumptionVector_.size());
+        }
+        // Iterating restricted variables
+        else {
+            for (VarT var : restrictedVariableSet) {
+                // It is an assumption
+                if (!includeAssumptions && this->isVariableAssigned(var))
+                    continue;
 
-                    // It is an assumption
-                    if (!includeAssumptions && variableAssumptionVector_[var])
-                        continue;
+                VariableMiniSatType varMiniSat = convertVariableToVariableMiniSat(var);
 
-                    MiniSatCore::Var varMiniSat = convertVariableToVariableMiniSat(var);
+                // The variable is NOT implied
+                if (!solver_.isAssigned(varMiniSat))
+                    continue;
 
-                    if (!solver_.isAssigned(varMiniSat))
-                        continue;
-
-                    impliedLiteralReusableVector.push_back(convertLiteralMiniSatToLiteral(solver_.litAssigned(varMiniSat)));
-                }
+                impliedLiteralReusableVector.push_back(convertLiteralMiniSatToLiteral(solver_.litAssigned(varMiniSat)));
             }
-
-            return true;
         }
 
-        // The current formula is NOT satisfiable
-        return false;
+        return true;
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool MiniSatSolver<VarT, LiteralT, ClauseIdT>::unitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
-                                                                   LiteralReusableVectorType& impliedLiteralReusableVector) {
-        assert(!variableAssumptionVector_[lit.getVariable()]);   // variable is not assigned
-
+    bool MiniSatSolver<VarT, LiteralT, ClauseIdT>::processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
+                                                                          LiteralReusableVectorType& impliedLiteralReusableVector) {
         // Initialize local auxiliary data structures
-        if (l_firstCall_unitPropagation_) {
-            l_impliedLiteralMiniSatReusableVector_unitPropagation_ = LiteralMiniSatReusableVectorType(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
+        if (l_firstCall_processUnitPropagation_) {
+            l_impliedLiteralMiniSatReusableVector_processUnitPropagation_ = LiteralMiniSatReusableVectorType(this->formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
 
-            l_firstCall_unitPropagation_ = false;
+            l_firstCall_processUnitPropagation_ = false;
         }
 
-        impliedLiteralReusableVector.clear();
-        l_impliedLiteralMiniSatReusableVector_unitPropagation_.clear();
+        l_impliedLiteralMiniSatReusableVector_processUnitPropagation_.clear();
 
         solver_.refillAssums();
 
         // No contradiction was derived
-        if (solver_.decideAndComputeUnit(convertLiteralToLiteralMiniSat(lit), l_impliedLiteralMiniSatReusableVector_unitPropagation_)) {
+        if (solver_.decideAndComputeUnit(convertLiteralToLiteralMiniSat(lit), l_impliedLiteralMiniSatReusableVector_processUnitPropagation_)) {
             // Iterate the implied literals
-            for (const MiniSatCore::Lit& impliedLitMiniSat : l_impliedLiteralMiniSatReusableVector_unitPropagation_) {
+            for (const LiteralMiniSatType& impliedLitMiniSat : l_impliedLiteralMiniSatReusableVector_processUnitPropagation_) {
                 LiteralType impliedLit = convertLiteralMiniSatToLiteral(impliedLitMiniSat);
 
                 if (!Other::containInSet(restrictedVariableSet, impliedLit.getVariable()))
                     continue;
 
-                assert(impliedLit != ~lit);                                     // not a complementary literal
-                assert(!variableAssumptionVector_[impliedLit.getVariable()]);   // variable is not assigned
+                assert(impliedLit != ~lit);                                    // not a complementary literal
+                assert(!this->isVariableAssigned(impliedLit.getVariable()));   // variable is not assigned
 
                 if (impliedLit == lit)
                     continue;
@@ -239,24 +228,25 @@ namespace Hydra::SatSolver::MiniSat {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool MiniSatSolver<VarT, LiteralT, ClauseIdT>::isVariableAssigned(VarT variable) const {
-        assert(variable < variableAssumptionVector_.size());
-
-        return variableAssumptionVector_[variable];
-    }
-
-    template <typename VarT, typename LiteralT, typename ClauseIdT>
     VsidsScoreType MiniSatSolver<VarT, LiteralT, ClauseIdT>::getVsidsScore(VarT variable) const {
+        VariableMiniSatType varMiniSat = convertVariableToVariableMiniSat(variable);
+
         switch (configuration_.vsidsScoreType) {
             // D4
             case VsidsScoreTypeEnum::D4:
-                return static_cast<VsidsScoreType>(solver_.scoreActivityD4[convertVariableToVariableMiniSat(variable)]);
+                assert(varMiniSat < solver_.scoreActivityD4.size());   // valid variable
+
+                return static_cast<VsidsScoreType>(solver_.scoreActivityD4[varMiniSat]);
             // D4v2
             case VsidsScoreTypeEnum::D4_V2:
-                return static_cast<VsidsScoreType>(solver_.scoreActivityD4v2[convertVariableToVariableMiniSat(variable)]);
+                assert(varMiniSat < solver_.scoreActivityD4v2.size());   // valid variable
+
+                return static_cast<VsidsScoreType>(solver_.scoreActivityD4v2[varMiniSat]);
             // MiniSat
             case VsidsScoreTypeEnum::MINISAT:
-                return static_cast<VsidsScoreType>(solver_.activity[convertVariableToVariableMiniSat(variable)]);
+                assert(varMiniSat < solver_.activity.size());   // valid variable
+
+                return static_cast<VsidsScoreType>(solver_.activity[varMiniSat]);
             default:
                 throw Exception::NotImplementedException(vsidsScoreTypeEnumToString(configuration_.vsidsScoreType),
                                                          "Hydra::SatSolver::MiniSat::MiniSatSolver::getVsidsScore");
@@ -270,19 +260,7 @@ namespace Hydra::SatSolver::MiniSat {
         out << "VSIDS score type: " << vsidsScoreTypeEnumToString(configuration_.vsidsScoreType) << std::endl;
         if (configuration_.vsidsScoreType == VsidsScoreTypeEnum::D4_V2)
             out << "Frequency decay for VSIDS score: " << std::to_string(configuration_.frequencyDecayD4v2VsidsScore) << std::endl;
-
-        out << "Assumption:";
-        for (int i = 0; i < solver_.assumptions.size(); ++i)
-            out << " " << convertLiteralMiniSatToLiteral(solver_.assumptions[i]);
         out << std::endl;
-
-        out << "Variable assumption:";
-        for (VarT var = 1; var < variableAssumptionVector_.size(); ++var) {
-            if (variableAssumptionVector_[var])
-                out << " " << std::to_string(var);
-        }
-        out << std::endl
-            << std::endl;
 
         if (!printCoreSatSolver)
             return;
@@ -324,7 +302,7 @@ namespace Hydra::SatSolver::MiniSat {
                 continue;
 
             for (int j = 0; j < clause.size(); ++j) {
-                const MiniSatCore::Lit& lit = clause[j];
+                const LiteralMiniSatType& lit = clause[j];
 
                 // The literal is not assigned
                 if (lboolIsUndef(solver_.value(lit))) {
@@ -351,7 +329,7 @@ namespace Hydra::SatSolver::MiniSat {
                     continue;
 
                 for (int j = 0; j < clause.size(); ++j) {
-                    const MiniSatCore::Lit& lit = clause[j];
+                    const LiteralMiniSatType& lit = clause[j];
 
                     // The literal is not assigned
                     if (lboolIsUndef(solver_.value(lit))) {

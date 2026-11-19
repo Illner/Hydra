@@ -111,7 +111,8 @@ namespace Hydra::Formula::Representation::Contiguous {
                 const LiteralType& lit = *clauseIt;
 
                 // Occurrence list iterating
-                for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != contiguousOccurrenceList_.end(lit.getLiteralT()); ++it) {
+                const auto endIt = contiguousOccurrenceList_.end(lit.getLiteralT());
+                for (auto it = contiguousOccurrenceList_.begin(lit.getLiteralT()); it != endIt; ++it) {
                     if (*it == clauseId)
                         continue;
 

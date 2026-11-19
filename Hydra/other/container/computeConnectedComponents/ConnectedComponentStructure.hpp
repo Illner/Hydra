@@ -13,8 +13,8 @@ namespace Hydra::Container::ComputeConnectedComponents {
     template <typename VarT, typename LiteralT>
     struct ConnectedComponentStruct {
     private:
-        using VariableSetType = typename Formula::Literal<VarT, LiteralT>::VariableSetType;
-        using LiteralVectorType = typename Formula::Literal<VarT, LiteralT>::LiteralVectorType;
+        using VariableSetType = Formula::Literal<VarT, LiteralT>::VariableSetType;
+        using LiteralVectorType = Formula::Literal<VarT, LiteralT>::LiteralVectorType;
 
     public:
         explicit ConnectedComponentStruct(std::size_t numberOfVariables) noexcept

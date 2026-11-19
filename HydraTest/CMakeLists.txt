@@ -54,6 +54,7 @@ add_executable(HydraTest "HydraTest.cpp"
         "hypergraphPartitioning/HypergraphPartitioningTest.cpp"
 
         # SAT solver
+        "satSolver/cadical/CadicalSolverTest.cpp"
         "satSolver/glucose/GlucoseSolverTest.cpp"
         "satSolver/minisat/MiniSatSolverTest.cpp"
 

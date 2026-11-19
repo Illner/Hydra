@@ -10,11 +10,11 @@ namespace Hydra::DecisionHeuristic::Upc {
         // Positive literal
         LiteralType posLit(var, true);
         this->satSolverAbstractPtr_->assignLiteral(posLit, false);
-        bool isSatisfiable = this->satSolverAbstractPtr_->unitPropagation(selectedVariableSet, false);
+        bool noContradiction = this->satSolverAbstractPtr_->unitPropagation(selectedVariableSet, false);
         this->satSolverAbstractPtr_->unassignLiteral(posLit);
 
-        // Contradiction
-        if (!isSatisfiable)
+        // A contradiction was derived
+        if (!noContradiction)
             return -1;
 
         UpcScoreType posUnitPropagationSize = static_cast<UpcScoreType>(this->satSolverAbstractPtr_->getImpliedLiteralReusableVectorFromPreviousCallOfUnitPropagation().size());
@@ -22,11 +22,11 @@ namespace Hydra::DecisionHeuristic::Upc {
         // Negative literal
         LiteralType negLit(var, false);
         this->satSolverAbstractPtr_->assignLiteral(negLit, false);
-        isSatisfiable = this->satSolverAbstractPtr_->unitPropagation(selectedVariableSet, false);
+        noContradiction = this->satSolverAbstractPtr_->unitPropagation(selectedVariableSet, false);
         this->satSolverAbstractPtr_->unassignLiteral(negLit);
 
-        // Contradiction
-        if (!isSatisfiable)
+        // A contradiction was derived
+        if (!noContradiction)
             return -1;
 
         UpcScoreType negUnitPropagationSize = static_cast<UpcScoreType>(this->satSolverAbstractPtr_->getImpliedLiteralReusableVectorFromPreviousCallOfUnitPropagation().size());

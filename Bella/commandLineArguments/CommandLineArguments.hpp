@@ -62,6 +62,7 @@ namespace Bella::CommandLineArguments {
     inline constexpr ArgumentNameType CARA_HYPERGRAPH_CUT_CACHE_CLEANING_STRATEGY_ARGUMENT = "-c_hcccs";
 
     // SAT solvers
+    inline constexpr ArgumentNameType CADICAL_SAT_SOLVER_ARGUMENT = "-c_ss";
     inline constexpr ArgumentNameType MINISAT_SAT_SOLVER_ARGUMENT = "-m_ss";
     inline constexpr ArgumentNameType GLUCOSE_SAT_SOLVER_ARGUMENT = "-g_ss";
 

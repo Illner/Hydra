@@ -33,6 +33,7 @@ namespace Hydra::SatSolver {
      * Copy and move methods are disabled!
      * Exception:
      *      SatSolverDoesNotSupportVsidsException
+     *      SomethingCannotBeSavedAsStdSizeTException
      *      SatSolverDoesNotSupportUnitPropagationException
      *      IthElementOfAssignmentDoesNotCorrespondToIthElementOfPartialAssignmentException (debug)
      * @tparam VarT type used for a variable
@@ -46,11 +47,11 @@ namespace Hydra::SatSolver {
         static_assert(Other::isValidClauseIdT<ClauseIdT>, "Invalid ClauseIdT type!");
 
     public:
-        using LiteralType = typename Formula::Literal<VarT, LiteralT>::LiteralType;
-        using VariableSetType = typename Formula::Literal<VarT, LiteralT>::VariableSetType;
-        using LiteralVectorType = typename Formula::Literal<VarT, LiteralT>::LiteralVectorType;
-        using VariableVectorType = typename Formula::Literal<VarT, LiteralT>::VariableVectorType;
-        using SatSolverStatisticsPtrType = typename SatSolverStatistics::SatSolverStatisticsPtrType;
+        using LiteralType = Formula::Literal<VarT, LiteralT>::LiteralType;
+        using VariableSetType = Formula::Literal<VarT, LiteralT>::VariableSetType;
+        using LiteralVectorType = Formula::Literal<VarT, LiteralT>::LiteralVectorType;
+        using VariableVectorType = Formula::Literal<VarT, LiteralT>::VariableVectorType;
+        using SatSolverStatisticsPtrType = SatSolverStatistics::SatSolverStatisticsPtrType;
 
     public:
         using LiteralReusableVectorType = Container::ReusableVector::ReusableVector<LiteralType>;
@@ -63,21 +64,26 @@ namespace Hydra::SatSolver {
         using BoolVectorType = std::vector<bool>;
 
     private:
-        using VariableReusableVectorType = typename Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableReusableVectorType;
+        using VariableReusableVectorType = Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableReusableVectorType;
 
     private:
         using VectorSetType = Container::VectorSet::VectorSet;
 
     public:
         SatSolverAbstract(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr, SatSolverTypeEnum satSolverType,
-                          SatSolverStatisticsPtrType satSolverStatisticsPtr) noexcept
-            : satSolverType_(satSolverType), l_firstCall_unitPropagation_(true), l_impliedLiteralReusableVector_unitPropagation_(),
-              l_firstCall_createEquivalencePreprocessingStruct_(true), l_ignoredVariableVectorSet_createEquivalencePreprocessingStruct_(),
-              l_positiveLiteralTVectorSet_createEquivalencePreprocessingStruct_(), l_variableOrderReusableVector_createEquivalencePreprocessingStruct_(),
-              l_positiveUnitPropagationLiteralReusableVector_createEquivalencePreprocessingStruct_(),
-              l_negativeUnitPropagationLiteralReusableVector_createEquivalencePreprocessingStruct_(), initiallyImpliedLiterals_(),
-              numberOfGetDecisionVariableCalls_(0), formulaRepresentationAbstractPtr_(formulaRepresentationAbstractPtr),
-              satSolverStatisticsPtr_(satSolverStatisticsPtr) { }
+                          SatSolverStatisticsPtrType satSolverStatisticsPtr)
+            : satSolverType_(satSolverType),
+              variableAssumptionVector_(formulaRepresentationAbstractPtr->getNumberOfVariablesInOriginalFormulaUsedForIndexing(), false),
+              l_firstCall_unitPropagation_(true), l_firstCall_createEquivalencePreprocessingStruct_(true), numberOfGetDecisionVariableCalls_(0),
+              formulaRepresentationAbstractPtr_(formulaRepresentationAbstractPtr), satSolverStatisticsPtr_(satSolverStatisticsPtr) {
+            // The variables cannot be saved as std::size_t
+            if (!Other::unsignedValueCanBeSavedAsStdSizeT<VarT>(formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula(), 1))
+                throw Exception::SomethingCannotBeSavedAsStdSizeTException("variables", formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
+
+            #ifndef NDEBUG
+            d_assumptionLiteralVector_.reserve(formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
+            #endif
+        }
 
         SatSolverAbstract(const SatSolverAbstract&) = delete;
         SatSolverAbstract(SatSolverAbstract&&) noexcept = delete;
@@ -89,6 +95,7 @@ namespace Hydra::SatSolver {
 
     private:
         SatSolverTypeEnum satSolverType_;
+        BoolVectorType variableAssumptionVector_;
 
         // Local auxiliary data structures for unitPropagation
         bool l_firstCall_unitPropagation_;
@@ -129,6 +136,21 @@ namespace Hydra::SatSolver {
         virtual bool processUnitPropagation(const VariableSetType& restrictedVariableSet, LiteralReusableVectorType& impliedLiteralReusableVector,
                                             bool includeAssumptions) = 0;
 
+        virtual bool processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
+                                            LiteralReusableVectorType& impliedLiteralReusableVector) = 0;
+
+        /**
+         * Initialize the SAT solver
+         * Note: used for statistics
+         */
+        void initializeSatSolver();
+
+        /**
+         * @param variable a variable
+         * @return true if the variable is assigned. Otherwise, false is returned.
+         */
+        bool isVariableAssigned(VarT variable) const;
+
         /**
          * Assign the literal and do unit propagation (that is, boolean constraint propagation)
          * Assert: the literal MUST NOT be assigned
@@ -140,32 +162,23 @@ namespace Hydra::SatSolver {
          * @return true if NO contradiction was derived. Otherwise, false is returned.
          * @throw SatSolverDoesNotSupportUnitPropagationException if the SAT solver does not support unit propagation
          */
-        virtual bool unitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
-                                     LiteralReusableVectorType& impliedLiteralReusableVector) = 0;
+        bool unitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet, LiteralReusableVectorType& impliedLiteralReusableVector);
 
-        /**
-         * Initialize the SAT solver
-         * Note: used for statistics
-         */
-        void initializeSatSolver();
-
+    #if defined(TEST)
+    public:
+    #endif
         /**
          * Compute and set the initially implied literals
+         * Assert: initiallyImpliedLiterals_ MUST be empty
          * Note: used for statistics
          */
         void computeAndSetInitiallyImpliedLiterals();
-
-        /**
-         * @param variable a variable
-         * @return true if the variable is assigned. Otherwise, false is returned.
-         */
-        virtual bool isVariableAssigned(VarT variable) const = 0;
 
     public:
         /**
          * Initial simplification
          * Assert: MUST be called at most once
-         * Note: used for statistics
+         * Assert: input formula MUST be satisfiable
          * Note: called only once at the beginning of the compilation
          */
         void initialSimplification();
@@ -182,7 +195,7 @@ namespace Hydra::SatSolver {
 
         /**
          * Unassign the literal
-         * Assert: the literal MUST be assigned
+         * Assert: the literal MUST be the last assigned literal
          * @param lit a literal
          */
         void unassignLiteral(const LiteralType& lit);
@@ -269,7 +282,7 @@ namespace Hydra::SatSolver {
     #ifndef NDEBUG
     private:
         bool d_initialSimplification_ = false;
-        VarT d_numberOfAssignedVariables_ = 0;
+        LiteralVectorType d_assumptionLiteralVector_;
 
     public:
         void printSatSolverDebug(std::ostream& out, bool printCoreSatSolver = true, bool printCurrentFormula = false, bool printLearntClauses = false) const;

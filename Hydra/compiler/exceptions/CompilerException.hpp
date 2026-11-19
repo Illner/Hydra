@@ -137,23 +137,33 @@ namespace Hydra::Exception {
     };
 
     /**
+     * Something cannot be saved as typeName
+     */
+    template <typename TypeT>
+    class SomethingCannotBeSavedAsTypeNameException : public CompilerException {
+    public:
+        SomethingCannotBeSavedAsTypeNameException(const std::string& whatCannotBeSavedAsTypeName, TypeT value, const std::string& typeName)
+            : CompilerException("The " + whatCannotBeSavedAsTypeName + " (" + std::to_string(value) + ") cannot be saved as " + typeName + "!") { }
+    };
+
+    /**
      * Something cannot be saved as int
      */
     template <typename TypeT>
-    class SomethingCannotBeSavedAsIntException : public CompilerException {
+    class SomethingCannotBeSavedAsIntException : public SomethingCannotBeSavedAsTypeNameException<TypeT> {
     public:
         SomethingCannotBeSavedAsIntException(const std::string& whatCannotBeSavedAsInt, TypeT value)
-            : CompilerException("The " + whatCannotBeSavedAsInt + " (" + std::to_string(value) + ") cannot be saved as int!") { }
+            : SomethingCannotBeSavedAsTypeNameException<TypeT>(whatCannotBeSavedAsInt, value, "int") { }
     };
 
     /**
      * Something cannot be saved as std::size_t
      */
     template <typename TypeT>
-    class SomethingCannotBeSavedAsStdSizeTException : public CompilerException {
+    class SomethingCannotBeSavedAsStdSizeTException : public SomethingCannotBeSavedAsTypeNameException<TypeT> {
     public:
         SomethingCannotBeSavedAsStdSizeTException(const std::string& whatCannotBeSavedAsStdSizeT, TypeT value)
-            : CompilerException("The " + whatCannotBeSavedAsStdSizeT + " (" + std::to_string(value) + ") cannot be saved as std::size_t!") { }
+            : SomethingCannotBeSavedAsTypeNameException<TypeT>(whatCannotBeSavedAsStdSizeT, value, "std::size_t") { }
     };
 
     /**

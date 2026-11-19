@@ -175,8 +175,8 @@ namespace Hydra {
 
         VarT numberOfVariablesBeforeUnitPropagation = static_cast<VarT>(currentComponentVariableSet.size());
 
-        [[maybe_unused]] bool isSatisfiable = satSolverAbstractUniquePtr_->unitPropagation(currentComponentVariableSet, false);
-        assert(isSatisfiable);   // current formula is satisfiable
+        [[maybe_unused]] bool noContradiction = satSolverAbstractUniquePtr_->unitPropagation(currentComponentVariableSet, false);
+        assert(noContradiction);   // no contradiction was derived
 
         // Get (unsorted) implied literals
         LiteralVectorType impliedLiteralVector = satSolverAbstractUniquePtr_->getImpliedLiteralVectorFromPreviousCallOfUnitPropagation(false);
@@ -287,8 +287,9 @@ namespace Hydra {
         VarT numberOfMissingVariables = 0;
 
         // Create the current component set
-        VariableSetType currentComponentVariableSet(formulaRepresentationAbstractUniquePtr_->getNumberOfVariablesInOriginalFormula());
-        for (VarT var = 1; var <= formulaRepresentationAbstractUniquePtr_->getNumberOfVariablesInOriginalFormula(); ++var) {
+        const VarT numberOfVariablesInOriginalFormula = formulaRepresentationAbstractUniquePtr_->getNumberOfVariablesInOriginalFormula();
+        VariableSetType currentComponentVariableSet(numberOfVariablesInOriginalFormula);
+        for (VarT var = 1; var <= numberOfVariablesInOriginalFormula; ++var) {
             // Free variables are ignored
             if (formulaRepresentationAbstractUniquePtr_->isVariableFree(var)) {
                 ++numberOfMissingVariables;

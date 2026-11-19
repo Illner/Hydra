@@ -169,12 +169,12 @@ namespace BellaTest::Compiler::wDNNF {
     /**
      * SAT solver - MiniSat
      *      VSIDS score: D4v2
-     *      frequency decay: 2048
+     *      frequency decay: 2'048
      */
-    TEST_CASE(" [Compiler::wDNNF] SAT solver - MiniSat (VSIDS score: D4v2, frequency decay: 2048)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - MiniSat (VSIDS score: D4v2, frequency decay: 2'048)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.satSolverType = SatSolverTypeEnum::MINISAT;
-        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
+        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 2'048;
         configuration.miniSatSolverConfiguration.vsidsScoreType = MiniSatVsidsScoreTypeEnum::D4_V2;
 
         process(configuration, true);
@@ -183,12 +183,12 @@ namespace BellaTest::Compiler::wDNNF {
     /**
      * SAT solver - MiniSat
      *      VSIDS score: D4v2
-     *      frequency decay: 8192
+     *      frequency decay: 8'192
      */
-    TEST_CASE(" [Compiler::wDNNF] SAT solver - MiniSat (VSIDS score: D4v2, frequency decay: 8192)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - MiniSat (VSIDS score: D4v2, frequency decay: 8'192)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.satSolverType = SatSolverTypeEnum::MINISAT;
-        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 8192;
+        configuration.miniSatSolverConfiguration.frequencyDecayD4v2VsidsScore = 8'192;
         configuration.miniSatSolverConfiguration.vsidsScoreType = MiniSatVsidsScoreTypeEnum::D4_V2;
 
         process(configuration, true);
@@ -295,12 +295,12 @@ namespace BellaTest::Compiler::wDNNF {
     /**
      * SAT solver - Glucose
      *      VSIDS score: D4v2
-     *      frequency decay: 2048
+     *      frequency decay: 2'048
      */
-    TEST_CASE(" [Compiler::wDNNF] SAT solver - Glucose (VSIDS score: D4v2, frequency decay: 2048)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - Glucose (VSIDS score: D4v2, frequency decay: 2'048)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.satSolverType = SatSolverTypeEnum::GLUCOSE;
-        configuration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 2048;
+        configuration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 2'048;
         configuration.glucoseSolverConfiguration.vsidsScoreType = GlucoseVsidsScoreTypeEnum::D4_V2;
 
         process(configuration, true);
@@ -309,13 +309,1223 @@ namespace BellaTest::Compiler::wDNNF {
     /**
      * SAT solver - Glucose
      *      VSIDS score: D4v2
-     *      frequency decay: 8192
+     *      frequency decay: 8'192
      */
-    TEST_CASE(" [Compiler::wDNNF] SAT solver - Glucose (VSIDS score: D4v2, frequency decay: 8192)", "[Compiler::wDNNF] [.wDNNF]") {
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - Glucose (VSIDS score: D4v2, frequency decay: 8'192)", "[Compiler::wDNNF] [.wDNNF]") {
         CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
         configuration.satSolverType = SatSolverTypeEnum::GLUCOSE;
-        configuration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 8192;
+        configuration.glucoseSolverConfiguration.frequencyDecayD4v2VsidsScore = 8'192;
         configuration.glucoseSolverConfiguration.vsidsScoreType = GlucoseVsidsScoreTypeEnum::D4_V2;
+
+        process(configuration, true);
+    }
+    //endregion
+
+    //region CaDiCaL
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: CaDiCaL
+     *      score factor per mille: 500
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: CaDiCaL, score factor per mille: 500)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.scoreFactorCadical = 500;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::CADICAL;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: CaDiCaL
+     *      score factor per mille: 550
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: CaDiCaL, score factor per mille: 550)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.scoreFactorCadical = 550;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::CADICAL;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: CaDiCaL
+     *      score factor per mille: 600
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: CaDiCaL, score factor per mille: 600)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.scoreFactorCadical = 600;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::CADICAL;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: CaDiCaL
+     *      score factor per mille: 650
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: CaDiCaL, score factor per mille: 650)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.scoreFactorCadical = 650;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::CADICAL;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: CaDiCaL
+     *      score factor per mille: 700
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: CaDiCaL, score factor per mille: 700)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.scoreFactorCadical = 700;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::CADICAL;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: CaDiCaL
+     *      score factor per mille: 750
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: CaDiCaL, score factor per mille: 750)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.scoreFactorCadical = 750;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::CADICAL;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: CaDiCaL
+     *      score factor per mille: 800
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: CaDiCaL, score factor per mille: 800)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.scoreFactorCadical = 800;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::CADICAL;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: CaDiCaL
+     *      score factor per mille: 850
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: CaDiCaL, score factor per mille: 850)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.scoreFactorCadical = 850;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::CADICAL;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: CaDiCaL
+     *      score factor per mille: 900
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: CaDiCaL, score factor per mille: 900)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.scoreFactorCadical = 900;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::CADICAL;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: CaDiCaL
+     *      score factor per mille: 950
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: CaDiCaL, score factor per mille: 950)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.scoreFactorCadical = 950;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::CADICAL;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: CaDiCaL
+     *      score factor per mille: 1'000
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: CaDiCaL, score factor per mille: 1'000)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.scoreFactorCadical = 1'000;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::CADICAL;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: Hydra
+     *      frequency decay: 0
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: Hydra, frequency decay: 0)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.frequencyDecayHydraVsidsScore = 0;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::HYDRA;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: Hydra
+     *      frequency decay: 2
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: Hydra, frequency decay: 2)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.frequencyDecayHydraVsidsScore = 2;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::HYDRA;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: Hydra
+     *      frequency decay: 8
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: Hydra, frequency decay: 8)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.frequencyDecayHydraVsidsScore = 8;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::HYDRA;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: Hydra
+     *      frequency decay: 32
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: Hydra, frequency decay: 32)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.frequencyDecayHydraVsidsScore = 32;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::HYDRA;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: Hydra
+     *      frequency decay: 128
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: Hydra, frequency decay: 128)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.frequencyDecayHydraVsidsScore = 128;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::HYDRA;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: Hydra
+     *      frequency decay: 512
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: Hydra, frequency decay: 512)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.frequencyDecayHydraVsidsScore = 512;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::HYDRA;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: Hydra
+     *      frequency decay: 2'048
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: Hydra, frequency decay: 2'048)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.frequencyDecayHydraVsidsScore = 2'048;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::HYDRA;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      VSIDS score: Hydra
+     *      frequency decay: 8'192
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (VSIDS score: Hydra, frequency decay: 8'192)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.frequencyDecayHydraVsidsScore = 8'192;
+        configuration.cadicalSolverConfiguration.vsidsScoreType = CadicalVsidsScoreTypeEnum::HYDRA;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1)
+     *      reduce interval: 2
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1), reduce interval: 2)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 2;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::NUMBER_OF_REDUCTIONS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1)
+     *      reduce interval: 25
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1), reduce interval: 25)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 25;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::NUMBER_OF_REDUCTIONS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1)
+     *      reduce interval: 50
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1), reduce interval: 50)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 50;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::NUMBER_OF_REDUCTIONS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1)
+     *      reduce interval: 75
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1), reduce interval: 75)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 75;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::NUMBER_OF_REDUCTIONS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1)
+     *      reduce interval: 100
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1), reduce interval: 100)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 100;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::NUMBER_OF_REDUCTIONS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1)
+     *      reduce interval: 200
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1), reduce interval: 200)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 200;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::NUMBER_OF_REDUCTIONS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1)
+     *      reduce interval: 300
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1), reduce interval: 300)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 300;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::NUMBER_OF_REDUCTIONS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1)
+     *      reduce interval: 400
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1), reduce interval: 400)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 400;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::NUMBER_OF_REDUCTIONS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1)
+     *      reduce interval: 500
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1), reduce interval: 500)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 500;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::NUMBER_OF_REDUCTIONS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1)
+     *      reduce interval: 600
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1), reduce interval: 600)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 600;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::NUMBER_OF_REDUCTIONS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1)
+     *      reduce interval: 700
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1), reduce interval: 700)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 700;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::NUMBER_OF_REDUCTIONS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1)
+     *      reduce interval: 800
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1), reduce interval: 800)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 800;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::NUMBER_OF_REDUCTIONS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1)
+     *      reduce interval: 900
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1), reduce interval: 900)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 900;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::NUMBER_OF_REDUCTIONS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1)
+     *      reduce interval: 1'000
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1), reduce interval: 1'000)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 1'000;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::NUMBER_OF_REDUCTIONS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1)
+     *      reduce interval: 10'000
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1), reduce interval: 10'000)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 10'000;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::NUMBER_OF_REDUCTIONS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1)
+     *      reduce interval: 100'000
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1), reduce interval: 100'000)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 100'000;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::NUMBER_OF_REDUCTIONS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1)
+     *      reduce interval: 1'000'000
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt^2 / 2 * (number of reductions so far + 1), reduce interval: 1'000'000)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 1'000'000;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::NUMBER_OF_REDUCTIONS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * SQRT(number of conflicts)
+     *      reduce interval: 2
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * SQRT(number of conflicts), reduce interval: 2)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 2;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::SQRT_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * SQRT(number of conflicts)
+     *      reduce interval: 25
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * SQRT(number of conflicts), reduce interval: 25)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 25;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::SQRT_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * SQRT(number of conflicts)
+     *      reduce interval: 50
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * SQRT(number of conflicts), reduce interval: 50)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 50;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::SQRT_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * SQRT(number of conflicts)
+     *      reduce interval: 75
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * SQRT(number of conflicts), reduce interval: 75)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 75;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::SQRT_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * SQRT(number of conflicts)
+     *      reduce interval: 100
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * SQRT(number of conflicts), reduce interval: 100)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 100;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::SQRT_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * SQRT(number of conflicts)
+     *      reduce interval: 200
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * SQRT(number of conflicts), reduce interval: 200)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 200;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::SQRT_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * SQRT(number of conflicts)
+     *      reduce interval: 300
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * SQRT(number of conflicts), reduce interval: 300)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 300;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::SQRT_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * SQRT(number of conflicts)
+     *      reduce interval: 400
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * SQRT(number of conflicts), reduce interval: 400)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 400;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::SQRT_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * SQRT(number of conflicts)
+     *      reduce interval: 500
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * SQRT(number of conflicts), reduce interval: 500)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 500;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::SQRT_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * SQRT(number of conflicts)
+     *      reduce interval: 600
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * SQRT(number of conflicts), reduce interval: 600)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 600;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::SQRT_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * SQRT(number of conflicts)
+     *      reduce interval: 700
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * SQRT(number of conflicts), reduce interval: 700)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 700;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::SQRT_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * SQRT(number of conflicts)
+     *      reduce interval: 800
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * SQRT(number of conflicts), reduce interval: 800)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 800;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::SQRT_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * SQRT(number of conflicts)
+     *      reduce interval: 900
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * SQRT(number of conflicts), reduce interval: 900)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 900;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::SQRT_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * SQRT(number of conflicts)
+     *      reduce interval: 1'000
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * SQRT(number of conflicts), reduce interval: 1'000)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 1'000;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::SQRT_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * SQRT(number of conflicts)
+     *      reduce interval: 10'000
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * SQRT(number of conflicts), reduce interval: 10'000)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 10'000;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::SQRT_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * SQRT(number of conflicts)
+     *      reduce interval: 100'000
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * SQRT(number of conflicts), reduce interval: 100'000)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 100'000;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::SQRT_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * SQRT(number of conflicts)
+     *      reduce interval: 1'000'000
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * SQRT(number of conflicts), reduce interval: 1'000'000)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 1'000'000;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::SQRT_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * LOG(number of conflicts)
+     *      reduce interval: 2
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * LOG(number of conflicts), reduce interval: 2)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 2;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::LOG_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * LOG(number of conflicts)
+     *      reduce interval: 25
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * LOG(number of conflicts), reduce interval: 25)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 25;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::LOG_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * LOG(number of conflicts)
+     *      reduce interval: 50
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * LOG(number of conflicts), reduce interval: 50)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 50;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::LOG_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * LOG(number of conflicts)
+     *      reduce interval: 75
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * LOG(number of conflicts), reduce interval: 75)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 75;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::LOG_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * LOG(number of conflicts)
+     *      reduce interval: 100
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * LOG(number of conflicts), reduce interval: 100)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 100;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::LOG_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * LOG(number of conflicts)
+     *      reduce interval: 200
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * LOG(number of conflicts), reduce interval: 200)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 200;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::LOG_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * LOG(number of conflicts)
+     *      reduce interval: 300
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * LOG(number of conflicts), reduce interval: 300)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 300;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::LOG_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * LOG(number of conflicts)
+     *      reduce interval: 400
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * LOG(number of conflicts), reduce interval: 400)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 400;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::LOG_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * LOG(number of conflicts)
+     *      reduce interval: 500
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * LOG(number of conflicts), reduce interval: 500)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 500;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::LOG_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * LOG(number of conflicts)
+     *      reduce interval: 600
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * LOG(number of conflicts), reduce interval: 600)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 600;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::LOG_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * LOG(number of conflicts)
+     *      reduce interval: 700
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * LOG(number of conflicts), reduce interval: 700)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 700;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::LOG_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * LOG(number of conflicts)
+     *      reduce interval: 800
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * LOG(number of conflicts), reduce interval: 800)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 800;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::LOG_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * LOG(number of conflicts)
+     *      reduce interval: 900
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * LOG(number of conflicts), reduce interval: 900)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 900;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::LOG_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * LOG(number of conflicts)
+     *      reduce interval: 1'000
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * LOG(number of conflicts), reduce interval: 1'000)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 1'000;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::LOG_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * LOG(number of conflicts)
+     *      reduce interval: 10'000
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * LOG(number of conflicts), reduce interval: 10'000)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 10'000;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::LOG_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * LOG(number of conflicts)
+     *      reduce interval: 100'000
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * LOG(number of conflicts), reduce interval: 100'000)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 100'000;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::LOG_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      reduce opt: reduceInt * LOG(number of conflicts)
+     *      reduce interval: 1'000'000
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (reduce opt: reduceInt * LOG(number of conflicts), reduce interval: 1'000'000)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reduceIntCadical = 1'000'000;
+        configuration.cadicalSolverConfiguration.reduceOptTypeCadical = CadicalReduceOptTypeEnum::LOG_OF_CONFLICTS;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      maximum number of preprocessing rounds for simplification: 0
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (maximum number of preprocessing rounds for simplification: 0)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.maximumNumberOfPreprocessingRoundsForSimplificationCadical = 0;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      maximum number of preprocessing rounds for simplification: 1
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (maximum number of preprocessing rounds for simplification: 1)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.maximumNumberOfPreprocessingRoundsForSimplificationCadical = 1;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      maximum number of preprocessing rounds for simplification: 2
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (maximum number of preprocessing rounds for simplification: 2)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.maximumNumberOfPreprocessingRoundsForSimplificationCadical = 2;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      maximum number of preprocessing rounds for simplification: 3
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (maximum number of preprocessing rounds for simplification: 3)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.maximumNumberOfPreprocessingRoundsForSimplificationCadical = 3;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      maximum number of preprocessing rounds for simplification: 4
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (maximum number of preprocessing rounds for simplification: 4)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.maximumNumberOfPreprocessingRoundsForSimplificationCadical = 4;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      maximum number of preprocessing rounds for simplification: 5
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (maximum number of preprocessing rounds for simplification: 5)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.maximumNumberOfPreprocessingRoundsForSimplificationCadical = 5;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      maximum number of preprocessing rounds for simplification: 6
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (maximum number of preprocessing rounds for simplification: 6)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.maximumNumberOfPreprocessingRoundsForSimplificationCadical = 6;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      maximum number of preprocessing rounds for simplification: 7
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (maximum number of preprocessing rounds for simplification: 7)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.maximumNumberOfPreprocessingRoundsForSimplificationCadical = 7;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      maximum number of preprocessing rounds for simplification: 8
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (maximum number of preprocessing rounds for simplification: 8)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.maximumNumberOfPreprocessingRoundsForSimplificationCadical = 8;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      maximum number of preprocessing rounds for simplification: 9
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (maximum number of preprocessing rounds for simplification: 9)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.maximumNumberOfPreprocessingRoundsForSimplificationCadical = 9;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      maximum number of preprocessing rounds for simplification: 10
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (maximum number of preprocessing rounds for simplification: 10)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.maximumNumberOfPreprocessingRoundsForSimplificationCadical = 10;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      stable reluctant doubling restarts: true
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (stable reluctant doubling restarts: true)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reluctantCadical = true;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      stable reluctant doubling restarts: false
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (stable reluctant doubling restarts: false)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.reluctantCadical = false;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      shrink conflict clause: no shrinking
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (shrink conflict clause: no shrinking)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.shrinkTypeCadical = CadicalShrinkTypeEnum::NONE;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      shrink conflict clause: shrinking using only binary reason clauses
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (shrink conflict clause: shrinking using only binary reason clauses)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.shrinkTypeCadical = CadicalShrinkTypeEnum::BINARY_REASON_CLAUSES;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      shrink conflict clause: shrinking using all reason clauses
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (shrink conflict clause: shrinking using all reason clauses)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.shrinkTypeCadical = CadicalShrinkTypeEnum::ALL_REASON_CLAUSES;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      shrink conflict clause: shrinking using all reason clauses, trying to minimize pulled-in lower-level literals
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (shrink conflict clause: shrinking using all reason clauses, trying to minimize pulled-in lower-level literals)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.shrinkTypeCadical = CadicalShrinkTypeEnum::ALL_REASON_CLAUSES_MINIMIZING_PULLED_IN;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      target phases: true
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (target phases: true)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.targetPhasesCadical = true;
+
+        process(configuration, true);
+    }
+
+    /**
+     * SAT solver - CaDiCaL
+     *      target phases: false
+     */
+    TEST_CASE(" [Compiler::wDNNF] SAT solver - CaDiCaL (target phases: false)", "[Compiler::wDNNF] [.wDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.satSolverType = SatSolverTypeEnum::CADICAL;
+        configuration.cadicalSolverConfiguration.targetPhasesCadical = false;
 
         process(configuration, true);
     }

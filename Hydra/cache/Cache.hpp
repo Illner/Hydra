@@ -36,7 +36,7 @@ namespace Hydra::Cache {
     using InitialCacheSizeType = unsigned long int;   // at least 32 bits
 
     consteval LargeNumberType convertGigabytesToBytes(LargeNumberType sizeInGigabytes) {
-        return sizeInGigabytes * LargeNumberType(1024) * LargeNumberType(1024) * LargeNumberType(1024);
+        return sizeInGigabytes * LargeNumberType(1'024) * LargeNumberType(1'024) * LargeNumberType(1'024);
     }
 
     inline constexpr LargeNumberType TWO_GIGABYTES_IN_BYTES = convertGigabytesToBytes(2);        //  2 GB
