@@ -62,12 +62,10 @@ namespace Hydra::SatSolver {
 
     protected:
         using BoolVectorType = std::vector<bool>;
+        using VectorSetType = Container::VectorSet::VectorSet;
 
     private:
         using VariableReusableVectorType = Formula::Representation::FormulaRepresentationAbstract<VarT, LiteralT, ClauseIdT>::VariableReusableVectorType;
-
-    private:
-        using VectorSetType = Container::VectorSet::VectorSet;
 
     public:
         SatSolverAbstract(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr, SatSolverTypeEnum satSolverType,
@@ -105,6 +103,7 @@ namespace Hydra::SatSolver {
         bool l_firstCall_createEquivalencePreprocessingStruct_;
         VectorSetType l_ignoredVariableVectorSet_createEquivalencePreprocessingStruct_;
         VectorSetType l_positiveLiteralTVectorSet_createEquivalencePreprocessingStruct_;
+        VectorSetType l_restrictedVariableVectorSet_createEquivalencePreprocessingStruct_;
         VariableReusableVectorType l_variableOrderReusableVector_createEquivalencePreprocessingStruct_;
         LiteralReusableVectorType l_positiveUnitPropagationLiteralReusableVector_createEquivalencePreprocessingStruct_;
         LiteralReusableVectorType l_negativeUnitPropagationLiteralReusableVector_createEquivalencePreprocessingStruct_;
@@ -136,7 +135,7 @@ namespace Hydra::SatSolver {
         virtual bool processUnitPropagation(const VariableSetType& restrictedVariableSet, LiteralReusableVectorType& impliedLiteralReusableVector,
                                             bool includeAssumptions) = 0;
 
-        virtual bool processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
+        virtual bool processUnitPropagation(const LiteralType& lit, const VectorSetType& restrictedVariableVectorSet,
                                             LiteralReusableVectorType& impliedLiteralReusableVector) = 0;
 
         /**
@@ -157,12 +156,12 @@ namespace Hydra::SatSolver {
          * Note: the implied literals are NOT assigned
          * Note: impliedLiteralReusableVector will be cleared at the beginning
          * @param lit a literal
-         * @param restrictedVariableSet a restriction
+         * @param restrictedVariableVectorSet a restriction
          * @param impliedLiteralReusableVector a reusable vector of implied literals
          * @return true if NO contradiction was derived. Otherwise, false is returned.
          * @throw SatSolverDoesNotSupportUnitPropagationException if the SAT solver does not support unit propagation
          */
-        bool unitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet, LiteralReusableVectorType& impliedLiteralReusableVector);
+        bool unitPropagation(const LiteralType& lit, const VectorSetType& restrictedVariableVectorSet, LiteralReusableVectorType& impliedLiteralReusableVector);
 
     #if defined(TEST)
     public:
@@ -261,6 +260,7 @@ namespace Hydra::SatSolver {
          *      l_firstCall_createEquivalencePreprocessingStruct_
          *      l_ignoredVariableVectorSet_createEquivalencePreprocessingStruct_
          *      l_positiveLiteralTVectorSet_createEquivalencePreprocessingStruct_
+         *      l_restrictedVariableVectorSet_createEquivalencePreprocessingStruct_
          *      l_variableOrderReusableVector_createEquivalencePreprocessingStruct_
          *      l_positiveUnitPropagationLiteralReusableVector_createEquivalencePreprocessingStruct_
          *      l_negativeUnitPropagationLiteralReusableVector_createEquivalencePreprocessingStruct_

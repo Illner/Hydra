@@ -47,14 +47,14 @@ namespace Hydra::SatSolver {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool SatSolverAbstract<VarT, LiteralT, ClauseIdT>::unitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
+    bool SatSolverAbstract<VarT, LiteralT, ClauseIdT>::unitPropagation(const LiteralType& lit, const VectorSetType& restrictedVariableVectorSet,
                                                                        LiteralReusableVectorType& impliedLiteralReusableVector) {
         assert(lit.getVariable() < variableAssumptionVector_.size());
         assert(!variableAssumptionVector_[lit.getVariable()]);   // variable is not assigned
 
         impliedLiteralReusableVector.clear();
 
-        return processUnitPropagation(lit, restrictedVariableSet, impliedLiteralReusableVector);
+        return processUnitPropagation(lit, restrictedVariableVectorSet, impliedLiteralReusableVector);
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
@@ -252,6 +252,7 @@ namespace Hydra::SatSolver {
         if (l_firstCall_createEquivalencePreprocessingStruct_) {
             l_variableOrderReusableVector_createEquivalencePreprocessingStruct_ = VariableReusableVectorType(formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
             l_ignoredVariableVectorSet_createEquivalencePreprocessingStruct_ = VectorSetType(formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormulaUsedForIndexing());
+            l_restrictedVariableVectorSet_createEquivalencePreprocessingStruct_ = VectorSetType(formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormulaUsedForIndexing());
             l_positiveUnitPropagationLiteralReusableVector_createEquivalencePreprocessingStruct_ = LiteralReusableVectorType(formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
             l_negativeUnitPropagationLiteralReusableVector_createEquivalencePreprocessingStruct_ = LiteralReusableVectorType(formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula());
             l_positiveLiteralTVectorSet_createEquivalencePreprocessingStruct_ = VectorSetType(Formula::getNegativeLiteralT<VarT, LiteralT>(formulaRepresentationAbstractPtr_->getNumberOfVariablesInOriginalFormula()));
@@ -266,7 +267,11 @@ namespace Hydra::SatSolver {
         equivalencePreprocessingStruct.ignoreMultiOccurrentIgnoredVariables = ignoreMultiOccurrentIgnoredVariables;
 
         l_ignoredVariableVectorSet_createEquivalencePreprocessingStruct_.clear();
+        l_restrictedVariableVectorSet_createEquivalencePreprocessingStruct_.clear();
         l_variableOrderReusableVector_createEquivalencePreprocessingStruct_.copySet(selectedVariableSet);
+
+        for (VarT var : selectedVariableSet)
+            l_restrictedVariableVectorSet_createEquivalencePreprocessingStruct_.emplace(var);
 
         // Order the variables for implicit BCP
         switch (implicitBcpVariableOrderType) {
@@ -308,7 +313,7 @@ namespace Hydra::SatSolver {
 
             // Positive literal
             // Contradiction -> negative literal is implied
-            if (!unitPropagation(posLit, selectedVariableSet, l_positiveUnitPropagationLiteralReusableVector_createEquivalencePreprocessingStruct_)) {
+            if (!unitPropagation(posLit, l_restrictedVariableVectorSet_createEquivalencePreprocessingStruct_, l_positiveUnitPropagationLiteralReusableVector_createEquivalencePreprocessingStruct_)) {
                 assignLiteral(negLit, false);
                 equivalencePreprocessingStruct.implicitImpliedLiteralVector.emplace_back(var, false);
 
@@ -317,7 +322,7 @@ namespace Hydra::SatSolver {
 
             // Negative literal
             // Contradiction -> positive literal is implied
-            if (!unitPropagation(negLit, selectedVariableSet, l_negativeUnitPropagationLiteralReusableVector_createEquivalencePreprocessingStruct_)) {
+            if (!unitPropagation(negLit, l_restrictedVariableVectorSet_createEquivalencePreprocessingStruct_, l_negativeUnitPropagationLiteralReusableVector_createEquivalencePreprocessingStruct_)) {
                 assignLiteral(posLit, false);
                 equivalencePreprocessingStruct.implicitImpliedLiteralVector.emplace_back(var, true);
 
