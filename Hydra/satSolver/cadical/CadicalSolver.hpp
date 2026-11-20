@@ -41,6 +41,7 @@ namespace Hydra::SatSolver::Cadical {
     class CadicalSolver final : public SatSolverAbstract<VarT, LiteralT, ClauseIdT> {
     private:
         using LiteralType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralType;
+        using VectorSetType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::VectorSetType;
         using VariableSetType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::VariableSetType;
         using LiteralVectorType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralVectorType;
         using LiteralReusableVectorType = SatSolverAbstract<VarT, LiteralT, ClauseIdT>::LiteralReusableVectorType;
@@ -153,7 +154,7 @@ namespace Hydra::SatSolver::Cadical {
          *      l_firstCall_processUnitPropagation_
          *      l_impliedLiteralCadicalVector_processUnitPropagation_
          */
-        bool processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
+        bool processUnitPropagation(const LiteralType& lit, const VectorSetType& restrictedVariableVectorSet,
                                     LiteralReusableVectorType& impliedLiteralReusableVector) override;
 
         VsidsScoreType getVsidsScore(VarT variable) const override;

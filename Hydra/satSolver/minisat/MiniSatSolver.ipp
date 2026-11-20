@@ -189,7 +189,7 @@ namespace Hydra::SatSolver::MiniSat {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool MiniSatSolver<VarT, LiteralT, ClauseIdT>::processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
+    bool MiniSatSolver<VarT, LiteralT, ClauseIdT>::processUnitPropagation(const LiteralType& lit, const VectorSetType& restrictedVariableVectorSet,
                                                                           LiteralReusableVectorType& impliedLiteralReusableVector) {
         // Initialize local auxiliary data structures
         if (l_firstCall_processUnitPropagation_) {
@@ -208,7 +208,7 @@ namespace Hydra::SatSolver::MiniSat {
             for (const LiteralMiniSatType& impliedLitMiniSat : l_impliedLiteralMiniSatReusableVector_processUnitPropagation_) {
                 LiteralType impliedLit = convertLiteralMiniSatToLiteral(impliedLitMiniSat);
 
-                if (!Other::containInSet(restrictedVariableSet, impliedLit.getVariable()))
+                if (!restrictedVariableVectorSet.contains(impliedLit.getVariable()))
                     continue;
 
                 assert(impliedLit != ~lit);                                    // not a complementary literal
