@@ -51,6 +51,7 @@ namespace Hydra {
         }
 
         componentCacheUniquePtr_ = std::make_unique<ComponentCacheType>(std::move(cachingSchemeAbstractUniquePtr), std::move(cacheCleaningStrategyAbstractUniquePtr),
+                                                                        configuration_.cacheComponentCachingConfiguration,
                                                                         statisticsPtr_ ? statisticsPtr_->getComponentCacheStatisticsPtr() : nullptr);
     }
 
@@ -101,6 +102,7 @@ namespace Hydra {
         }
 
         hypergraphCutCacheUniquePtr_ = std::make_unique<HypergraphCutCacheType>(std::move(cachingSchemeAbstractUniquePtr), std::move(cacheCleaningStrategyAbstractUniquePtr),
+                                                                                configuration_.cacheHypergraphCutCachingConfiguration,
                                                                                 statisticsPtr_ ? statisticsPtr_->getHypergraphCutCacheStatisticsPtr() : nullptr);
     }
 

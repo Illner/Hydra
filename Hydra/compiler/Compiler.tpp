@@ -15,6 +15,7 @@
 #include "Hydra/satSolver/enums/ImplicitBcpVariableOrderTypeEnum.hpp"
 #include "Hydra/satSolver/enums/SatSolverTypeEnum.hpp"
 
+#include "Hydra/cache/Cache.tpp"
 #include "Hydra/cache/cacheCleaningStrategy/cara/CaraCacheCleaningStrategy.tpp"
 #include "Hydra/cache/cacheCleaningStrategy/sharpSat/SharpSatCacheCleaningStrategy.tpp"
 #include "Hydra/cache/cachingScheme/basic/BasicCachingScheme.tpp"
@@ -42,6 +43,7 @@ namespace Hydra {
      */
     struct CompilerConfiguration {
     public:
+        using CacheConfigurationType = Cache::CacheConfiguration;
         using CadicalSolverConfigurationType = SatSolver::Cadical::CadicalSolverConfiguration;
         using GlucoseSolverConfigurationType = SatSolver::Glucose::GlucoseSolverConfiguration;
         using MiniSatSolverConfigurationType = SatSolver::MiniSat::MiniSatSolverConfiguration;
@@ -90,6 +92,7 @@ namespace Hydra {
         /**
          * Caching scheme (component caching)
          */
+        CacheConfigurationType cacheComponentCachingConfiguration;
         CachingSchemeTypeEnum cachingSchemeComponentCachingType = CachingSchemeTypeEnum::NONE;
         CachingSchemeVariantTypeEnum cachingSchemeVariantComponentCachingType = CachingSchemeVariantTypeEnum::NONE;
         CaraCachingSchemeConfigurationType caraCachingSchemeComponentCachingConfiguration;
@@ -100,6 +103,7 @@ namespace Hydra {
         /**
          * Caching scheme (hypergraph cut caching)
          */
+        CacheConfigurationType cacheHypergraphCutCachingConfiguration;
         CachingSchemeTypeEnum cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::NONE;
         CaraCachingSchemeConfigurationType caraCachingSchemeHypergraphCutCachingConfiguration;
         BasicCachingSchemeConfigurationType basicCachingSchemeHypergraphCutCachingConfiguration;
