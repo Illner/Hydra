@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <cmath>
 #include <iostream>
 #include <iterator>
 #include <limits>
@@ -44,9 +45,10 @@ namespace Hydra::Cache::CacheCleaningStrategy::Cara {
     public:
         explicit CaraCacheCleaningStrategy(const CaraCacheCleaningStrategyConfiguration& configuration = CaraCacheCleaningStrategyConfiguration())
             : CacheCleaningStrategyAbstract<VarT, LiteralT, ClauseIdT, CacheValueT>(CacheCleaningStrategyTypeEnum::CARA),
-              activityCounter_(1), activityIncrement_((ActivityType)1 / configuration.activityDecayFactor),
+              activityCounter_(1), activityIncrement_(static_cast<ActivityType>(1) / configuration.activityDecayFactor),
               configuration_(configuration) {
             assert(configuration_.activityDecayFactor > 0 && configuration_.activityDecayFactor <= 1);
+            assert(activityIncrement_ <= std::ldexp(static_cast<ActivityType>(1), S_ACTIVITY_RESCALING_EXPONENT_ - 1));   // the activity counter cannot overflow between two rescalings
             assert(configuration_.percentageOfDeletedEntries > 0 && configuration_.percentageOfDeletedEntries <= 100);
         }
 
@@ -55,6 +57,8 @@ namespace Hydra::Cache::CacheCleaningStrategy::Cara {
         const ActivityType activityIncrement_;
         MappingFromIdToActivityType mappingFromIdToActivity_;
         CaraCacheCleaningStrategyConfiguration configuration_;
+
+        inline static constexpr int S_ACTIVITY_RESCALING_EXPONENT_ = 512;
 
     private:
         void processCleanCache() override;
@@ -74,6 +78,7 @@ namespace Hydra::Cache::CacheCleaningStrategy::Cara {
         /**
          * Update the activity counter
          * Note: activityCounter_ *= activityIncrement_
+         * Note: if the activity counter exceeds 2^S_ACTIVITY_RESCALING_EXPONENT_, the activity counter and all the activities are multiplied by 2^(-S_ACTIVITY_RESCALING_EXPONENT_)
          */
         void updateActivityCounter() noexcept;
 
