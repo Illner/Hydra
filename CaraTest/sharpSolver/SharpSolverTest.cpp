@@ -1817,6 +1817,182 @@ namespace CaraTest::SharpSolver {
 
     //region Caching scheme (component cache)
     /**
+     * Caching scheme (component cache)
+     *      not enough variables for caching: 0
+     */
+    TEST_CASE("[SharpSolver] caching scheme (component cache) (not enough variables for caching: 0)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cacheComponentCachingConfiguration.notEnoughVariablesForCaching = 0;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      not enough variables for caching: 2
+     */
+    TEST_CASE("[SharpSolver] caching scheme (component cache) (not enough variables for caching: 2)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cacheComponentCachingConfiguration.notEnoughVariablesForCaching = 2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      not enough variables for caching: 8
+     */
+    TEST_CASE("[SharpSolver] caching scheme (component cache) (not enough variables for caching: 8)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cacheComponentCachingConfiguration.notEnoughVariablesForCaching = 8;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      not enough variables for caching: 32
+     */
+    TEST_CASE("[SharpSolver] caching scheme (component cache) (not enough variables for caching: 32)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cacheComponentCachingConfiguration.notEnoughVariablesForCaching = 32;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      not enough variables for caching: 128
+     */
+    TEST_CASE("[SharpSolver] caching scheme (component cache) (not enough variables for caching: 128)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cacheComponentCachingConfiguration.notEnoughVariablesForCaching = 128;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      not enough variables for caching: 512
+     */
+    TEST_CASE("[SharpSolver] caching scheme (component cache) (not enough variables for caching: 512)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cacheComponentCachingConfiguration.notEnoughVariablesForCaching = 512;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      not enough variables for caching: 2'048
+     */
+    TEST_CASE("[SharpSolver] caching scheme (component cache) (not enough variables for caching: 2'048)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cacheComponentCachingConfiguration.notEnoughVariablesForCaching = 2'048;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      not enough variables for caching: 8'192
+     */
+    TEST_CASE("[SharpSolver] caching scheme (component cache) (not enough variables for caching: 8'192)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cacheComponentCachingConfiguration.notEnoughVariablesForCaching = 8'192;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      too many variables for caching: 0
+     */
+    TEST_CASE("[SharpSolver] caching scheme (component cache) (too many variables for caching: 0)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cacheComponentCachingConfiguration.tooManyVariablesForCaching = 0;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      too many variables for caching: 2
+     */
+    TEST_CASE("[SharpSolver] caching scheme (component cache) (too many variables for caching: 2)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cacheComponentCachingConfiguration.tooManyVariablesForCaching = 2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      too many variables for caching: 8
+     */
+    TEST_CASE("[SharpSolver] caching scheme (component cache) (too many variables for caching: 8)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cacheComponentCachingConfiguration.tooManyVariablesForCaching = 8;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      too many variables for caching: 32
+     */
+    TEST_CASE("[SharpSolver] caching scheme (component cache) (too many variables for caching: 32)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cacheComponentCachingConfiguration.tooManyVariablesForCaching = 32;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      too many variables for caching: 128
+     */
+    TEST_CASE("[SharpSolver] caching scheme (component cache) (too many variables for caching: 128)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cacheComponentCachingConfiguration.tooManyVariablesForCaching = 128;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      too many variables for caching: 512
+     */
+    TEST_CASE("[SharpSolver] caching scheme (component cache) (too many variables for caching: 512)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cacheComponentCachingConfiguration.tooManyVariablesForCaching = 512;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      too many variables for caching: 2'048
+     */
+    TEST_CASE("[SharpSolver] caching scheme (component cache) (too many variables for caching: 2'048)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cacheComponentCachingConfiguration.tooManyVariablesForCaching = 2'048;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      too many variables for caching: 8'192
+     */
+    TEST_CASE("[SharpSolver] caching scheme (component cache) (too many variables for caching: 8'192)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cacheComponentCachingConfiguration.tooManyVariablesForCaching = 8'192;
+
+        process(configuration, false);
+    }
+
+    /**
      * Caching scheme (component cache) - none
      */
     TEST_CASE("[SharpSolver] caching scheme (component cache) - none", "[SharpSolver]") {
@@ -3794,6 +3970,198 @@ namespace CaraTest::SharpSolver {
     //endregion
 
     //region Caching scheme (hypergraph cut cache)
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      not enough variables for caching: 0
+     */
+    TEST_CASE("[SharpSolver] caching scheme (hypergraph cut cache) (not enough variables for caching: 0)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.notEnoughVariablesForCaching = 0;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      not enough variables for caching: 2
+     */
+    TEST_CASE("[SharpSolver] caching scheme (hypergraph cut cache) (not enough variables for caching: 2)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.notEnoughVariablesForCaching = 2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      not enough variables for caching: 8
+     */
+    TEST_CASE("[SharpSolver] caching scheme (hypergraph cut cache) (not enough variables for caching: 8)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.notEnoughVariablesForCaching = 8;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      not enough variables for caching: 32
+     */
+    TEST_CASE("[SharpSolver] caching scheme (hypergraph cut cache) (not enough variables for caching: 32)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.notEnoughVariablesForCaching = 32;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      not enough variables for caching: 128
+     */
+    TEST_CASE("[SharpSolver] caching scheme (hypergraph cut cache) (not enough variables for caching: 128)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.notEnoughVariablesForCaching = 128;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      not enough variables for caching: 512
+     */
+    TEST_CASE("[SharpSolver] caching scheme (hypergraph cut cache) (not enough variables for caching: 512)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.notEnoughVariablesForCaching = 512;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      not enough variables for caching: 2'048
+     */
+    TEST_CASE("[SharpSolver] caching scheme (hypergraph cut cache) (not enough variables for caching: 2'048)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.notEnoughVariablesForCaching = 2'048;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      not enough variables for caching: 8'192
+     */
+    TEST_CASE("[SharpSolver] caching scheme (hypergraph cut cache) (not enough variables for caching: 8'192)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.notEnoughVariablesForCaching = 8'192;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      too many variables for caching: 0
+     */
+    TEST_CASE("[SharpSolver] caching scheme (hypergraph cut cache) (too many variables for caching: 0)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.tooManyVariablesForCaching = 0;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      too many variables for caching: 2
+     */
+    TEST_CASE("[SharpSolver] caching scheme (hypergraph cut cache) (too many variables for caching: 2)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.tooManyVariablesForCaching = 2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      too many variables for caching: 8
+     */
+    TEST_CASE("[SharpSolver] caching scheme (hypergraph cut cache) (too many variables for caching: 8)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.tooManyVariablesForCaching = 8;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      too many variables for caching: 32
+     */
+    TEST_CASE("[SharpSolver] caching scheme (hypergraph cut cache) (too many variables for caching: 32)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.tooManyVariablesForCaching = 32;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      too many variables for caching: 128
+     */
+    TEST_CASE("[SharpSolver] caching scheme (hypergraph cut cache) (too many variables for caching: 128)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.tooManyVariablesForCaching = 128;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      too many variables for caching: 512
+     */
+    TEST_CASE("[SharpSolver] caching scheme (hypergraph cut cache) (too many variables for caching: 512)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.tooManyVariablesForCaching = 512;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      too many variables for caching: 2'048
+     */
+    TEST_CASE("[SharpSolver] caching scheme (hypergraph cut cache) (too many variables for caching: 2'048)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.tooManyVariablesForCaching = 2'048;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      too many variables for caching: 8'192
+     */
+    TEST_CASE("[SharpSolver] caching scheme (hypergraph cut cache) (too many variables for caching: 8'192)", "[SharpSolver]") {
+        SharpSolverConfigurationType configuration = createDefaultSharpSolverConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.tooManyVariablesForCaching = 8'192;
+
+        process(configuration, false);
+    }
+
     /**
      * Caching scheme (hypergraph cut cache) - none
      */

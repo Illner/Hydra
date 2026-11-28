@@ -30,6 +30,8 @@
 #include "Hydra/cache/enums/CacheTypeEnum.hpp"
 #include "Hydra/compiler/enums/IgnorePureLiteralTypeEnum.hpp"
 
+#include "Hydra/cache/Cache.tpp"
+
 namespace HydraTest::Cache {
     //region Types
     using VarT = char32_t;
@@ -68,6 +70,7 @@ namespace HydraTest::Cache {
     using OmitClauseTypeEnum = Hydra::Cache::CachingScheme::OmitClauseTypeEnum;
     using PreprocessingTypeEnum = Hydra::Cache::CachingScheme::PreprocessingTypeEnum;
 
+    using CacheConfigurationType = Hydra::Cache::CacheConfiguration;
     using CaraCachingSchemeConfigurationType = Hydra::Cache::CachingScheme::Cara::CaraCachingSchemeConfiguration;
     using BasicCachingSchemeConfigurationType = Hydra::Cache::CachingScheme::Basic::BasicCachingSchemeConfiguration;
     //endregion
@@ -89,7 +92,8 @@ namespace HydraTest::Cache {
         return CacheType(std::move(cachingSchemeAbstractUniquePtr), std::move(cacheCleaningStrategyAbstractUniquePtr));
     }
 
-    CacheType createCacheWithoutMapping(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr, CacheTypeEnum cacheType) {
+    CacheType createCacheWithoutMapping(FormulaRepresentationAbstractPtrType formulaRepresentationAbstractPtr, CacheTypeEnum cacheType,
+                                        const CacheConfigurationType& cacheConfiguration = CacheConfigurationType()) {
         // Cache cleaning strategy
         CacheCleaningStrategyAbstractUniquePtrType cacheCleaningStrategyAbstractUniquePtr = std::make_unique<NoneCacheCleaningStrategyType>();
 
@@ -101,7 +105,8 @@ namespace HydraTest::Cache {
         CachingSchemeAbstractUniquePtrType cachingSchemeAbstractUniquePtr = std::make_unique<BasicCachingSchemeType>(formulaRepresentationAbstractPtr, cacheType,
                                                                                                                      configuration);
 
-        return CacheType(std::move(cachingSchemeAbstractUniquePtr), std::move(cacheCleaningStrategyAbstractUniquePtr));
+        return CacheType(std::move(cachingSchemeAbstractUniquePtr), std::move(cacheCleaningStrategyAbstractUniquePtr),
+                         cacheConfiguration);
     }
 
     void printCache(const CacheType& cache, std::stringstream& actualResult, bool printCurrentFormula = true,
@@ -736,6 +741,54 @@ namespace HydraTest::Cache {
     }
 
     /**
+     * Cache without mapping - component caching (not enough variables)
+     */
+    TEST_CASE("[Cache] cache without mapping - component caching (not enough variables)", "[Cache]") {
+        TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
+                          cacheWithoutMappingComponentCachingNotEnoughVariablesResult);
+        std::stringstream& actualResult = test.getStringStream();
+
+        try {
+            CacheConfigurationType cacheConfiguration;
+            cacheConfiguration.notEnoughVariablesForCaching = 3;
+
+            FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormula();
+            CacheType cache = createCacheWithoutMapping(formulaRepresentation.get(), CacheTypeEnum::COMPONENT, cacheConfiguration);
+            processCreateCacheRecord(cache, actualResult);
+        }
+        catch (const std::exception& e) {
+            actualResult << e.what() << std::endl;
+        }
+
+        // test.saveActualResultToFile();
+        REQUIRE(test.checkTest());
+    }
+
+    /**
+     * Cache without mapping - component caching (too many variables)
+     */
+    TEST_CASE("[Cache] cache without mapping - component caching (too many variables)", "[Cache]") {
+        TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
+                          cacheWithoutMappingComponentCachingTooManyVariablesResult);
+        std::stringstream& actualResult = test.getStringStream();
+
+        try {
+            CacheConfigurationType cacheConfiguration;
+            cacheConfiguration.tooManyVariablesForCaching = 6;
+
+            FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormula();
+            CacheType cache = createCacheWithoutMapping(formulaRepresentation.get(), CacheTypeEnum::COMPONENT, cacheConfiguration);
+            processCreateCacheRecord(cache, actualResult);
+        }
+        catch (const std::exception& e) {
+            actualResult << e.what() << std::endl;
+        }
+
+        // test.saveActualResultToFile();
+        REQUIRE(test.checkTest());
+    }
+
+    /**
      * Cache without mapping - component caching (add cache record)
      */
     TEST_CASE("[Cache] cache without mapping - component caching (add cache record)", "[Cache]") {
@@ -956,6 +1009,54 @@ namespace HydraTest::Cache {
         try {
             FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormula();
             CacheType cache = createCacheWithoutMapping(formulaRepresentation.get(), CacheTypeEnum::HYPERGRAPH_CUT);
+            processCreateCacheRecord(cache, actualResult);
+        }
+        catch (const std::exception& e) {
+            actualResult << e.what() << std::endl;
+        }
+
+        // test.saveActualResultToFile();
+        REQUIRE(test.checkTest());
+    }
+
+    /**
+     * Cache without mapping - hypergraph cut caching (not enough variables)
+     */
+    TEST_CASE("[Cache] cache without mapping - hypergraph cut caching (not enough variables)", "[Cache]") {
+        TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
+                          cacheWithoutMappingHypergraphCutCachingNotEnoughVariablesResult);
+        std::stringstream& actualResult = test.getStringStream();
+
+        try {
+            CacheConfigurationType cacheConfiguration;
+            cacheConfiguration.notEnoughVariablesForCaching = 3;
+
+            FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormula();
+            CacheType cache = createCacheWithoutMapping(formulaRepresentation.get(), CacheTypeEnum::HYPERGRAPH_CUT, cacheConfiguration);
+            processCreateCacheRecord(cache, actualResult);
+        }
+        catch (const std::exception& e) {
+            actualResult << e.what() << std::endl;
+        }
+
+        // test.saveActualResultToFile();
+        REQUIRE(test.checkTest());
+    }
+
+    /**
+     * Cache without mapping - hypergraph cut caching (too many variables)
+     */
+    TEST_CASE("[Cache] cache without mapping - hypergraph cut caching (too many variables)", "[Cache]") {
+        TemplateTest test(Catch::getResultCapture().getCurrentTestName(),
+                          cacheWithoutMappingHypergraphCutCachingTooManyVariablesResult);
+        std::stringstream& actualResult = test.getStringStream();
+
+        try {
+            CacheConfigurationType cacheConfiguration;
+            cacheConfiguration.tooManyVariablesForCaching = 6;
+
+            FormulaRepresentationAbstractUniquePtrType formulaRepresentation = createFormula();
+            CacheType cache = createCacheWithoutMapping(formulaRepresentation.get(), CacheTypeEnum::HYPERGRAPH_CUT, cacheConfiguration);
             processCreateCacheRecord(cache, actualResult);
         }
         catch (const std::exception& e) {

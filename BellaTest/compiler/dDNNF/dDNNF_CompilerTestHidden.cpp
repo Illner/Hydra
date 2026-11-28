@@ -1647,6 +1647,182 @@ namespace BellaTest::Compiler::dDNNF {
 
     //region Caching scheme (component cache)
     /**
+     * Caching scheme (component cache)
+     *      not enough variables for caching: 0
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (component cache) (not enough variables for caching: 0)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cacheComponentCachingConfiguration.notEnoughVariablesForCaching = 0;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      not enough variables for caching: 2
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (component cache) (not enough variables for caching: 2)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cacheComponentCachingConfiguration.notEnoughVariablesForCaching = 2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      not enough variables for caching: 8
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (component cache) (not enough variables for caching: 8)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cacheComponentCachingConfiguration.notEnoughVariablesForCaching = 8;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      not enough variables for caching: 32
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (component cache) (not enough variables for caching: 32)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cacheComponentCachingConfiguration.notEnoughVariablesForCaching = 32;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      not enough variables for caching: 128
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (component cache) (not enough variables for caching: 128)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cacheComponentCachingConfiguration.notEnoughVariablesForCaching = 128;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      not enough variables for caching: 512
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (component cache) (not enough variables for caching: 512)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cacheComponentCachingConfiguration.notEnoughVariablesForCaching = 512;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      not enough variables for caching: 2'048
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (component cache) (not enough variables for caching: 2'048)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cacheComponentCachingConfiguration.notEnoughVariablesForCaching = 2'048;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      not enough variables for caching: 8'192
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (component cache) (not enough variables for caching: 8'192)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cacheComponentCachingConfiguration.notEnoughVariablesForCaching = 8'192;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      too many variables for caching: 0
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (component cache) (too many variables for caching: 0)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cacheComponentCachingConfiguration.tooManyVariablesForCaching = 0;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      too many variables for caching: 2
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (component cache) (too many variables for caching: 2)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cacheComponentCachingConfiguration.tooManyVariablesForCaching = 2;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      too many variables for caching: 8
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (component cache) (too many variables for caching: 8)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cacheComponentCachingConfiguration.tooManyVariablesForCaching = 8;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      too many variables for caching: 32
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (component cache) (too many variables for caching: 32)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cacheComponentCachingConfiguration.tooManyVariablesForCaching = 32;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      too many variables for caching: 128
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (component cache) (too many variables for caching: 128)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cacheComponentCachingConfiguration.tooManyVariablesForCaching = 128;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      too many variables for caching: 512
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (component cache) (too many variables for caching: 512)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cacheComponentCachingConfiguration.tooManyVariablesForCaching = 512;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      too many variables for caching: 2'048
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (component cache) (too many variables for caching: 2'048)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cacheComponentCachingConfiguration.tooManyVariablesForCaching = 2'048;
+
+        process(configuration, false);
+    }
+
+    /**
+     * Caching scheme (component cache)
+     *      too many variables for caching: 8'192
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (component cache) (too many variables for caching: 8'192)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cacheComponentCachingConfiguration.tooManyVariablesForCaching = 8'192;
+
+        process(configuration, false);
+    }
+
+    /**
      * Caching scheme (component cache) - none
      */
     TEST_CASE(" [Compiler::dDNNF] caching scheme (component cache) - none", "[Compiler::dDNNF] [.dDNNF]") {
@@ -3624,6 +3800,198 @@ namespace BellaTest::Compiler::dDNNF {
     //endregion
 
     //region Caching scheme (hypergraph cut cache)
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      not enough variables for caching: 0
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (hypergraph cut cache) (not enough variables for caching: 0)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.notEnoughVariablesForCaching = 0;
+
+        process(configuration, true);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      not enough variables for caching: 2
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (hypergraph cut cache) (not enough variables for caching: 2)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.notEnoughVariablesForCaching = 2;
+
+        process(configuration, true);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      not enough variables for caching: 8
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (hypergraph cut cache) (not enough variables for caching: 8)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.notEnoughVariablesForCaching = 8;
+
+        process(configuration, true);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      not enough variables for caching: 32
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (hypergraph cut cache) (not enough variables for caching: 32)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.notEnoughVariablesForCaching = 32;
+
+        process(configuration, true);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      not enough variables for caching: 128
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (hypergraph cut cache) (not enough variables for caching: 128)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.notEnoughVariablesForCaching = 128;
+
+        process(configuration, true);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      not enough variables for caching: 512
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (hypergraph cut cache) (not enough variables for caching: 512)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.notEnoughVariablesForCaching = 512;
+
+        process(configuration, true);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      not enough variables for caching: 2'048
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (hypergraph cut cache) (not enough variables for caching: 2'048)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.notEnoughVariablesForCaching = 2'048;
+
+        process(configuration, true);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      not enough variables for caching: 8'192
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (hypergraph cut cache) (not enough variables for caching: 8'192)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.notEnoughVariablesForCaching = 8'192;
+
+        process(configuration, true);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      too many variables for caching: 0
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (hypergraph cut cache) (too many variables for caching: 0)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.tooManyVariablesForCaching = 0;
+
+        process(configuration, true);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      too many variables for caching: 2
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (hypergraph cut cache) (too many variables for caching: 2)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.tooManyVariablesForCaching = 2;
+
+        process(configuration, true);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      too many variables for caching: 8
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (hypergraph cut cache) (too many variables for caching: 8)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.tooManyVariablesForCaching = 8;
+
+        process(configuration, true);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      too many variables for caching: 32
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (hypergraph cut cache) (too many variables for caching: 32)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.tooManyVariablesForCaching = 32;
+
+        process(configuration, true);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      too many variables for caching: 128
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (hypergraph cut cache) (too many variables for caching: 128)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.tooManyVariablesForCaching = 128;
+
+        process(configuration, true);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      too many variables for caching: 512
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (hypergraph cut cache) (too many variables for caching: 512)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.tooManyVariablesForCaching = 512;
+
+        process(configuration, true);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      too many variables for caching: 2'048
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (hypergraph cut cache) (too many variables for caching: 2'048)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.tooManyVariablesForCaching = 2'048;
+
+        process(configuration, true);
+    }
+
+    /**
+     * Caching scheme (hypergraph cut cache)
+     *      too many variables for caching: 8'192
+     */
+    TEST_CASE(" [Compiler::dDNNF] caching scheme (hypergraph cut cache) (too many variables for caching: 8'192)", "[Compiler::dDNNF] [.dDNNF]") {
+        CompilerConfigurationType configuration = createDefaultCompilerConfiguration();
+        configuration.cachingSchemeHypergraphCutCachingType = CachingSchemeTypeEnum::STANDARD;
+        configuration.cacheHypergraphCutCachingConfiguration.tooManyVariablesForCaching = 8'192;
+
+        process(configuration, true);
+    }
+
     /**
      * Caching scheme (hypergraph cut cache) - none
      */

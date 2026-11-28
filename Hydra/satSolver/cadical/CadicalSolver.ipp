@@ -245,7 +245,7 @@ namespace Hydra::SatSolver::Cadical {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool CadicalSolver<VarT, LiteralT, ClauseIdT>::processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
+    bool CadicalSolver<VarT, LiteralT, ClauseIdT>::processUnitPropagation(const LiteralType& lit, const VectorSetType& restrictedVariableVectorSet,
                                                                           LiteralReusableVectorType& impliedLiteralReusableVector) {
         // Initialize local auxiliary data structures
         if (l_firstCall_processUnitPropagation_) {
@@ -275,7 +275,7 @@ namespace Hydra::SatSolver::Cadical {
         for (LiteralCadicalType impliedLitCadical : l_impliedLiteralCadicalVector_processUnitPropagation_) {
             LiteralType impliedLit = convertLiteralCadicalToLiteral(impliedLitCadical);
 
-            if (!Other::containInSet(restrictedVariableSet, impliedLit.getVariable()))
+            if (!restrictedVariableVectorSet.contains(impliedLit.getVariable()))
                 continue;
 
             assert(impliedLit != ~lit);                                    // not a complementary literal

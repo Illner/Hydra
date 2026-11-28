@@ -12,11 +12,11 @@ namespace Hydra::Cache::CacheCleaningStrategy::Cara {
         activityVector.reserve(mappingFromIdToActivity_.size());
 
         IdType maxId = 0;
-        for (const auto& [key, value] : mappingFromIdToActivity_) {
-            activityVector.emplace_back(value);
+        for (const auto& [id, activity] : mappingFromIdToActivity_) {
+            activityVector.emplace_back(activity);
 
-            if (key > maxId)
-                maxId = key;
+            if (id > maxId)
+                maxId = id;
         }
 
         ActivityVectorType::size_type position = (activityVector.size() - 1) * ((double)configuration_.percentageOfDeletedEntries / (double)100);
@@ -159,6 +159,16 @@ namespace Hydra::Cache::CacheCleaningStrategy::Cara {
     template <typename VarT, typename LiteralT, typename ClauseIdT, typename CacheValueT>
     void CaraCacheCleaningStrategy<VarT, LiteralT, ClauseIdT, CacheValueT>::updateActivityCounter() noexcept {
         activityCounter_ *= activityIncrement_;
+
+        // Rescale the activity counter and the activities
+        if (activityCounter_ > std::ldexp(static_cast<ActivityType>(1), S_ACTIVITY_RESCALING_EXPONENT_)) {
+            activityCounter_ = std::ldexp(activityCounter_, -S_ACTIVITY_RESCALING_EXPONENT_);
+
+            for (auto& [id, activity] : mappingFromIdToActivity_)
+                activity = std::ldexp(activity, -S_ACTIVITY_RESCALING_EXPONENT_);
+        }
+
+        assert(std::isfinite(activityCounter_));
     }
 
     #ifndef NDEBUG

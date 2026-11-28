@@ -36,6 +36,8 @@ namespace Hydra::Cache {
 
         NumberCounterStatisticsType ratioOfNumberOfEmptyCacheRecordsToNumberOfCacheRecordsCounter = NumberCounterStatisticsType("#empty cache records / #cache records");
 
+        NumberCounterStatisticsType ratioOfNumberOfIgnoredCacheRecordsToNumberOfCacheRecordsCounter = NumberCounterStatisticsType("#ignored cache records / #cache records");
+
         NumberCounterStatisticsType formulaSizeCacheRecordStructCounter = NumberCounterStatisticsType("formula size (cache record structure)");
 
         NumberCounterStatisticsType formulaSizePositiveHitCounter = NumberCounterStatisticsType("formula size (positive hit)");

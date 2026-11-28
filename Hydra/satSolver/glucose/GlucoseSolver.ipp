@@ -189,7 +189,7 @@ namespace Hydra::SatSolver::Glucose {
     }
 
     template <typename VarT, typename LiteralT, typename ClauseIdT>
-    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::processUnitPropagation(const LiteralType& lit, const VariableSetType& restrictedVariableSet,
+    bool GlucoseSolver<VarT, LiteralT, ClauseIdT>::processUnitPropagation(const LiteralType& lit, const VectorSetType& restrictedVariableVectorSet,
                                                                           LiteralReusableVectorType& impliedLiteralReusableVector) {
         // Initialize local auxiliary data structures
         if (l_firstCall_processUnitPropagation_) {
@@ -206,7 +206,7 @@ namespace Hydra::SatSolver::Glucose {
             for (const LiteralGlucoseType& impliedLitGlucose : l_impliedLiteralGlucoseReusableVector_processUnitPropagation_) {
                 LiteralType impliedLit = convertLiteralGlucoseToLiteral(impliedLitGlucose);
 
-                if (!Other::containInSet(restrictedVariableSet, impliedLit.getVariable()))
+                if (!restrictedVariableVectorSet.contains(impliedLit.getVariable()))
                     continue;
 
                 assert(impliedLit != ~lit);   // not a complementary literal

@@ -291,11 +291,18 @@ namespace Hydra::Cache {
         if (cacheStatisticsPtr_)
             cacheStatisticsPtr_->createCacheRecordStructTimer.startStopwatch();
 
-        CacheRecordStruct cacheRecordStruct = cachingSchemeAbstractUniquePtr_->createCacheRecordStruct(currentComponentVariableSet);
+        // Not enough variables or too many variables => cache record is ignored
+        const bool isCacheRecordStructIgnored = (currentComponentVariableSet.size() <= configuration_.notEnoughVariablesForCaching) ||
+                                                (currentComponentVariableSet.size() >= configuration_.tooManyVariablesForCaching);
+
+        CacheRecordStruct cacheRecordStruct = isCacheRecordStructIgnored ? CacheRecordStruct() : cachingSchemeAbstractUniquePtr_->createCacheRecordStruct(currentComponentVariableSet);
+
+        assert(!isCacheRecordStructIgnored || cacheRecordStruct.empty);
 
         // Statistics
         if (cacheStatisticsPtr_) {
             cacheStatisticsPtr_->ratioOfNumberOfEmptyCacheRecordsToNumberOfCacheRecordsCounter.addCount(static_cast<Statistics::LargeNumberType>(cacheRecordStruct.empty ? 1 : 0));
+            cacheStatisticsPtr_->ratioOfNumberOfIgnoredCacheRecordsToNumberOfCacheRecordsCounter.addCount(static_cast<Statistics::LargeNumberType>(isCacheRecordStructIgnored ? 1 : 0));
 
             if (!cacheRecordStruct.empty) {
                 cacheStatisticsPtr_->formulaSizeCacheRecordStructCounter.addCount(static_cast<Statistics::LargeNumberType>(cacheRecordStruct.formulaSize));
@@ -682,6 +689,13 @@ namespace Hydra::Cache {
     void Cache<VarT, LiteralT, ClauseIdT, CacheValueT>::printCacheDebug(std::ostream& out, bool printCurrentFormula, bool printCaches,
                                                                         bool printVariableNumberOfHits, bool printCacheStatistics) const {
         out << "Cache" << std::endl;
+
+        // Not enough variables for caching
+        if (configuration_.notEnoughVariablesForCaching != CacheConfiguration::S_NUMBER_OF_VARIABLES_MINIMUM)
+            out << "Not enough variables for caching: " << std::to_string(configuration_.notEnoughVariablesForCaching) << std::endl;
+        // Too many variables for caching
+        if (configuration_.tooManyVariablesForCaching != CacheConfiguration::S_NUMBER_OF_VARIABLES_MAXIMUM)
+            out << "Too many variables for caching: " << std::to_string(configuration_.tooManyVariablesForCaching) << std::endl;
 
         // Total cache
         out << "Total cache" << std::endl;

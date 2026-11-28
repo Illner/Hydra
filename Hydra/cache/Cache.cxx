@@ -19,6 +19,8 @@ namespace Hydra::Cache {
 
         ratioOfNumberOfEmptyCacheRecordsToNumberOfCacheRecordsCounter.printCounterStatistics(out, statisticsName, addLabels);
 
+        ratioOfNumberOfIgnoredCacheRecordsToNumberOfCacheRecordsCounter.printCounterStatistics(out, statisticsName, addLabels);
+
         formulaSizeCacheRecordStructCounter.printCounterStatistics(out, statisticsName, addLabels);
 
         formulaSizePositiveHitCounter.printCounterStatistics(out, statisticsName, addLabels);

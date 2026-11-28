@@ -30,6 +30,7 @@
 #include "Hydra/cache/enums/CacheTypeEnum.hpp"
 
 #include "Hydra/cache/Cache.hxx"
+#include "Hydra/cache/Cache.tpp"
 
 namespace Hydra::Cache {
 
@@ -125,6 +126,7 @@ namespace Hydra::Cache {
     public:
         Cache(CachingSchemeAbstractUniquePtrType&& cachingSchemeAbstractUniquePtr,
               CacheCleaningStrategyAbstractUniquePtrType&& cacheCleaningStrategyAbstractUniquePtr,
+              const CacheConfiguration& configuration = CacheConfiguration(),
               CacheStatisticsPtrType cacheStatisticsPtr = nullptr)
             : id_counter_(0), usedMapping_(cachingSchemeAbstractUniquePtr->getUsedMapping()),
               keyByteSizeCache8_(0), valueByteSizeCache8_(0), keyByteSizeCache16_(0), valueByteSizeCache16_(0),
@@ -139,7 +141,7 @@ namespace Hydra::Cache {
               negativeHitCacheStatistics_(cachingSchemeAbstractUniquePtr->getFormulaRepresentationAbstractPtr()),
               cachingSchemeAbstractUniquePtr_(std::move(cachingSchemeAbstractUniquePtr)),
               cacheCleaningStrategyAbstractUniquePtr_(std::move(cacheCleaningStrategyAbstractUniquePtr)),
-              cacheStatisticsPtr_(cacheStatisticsPtr) {
+              configuration_(configuration), cacheStatisticsPtr_(cacheStatisticsPtr) {
             // The variables cannot be saved as std::size_t
             VarT numberOfVariablesInOriginalFormula = cachingSchemeAbstractUniquePtr_->getFormulaRepresentationAbstractPtr()->getNumberOfVariablesInOriginalFormula();
             if (!Other::unsignedValueCanBeSavedAsStdSizeT<VarT>(numberOfVariablesInOriginalFormula, 1))
@@ -201,6 +203,7 @@ namespace Hydra::Cache {
         CachingSchemeAbstractUniquePtrType cachingSchemeAbstractUniquePtr_;
         CacheCleaningStrategyAbstractUniquePtrType cacheCleaningStrategyAbstractUniquePtr_;
 
+        CacheConfiguration configuration_;
         CacheStatisticsPtrType cacheStatisticsPtr_;
 
         inline static constexpr LargeNumberType S_VAR_BYTE_SIZE_ = sizeof(VarT);
@@ -297,6 +300,7 @@ namespace Hydra::Cache {
          * Assert: the variables MUST NOT be free
          * Assert: the variables MUST NOT be assigned
          * Assert: the variables MUST be in the current component
+         * Note: if the number of variables is NOT between notEnoughVariablesForCaching and tooManyVariablesForCaching, an empty cache record structure is returned
          * @param currentComponentVariableSet a set of variables appearing in the current component
          * @return a cache record structure
          * @throw MappingIsNotInjectiveException (debug) if the created mapping is not injective
